@@ -2,6 +2,7 @@ package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -29,11 +30,13 @@ class MainActivity : ComponentActivity() {
         val mountButton = findViewById<LinearLayout>(R.id.mountButton)
         val codeNameText = findViewById<TextView>(R.id.codeName)
         val settingsButton = findViewById<ImageView>(R.id.settingsButton)
+        val guideButton = findViewById<TextView>(R.id.guideButton)
 
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
         codeNameText.text = "Device: ${Commands.getDevice()}"
 
         settingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
+        guideButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGuideLink())))}
 
         quickbootButton.setOnClickListener {
             UniversalDialog.showDialog(
@@ -72,6 +75,48 @@ class MainActivity : ComponentActivity() {
                     Pair("NO") {}
                 )
             )
+        }
+    }
+
+    fun getGuideLink(): String {
+        return when (Commands.getDevice()) {
+            "alphalm", "alphaplus", "alpha_lao_com", "alphalm_lao_com", "alphaplus_lao_com" -> "https://github.com/n00b69/woa-alphaplus"
+            "betaplus", "betalm", "beta_lao_com", "betaplus_lao_com", "betalm_lao_com" -> "https://github.com/n00b69/woa-betalm"
+            "flashlmdd", "flash_lao_com", "flashlm", "flashlmdd_lao_com" -> "https://github.com/n00b69/woa-flashlmdd"
+            "mh2lm", "mh2plus", "mh2plus_lao_com", "mh2lm_lao_com" -> "https://github.com/n00b69/woa-mh2lm"
+            "mh2lm5g", "mh2lm5g_lao_com" -> "https://github.com/n00b69/woa-mh2lm5g"
+            "beryllium" -> "https://github.com/n00b69/woa-beryllium"
+            "bhima", "vayu" -> "https://github.com/woa-vayu/POCOX3Pro-Guides"
+            "cepheus" -> "https://github.com/ivanvorvanin/Port-Windows-XiaoMI-9"
+            "dumpling", "chiron", "cheeseburger" -> "https://renegade-project.tech/"
+            "curtana", "curtana2", "curtana_india", "curtana_cn", "curtanacn", "durandal", "durandal_india",
+            "excalibur", "excalibur2", "excalibur_india", "gram", "joyeuse", "miatoll" -> "prod_link"
+            "production" -> "https://github.com/woa-miatoll/Port-Windows-11-Redmi-Note-9-Pro"
+            "dipper" -> "https://github.com/n00b69/woa-dipper"
+            "equuleus" -> "https://github.com/n00b69/woa-equuleus"
+            "G973F", "SM-G973F", "beyond1lte", "beyond1qlte", "G973U", "G973U1", "SM-G973U", "SM-G973U1", "G9730", "SM-G9730", "G973N",
+            "SM-G973N", "G973X", "SM-G973X", "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1" -> "https://github.com/sonic011gamer/Mu-Samsung"
+            "lisa" -> "https://github.com/ETCHDEV/Port-Windows-11-Xiaomi-11-Lite-NE"
+            "nabu" -> "https://github.com/erdilS/Port-Windows-11-Xiaomi-Pad-5/tree/main"
+            "perseus" -> "https://github.com/n00b69/woa-perseus"
+            "pipa" -> "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md"
+            "polaris" -> "https://github.com/n00b69/woa-polaris"
+            "Pong", "pong" -> "https://github.com/Govro150/woa-pong"
+            "raphael", "raphaelin", "raphaels" -> "https://github.com/woa-raphael/woa-raphael"
+            "surya" -> "https://github.com/woa-surya/pocox3nfc-guides"
+            "a52sxq" -> "https://github.com/woa-a52s/Samsung-A52s-5G-Guides"
+            "judyln", "judyp", "judypn" -> "https://github.com/n00b69/woa-everything"
+            "joan" -> "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md"
+            "OnePlus6", "fajita", "OnePlus6T", "enchilada" -> "https://github.com/n00b69/woa-op6"
+            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" -> "https://github.com/n00b69/woa-op7"
+            "guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7", "OnePlus7TPro5G", "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr",
+            "t860", "t865", "q2q", "andromeda" -> "https://project-aloha.github.io/"
+            "sagit" -> "https://renegade-project.tech/"
+            "winnerx", "winner" -> "https://github.com/n00b69/woa-winner"
+            "xpeng", "venus", "RMX2061", "RMX2170", "cmi", "houji", "meizu20pro", "husky", "redfin", "e3q", "dm3q", "dm3" -> "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md"
+            "davinci" -> "https://github.com/zxcwsurx/woa-davinci"
+            "marble" -> "https://github.com/Xhdsos/woa-marble"
+            else -> "https://renegade-project.tech/"
         }
     }
 }
