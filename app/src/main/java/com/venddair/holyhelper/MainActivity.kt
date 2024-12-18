@@ -31,12 +31,14 @@ class MainActivity : ComponentActivity() {
         val codeNameText = findViewById<TextView>(R.id.codeName)
         val settingsButton = findViewById<ImageView>(R.id.settingsButton)
         val guideButton = findViewById<TextView>(R.id.guideButton)
+        val groupButton = findViewById<TextView>(R.id.groupButton)
 
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
         codeNameText.text = "Device: ${Commands.getDevice()}"
 
         settingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
         guideButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGuideLink())))}
+        groupButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGroupLink())))}
 
         quickbootButton.setOnClickListener {
             UniversalDialog.showDialog(
