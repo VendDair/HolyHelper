@@ -13,15 +13,35 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center"
-            android:text="Holy Helper"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText,PxUsage" />
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="150px"
+                android:gravity="center"
+                android:text="Holy Helper"
+                android:textColor="@color/black"
+                android:textSize="50px"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,PxUsage" />
+
+            <ImageView
+                android:id="@+id/settingsButton"
+                android:clickable="true"
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="100dp"
+                android:src="@drawable/settings"
+                tools:ignore="ContentDescription,PxUsage" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,8 +75,9 @@
                     android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:text="Windows on ARM"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_blue"
                     android:textStyle="bold"
+                    android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +90,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="35dp"
                     android:text="Device: "
-                    android:textColor="@color/black"
+                    android:textColor="@color/blue"
                     app:layout_constraintEnd_toStartOf="@+id/textView4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -86,7 +107,8 @@
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="3dp"
                     android:text="Group"
-                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_bej"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText,TouchTargetSizeCheck" />
@@ -102,7 +124,8 @@
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="3dp"
                     android:text="Guide"
-                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_bej"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="HardcodedText,TouchTargetSizeCheck" />

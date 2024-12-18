@@ -1,6 +1,7 @@
 package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
         ToastUtil.init(this)
         Files.init(this)
         UniversalDialog.init(this)
+        Preferences.init(this)
 
         Files.createFolder(Files.paths["uefiFolder"]!!)
 
@@ -26,9 +28,12 @@ class MainActivity : ComponentActivity() {
         val deviceImageView = findViewById<ImageView>(R.id.device)
         val mountButton = findViewById<LinearLayout>(R.id.mountButton)
         val codeNameText = findViewById<TextView>(R.id.codeName)
+        val settingsButton = findViewById<ImageView>(R.id.settingsButton)
 
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
         codeNameText.text = "Device: ${Commands.getDevice()}"
+
+        settingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
 
         quickbootButton.setOnClickListener {
             UniversalDialog.showDialog(

@@ -44,6 +44,8 @@ object Commands {
     }
 
     fun mountWindows() {
-        execute("su -mm -c ${Files.paths["mount.ntfs"]} -o rw ${Files.getWinPartition()} ${Files.paths["mount"]}")
+        val mountPath: String = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Files.paths["mount1"]!!
+        else Files.paths["mount"]!!
+        execute("su -mm -c ${Files.paths["mount.ntfs"]} -o rw ${Files.getWinPartition()} $mountPath")
     }
 }
