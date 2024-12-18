@@ -9,3 +9,4 @@ THIS PROJECT IS IN AN EARLY ALPHA AND DOES NOT CONTAIN ALL THE FEATURES
  - Backup of boot partition
  - Boot in windows
  - Proper landscape mode (unlike [original helper](https://github.com/n00b69/woa-helper))
+ - Mounting in /mnt instead of /sdcard
