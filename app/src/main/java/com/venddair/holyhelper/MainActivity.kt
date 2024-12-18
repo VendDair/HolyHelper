@@ -78,6 +78,44 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    fun getGroupLink(): String {
+        return when (Commands.getDevice()) {
+            "andromeda", "t860", "t865", "q2q", "winnerx", "winner" -> "https://t.me/project_aloha_issues"
+
+            "alphalm", "alphaplus", "alpha_lao_com", "alphalm_lao_com", "alphaplus_lao_com", "betaplus", "betalm", "beta_lao_com",
+            "betaplus_lao_com", "betalm_lao_com", "flashlmdd", "flash_lao_com", "flashlm", "flashlmdd_lao_com", "mh2lm", "mh2plus",
+            "mh2plus_lao_com", "mh2lm_lao_com", "mh2lm5g", "mh2lm5g_lao_com", "bhima", "vayu", "G973F", "SM-G973F", "beyond1lte",
+            "beyond1qlte", "G973U", "G973U1", "SM-G973U", "SM-G973U1", "G9730", "SM-G9730", "G973N", "SM-G973N", "G973X", "SM-G973X",
+            "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1", "xpeng", "venus", "alioth" -> "https://t.me/woahelperchat"
+
+            "beryllium" -> "https://t.me/WinOnF1"
+            "cepheus" -> "http://t.me/woacepheus"
+            "cheeseburger", "chiron", "dumpling", "lisa", "sagit" -> "https://t.me/joinchat/MNjTmBqHIokjweeN0SpoyA"
+            "curtana", "curtana2", "curtana_india", "curtana_cn", "curtanacn", "durandal", "durandal_india", "excalibur", "excalibur2",
+            "excalibur_india", "gram", "joyeuse", "miatoll" -> "http://t.me/woamiatoll"
+            "dipper" -> "https://t.me/woadipper"
+            "equuleus" -> "https://t.me/woaequuleus"
+            "nabu" -> "https://t.me/nabuwoa"
+            "perseus" -> "https://t.me/woaperseus"
+            "pipa" -> "https://t.me/pad6_pipa"
+            "polaris" -> "https://t.me/WinOnMIX2S"
+            "Pong", "pong" -> "https://t.me/woa_pong"
+            "raphael", "raphaelin", "raphaels" -> "https://t.me/woaraphael"
+            "surya" -> "https://t.me/windows_on_pocox3_nfc"
+            "a52sxq" -> "https://t.me/a52sxq_uefi"
+            "judyln", "judyp", "judypn", "joan" -> "https://t.me/lgedevices"
+            "OnePlus6", "fajita", "OnePlus6T", "enchilada" -> "https://t.me/WinOnOP6"
+            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "OnePlus7Pro", "OnePlus7Pro4G", "guacamoleb", "hotdogb", "OnePlus7T",
+            "OnePlus7", "OnePlus7TPro5G", "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr" -> "https://t.me/onepluswoachat"
+            "davinci" -> "https://t.me/woa_davinci"
+            "marble" -> "https://t.me/woa_marble"
+            "RMX2061", "RMX2170" -> "https://t.me/realme6PROwindowsARM64"
+            "cmi", "houji", "meizu20pro", "husky", "redfin", "dm3q", "dm3" -> "https://t.me/dumanthecat"
+            "e3q" -> "https://t.me/biskupmuf"
+            else -> "https://t.me/joinchat/MNjTmBqHIokjweeN0SpoyA"
+        }
+    }
+
     fun getGuideLink(): String {
         return when (Commands.getDevice()) {
             "alphalm", "alphaplus", "alpha_lao_com", "alphalm_lao_com", "alphaplus_lao_com" -> "https://github.com/n00b69/woa-alphaplus"
