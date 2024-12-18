@@ -31,4 +31,8 @@ object Commands {
     fun bootInWindows() {
         execute("su -c dd if=${Files.paths["uefi"]} of=${Files.paths["bootBlock"]} bs=8M")
     }
+
+    fun getDevice(): String {
+        return execute("getprop ro.product.device").replace("\n", "")
+    }
 }
