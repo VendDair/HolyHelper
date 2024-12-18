@@ -26,21 +26,82 @@
             android:id="@+id/device"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:scaleX="0.9"
             android:scaleY="0.9"
             android:src="@drawable/ic_launcher_background"
             tools:ignore="ContentDescription" />
 
-        <ImageView
-            android:id="@+id/imageView4"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
-            android:src="@drawable/ic_launcher_background"
-            tools:ignore="ContentDescription" />
+            android:scaleY="0.9"
+            android:scaleX="0.9"
+            android:layout_marginRight="20dp"
+            android:foregroundGravity="left"
+            android:background="@drawable/rounded_light_blue"
+            tools:ignore="RtlHardcoded">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Windows on ARM"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/codeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="35dp"
+                android:text="Device: "
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/groupButton"
+                android:clickable="true"
+                android:background="@drawable/rounded_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:text="Group"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/guideButton"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_blue"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:text="Guide"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="HardcodedText" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
@@ -55,7 +116,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="550px"
-            android:background="@drawable/rounded_gray"
+            android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +152,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="300px"
-            android:background="@drawable/rounded_gray"
+            android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -127,7 +188,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_gray"
+            android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
