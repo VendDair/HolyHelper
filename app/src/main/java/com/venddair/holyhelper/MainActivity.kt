@@ -21,8 +21,11 @@ class MainActivity : ComponentActivity() {
         Files.init(this)
         UniversalDialog.init(this)
         Preferences.init(this)
+        Download.init(this)
 
         Files.createFolder(Files.paths["uefiFolder"]!!)
+
+        //Download.download("https://github.com/n00b69/woasetup/releases/download/Installers/PhysX-9.13.0604-SystemSoftware-Legacy.msi", "test.msi")
 
         val quickbootButton = findViewById<LinearLayout>(R.id.quickbootButton)
         val backupButton = findViewById<LinearLayout>(R.id.backupButton)
@@ -67,7 +70,7 @@ class MainActivity : ComponentActivity() {
             )
         }
 
-        mountText.text = if (Commands.isWindowsMounted()) "Unmount Windows?" else "Mount Windows?"
+        mountText.text = if (Commands.isWindowsMounted()) "Unmount Windows" else "Mount Windows"
         mountButton.setOnClickListener {
             UniversalDialog.showDialog(
                 title = if (!Commands.isWindowsMounted()) "Mount Windows?" else "Unmount Windows?",

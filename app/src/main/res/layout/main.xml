@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@drawable/walp1"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,7 +20,7 @@
             android:layout_height="107dp"
             android:gravity="center"
             android:text="Holy Helper"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="50px"
             android:textStyle="bold"
             tools:ignore="HardcodedText,PxUsage" />
@@ -136,7 +137,7 @@
             android:layout_height="200px"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="550px"
+            android:layout_marginBottom="800px"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -160,6 +161,42 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Backup android boot"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/toolboxButton"
+            android:layout_width="0dp"
+            android:layout_height="200px"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="550px"
+            android:background="@drawable/rounded_light_blue"
+            android:clickable="true"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="PxUsage">
+
+            <ImageView
+                android:id="@+id/imageViews1asd"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:src="@drawable/toolbox"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/textView7asdg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Toolbox"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
