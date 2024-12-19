@@ -20,19 +20,25 @@
             android:layout_height="107dp"
             android:gravity="center"
             android:text="Holy Helper"
+            android:layout_marginStart="20dp"
             android:textColor="@color/white"
             android:textSize="50px"
             android:textStyle="bold"
-            tools:ignore="HardcodedText,PxUsage" />
+            tools:ignore="HardcodedText,PxUsage,RtlSymmetry" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/settingsButton"
             android:clickable="true"
             android:layout_width="100px"
             android:layout_height="100px"
-            android:layout_marginStart="100dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/settings"
-            tools:ignore="ContentDescription,PxUsage" />
+            tools:ignore="ContentDescription,PxUsage,RtlSymmetry" />
 
     </LinearLayout>
 
@@ -161,7 +167,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Backup android boot"
-                android:textColor="@color/white"
+                android:textColor="@color/light_blue"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -197,7 +203,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Toolbox"
-                android:textColor="@color/white"
+                android:textColor="@color/light_blue"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -233,7 +239,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Mount Windows"
-                android:textColor="@color/white"
+                android:textColor="@color/light_blue"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
@@ -269,7 +275,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Boot to Windows"
-                android:textColor="@color/white"
+                android:textColor="@color/light_blue"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 

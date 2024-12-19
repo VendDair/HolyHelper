@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/walp4"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,6 +14,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:minHeight="48dp"
+        android:textColor="@color/gray"
+        android:thumbTint="@color/white"
+        android:trackTint="@color/white"
+        android:trackTintMode="src_in"
+        android:thumbTintMode="multiply"
         android:text="Mount to /mnt instead of /sdcard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
