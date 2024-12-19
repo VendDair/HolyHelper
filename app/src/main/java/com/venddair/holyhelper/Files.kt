@@ -24,7 +24,7 @@ object Files {
         "bootBlock" to "/dev/block/by-name/boot",
         "bootImage" to "/sdcard/boot.img",
         "mount" to "/sdcard/Windows",
-        "mount1" to "/mnt/Windows",
+        "mount1" to "/mnt/sdcard/Windows",
         "data" to "/data/local/tmp/holyhelper",
         "mount.ntfs" to "/data/local/tmp/holyhelper/mount.ntfs"
     )

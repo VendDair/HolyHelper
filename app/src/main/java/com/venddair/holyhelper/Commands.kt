@@ -43,9 +43,18 @@ object Commands {
         return execute("getprop ro.product.device").replace("\n", "")
     }
 
-    fun mountWindows() {
+    fun mountWindows(): Boolean {
         val mountPath: String = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Files.paths["mount1"]!!
         else Files.paths["mount"]!!
-        execute("su -mm -c ${Files.paths["mount.ntfs"]} -o rw ${Files.getWinPartition()} $mountPath")
+
+        if (isWindowsMounted()) {
+            execute("su -mm -c umount /sdcard/Windows")
+            return false
+        }
+        Files.createFolder(mountPath)
+
+        execute("su -c sh -c 'cd ${Files.paths["data"]} && su -mm -c ${Files.paths["mount.ntfs"]} ${Files.getWinPartition()} $mountPath'")
+
+        return isWindowsMounted()
     }
 }

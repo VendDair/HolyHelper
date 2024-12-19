@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
         val backupButton = findViewById<LinearLayout>(R.id.backupButton)
         val deviceImageView = findViewById<ImageView>(R.id.device)
         val mountButton = findViewById<LinearLayout>(R.id.mountButton)
+        val mountText = findViewById<TextView>(R.id.mountText)
         val codeNameText = findViewById<TextView>(R.id.codeName)
         val settingsButton = findViewById<ImageView>(R.id.settingsButton)
         val guideButton = findViewById<TextView>(R.id.guideButton)
@@ -65,14 +66,16 @@ class MainActivity : ComponentActivity() {
                 )
             )
         }
+
+        mountText.text = if (Commands.isWindowsMounted()) "Unmount Windows?" else "Mount Windows?"
         mountButton.setOnClickListener {
             UniversalDialog.showDialog(
-                title = "Mount Windows?",
-                text = "Mounts Windows in /sdcard/Windows",
+                title = if (!Commands.isWindowsMounted()) "Mount Windows?" else "Unmount Windows?",
+                text = "Mounts/Unmounts Windows in /sdcard/Windows or /mnt/sdcard/Windows",
                 image = R.drawable.folder,
                 buttons = listOf(
                     Pair("YES") {
-                        Commands.mountWindows()
+                        mountText.text = if (Commands.mountWindows()) "Unmount Windows?" else "Mount Windows?"
                     },
                     Pair("NO") {}
                 )
