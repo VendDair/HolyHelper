@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.marginRight
 
 object UniversalDialog {
     private lateinit var dialog: Dialog
@@ -33,6 +36,7 @@ object UniversalDialog {
             .setView(dialogView)
             .setCancelable(true)
 
+
         val imageView: ImageView = dialogView.findViewById(R.id.image)
         val dialogText: TextView = dialogView.findViewById(R.id.title)
         val textText: TextView = dialogView.findViewById(R.id.text)
@@ -48,19 +52,33 @@ object UniversalDialog {
             textTextParams.setMargins(textTextParams.leftMargin, 0, textTextParams.rightMargin, 0)
         }
 
-        for (button in buttons) {
+        for ((index, button) in buttons.withIndex()) {
             val buttonView = Button(appContext)
             buttonView.text = button.first
             buttonView.textSize = 14.0f
+            //buttonView.setBackgroundColor(appContext.getColor(R.color.light_blue))
+            buttonView.setBackgroundResource(R.drawable.rounded_light_blue)
+            buttonView.setTextColor(appContext.getColor(R.color.blue))
             buttonView.setOnClickListener {
                 button.second()
                 dialog.dismiss()
             }
+
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+
+            if (index < buttons.size - 1) {
+                params.rightMargin = 20
+            }
+
+            buttonView.layoutParams = params
             container.addView(buttonView)
         }
 
-        // Create and show the dialog
         dialog = dialogBuilder.create()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
 }

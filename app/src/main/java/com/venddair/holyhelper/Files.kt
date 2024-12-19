@@ -101,6 +101,7 @@ object Files {
     fun getResourceFromDevice(): Drawable {
         return when (Commands.getDevice()) {
             "a52sxq" -> getResource(R.drawable.a52sxq)
+            "dm1q" -> getResource(R.drawable.dm1q)
             "judyln", "judyp", "judypn", "joan", "andromeda", "guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7",
             "sagit", "t860", "t865" -> getResource(R.drawable.unknown)
             "alphalm", "alphaplus", "alpha_lao_com", "alphalm_lao_com", "alphaplus_lao_com" -> getResource(R.drawable.alphaplus)
