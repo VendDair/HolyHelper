@@ -4,6 +4,7 @@ import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import java.io.File
 
 object Download {
 
@@ -20,6 +21,8 @@ object Download {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+        //request.setDestinationInExternalPublicDir(File(File(appContext.filesDir, "UEFI")), fileName)
+        //request.setDestinationInExternalPublicDir(, fileName)
 
         val downloadManager = appContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadManager.enqueue(request)

@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         Preferences.init(this)
         Download.init(this)
 
-        Files.createFolder(Files.paths["uefiFolder"]!!)
+        Files.createFolder(Paths.uefiFolder)
 
         //Download.download("https://github.com/n00b69/woasetup/releases/download/Installers/PhysX-9.13.0604-SystemSoftware-Legacy.msi", "test.msi")
 
@@ -36,11 +36,13 @@ class MainActivity : ComponentActivity() {
         val settingsButton = findViewById<ImageView>(R.id.settingsButton)
         val guideButton = findViewById<TextView>(R.id.guideButton)
         val groupButton = findViewById<TextView>(R.id.groupButton)
+        val toolboxButton = findViewById<LinearLayout>(R.id.toolboxButton)
 
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
         codeNameText.text = "Device: ${Commands.getDevice()}"
 
         settingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
+        toolboxButton.setOnClickListener { startActivity(Intent(this, ToolboxActivity::class.java)) }
         guideButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGuideLink())))}
         groupButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGroupLink())))}
 

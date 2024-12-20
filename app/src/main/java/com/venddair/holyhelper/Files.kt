@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.widget.Toast
+import androidx.compose.ui.graphics.Path
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -17,27 +18,17 @@ object Files {
 
 
     @SuppressLint("SdCardPath")
-    val paths = mapOf(
-        "uefiFolder" to "/sdcard/UEFI",
-        "uefi" to "/sdcard/UEFI/uefi.img",
-        "main" to "/sdcard",
-        "bootBlock" to "/dev/block/by-name/boot",
-        "bootImage" to "/sdcard/boot.img",
-        "mount" to "/sdcard/Windows",
-        "mount1" to "/mnt/sdcard/Windows",
-        "data" to "/data/local/tmp/holyhelper",
-        "mount.ntfs" to "/data/local/tmp/holyhelper/mount.ntfs"
-    )
-
     fun init(context: Context) {
         appContext = context
 
-        createFolder(paths["mount"]!!)
-        createFolder(paths["data"]!!)
+        createFolder(Paths.winPath)
+        createFolder(Paths.data)
 
         copyAsset("mount.ntfs","+x")
+        copyAsset("sta.exe","+x")
         copyAsset("libntfs-3g.so", "777")
         copyAsset("libfuse-lite.so", "777")
+        copyAsset("Switch to Android.lnk")
     }
 
     fun createFolder(path: String, alert: Boolean = false) {
@@ -52,9 +43,7 @@ object Files {
 
     fun copyAsset(name: String, perms: String? = null, alert: Boolean = false) {
 
-        val outputFilePath = paths["data"]!! + "/$name"
-
-        //if (checkFile(outputFilePath)) return
+        val outputFilePath = Paths.data + "/$name"
 
         try {
             val tempFile = File(appContext.cacheDir, name)
@@ -71,7 +60,7 @@ object Files {
 
             if (perms != null) Commands.execute("su -c chmod $perms $outputFilePath")
 
-            if (alert) ToastUtil.showToast("Asset $name was copied to path ${paths["data"]}")
+            if (alert) ToastUtil.showToast("Asset $name was copied to path ${Paths.data}")
         } catch (e: IOException) {
             e.printStackTrace()
             println("Error copying file: ${e.message}")

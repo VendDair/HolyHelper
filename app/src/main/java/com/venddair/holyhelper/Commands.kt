@@ -1,5 +1,6 @@
 package com.venddair.holyhelper
 
+import android.graphics.drawable.shapes.PathShape
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -30,13 +31,16 @@ object Commands {
     }
 
     fun backupBootImage() {
-        execute("su -c dd bs=8M if=${Files.paths["bootBlock"]} of=${Files.paths["bootImage"]}")
-        if (isWindowsMounted()) Files.copyFile(Files.paths["bootImage"]!!, Files.paths["mount"]!! + "/boot.img")
+        execute("su -c dd bs=8M if=${Paths.bootPartition} of=${Paths.bootImage}")
+        if (isWindowsMounted()) {
+            val winpath = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1 else Paths.winPath
+            Files.copyFile(Paths.bootPartition, "$winpath/boot.img")
+        }
     }
 
     fun bootInWindows() {
         backupBootImage()
-        execute("su -c dd if=${Files.paths["uefi"]} of=${Files.paths["bootBlock"]} bs=8M")
+        execute("su -c dd if=${Paths.uefiImg} of=${Paths.bootPartition} bs=8M")
     }
 
     fun getDevice(): String {
@@ -44,8 +48,8 @@ object Commands {
     }
 
     fun mountWindows(): Boolean {
-        val mountPath: String = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Files.paths["mount1"]!!
-        else Files.paths["mount"]!!
+        val mountPath: String = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1
+        else Paths.winPath
 
         if (isWindowsMounted()) {
             execute("su -mm -c umount /sdcard/Windows")
@@ -53,7 +57,7 @@ object Commands {
         }
         Files.createFolder(mountPath)
 
-        execute("su -c sh -c 'cd ${Files.paths["data"]} && su -mm -c ${Files.paths["mount.ntfs"]} ${Files.getWinPartition()} $mountPath'")
+        execute("su -c sh -c 'cd ${Paths.data} && su -mm -c ${Paths.mountNtfs} ${Files.getWinPartition()} $mountPath'")
 
         return isWindowsMounted()
     }
