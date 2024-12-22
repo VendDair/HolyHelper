@@ -18,21 +18,16 @@ import androidx.core.view.marginRight
 
 object UniversalDialog {
     private lateinit var dialog: Dialog
-    lateinit var appContext: Context
 
-    fun init(context: Context) {
-        appContext = context
-    }
-
-    fun showDialog(title: String = "", text: String = "", textGravity: Int = Gravity.CENTER, image: Int = R.drawable.win11logo,
-                   buttons: List<Pair<String, () -> Unit>> = listOf()
+    fun showDialog(context: Context, title: String = "", text: String = "", textGravity: Int = Gravity.CENTER, image: Int = R.drawable.win11logo,
+                   buttons: List<Pair<String, () -> Unit>> = listOf(), after : (dialog: Dialog) -> Unit = {}
     ) {
 
         // Inflate the custom layout
-        val dialogView: View = LayoutInflater.from(appContext).inflate(R.layout.universal_dialog, null)
+        val dialogView: View = LayoutInflater.from(context).inflate(R.layout.universal_dialog, null)
 
         // Create the AlertDialog
-        val dialogBuilder = AlertDialog.Builder(appContext)
+        val dialogBuilder = AlertDialog.Builder(context)
             .setView(dialogView)
             .setCancelable(true)
 
@@ -53,14 +48,15 @@ object UniversalDialog {
         }
 
         for ((index, button) in buttons.withIndex()) {
-            val buttonView = Button(appContext)
+            val buttonView = Button(context)
             buttonView.text = button.first
             buttonView.textSize = 14.0f
             buttonView.setBackgroundResource(R.drawable.rounded_light_blue)
-            buttonView.setTextColor(appContext.getColor(R.color.blue))
+            buttonView.setTextColor(context.getColor(R.color.blue))
             buttonView.setOnClickListener {
-                button.second()
                 dialog.dismiss()
+                button.second()
+                after(dialog)
             }
 
             val params = LinearLayout.LayoutParams(

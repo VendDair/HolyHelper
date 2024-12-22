@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
 
         ToastUtil.init(this)
         Files.init(this)
-        UniversalDialog.init(this)
         Preferences.init(this)
         Download.init(this)
 
@@ -47,7 +46,7 @@ class MainActivity : ComponentActivity() {
         groupButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGroupLink())))}
 
         quickbootButton.setOnClickListener {
-            UniversalDialog.showDialog(
+            UniversalDialog.showDialog(this,
                 title = "Boot in Windows?",
                 text = "It flashes uefi.img to boot partition",
                 buttons = listOf(
@@ -59,7 +58,7 @@ class MainActivity : ComponentActivity() {
             )
         }
         backupButton.setOnClickListener {
-            UniversalDialog.showDialog(
+            UniversalDialog.showDialog(this,
                 title = "Backup current boot partition?",
                 text = "Backups current boot in /sdcard/boot.img or in win folder when its mounted",
                 image = R.drawable.cd,
@@ -74,13 +73,14 @@ class MainActivity : ComponentActivity() {
 
         mountText.text = if (Commands.isWindowsMounted()) "Unmount Windows" else "Mount Windows"
         mountButton.setOnClickListener {
-            UniversalDialog.showDialog(
+            UniversalDialog.showDialog(this,
                 title = if (!Commands.isWindowsMounted()) "Mount Windows?" else "Unmount Windows?",
                 text = "Mounts/Unmounts Windows in /sdcard/Windows or /mnt/sdcard/Windows",
                 image = R.drawable.folder,
                 buttons = listOf(
                     Pair("YES") {
-                        mountText.text = if (Commands.mountWindows()) "Unmount Windows?" else "Mount Windows?"
+                        Commands.mountWindows(this)
+                        mountText.text = if (Commands.isWindowsMounted()) "Unmount Windows" else "Mount Windows"
                     },
                     Pair("NO") {}
                 )

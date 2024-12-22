@@ -1,5 +1,6 @@
 package com.venddair.holyhelper
 
+import android.content.Context
 import android.graphics.drawable.shapes.PathShape
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -47,18 +48,23 @@ object Commands {
         return execute("getprop ro.product.device").replace("\n", "")
     }
 
-    fun mountWindows(): Boolean {
+    fun mountWindows(context: Context): Boolean {
         val mountPath: String = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1
         else Paths.winPath
 
         if (isWindowsMounted()) {
             execute("su -mm -c umount /sdcard/Windows")
-            return false
+            return true
         }
         Files.createFolder(mountPath)
 
         execute("su -c sh -c 'cd ${Paths.data} && su -mm -c ${Paths.mountNtfs} ${Files.getWinPartition()} $mountPath'")
 
-        return isWindowsMounted()
+        if (!isWindowsMounted()) {
+            Info.winUnableToMount(context)
+            return false
+        }
+
+        return true
     }
 }

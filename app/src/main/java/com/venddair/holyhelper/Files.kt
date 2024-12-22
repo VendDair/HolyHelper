@@ -28,7 +28,7 @@ object Files {
         copyAsset("sta.exe","+x")
         copyAsset("libntfs-3g.so", "777")
         copyAsset("libfuse-lite.so", "777")
-        copyAsset("Switch to Android.lnk")
+        copyAsset("Android.lnk")
     }
 
     fun createFolder(path: String, alert: Boolean = false) {

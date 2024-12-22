@@ -27,11 +27,26 @@ class ToolboxActivity : ComponentActivity() {
         }
 
         staButton.setOnClickListener {
-            if (!Commands.isWindowsMounted()) return@setOnClickListener
+            UniversalDialog.showDialog(this,
+                title = "Sta creator",
+                text = "Copies sta files into win partition",
+                image = R.drawable.adrod,
+                buttons = listOf(
+                    Pair("YES") {
+                        if (!Commands.isWindowsMounted()) {
+                            Info.winNotMounted(this) { mounted ->
+                                if (mounted) {
+                                    Files.createFolder(Paths.sta)
+                                    Files.copyFile(Paths.staAsset, Paths.staBin)
+                                    Files.copyFile(Paths.staLinkAsset, Paths.staLink)
+                                }
+                            }
+                        }
+                    },
+                    Pair("NO") {}
+                )
+            )
 
-            Files.createFolder(Paths.sta)
-            Files.copyFile(Paths.staAsset, Paths.staBin)
-            Files.copyFile(Paths.staLinkAsset, Paths.staLink)
         }
 
 
