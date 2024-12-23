@@ -16,6 +16,11 @@
         android:theme="@style/Theme.HolyHelper"
         tools:targetApi="31">
         <activity
+            android:name=".ScriptToolboxActivity"
+            android:exported="false"
+            android:label="@string/title_activity_script_toolbox"
+            android:theme="@style/Theme.HolyHelper" />
+        <activity
             android:name=".ToolboxActivity"
             android:exported="false"
             android:label="@string/title_activity_toolbox"

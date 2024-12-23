@@ -1,10 +1,10 @@
 package com.venddair.holyhelper
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
-import kotlin.io.path.Path
 
 class ToolboxActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,11 @@ class ToolboxActivity : ComponentActivity() {
                     Pair("YES") {
                         if (!Commands.isWindowsMounted()) {
                             Info.winNotMounted(this) { mounted ->
-                                if (mounted) {
-                                    Files.createFolder(Paths.sta)
-                                    Files.copyFile(Paths.staAsset, Paths.staBin)
-                                    Files.copyFile(Paths.staLinkAsset, Paths.staLink)
-                                }
+                                if (!mounted) return@winNotMounted
+
+                                Files.createFolder(Paths.sta)
+                                Files.copyFile(Paths.staAsset, Paths.staBin)
+                                Files.copyFile(Paths.staLinkAsset, Paths.staLink)
                             }
                         }
                     },
@@ -48,6 +48,32 @@ class ToolboxActivity : ComponentActivity() {
             )
 
         }
+        scriptButton.setOnClickListener { startActivity(Intent(this, ScriptToolboxActivity::class.java)) }
+
+        dumpModemButton.setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = "Dump modem",
+                text = "Dump modem to Windows for LTE on SIM1.\nDump modem1st and modem2st to Windows partition?\nRequired before every Windows boot",
+                image = R.drawable.ic_modem,
+                buttons = listOf(
+                    Pair("YES") {
+                        if (!Commands.isWindowsMounted()) Info.winNotMounted(this) { mounted ->
+                            if (!mounted) return@winNotMounted
+                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getWinPartition()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
+                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getWinPartition()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
+                        }
+                    },
+                    Pair("NO") {}
+                )
+            )
+
+        }
+
+        armButton.setOnClickListener {  }
+
+        atlasosButton.setOnClickListener {  }
+
+        dbkpButton.setOnClickListener {  }
 
 
     }

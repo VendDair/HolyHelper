@@ -2,4 +2,5 @@
     <string name="app_name">Holy Helper</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_toolbox">ToolboxActivity</string>
+    <string name="title_activity_script_toolbox">ScriptToolboxActivity</string>
 </resources>
