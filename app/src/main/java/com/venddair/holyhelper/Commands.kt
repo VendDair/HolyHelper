@@ -39,9 +39,10 @@ object Commands {
         }
     }
 
-    fun bootInWindows() {
+    fun bootInWindows(reboot: Boolean = false) {
         backupBootImage()
         execute("su -c dd if=${Paths.uefiImg} of=${Paths.bootPartition} bs=8M")
+        if (reboot) execute("su -c reboot")
     }
 
     fun getDevice(): String {

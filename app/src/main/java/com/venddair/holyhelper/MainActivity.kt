@@ -50,10 +50,13 @@ class MainActivity : ComponentActivity() {
                 title = "Boot in Windows?",
                 text = "It flashes uefi.img to boot partition",
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair("Flash") {
                         Commands.bootInWindows()
                     },
-                    Pair("NO") {}
+                    Pair("Reboot") {
+                        Commands.bootInWindows()
+                    },
+                    Pair("Cancel") {}
                 )
             )
         }
