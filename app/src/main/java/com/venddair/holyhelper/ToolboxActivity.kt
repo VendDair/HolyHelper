@@ -59,8 +59,8 @@ class ToolboxActivity : ComponentActivity() {
                     Pair("YES") {
                         if (!Commands.isWindowsMounted()) Info.winNotMounted(this) { mounted ->
                             if (!mounted) return@winNotMounted
-                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getWinPartition()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
-                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getWinPartition()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
+                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
+                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
                         }
                     },
                     Pair("NO") {}
@@ -69,7 +69,27 @@ class ToolboxActivity : ComponentActivity() {
 
         }
 
-        armButton.setOnClickListener {  }
+        armButton.setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = "Arm Software",
+                text = "Copy browser shortcuts to C:\\Toolbox?",
+                image = R.drawable.ic_modem,
+                buttons = listOf(
+                    Pair("YES") {
+                        if (!Commands.isWindowsMounted()) Info.winNotMounted(this) { mounted ->
+                            if (!mounted) return@winNotMounted
+                            val winToolbox = Files.getMountDir() + "/Toolbox"
+                            Files.createFolder(winToolbox)
+                            Files.copyFile(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
+                            Files.copyFile(Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
+                            Files.copyFile(Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
+                            Files.copyFile(Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
+                        }
+                    },
+                    Pair("NO") {}
+                )
+            )
+        }
 
         atlasosButton.setOnClickListener {  }
 

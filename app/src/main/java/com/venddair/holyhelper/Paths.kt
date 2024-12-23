@@ -4,18 +4,37 @@ import android.annotation.SuppressLint
 
 @SuppressLint("SdCardPath")
 object Paths {
-    val uefiFolder = "/sdcard/UEFI"
-    val uefiImg = "/sdcard/UEFI/uefi.img"
-    val internalStorage = "/sdcard"
-    val bootPartition = "/dev/block/by-name/boot"
-    val bootImage = "/sdcard/boot.img"
-    val winPath = "/sdcard/Windows"
-    val winPath1 = "/mnt/sdcard/Windows"
-    val sta = "/sdcard/Windows/sta"
-    val staBin = "/sdcard/Windows/sta/sta.exe"
-    val staLink = "/sdcard/Windows/Users/Public/Desktop/Android.lnk"
-    val staLinkAsset = "/data/local/tmp/holyhelper/Android.lnk"
-    val staAsset = "/data/local/tmp/holyhelper/sta.exe"
-    val data = "/data/local/tmp/holyhelper"
-    val mountNtfs = "/data/local/tmp/holyhelper/mount.ntfs"
+    const val uefiFolder = "/sdcard/UEFI"
+    const val uefiImg = "/sdcard/UEFI/uefi.img"
+
+    const val internalStorage = "/sdcard"
+    const val bootPartition = "/dev/block/by-name/boot"
+    const val bootImage = "/sdcard/boot.img"
+
+    const val winPath = "/sdcard/Windows"
+    const val winPath1 = "/mnt/sdcard/Windows"
+
+    val sta: String get() = Files.getMountDir() + "/sta"
+    val staBin: String get() = Files.getMountDir() + "/sta/sta.exe"
+    val staLink: String get() = Files.getMountDir() + "/Users/Public/Desktop/Android.lnk"
+    const val staLinkAsset = "/data/local/tmp/holyhelper/Android.lnk"
+    const val staAsset = "/data/local/tmp/holyhelper/sta.exe"
+
+    const val data = "/data/local/tmp/holyhelper"
+
+    const val mountNtfs = "/data/local/tmp/holyhelper/mount.ntfs"
+
+    const val ARMRepoLinkAsset = "/data/local/tmp/holyhelper/ARMRepo.url"
+    const val ARMSoftwareLinkAsset = "/data/local/tmp/holyhelper/ARMSoftware.url"
+    const val TestedSoftwareLinkAsset = "/data/local/tmp/holyhelper/TestedSoftware.url"
+    const val WorksOnWoaLinkAsset = "/data/local/tmp/holyhelper/WorksOnWoa.url"
+
+    val ARMRepoLink get() = Files.getMountDir() + "/Toolbox/ARMRepo.url"
+    val ARMSoftwareLink get() = Files.getMountDir() + "/Toolbox/ARMSoftware.url"
+    val TestedSoftwareLink get() = Files.getMountDir() + "/Toolbox/TestedSoftware.url"
+    val WorksOnWoaLink get() = Files.getMountDir() + "/Toolbox/WorksOnWoa.url"
+
+
+
+
 }

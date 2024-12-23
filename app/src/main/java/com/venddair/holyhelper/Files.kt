@@ -29,6 +29,10 @@ object Files {
         copyAsset("libntfs-3g.so", "777")
         copyAsset("libfuse-lite.so", "777")
         copyAsset("Android.lnk")
+        copyAsset("ARMRepo.url")
+        copyAsset("ARMSoftware.url")
+        copyAsset("TestedSoftware.url")
+        copyAsset("WorksOnWoa.url")
     }
 
     fun createFolder(path: String, alert: Boolean = false) {
@@ -81,6 +85,10 @@ object Files {
 
     fun getWinPartition(): String {
         return Commands.execute("su -c realpath /dev/block/by-name/win")
+    }
+
+    fun getMountDir(): String {
+        return if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1 else Paths.winPath
     }
 
     fun getResource(id: Int): Drawable {
