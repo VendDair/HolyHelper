@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
         mountButton.setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = if (!Commands.isWindowsMounted()) "Mount Windows?" else "Unmount Windows?",
-                text = "Mounts/Unmounts Windows in /sdcard/Windows or /mnt/sdcard/Windows",
+                text = "Mounts/Unmounts Windows in ${Files.getMountDir()}",
                 image = R.drawable.folder,
                 buttons = listOf(
                     Pair("YES") {
