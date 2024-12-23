@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         Commands.bootInWindows()
                     },
                     Pair("Reboot") {
-                        Commands.bootInWindows()
+                        Commands.bootInWindows(true)
                     },
                     Pair("Cancel") {}
                 )
