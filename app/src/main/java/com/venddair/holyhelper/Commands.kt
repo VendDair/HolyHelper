@@ -26,6 +26,11 @@ object Commands {
         }
     }
 
+    fun dumoModem() {
+        execute("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
+        execute("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
+    }
+
     fun isWindowsMounted(): Boolean {
         val isMounted = execute("su -c mount | grep ${Files.getWinPartition()}")
         return isMounted.isNotEmpty()

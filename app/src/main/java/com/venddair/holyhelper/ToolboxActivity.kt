@@ -56,9 +56,9 @@ class ToolboxActivity : ComponentActivity() {
                     Pair("YES") {
                         if (!Commands.isWindowsMounted()) Info.winNotMounted(this) { mounted ->
                             if (!mounted) return@winNotMounted
-                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
-                            Commands.execute("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
+                            Commands.dumoModem()
                         }
+                        else Commands.dumoModem()
                     },
                     Pair("NO") {}
                 )
