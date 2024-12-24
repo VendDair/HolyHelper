@@ -33,15 +33,12 @@ class ToolboxActivity : ComponentActivity() {
                 image = R.drawable.adrod,
                 buttons = listOf(
                     Pair("YES") {
-                        if (!Commands.isWindowsMounted()) {
+                        if (!Commands.isWindowsMounted())
                             Info.winNotMounted(this) { mounted ->
                                 if (!mounted) return@winNotMounted
-
-                                Files.createFolder(Paths.sta)
-                                Files.copyFile(Paths.staAsset, Paths.staBin)
-                                Files.copyFile(Paths.staLinkAsset, Paths.staLink)
+                                Files.copyStaFiles()
                             }
-                        }
+                        else Files.copyStaFiles()
                     },
                     Pair("NO") {}
                 )
@@ -78,13 +75,9 @@ class ToolboxActivity : ComponentActivity() {
                     Pair("YES") {
                         if (!Commands.isWindowsMounted()) Info.winNotMounted(this) { mounted ->
                             if (!mounted) return@winNotMounted
-                            val winToolbox = Files.getMountDir() + "/Toolbox"
-                            Files.createFolder(winToolbox)
-                            Files.copyFile(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
-                            Files.copyFile(Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
-                            Files.copyFile(Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
-                            Files.copyFile(Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
+                            Files.copyArmSoftwareLinks()
                         }
+                        else Files.copyArmSoftwareLinks()
                     },
                     Pair("NO") {}
                 )

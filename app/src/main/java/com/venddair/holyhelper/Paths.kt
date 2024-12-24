@@ -20,6 +20,14 @@ object Paths {
     const val staLinkAsset = "/data/local/tmp/holyhelper/Android.lnk"
     const val staAsset = "/data/local/tmp/holyhelper/sta.exe"
 
+    const val sddAsset = "/data/local/tmp/holyhelper/sdd.exe"
+    val sdd: String get() = Files.getMountDir() + "/sta/sdd.exe"
+    const val sddConfigAsset = "/data/local/tmp/holyhelper/sdd.conf"
+    val sddConfig: String get() = Files.getMountDir() + "/sta/sdd.conf"
+
+    const val autoFlasherAsset = "/data/local/tmp/holyhelper/boot_img_auto-flasher_V1.0.exe"
+    val autoFlasher: String get() = Files.getMountDir() + "/sta/boot_img_auto-flasher_V1.0.exe"
+
     const val data = "/data/local/tmp/holyhelper"
 
     const val mountNtfs = "/data/local/tmp/holyhelper/mount.ntfs"

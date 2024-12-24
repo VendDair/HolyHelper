@@ -25,7 +25,11 @@ object Files {
         createFolder(Paths.data)
 
         copyAsset("mount.ntfs","+x")
-        copyAsset("sta.exe","+x")
+        copyAsset("sta.exe")
+        copyAsset("sdd.exe")
+        copyAsset("boot_img_auto-flasher_V1.0.exe")
+        copyAsset("sdd.conf")
+        copyAsset("boot_img_auto-flasher_V1.0.exe")
         copyAsset("libntfs-3g.so", "777")
         copyAsset("libfuse-lite.so", "777")
         copyAsset("Android.lnk")
@@ -33,6 +37,7 @@ object Files {
         copyAsset("ARMSoftware.url")
         copyAsset("TestedSoftware.url")
         copyAsset("WorksOnWoa.url")
+
     }
 
     fun createFolder(path: String, alert: Boolean = false) {
@@ -72,6 +77,24 @@ object Files {
             e.printStackTrace()
             println("Process was interrupted: ${e.message}")
         }
+    }
+
+    fun copyStaFiles() {
+        createFolder(Paths.sta)
+        copyFile(Paths.staAsset, Paths.staBin)
+        copyFile(Paths.staLinkAsset, Paths.staLink)
+
+        copyFile(Paths.sddAsset, Paths.sdd)
+        copyFile(Paths.sddConfigAsset, Paths.sddConfig)
+
+        copyFile(Paths.autoFlasherAsset, Paths.autoFlasher)
+    }
+    fun copyArmSoftwareLinks() {
+        createFolder(getMountDir() + "/Toolbox")
+        copyFile(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
+        copyFile(Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
+        copyFile(Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
+        copyFile(Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
     }
 
     fun checkFolder(path: String): Boolean {
