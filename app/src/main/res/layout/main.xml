@@ -97,6 +97,19 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
+                android:id="@+id/backupTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="55dp"
+                android:text="Last Backup: "
+                android:textColor="@color/blue"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
                 android:id="@+id/groupButton"
                 android:clickable="true"
                 android:background="@drawable/rounded_blue"

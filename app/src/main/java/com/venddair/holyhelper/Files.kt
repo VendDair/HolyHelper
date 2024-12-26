@@ -3,8 +3,8 @@ package com.venddair.holyhelper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.widget.Toast
-import androidx.compose.ui.graphics.Path
+import com.topjohnwu.superuser.ShellUtils
+import com.venddair.holyhelper.Commands.backupBootImage
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -37,17 +37,55 @@ object Files {
         copyAsset("ARMSoftware.url")
         copyAsset("TestedSoftware.url")
         copyAsset("WorksOnWoa.url")
+        copyAsset("dbkp8150.cfg")
+        copyAsset("dbkp.hotdog.bin")
+        copyAsset("dbkp.cepheus.bin")
+        copyAsset("dbkp.nabu.bin")
 
     }
 
     fun createFolder(path: String, alert: Boolean = false) {
         if (checkFolder(path)) return
         if (alert) ToastUtil.showToast("Folder $path was created")
-        Commands.execute("su -c mkdir $path")
+        ShellUtils.fastCmd("su -c mkdir $path")
     }
 
-    fun copyFile(path: String, newPath: String) {
-        Commands.execute("su -c cp $path $newPath")
+    @SuppressLint("SdCardPath")
+    fun setupDbkpFiles() {
+        createFolder("/sdcard/dbkp")
+        backupBootImage()
+        remove("/sdcard/original-boot.img")
+        copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
+        moveFile(Paths.bootImage, "/sdcard/original-boot.img")
+        copy(Paths.dbkp8150CfgAsset, "/sdcard/dbkp")
+        copy(Paths.dbkpHotdogBinAsset, "/sdcard/dbkp")
+        copy(Paths.dbkpCepheusBinAsset, "/sdcard/dbkp")
+        copy(Paths.dbkpNabuBinAsset, "/sdcard/dbkp")
+    }
+
+    fun copy(path: String, newPath: String) {
+        ShellUtils.fastCmd("su -c cp $path $newPath")
+    }
+
+    fun setPerms(path: String, perms: String) {
+        ShellUtils.fastCmd("su -c chmod $perms $path")
+    }
+
+    fun copyFileToWin(context: Context, path: String, newPath: String, alertIfNotMounted: Boolean = true) {
+        if (!Commands.isWindowsMounted() && alertIfNotMounted) Info.winNotMounted(context) { mounted ->
+            if (mounted) ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
+        }
+        else {
+            ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
+        }
+    }
+
+    fun moveFile(path: String, newPath: String) {
+        ShellUtils.fastCmd("su -c mv $path $newPath")
+    }
+
+    fun remove(path: String) {
+        ShellUtils.fastCmd("su -c rm -rf $path")
     }
 
     fun copyAsset(name: String, perms: String? = null, alert: Boolean = false) {
@@ -65,9 +103,9 @@ object Files {
                 }
             }
 
-            Commands.execute("su -c cp ${tempFile.absolutePath} $outputFilePath")
+            ShellUtils.fastCmd("su -c cp ${tempFile.absolutePath} $outputFilePath")
 
-            if (perms != null) Commands.execute("su -c chmod $perms $outputFilePath")
+            if (perms != null) ShellUtils.fastCmd("su -c chmod $perms $outputFilePath")
 
             if (alert) ToastUtil.showToast("Asset $name was copied to path ${Paths.data}")
         } catch (e: IOException) {
@@ -81,20 +119,20 @@ object Files {
 
     fun copyStaFiles() {
         createFolder(Paths.sta)
-        copyFile(Paths.staAsset, Paths.staBin)
-        copyFile(Paths.staLinkAsset, Paths.staLink)
+        copy(Paths.staAsset, Paths.staBin)
+        copy(Paths.staLinkAsset, Paths.staLink)
 
-        copyFile(Paths.sddAsset, Paths.sdd)
-        copyFile(Paths.sddConfigAsset, Paths.sddConfig)
+        copy(Paths.sddAsset, Paths.sdd)
+        copy(Paths.sddConfigAsset, Paths.sddConfig)
 
-        copyFile(Paths.autoFlasherAsset, Paths.autoFlasher)
+        copy(Paths.autoFlasherAsset, Paths.autoFlasher)
     }
     fun copyArmSoftwareLinks() {
         createFolder(getMountDir() + "/Toolbox")
-        copyFile(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
-        copyFile(Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
-        copyFile(Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
-        copyFile(Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
+        copy(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
+        copy(Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
+        copy(Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
+        copy(Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
     }
 
     fun checkFolder(path: String): Boolean {
@@ -107,7 +145,7 @@ object Files {
     }
 
     fun getWinPartition(): String {
-        return Commands.execute("su -c realpath /dev/block/by-name/win")
+        return ShellUtils.fastCmd("su -c realpath /dev/block/by-name/win")
     }
 
     fun getMountDir(): String {

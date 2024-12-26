@@ -19,6 +19,17 @@ class Info {
             )
         }
 
+        fun downloadFailed(context: Context, fileName: String) {
+            UniversalDialog.showDialog(context,
+                title = "Failed to download $fileName!",
+                text = "Check your internet connection!",
+                image = R.drawable.info,
+                buttons = listOf(
+                    Pair("OK") {},
+                )
+            )
+        }
+
         fun winUnableToMount(context: Context) {
             UniversalDialog.showDialog(context,
                 title = "Windows wasn't able to mount!",

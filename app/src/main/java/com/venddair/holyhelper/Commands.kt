@@ -1,57 +1,47 @@
 package com.venddair.holyhelper
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.shapes.PathShape
+import com.topjohnwu.superuser.ShellUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 object Commands {
-    fun execute(command: String): String {
-        return try {
-            val process = Runtime.getRuntime().exec(command)
 
-            val reader = BufferedReader(InputStreamReader(process.inputStream))
-            val output = StringBuilder()
-            var line: String?
-
-            while (reader.readLine().also { line = it } != null) {
-                output.append(line).append("\n")
-            }
-
-            process.waitFor()
-
-            output.toString()
-        } catch (e: Exception) {
-            "Error executing command: ${e.message}"
-        }
-    }
-
-    fun dumoModem() {
-        execute("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
-        execute("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
+    fun dumpModem() {
+        ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
+        ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
     }
 
     fun isWindowsMounted(): Boolean {
-        val isMounted = execute("su -c mount | grep ${Files.getWinPartition()}")
+        val isMounted = ShellUtils.fastCmd("su -c mount | grep ${Files.getWinPartition()}")
         return isMounted.isNotEmpty()
     }
 
+    fun askUserToMountIfNotMounted(context: Context, callback: () -> Unit) {
+        if (!isWindowsMounted()) Info.winNotMounted(context) { mounted ->
+            if (mounted)
+                callback()
+        }
+        else callback()
+    }
+
     fun backupBootImage() {
-        execute("su -c dd bs=8M if=${Paths.bootPartition} of=${Paths.bootImage}")
+        ShellUtils.fastCmd("su -c dd bs=8M if=${Paths.bootPartition} of=${Paths.bootImage}")
         if (isWindowsMounted()) {
             val winpath = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1 else Paths.winPath
-            Files.copyFile(Paths.bootPartition, "$winpath/boot.img")
+            Files.copy(Paths.bootPartition, "$winpath/boot.img")
         }
     }
 
     fun bootInWindows(reboot: Boolean = false) {
         backupBootImage()
-        execute("su -c dd if=${Paths.uefiImg} of=${Paths.bootPartition} bs=8M")
-        if (reboot) execute("su -c reboot")
+        ShellUtils.fastCmd("su -c dd if=${Paths.uefiImg} of=${Paths.bootPartition} bs=8M")
+        if (reboot) ShellUtils.fastCmd("su -c reboot")
     }
 
     fun getDevice(): String {
-        return execute("getprop ro.product.device").replace("\n", "")
+        return ShellUtils.fastCmd("getprop ro.product.device").replace("\n", "")
     }
 
     fun mountWindows(context: Context): Boolean {
@@ -59,12 +49,12 @@ object Commands {
         else Paths.winPath
 
         if (isWindowsMounted()) {
-            execute("su -mm -c umount /sdcard/Windows")
+            ShellUtils.fastCmd("su -mm -c umount /sdcard/Windows")
             return true
         }
         Files.createFolder(mountPath)
 
-        execute("su -c sh -c 'cd ${Paths.data} && su -mm -c ${Paths.mountNtfs} ${Files.getWinPartition()} $mountPath'")
+        ShellUtils.fastCmd("su -c sh -c 'cd ${Paths.data} && su -mm -c ${Paths.mountNtfs} ${Files.getWinPartition()} $mountPath'")
 
         if (!isWindowsMounted()) {
             Info.winUnableToMount(context)
@@ -72,5 +62,75 @@ object Commands {
         }
 
         return true
+    }
+
+    @SuppressLint("SdCardPath")
+    fun dbkp(context: Context) {
+        Files.setupDbkpFiles()
+        Download.download(context, "https://github.com/n00b69/woa-op7/releases/download/DBKP/dbkp", "dbkp") { dbkp ->
+            Files.moveFile("${Paths.downloads}/$dbkp", Paths.data)
+            Files.setPerms(Paths.dbkpAsset, "777")
+
+            val (url, fileName) = when (getDevice()) {
+                "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" ->
+                    "https://github.com/n00b69/woa-op7/releases/download/DBKP/guacamole.fd" to listOf("guacamole.fd", "hotdog")
+                "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" ->
+                    "https://github.com/n00b69/woa-op7/releases/download/DBKP/hotdog.fd" to listOf("hotdog.fd", "hotdog")
+                "cepheus" ->
+                    "https://github.com/n00b69/woa-everything/releases/download/Files/cepheus.fd" to listOf("cepheus.fd", "cepheus")
+                "nabu" ->
+                    "https://github.com/erdilS/Port-Windows-11-Xiaomi-Pad-5/releases/download/1.0/nabu.fd" to listOf("nabu.fd", "nabu")
+                else -> return@download
+            }
+
+            val dbkpDir = "/sdcard/dbkp"
+
+            // Execute commands
+            Download.download(context, url, fileName[0]) { name ->
+                Files.moveFile("${Paths.downloads}/$name", dbkpDir)
+                ShellUtils.fastCmd("cd $dbkpDir")
+                ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) unpack boot.img\" | su -c sh")
+                ShellUtils.fastCmd("su -mm -c ${Paths.data}/dbkp kernel ${fileName[0]} output dbkp8150.cfg dbkp.${fileName[1]}.bin")
+                ShellUtils.fastCmd("su -mm -c rm kernel")
+                ShellUtils.fastCmd("su -mm -c mv output kernel")
+                ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) repack boot.img\" | su -c sh")
+                ShellUtils.fastCmd("su -mm -c cp new-boot.img /sdcard/patched-boot.img")
+                ShellUtils.fastCmd("rm -r $dbkpDir")
+
+                if (getDevice() == "cepheus") {
+                    ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot bs=16M")
+                }
+                else {
+                    ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_a bs=16M")
+                    ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_b bs=16M")
+                }
+
+            }
+
+        }
+
+
+
+
+
+        /*when (getDevice()) {
+            "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" -> {
+                Download.download(context, "https://github.com/n00b69/woa-op7/releases/download/DBKP/guacamole.fd", "guacamole.fd") { name ->
+                    Files.moveFile(Paths.downloads+"/$name", "/sdcard/dbkp/guacamole.fd")
+                    ShellUtils.fastCmd("cd /sdcard/dbkp")
+                    ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) unpack boot.img\" | su -c sh")
+                    ShellUtils.fastCmd("su -mm -c ${Paths.dbkpAsset} /sdcard/dbkp/kernel /sdcard/dbkp/guacamole.fd /sdcard/dbkp/output /sdcard/dbkp/dbkp8150.cfg /sdcard/dbkp/dbkp.hotdog.bin")
+                    Files.remove("/sdcard/dbkp/kernel")
+                    Files.moveFile("output" , "kernel")
+                    ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) repack boot.img\" | su -c sh")
+                    Files.copy("new-boot.img", "/sdcard/new-boot.img")
+                    Files.moveFile("/sdcard/new-boot.img", "/sdcard/patched-boot.img")
+                    Files.remove("rm -r /sdcard/dbkp")
+                    ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_a bs=16M")
+                    ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_b bs=16M")
+                }
+            }
+        }*/
+
     }
 }

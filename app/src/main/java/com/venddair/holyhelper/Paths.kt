@@ -1,6 +1,7 @@
 package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
+import android.os.Environment
 
 @SuppressLint("SdCardPath")
 object Paths {
@@ -8,6 +9,9 @@ object Paths {
     const val uefiImg = "/sdcard/UEFI/uefi.img"
 
     const val internalStorage = "/sdcard"
+
+    val downloads: String get() = "/sdcard/${Environment.DIRECTORY_DOWNLOADS}"
+
     const val bootPartition = "/dev/block/by-name/boot"
     const val bootImage = "/sdcard/boot.img"
 
@@ -41,6 +45,12 @@ object Paths {
     val ARMSoftwareLink get() = Files.getMountDir() + "/Toolbox/ARMSoftware.url"
     val TestedSoftwareLink get() = Files.getMountDir() + "/Toolbox/TestedSoftware.url"
     val WorksOnWoaLink get() = Files.getMountDir() + "/Toolbox/WorksOnWoa.url"
+
+    val dbkp8150CfgAsset = "/data/local/tmp/holyhelper/dbkp8150.cfg"
+    val dbkpHotdogBinAsset = "/data/local/tmp/holyhelper/dbkp.hotdog.bin"
+    val dbkpCepheusBinAsset = "/data/local/tmp/holyhelper/dbkp.cepheus.bin"
+    val dbkpNabuBinAsset = "/data/local/tmp/holyhelper/dbkp.nabu.bin"
+    val dbkpAsset = "/data/local/tmp/holyhelper/dbkp"
 
 
 

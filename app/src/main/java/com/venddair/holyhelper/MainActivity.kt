@@ -20,7 +20,6 @@ class MainActivity : ComponentActivity() {
         ToastUtil.init(this)
         Files.init(this)
         Preferences.init(this)
-        Download.init(this)
 
         Files.createFolder(Paths.uefiFolder)
 
