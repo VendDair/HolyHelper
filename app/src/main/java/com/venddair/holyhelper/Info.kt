@@ -1,6 +1,8 @@
 package com.venddair.holyhelper
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 
 class Info {
     companion object {
@@ -37,6 +39,18 @@ class Info {
                 image = R.drawable.info,
                 buttons = listOf(
                     Pair("OK") {}
+                )
+            )
+        }
+
+        fun noWinPartition(context: Context) {
+            UniversalDialog.showDialog(context,
+                title = "No Windows partition was found!",
+                text = "You may not have windows installed\nCheck the guide for your device",
+                image = R.drawable.info,
+                buttons = listOf(
+                    Pair("CHECK") {context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(MainActivity.getGuideLink())))},
+                    Pair("Later") {}
                 )
             )
         }

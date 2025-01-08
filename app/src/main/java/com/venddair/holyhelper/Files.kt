@@ -21,26 +21,29 @@ object Files {
     fun init(context: Context) {
         appContext = context
 
-        createFolder(Paths.winPath)
-        createFolder(Paths.data)
+        Thread {
+            createFolder(Paths.winPath)
+            createFolder(Paths.data)
 
-        copyAsset("mount.ntfs","+x")
-        copyAsset("sta.exe")
-        copyAsset("sdd.exe")
-        copyAsset("boot_img_auto-flasher_V1.0.exe")
-        copyAsset("sdd.conf")
-        copyAsset("boot_img_auto-flasher_V1.0.exe")
-        copyAsset("libntfs-3g.so", "777")
-        copyAsset("libfuse-lite.so", "777")
-        copyAsset("Android.lnk")
-        copyAsset("ARMRepo.url")
-        copyAsset("ARMSoftware.url")
-        copyAsset("TestedSoftware.url")
-        copyAsset("WorksOnWoa.url")
-        copyAsset("dbkp8150.cfg")
-        copyAsset("dbkp.hotdog.bin")
-        copyAsset("dbkp.cepheus.bin")
-        copyAsset("dbkp.nabu.bin")
+            copyAsset("mount.ntfs","+x")
+            copyAsset("sta.exe")
+            copyAsset("sdd.exe")
+            copyAsset("boot_img_auto-flasher_V1.0.exe")
+            copyAsset("sdd.conf")
+            copyAsset("boot_img_auto-flasher_V1.0.exe")
+            copyAsset("libntfs-3g.so", "777")
+            copyAsset("libfuse-lite.so", "777")
+            copyAsset("Android.lnk")
+            copyAsset("ARMRepo.url")
+            copyAsset("ARMSoftware.url")
+            copyAsset("TestedSoftware.url")
+            copyAsset("WorksOnWoa.url")
+            copyAsset("dbkp8150.cfg")
+            copyAsset("dbkp.hotdog.bin")
+            copyAsset("dbkp.cepheus.bin")
+            copyAsset("dbkp.nabu.bin")
+        }.start()
+
 
     }
 
@@ -51,9 +54,9 @@ object Files {
     }
 
     @SuppressLint("SdCardPath")
-    fun setupDbkpFiles() {
+    fun setupDbkpFiles(context: Context) {
         createFolder("/sdcard/dbkp")
-        backupBootImage()
+        backupBootImage(context)
         remove("/sdcard/original-boot.img")
         copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
         moveFile(Paths.bootImage, "/sdcard/original-boot.img")
@@ -72,7 +75,7 @@ object Files {
     }
 
     fun copyFileToWin(context: Context, path: String, newPath: String, alertIfNotMounted: Boolean = true) {
-        if (!Commands.isWindowsMounted() && alertIfNotMounted) Info.winNotMounted(context) { mounted ->
+        if (!Commands.isWindowsMounted(context) && alertIfNotMounted) Info.winNotMounted(context) { mounted ->
             if (mounted) ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
         }
         else {
@@ -144,8 +147,16 @@ object Files {
         return file.exists() && file.isFile
     }
 
-    fun getWinPartition(): String {
-        return ShellUtils.fastCmd("su -c realpath /dev/block/by-name/win")
+    fun getWinPartition(context: Context, callback: (realPath: String) -> Unit = {}) {
+        listOf("/dev/block/by-name/win", "/dev/block/by-name/windows", "/dev/block/by-name/mindows").forEach { path ->
+            val realPath = ShellUtils.fastCmd("su -c realpath $path")
+            if (realPath.contains("/dev/block/sda")) {
+                callback(realPath)
+                return
+            }
+        }
+        Info.noWinPartition(context)
+
     }
 
     fun getMountDir(): String {

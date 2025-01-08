@@ -13,29 +13,33 @@ object Commands {
         ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
     }
 
-    fun isWindowsMounted(): Boolean {
-        val isMounted = ShellUtils.fastCmd("su -c mount | grep ${Files.getWinPartition()}")
-        return isMounted.isNotEmpty()
+    fun isWindowsMounted(context: Context): Boolean {
+        var isMounted = false
+        Files.getWinPartition(context) { path ->
+            isMounted = ShellUtils.fastCmd("su -c mount | grep $path").isNotEmpty()
+        }
+
+        return isMounted
     }
 
     fun askUserToMountIfNotMounted(context: Context, callback: () -> Unit) {
-        if (!isWindowsMounted()) Info.winNotMounted(context) { mounted ->
+        if (!isWindowsMounted(context)) Info.winNotMounted(context) { mounted ->
             if (mounted)
                 callback()
         }
         else callback()
     }
 
-    fun backupBootImage() {
+    fun backupBootImage(context: Context) {
         ShellUtils.fastCmd("su -c dd bs=8M if=${Paths.bootPartition} of=${Paths.bootImage}")
-        if (isWindowsMounted()) {
+        if (isWindowsMounted(context)) {
             val winpath = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1 else Paths.winPath
             Files.copy(Paths.bootPartition, "$winpath/boot.img")
         }
     }
 
-    fun bootInWindows(reboot: Boolean = false) {
-        backupBootImage()
+    fun bootInWindows(context: Context, reboot: Boolean = false) {
+        backupBootImage(context)
         ShellUtils.fastCmd("su -c dd if=${Paths.uefiImg} of=${Paths.bootPartition} bs=8M")
         if (reboot) ShellUtils.fastCmd("su -c reboot")
     }
@@ -48,15 +52,17 @@ object Commands {
         val mountPath: String = if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1
         else Paths.winPath
 
-        if (isWindowsMounted()) {
-            ShellUtils.fastCmd("su -mm -c umount /sdcard/Windows")
+        if (isWindowsMounted(context)) {
+            Files.getWinPartition(context) { path -> ShellUtils.fastCmd("su -mm -c umount $path")}
             return true
         }
         Files.createFolder(mountPath)
 
-        ShellUtils.fastCmd("su -c sh -c 'cd ${Paths.data} && su -mm -c ${Paths.mountNtfs} ${Files.getWinPartition()} $mountPath'")
+        Files.getWinPartition(context) { path ->
+            ShellUtils.fastCmd("su -mm -c ${Paths.mountNtfs} $path $mountPath")
+        }
 
-        if (!isWindowsMounted()) {
+        if (!isWindowsMounted(context)) {
             Info.winUnableToMount(context)
             return false
         }
@@ -66,7 +72,7 @@ object Commands {
 
     @SuppressLint("SdCardPath")
     fun dbkp(context: Context) {
-        Files.setupDbkpFiles()
+        Files.setupDbkpFiles(context)
         Download.download(context, "https://github.com/n00b69/woa-op7/releases/download/DBKP/dbkp", "dbkp") { dbkp ->
             Files.moveFile("${Paths.downloads}/$dbkp", Paths.data)
             Files.setPerms(Paths.dbkpAsset, "777")
@@ -108,8 +114,6 @@ object Commands {
             }
 
         }
-
-
 
 
 

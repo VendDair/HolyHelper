@@ -35,7 +35,7 @@ class ToolboxActivity : ComponentActivity() {
                 image = R.drawable.adrod,
                 buttons = listOf(
                     Pair("YES") {
-                        if (!Commands.isWindowsMounted())
+                        if (!Commands.isWindowsMounted(this))
                             Info.winNotMounted(this) { mounted ->
                                 if (!mounted) return@winNotMounted
                                 Files.copyStaFiles()
@@ -56,7 +56,7 @@ class ToolboxActivity : ComponentActivity() {
                 image = R.drawable.ic_modem,
                 buttons = listOf(
                     Pair("YES") {
-                        if (!Commands.isWindowsMounted()) Info.winNotMounted(this) { mounted ->
+                        if (!Commands.isWindowsMounted(this)) Info.winNotMounted(this) { mounted ->
                             if (!mounted) return@winNotMounted
                             Commands.dumpModem()
                         }
@@ -75,7 +75,7 @@ class ToolboxActivity : ComponentActivity() {
                 image = R.drawable.ic_modem,
                 buttons = listOf(
                     Pair("YES") {
-                        if (!Commands.isWindowsMounted()) Info.winNotMounted(this) { mounted ->
+                        if (!Commands.isWindowsMounted(this)) Info.winNotMounted(this) { mounted ->
                             if (!mounted) return@winNotMounted
                             Files.copyArmSoftwareLinks()
                         }
