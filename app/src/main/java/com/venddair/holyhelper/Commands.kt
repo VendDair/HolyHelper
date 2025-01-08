@@ -53,7 +53,7 @@ object Commands {
         else Paths.winPath
 
         if (isWindowsMounted(context)) {
-            Files.getWinPartition(context) { path -> ShellUtils.fastCmd("su -mm -c umount $path")}
+            ShellUtils.fastCmd("su -mm -c umount $mountPath")
             return true
         }
         Files.createFolder(mountPath)
