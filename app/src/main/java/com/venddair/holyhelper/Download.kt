@@ -7,8 +7,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.core.content.FileProvider
+import com.venddair.holyhelper.Permissions.requestInstallPermission
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 object Download {
 
@@ -72,4 +82,63 @@ object Download {
 
         return finalFileName
     }
+
+    fun installAPK(context: Context, fileName: String) {
+        // Get the full path to the APK file in the Downloads directory
+        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val apkFile = File(downloadsDir, fileName)
+
+        // Check if the APK file exists
+        if (!apkFile.exists()) {
+            Toast.makeText(context, "APK file does not exist", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Use FileProvider to get the content URI
+        val apkUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
+
+        // Create an intent to install the APK
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(apkUri, "application/vnd.android.package-archive")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        // Start the installation activity
+        context.startActivity(intent)
+    }
+
+
+    fun getRemoteFileContent(context: ComponentActivity, fileUrl: String, callback: (fileContent: String) -> Unit) {
+        Thread {
+            try {
+                val url = URL(fileUrl)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+
+                // Check the response code
+                if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                    // Read the contents of the file
+                    BufferedReader(InputStreamReader(connection.inputStream)).use { reader ->
+                        val content = StringBuilder()
+                        var line: String?
+                        while (reader.readLine().also { line = it } != null) {
+                            content.appendLine(line)
+                            }
+                        context.runOnUiThread {
+                            callback(content.toString())
+                        }
+                    }
+                } else {
+                    println("Failed to fetch the file: HTTP error code ${connection.responseCode}")
+                    Info.unableToDownload(context)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Info.unableToDownload(context)
+            }
+        }.start()
+
+    }
+
 }

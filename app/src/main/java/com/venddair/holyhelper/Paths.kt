@@ -52,7 +52,7 @@ object Paths {
     val dbkpNabuBinAsset = "/data/local/tmp/holyhelper/dbkp.nabu.bin"
     val dbkpAsset = "/data/local/tmp/holyhelper/dbkp"
 
-
+    const val version = "1.0"
 
 
 }

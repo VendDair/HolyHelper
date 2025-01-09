@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.activity.enableEdgeToEdge
+import com.venddair.holyhelper.Permissions.requestInstallPermission
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("SetTextI18n")
@@ -21,7 +21,9 @@ class MainActivity : ComponentActivity() {
         Files.init(this)
         Preferences.init(this)
 
-        Files.createFolder(Paths.uefiFolder)
+        Commands.checkUpdate(this)
+
+
 
         val quickbootButton = findViewById<LinearLayout>(R.id.quickbootButton)
         val backupButton = findViewById<LinearLayout>(R.id.backupButton)
@@ -33,6 +35,7 @@ class MainActivity : ComponentActivity() {
         val guideButton = findViewById<TextView>(R.id.guideButton)
         val groupButton = findViewById<TextView>(R.id.groupButton)
         val toolboxButton = findViewById<LinearLayout>(R.id.toolboxButton)
+        val versionTextView = findViewById<TextView>(R.id.version)
 
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
         codeNameText.text = "Device: ${Commands.getDevice()}"
@@ -41,6 +44,15 @@ class MainActivity : ComponentActivity() {
         toolboxButton.setOnClickListener { startActivity(Intent(this, ToolboxActivity::class.java)) }
         guideButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGuideLink())))}
         groupButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getGroupLink())))}
+
+        versionTextView.text = Paths.version
+
+        // Check if the app can request package installs
+        if (!packageManager.canRequestPackageInstalls()) {
+            // Request permission to install unknown apps
+            requestInstallPermission(this)
+            return
+        }
 
         quickbootButton.setOnClickListener {
             UniversalDialog.showDialog(this,

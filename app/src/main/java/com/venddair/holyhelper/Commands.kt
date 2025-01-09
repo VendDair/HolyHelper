@@ -2,6 +2,7 @@ package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -68,6 +69,15 @@ object Commands {
         }
 
         return true
+    }
+
+    fun checkUpdate(context: ComponentActivity) {
+        Download.getRemoteFileContent(context, "https://github.com/VendDair/HolyHelper/releases/download/files/version") { content ->
+            val version = content.replace("\n", "")
+            if (version != Paths.version) {
+                Info.notifyAboutUpdate(context, version)
+            }
+        }
     }
 
     @SuppressLint("SdCardPath")

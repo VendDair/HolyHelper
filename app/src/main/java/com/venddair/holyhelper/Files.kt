@@ -22,8 +22,10 @@ object Files {
         appContext = context
 
         Thread {
+            createFolder(Paths.uefiFolder)
             createFolder(Paths.winPath)
             createFolder(Paths.data)
+
 
             copyAsset("mount.ntfs","+x")
             copyAsset("sta.exe")

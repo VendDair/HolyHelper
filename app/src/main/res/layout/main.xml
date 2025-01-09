@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@drawable/walp1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/walp1"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text=""
+        android:textColor="@color/gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="107dp"
+            android:layout_marginStart="20dp"
             android:gravity="center"
             android:text="Holy Helper"
-            android:layout_marginStart="20dp"
             android:textColor="@color/white"
             android:textSize="50px"
             android:textStyle="bold"
@@ -33,10 +49,10 @@
 
         <ImageView
             android:id="@+id/settingsButton"
-            android:clickable="true"
             android:layout_width="100px"
             android:layout_height="100px"
             android:layout_marginEnd="20dp"
+            android:clickable="true"
             android:src="@drawable/settings"
             tools:ignore="ContentDescription,PxUsage,RtlSymmetry" />
 
@@ -45,7 +61,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ImageView
             android:id="@+id/device"
@@ -60,12 +77,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleY="0.9"
-            android:scaleX="0.9"
             android:layout_marginRight="20dp"
-            android:foregroundGravity="left"
+            android:layout_weight="1"
             android:background="@drawable/rounded_light_blue"
+            android:foregroundGravity="left"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
             tools:ignore="RtlHardcoded">
 
             <TextView
@@ -76,8 +93,8 @@
                 android:gravity="center"
                 android:text="Windows on ARM"
                 android:textColor="@color/light_blue"
-                android:textStyle="bold"
                 android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -111,34 +128,34 @@
 
             <TextView
                 android:id="@+id/groupButton"
-                android:clickable="true"
-                android:background="@drawable/rounded_blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_blue"
+                android:clickable="true"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="3dp"
                 android:text="Group"
-                android:textStyle="bold"
                 android:textColor="@color/light_bej"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/guideButton"
-                android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_blue"
+                android:clickable="true"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="3dp"
                 android:text="Guide"
-                android:textStyle="bold"
                 android:textColor="@color/light_bej"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="HardcodedText" />
@@ -148,7 +165,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/backupButton"
@@ -296,4 +316,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

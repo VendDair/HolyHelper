@@ -3,6 +3,7 @@ package com.venddair.holyhelper
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 
 class Info {
     companion object {
@@ -24,7 +25,7 @@ class Info {
         fun downloadFailed(context: Context, fileName: String) {
             UniversalDialog.showDialog(context,
                 title = "Failed to download $fileName!",
-                text = "Check your internet connection!",
+                text = "Check your internet connection!\nOr file may not even exist",
                 image = R.drawable.info,
                 buttons = listOf(
                     Pair("OK") {},
@@ -51,6 +52,31 @@ class Info {
                 buttons = listOf(
                     Pair("CHECK") {context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(MainActivity.getGuideLink())))},
                     Pair("Later") {}
+                )
+            )
+        }
+
+        fun unableToDownload(context: Context) {
+            UniversalDialog.showDialog(context,
+                title = "Couldn't download the file",
+                text = "Check your internet connection\nFor any additional questions ask the developer",
+                image = R.drawable.info,
+                buttons = listOf(
+                    Pair("OK") {},
+                )
+            )
+        }
+
+        fun notifyAboutUpdate(context: Context, version: String) {
+            UniversalDialog.showDialog(context,
+                title = "New update was detected!",
+                text = "Would you like to download the version $version?",
+                image = R.drawable.info,
+                buttons = listOf(
+                    Pair("YES") { Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { fileName ->
+                        Download.installAPK(context, fileName)
+                    } },
+                    Pair("LATER") {}
                 )
             )
         }
