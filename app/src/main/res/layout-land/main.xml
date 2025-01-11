@@ -1,175 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/landscape"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:baselineAligned="false"
     android:background="@drawable/walp2"
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="150px"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="Holy Helper"
+            android:textColor="@color/white"
+            android:textSize="50px"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText,PxUsage" />
+
+        <Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
+            android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="150px"
-                android:gravity="center"
-                android:text="Holy Helper"
-                android:textColor="@color/white"
-                android:textSize="50px"
-                android:textStyle="bold"
-                android:layout_marginStart="20dp"
-                tools:ignore="HardcodedText,PxUsage" />
+        <ImageView
+            android:id="@+id/settingsButton"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:clickable="true"
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:id="@+id/settingsButton"
-                android:layout_width="100px"
-                android:layout_height="100px"
-                android:layout_marginEnd="30dp"
-                android:layout_marginTop="10dp"
-                android:clickable="true"
-
-                android:src="@drawable/settings"
-                tools:ignore="ContentDescription,PxUsage" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/device"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
-                android:src="@drawable/ic_launcher_background" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
-                android:foregroundGravity="left"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
-                tools:ignore="RtlHardcoded">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:text="Windows on ARM"
-                    android:textColor="@color/light_blue"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/codeName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="35dp"
-                    android:text="Device: "
-                    android:textColor="@color/blue"
-                    app:layout_constraintEnd_toStartOf="@+id/textView4"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/backupTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="55dp"
-                    android:text="Last Backup: "
-                    android:textColor="@color/blue"
-                    app:layout_constraintEnd_toStartOf="@+id/textView4"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/groupButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/rounded_blue"
-                    android:clickable="true"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="3dp"
-                    android:text="Group"
-                    android:textColor="@color/light_bej"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="HardcodedText,TouchTargetSizeCheck" />
-
-                <TextView
-                    android:id="@+id/guideButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/rounded_blue"
-                    android:clickable="true"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="3dp"
-                    android:text="Guide"
-                    android:textColor="@color/light_bej"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="HardcodedText,TouchTargetSizeCheck" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+            android:src="@drawable/settings"
+            tools:ignore="ContentDescription,PxUsage" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="bottom"
+        android:id="@+id/linearLayout3"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top">
 
-        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/device"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            android:src="@drawable/ic_launcher_background" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_light_blue"
+            android:foregroundGravity="left"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            tools:ignore="RtlHardcoded">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Windows on ARM"
+                android:textColor="@color/light_blue"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/codeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="35dp"
+                android:text="Device: "
+                android:textColor="@color/blue"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/backupTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="55dp"
+                android:text="Last Backup: "
+                android:textColor="@color/blue"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/groupButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_blue"
+                android:clickable="true"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:text="Group"
+                android:textColor="@color/light_bej"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/guideButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_blue"
+                android:clickable="true"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:text="Guide"
+                android:textColor="@color/light_bej"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/quickbootButton"
+        android:layout_width="0dp"
+        android:layout_height="200px"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_light_blue"
+        android:clickable="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        tools:ignore="PxUsage">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/win11logo"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:gravity="center"
+            android:text="Boot to Windows"
+            android:textColor="@color/light_blue"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+
+        android:layout_height="0dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/top">
+
+        <LinearLayout
+            android:id="@+id/backupButton"
+            android:layout_width="match_parent"
+            android:layout_height="200px"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_light_blue"
+            android:clickable="true"
+            android:orientation="horizontal"
+            tools:ignore="NestedWeights,PxUsage">
+
+            <ImageView
+                android:id="@+id/imageView1asd"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:scaleX="0.65"
+                android:scaleY="0.65"
+                android:src="@drawable/cd"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/textView7asd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Backup android boot"
+                android:textColor="@color/light_blue"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mountButton"
+            android:layout_width="match_parent"
+            android:layout_height="200px"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_light_blue"
+            android:clickable="true"
+            android:orientation="horizontal"
+            tools:ignore="PxUsage">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:src="@drawable/folder"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/mountText"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:gravity="center"
+                android:text="Mount Windows"
+                android:textColor="@color/light_blue"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/toolboxButton"
             android:layout_width="match_parent"
             android:layout_height="200px"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="50px"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
@@ -181,10 +283,10 @@
 
             <ImageView
                 android:id="@+id/imageViews1asd"
-                android:layout_width="100dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
-                android:scaleX="0.75"
-                android:scaleY="0.75"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
                 android:src="@drawable/toolbox"
                 tools:ignore="ContentDescription" />
 
@@ -200,112 +302,17 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="DisableBaselineAlignment">
-
-            <LinearLayout
-                android:id="@+id/mountButton"
-                android:layout_width="0dp"
-                android:layout_height="200px"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
-                android:clickable="true"
-                android:orientation="horizontal"
-                tools:ignore="PxUsage">
-
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:scaleX="0.5"
-                    android:scaleY="0.5"
-                    android:src="@drawable/folder"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/mountText"
-                    android:layout_width="match_parent"
-                    android:layout_height="73dp"
-                    android:gravity="center"
-                    android:text="Mount Windows"
-                    android:textColor="@color/light_blue"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/backupButton"
-                android:layout_width="0dp"
-                android:layout_height="200px"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
-                android:clickable="true"
-                android:orientation="horizontal"
-                tools:ignore="NestedWeights,PxUsage">
-
-                <ImageView
-                    android:id="@+id/imageView1asd"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:scaleX="0.75"
-                    android:scaleY="0.75"
-                    android:src="@drawable/cd"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/textView7asd"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Backup android boot"
-                    android:textColor="@color/light_blue"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/quickbootButton"
-            android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_light_blue"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:ignore="PxUsage">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-                android:src="@drawable/win11logo"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="73dp"
-                android:gravity="center"
-                android:text="Boot to Windows"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="@color/gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
