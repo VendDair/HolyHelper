@@ -24,4 +24,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
+    <Switch
+        android:id="@+id/CheckUpdates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:minHeight="48dp"
+        android:textColor="@color/gray"
+        android:thumbTint="@color/white"
+        android:trackTint="@color/white"
+        android:trackTintMode="src_in"
+        android:thumbTintMode="multiply"
+        android:text="Check for update when app is starting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

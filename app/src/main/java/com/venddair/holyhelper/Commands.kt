@@ -9,6 +9,8 @@ import java.io.InputStreamReader
 
 object Commands {
 
+    var updateChecked = false
+
     fun dumpModem() {
         ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
         ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
@@ -72,10 +74,13 @@ object Commands {
     }
 
     fun checkUpdate(context: ComponentActivity) {
+        if (Preferences.get("settings").getBoolean("checkUpdates", false)) return
+        if (updateChecked) return
         Download.getRemoteFileContent(context, "https://github.com/VendDair/HolyHelper/releases/download/files/version") { content ->
             val version = content.replace("\n", "")
             if (version != Paths.version) {
                 Info.notifyAboutUpdate(context, version)
+                updateChecked = true
             }
         }
     }
