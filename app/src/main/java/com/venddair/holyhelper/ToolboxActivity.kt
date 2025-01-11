@@ -22,7 +22,7 @@ class ToolboxActivity : ComponentActivity() {
         val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
 
         when (Commands.getDevice()) {
-            "cepheus", "guacamole", "OnePlus7Pro", "OnePlus7Pro4G", "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "nabu" -> {
+            "cepheus", "guacamole", "guacamolet", "pipa", "OnePlus7Pro", "OnePlus7Pro4G", "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "nabu" -> {
                 dbkpButton.visibility = View.VISIBLE
             }
             else -> dbkpButton.visibility = View.GONE
@@ -111,7 +111,7 @@ class ToolboxActivity : ComponentActivity() {
         dbkpButton.setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = "Dualboot kernel Patcher",
-                text = "Patches and flashes your current kernel",
+                text = "Patches and flashes your current kernel\nDON'T CLICK UNLESS YOUR DEVICE IS ${Commands.getDeviceBasedOnDbkpSupportedDevices()}",
                 image = R.drawable.ic_uefi,
                 buttons = listOf(
                     Pair("yes") {

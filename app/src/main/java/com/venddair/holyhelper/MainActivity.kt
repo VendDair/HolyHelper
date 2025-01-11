@@ -127,7 +127,7 @@ class MainActivity : ComponentActivity() {
             "a52sxq" -> "https://t.me/a52sxq_uefi"
             "judyln", "judyp", "judypn", "joan" -> "https://t.me/lgedevices"
             "OnePlus6", "fajita", "OnePlus6T", "enchilada" -> "https://t.me/WinOnOP6"
-            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "OnePlus7Pro", "OnePlus7Pro4G", "guacamoleb", "hotdogb", "OnePlus7T",
+            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G", "guacamoleb", "hotdogb", "OnePlus7T",
             "OnePlus7", "OnePlus7TPro5G", "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr" -> "https://t.me/onepluswoachat"
             "davinci" -> "https://t.me/woa_davinci"
             "marble" -> "https://t.me/woa_marble"
@@ -168,7 +168,7 @@ class MainActivity : ComponentActivity() {
                 "judyln", "judyp", "judypn" -> "https://github.com/n00b69/woa-everything"
                 "joan" -> "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md"
                 "OnePlus6", "fajita", "OnePlus6T", "enchilada" -> "https://github.com/n00b69/woa-op6"
-                "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" -> "https://github.com/n00b69/woa-op7"
+                "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G" -> "https://github.com/n00b69/woa-op7"
                 "guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7", "OnePlus7TPro5G", "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr",
                 "t860", "t865", "q2q", "andromeda" -> "https://project-aloha.github.io/"
                 "sagit" -> "https://renegade-project.tech/"

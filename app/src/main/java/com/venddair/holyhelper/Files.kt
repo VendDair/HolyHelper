@@ -202,7 +202,7 @@ object Files {
             "OnePlus6", "fajita" -> getResource(R.drawable.fajita)
             "OnePlus6T", "enchilada" -> getResource(R.drawable.enchilada)
             "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "OnePlus7TPro5G", "OnePlus7TProNR" -> getResource(R.drawable.hotdog)
-            "guacamole", "OnePlus7Pro", "OnePlus7Pro4G", "hotdogg", "OP7ProNRSpr" -> getResource(R.drawable.guacamole)
+            "guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G", "hotdogg", "OP7ProNRSpr" -> getResource(R.drawable.guacamole)
             "q2q" -> getResource(R.drawable.q2q)
             "winnerx", "winner" -> getResource(R.drawable.winner)
             "xpeng" -> getResource(R.drawable.xpeng)

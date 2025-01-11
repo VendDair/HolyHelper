@@ -85,6 +85,17 @@ object Commands {
         }
     }
 
+    fun getDeviceBasedOnDbkpSupportedDevices(): String {
+        return when (getDevice()) {
+            "guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G", "OnePlus7ProTMO" -> "ONEPLUS 7 PRO"
+            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" -> "ONEPLUS 7T PRO"
+            "cepheus" -> "XIAOMI MI 9"
+            "nabu" -> "XIAOMI PAD 5"
+            "pipa" -> "XIAOMI PAD 6"
+            else -> "UNSUPPORTED"
+        }
+    }
+
     @SuppressLint("SdCardPath")
     fun dbkp(context: Context) {
         Files.setupDbkpFiles(context)
@@ -101,6 +112,8 @@ object Commands {
                     "https://github.com/n00b69/woa-everything/releases/download/Files/cepheus.fd" to listOf("cepheus.fd", "cepheus")
                 "nabu" ->
                     "https://github.com/erdilS/Port-Windows-11-Xiaomi-Pad-5/releases/download/1.0/nabu.fd" to listOf("nabu.fd", "nabu")
+                "pipa" ->
+                    "https://github.com/n00b69/woa-everything/releases/download/Files/pipa.fd" to listOf("pipa.fd", "pipa")
                 else -> return@download
             }
 
@@ -129,27 +142,5 @@ object Commands {
             }
 
         }
-
-
-
-        /*when (getDevice()) {
-            "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" -> {
-                Download.download(context, "https://github.com/n00b69/woa-op7/releases/download/DBKP/guacamole.fd", "guacamole.fd") { name ->
-                    Files.moveFile(Paths.downloads+"/$name", "/sdcard/dbkp/guacamole.fd")
-                    ShellUtils.fastCmd("cd /sdcard/dbkp")
-                    ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) unpack boot.img\" | su -c sh")
-                    ShellUtils.fastCmd("su -mm -c ${Paths.dbkpAsset} /sdcard/dbkp/kernel /sdcard/dbkp/guacamole.fd /sdcard/dbkp/output /sdcard/dbkp/dbkp8150.cfg /sdcard/dbkp/dbkp.hotdog.bin")
-                    Files.remove("/sdcard/dbkp/kernel")
-                    Files.moveFile("output" , "kernel")
-                    ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) repack boot.img\" | su -c sh")
-                    Files.copy("new-boot.img", "/sdcard/new-boot.img")
-                    Files.moveFile("/sdcard/new-boot.img", "/sdcard/patched-boot.img")
-                    Files.remove("rm -r /sdcard/dbkp")
-                    ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_a bs=16M")
-                    ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_b bs=16M")
-                }
-            }
-        }*/
-
     }
 }
