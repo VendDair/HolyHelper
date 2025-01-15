@@ -18,7 +18,7 @@ class SettingsActivity : ComponentActivity() {
         val settingsEditor = settings.edit()
 
         switchMountToMnt.isChecked = settings.getBoolean("mountToMnt", false)
-        checkUpdates.isChecked = settings.getBoolean("checkUpdates", false)
+        checkUpdates.isChecked = settings.getBoolean("checkUpdates", true)
 
         switchMountToMnt.setOnCheckedChangeListener { _, isChecked ->
             settingsEditor.putBoolean("mountToMnt", isChecked)

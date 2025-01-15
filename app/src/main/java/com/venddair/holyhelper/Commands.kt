@@ -74,7 +74,7 @@ object Commands {
     }
 
     fun checkUpdate(context: ComponentActivity) {
-        if (Preferences.get("settings").getBoolean("checkUpdates", false)) return
+        if (!Preferences.get("settings").getBoolean("checkUpdates", true)) return
         if (updateChecked) return
         Download.getRemoteFileContent(context, "https://github.com/VendDair/HolyHelper/releases/download/files/version") { content ->
             val version = content.replace("\n", "")
