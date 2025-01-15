@@ -27,6 +27,7 @@ object Files {
             createFolder(Paths.winPath)
             createFolder(Paths.data)
             createFolder(Paths.toolbox)
+            createFolder(Paths.frameworks)
 
             copyAsset("mount.ntfs","+x")
             copyAsset("sta.exe")

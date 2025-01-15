@@ -163,8 +163,7 @@ object Download {
             "https://github.com/n00b69/woasetup/releases/download/Installers/dxwebsetup.exe" to "dxwebsetup.exe",
             "https://github.com/n00b69/woasetup/releases/download/Installers/oalinst.exe" to "oalinst.exe",
         )
-
-        if (Commands.isWindowsMounted(context)) {
+        Commands.askUserToMountIfNotMounted(context) {
             for ((url, fileName) in urls) {
                 download(context, url, fileName) { path, name ->
                     Files.copyFileToWin(context, path, "Toolbox/Frameworks/$name")

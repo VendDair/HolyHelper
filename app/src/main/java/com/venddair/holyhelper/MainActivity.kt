@@ -19,14 +19,10 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.main)
 
         ToastUtil.init(this)
-        Files.init(this)
         Preferences.init(this)
+        Files.init(this)
 
         Commands.checkUpdate(this)
-
-        ToastUtil.showToast(Environment.DIRECTORY_DOWNLOADS)
-
-
 
         val quickbootButton = findViewById<LinearLayout>(R.id.quickbootButton)
         val backupButton = findViewById<LinearLayout>(R.id.backupButton)
