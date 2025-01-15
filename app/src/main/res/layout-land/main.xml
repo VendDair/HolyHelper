@@ -180,7 +180,7 @@
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:layout_height="73dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="Boot to Windows"
             android:textColor="@color/light_blue"
@@ -257,7 +257,7 @@
             <TextView
                 android:id="@+id/mountText"
                 android:layout_width="match_parent"
-                android:layout_height="73dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Mount Windows"
                 android:textColor="@color/light_blue"
