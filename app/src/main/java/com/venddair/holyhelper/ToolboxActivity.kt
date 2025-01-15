@@ -126,28 +126,24 @@ class ToolboxActivity : ComponentActivity() {
     }
 
     private fun downloadAtlasOS() {
-        createFolder(getMountDir() + "/Toolbox")
-        Download.download(this,"https://github.com/n00b69/modified-playbooks/releases/download/AtlasOS/AtlasPlaybook.apbx", "AtlasPlaybook.apbx") { name ->
-            Files.moveFile("${Paths.downloads}/$name", Paths.internalStorage+"/AtlasPlaybook.apbx")
-            Files.copyFileToWin(this, Paths.internalStorage+"/AtlasPlaybook.apbx", "Toolbox/AtlasPlaybook.apbx", false)
+
+        Download.download(this,"https://github.com/n00b69/modified-playbooks/releases/download/AtlasOS/AtlasPlaybook.apbx", "AtlasPlaybook.apbx") { path, _ ->
+            Files.copyFileToWin(this, path, "Toolbox/AtlasPlaybook.apbx", false)
         }
 
-        Download.download(this, "https://download.ameliorated.io/AME%20Wizard%20Beta.zip", "AMEWizardBeta.zip") { name ->
-            Files.moveFile("${Paths.downloads}/$name", Paths.internalStorage+"/AMEWizardBeta.zip")
-            Files.copyFileToWin(this, Paths.internalStorage+"/AMEWizardBeta.zip", "Toolbox/AMEWizardBeta.zip", false)
+        Download.download(this, "https://download.ameliorated.io/AME%20Wizard%20Beta.zip", "AMEWizardBeta.zip") { path, _ ->
+            Files.copyFileToWin(this, path, "Toolbox/AMEWizardBeta.zip", false)
         }
     }
 
     private fun downloadReviOS() {
         createFolder(getMountDir() + "/Toolbox")
-        Download.download(this,"https://github.com/n00b69/modified-playbooks/releases/download/ReviOS/ReviPlaybook.apbx", "ReviPlaybook.apbx") { name ->
-            Files.moveFile("${Paths.downloads}/$name", Paths.internalStorage+"/ReviPlaybook.apbx")
-            Files.copyFileToWin(this, Paths.internalStorage+"/ReviPlaybook.apbx", "Toolbox/ReviPlaybook.apbx", false)
+        Download.download(this,"https://github.com/n00b69/modified-playbooks/releases/download/ReviOS/ReviPlaybook.apbx", "ReviPlaybook.apbx") { path, _ ->
+            Files.copyFileToWin(this, path, "Toolbox/ReviPlaybook.apbx", false)
         }
 
-        Download.download(this, "https://download.ameliorated.io/AME%20Wizard%20Beta.zip", "AMEWizardBeta.zip") { name ->
-            Files.moveFile("${Paths.downloads}/$name", Paths.internalStorage+"/AMEWizardBeta.zip")
-            Files.copyFileToWin(this, Paths.internalStorage+"/AMEWizardBeta.zip", "Toolbox/AMEWizardBeta.zip", false)
+        Download.download(this, "https://download.ameliorated.io/AME%20Wizard%20Beta.zip", "AMEWizardBeta.zip") { path, _ ->
+            Files.copyFileToWin(this, path, "Toolbox/AMEWizardBeta.zip", false)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.venddair.holyhelper
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -14,13 +13,18 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.marginRight
 
 object UniversalDialog {
     private lateinit var dialog: Dialog
 
-    fun showDialog(context: Context, title: String = "", text: String = "", textGravity: Int = Gravity.CENTER, image: Int = R.drawable.win11logo,
-                   buttons: List<Pair<String, () -> Unit>> = listOf(), after : (dialog: Dialog) -> Unit = {}
+    fun showDialog(
+        context: Context,
+        title: String = "",
+        text: String = "",
+        textGravity: Int = Gravity.CENTER,
+        image: Int = R.drawable.win11logo,
+        buttons: List<Pair<String, () -> Unit>> = listOf(),
+        after: (dialog: Dialog) -> Unit = {}
     ) {
 
         // Inflate the custom layout
@@ -74,6 +78,9 @@ object UniversalDialog {
 
         dialog = dialogBuilder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialog.setOnDismissListener { after(dialog) }
+
         dialog.show()
     }
 }

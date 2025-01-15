@@ -3,11 +3,16 @@ package com.venddair.holyhelper
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Environment
 
 class Info {
     companion object {
+
+        var isWinNotMountedDialog = false
+        var isWinUnableToMountDialog = false
+        var isNoWinPartitionDialog = false
+
         fun winNotMounted(context: Context, after: (result: Boolean) -> Unit = {}) {
+            if (isWinNotMountedDialog) return
             UniversalDialog.showDialog(context,
                 title = "Windows is not mounted!",
                 text = "Do you want to mount it?",
@@ -19,7 +24,10 @@ class Info {
                     },
                     Pair("NO") {},
                 )
-            )
+            ) {
+                isWinNotMountedDialog = false
+            }
+            isWinNotMountedDialog = true
         }
 
         fun downloadFailed(context: Context, fileName: String) {
@@ -34,6 +42,7 @@ class Info {
         }
 
         fun winUnableToMount(context: Context) {
+            if (isWinUnableToMountDialog) return
             UniversalDialog.showDialog(context,
                 title = "Windows wasn't able to mount!",
                 text = "Try to mount to /mnt in settings\nFurther questions to the developer",
@@ -41,10 +50,14 @@ class Info {
                 buttons = listOf(
                     Pair("OK") {}
                 )
-            )
+            ) {
+                isWinUnableToMountDialog = false
+            }
+            isWinUnableToMountDialog = true
         }
 
         fun noWinPartition(context: Context) {
+            if (isNoWinPartitionDialog) return
             UniversalDialog.showDialog(context,
                 title = "No Windows partition was found!",
                 text = "You may not have windows installed\nCheck the guide for your device",
@@ -53,7 +66,10 @@ class Info {
                     Pair("CHECK") {context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(MainActivity.getGuideLink())))},
                     Pair("Later") {}
                 )
-            )
+            ) {
+                isNoWinPartitionDialog = false
+            }
+            isNoWinPartitionDialog = true
         }
 
         fun unableToDownload(context: Context) {
@@ -73,7 +89,7 @@ class Info {
                 text = "Would you like to download the version $version?",
                 image = R.drawable.info,
                 buttons = listOf(
-                    Pair("YES") { Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { fileName ->
+                    Pair("YES") { Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { _, fileName ->
                         Download.installAPK(context, fileName)
                     } },
                     Pair("LATER") {}

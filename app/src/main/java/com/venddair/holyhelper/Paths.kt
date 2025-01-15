@@ -5,6 +5,9 @@ import android.os.Environment
 
 @SuppressLint("SdCardPath")
 object Paths {
+
+
+
     const val uefiFolder = "/sdcard/UEFI"
     const val uefiImg = "/sdcard/UEFI/uefi.img"
 
@@ -41,6 +44,11 @@ object Paths {
     const val TestedSoftwareLinkAsset = "/data/local/tmp/holyhelper/TestedSoftware.url"
     const val WorksOnWoaLinkAsset = "/data/local/tmp/holyhelper/WorksOnWoa.url"
 
+    val toolbox: String get() = Files.getMountDir() + "/Toolbox"
+    val frameworks: String get() = Files.getMountDir() + "/Toolbox/Frameworks"
+
+    val installAsset = "/data/local/tmp/holyhelper/install.bat"
+
     val ARMRepoLink get() = Files.getMountDir() + "/Toolbox/ARMRepo.url"
     val ARMSoftwareLink get() = Files.getMountDir() + "/Toolbox/ARMSoftware.url"
     val TestedSoftwareLink get() = Files.getMountDir() + "/Toolbox/TestedSoftware.url"
@@ -51,6 +59,11 @@ object Paths {
     val dbkpCepheusBinAsset = "/data/local/tmp/holyhelper/dbkp.cepheus.bin"
     val dbkpNabuBinAsset = "/data/local/tmp/holyhelper/dbkp.nabu.bin"
     val dbkpAsset = "/data/local/tmp/holyhelper/dbkp"
+
+    val USBHostModeAsset = "/data/local/tmp/holyhelper/usbhostmode.exe"
+
+    val displayAsset = "/data/local/tmp/holyhelper/display.exe"
+    val RotationShortcutAsset = "/data/local/tmp/holyhelper/RotationShortcut.lnk"
 
     const val version = "1.0"
 

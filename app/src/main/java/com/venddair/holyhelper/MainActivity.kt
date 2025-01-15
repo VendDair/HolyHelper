@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,6 +23,8 @@ class MainActivity : ComponentActivity() {
         Preferences.init(this)
 
         Commands.checkUpdate(this)
+
+        ToastUtil.showToast(Environment.DIRECTORY_DOWNLOADS)
 
 
 

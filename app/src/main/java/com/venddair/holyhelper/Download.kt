@@ -23,9 +23,10 @@ import java.net.URL
 object Download {
 
     @SuppressLint("InlinedApi")
-    fun download(context: Context, url: String, fileName: String, callback: (finalFileName: String) -> Unit) {
+    fun download(context: Context, url: String, fileName: String, callback: (path: String, finalFileName: String) -> Unit) {
         // Generate a unique file name if the file already exists
         val finalFileName = getUniqueFileName(fileName)
+        val path = Paths.downloads + "/$finalFileName"
 
         val request = DownloadManager.Request(Uri.parse(url)).apply {
             setTitle("Downloading $finalFileName")
@@ -51,7 +52,7 @@ object Download {
                         if (status == DownloadManager.STATUS_FAILED) {
                             Info.downloadFailed(context, finalFileName)
                         }
-                        callback(finalFileName) // Call the callback with the final file name
+                        callback(path, finalFileName) // Call the callback with the final file name
                     }
                     cursor?.close() // Close the cursor safely
                 }
@@ -139,6 +140,37 @@ object Download {
             }
         }.start()
 
+    }
+
+    fun downloadFrameworks(context: Context) {
+        val urls = mapOf(
+            "https://github.com/n00b69/woasetup/releases/download/Installers/PhysX-9.13.0604-SystemSoftware-Legacy.msi" to "PhysX-9.13.0604-SystemSoftware-Legacy.msi",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/PhysX_9.23.1019_SystemSoftware.exe" to "PhysX_9.23.1019_SystemSoftware.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/xnafx40_redist.msi" to "xnafx40_redist.msi",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2005vcredist_x64.EXE" to "2005vcredist_x64.EXE",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2005vcredist_x86.EXE" to "2005vcredist_x86.EXE",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2008vcredist_x64.exe" to "2008vcredist_x64.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2008vcredist_x86.exe" to "2008vcredist_x86.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2010vcredist_x64.exe" to "2010vcredist_x64.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2010vcredist_x86.exe" to "2010vcredist_x86.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2012vcredist_x64.exe" to "2012vcredist_x64.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2012vcredist_x86.exe" to "2012vcredist_x86.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2013vcredist_x64.exe" to "2013vcredist_x64.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2013vcredist_x86.exe" to "2013vcredist_x86.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2015VC_redist.x64.exe" to "2015VC_redist.x64.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2015VC_redist.x86.exe" to "2015VC_redist.x86.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/2022VC_redist.arm64.exe" to "2022VC_redist.arm64.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/dxwebsetup.exe" to "dxwebsetup.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/oalinst.exe" to "oalinst.exe",
+        )
+
+        if (Commands.isWindowsMounted(context)) {
+            for ((url, fileName) in urls) {
+                download(context, url, fileName) { path, name ->
+                    Files.copyFileToWin(context, path, "Toolbox/Frameworks/$name")
+                }
+            }
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Commands.backupBootImage
+import com.venddair.holyhelper.Commands.notifyIfNoWinPartition
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -25,7 +26,7 @@ object Files {
             createFolder(Paths.uefiFolder)
             createFolder(Paths.winPath)
             createFolder(Paths.data)
-
+            createFolder(Paths.toolbox)
 
             copyAsset("mount.ntfs","+x")
             copyAsset("sta.exe")
@@ -44,6 +45,7 @@ object Files {
             copyAsset("dbkp.hotdog.bin")
             copyAsset("dbkp.cepheus.bin")
             copyAsset("dbkp.nabu.bin")
+            copyAsset("usbhostmode.exe")
         }.start()
 
 
@@ -157,7 +159,7 @@ object Files {
                 return
             }
         }
-        Info.noWinPartition(context)
+        if (notifyIfNoWinPartition) Info.noWinPartition(context)
 
     }
 

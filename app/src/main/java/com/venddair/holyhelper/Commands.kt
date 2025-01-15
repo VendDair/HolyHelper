@@ -11,6 +11,12 @@ object Commands {
 
     var updateChecked = false
 
+    var notifyIfNoWinPartition = true
+
+    fun notifyIfNoWinPartitionToggle() {
+        notifyIfNoWinPartition != notifyIfNoWinPartition
+    }
+
     fun dumpModem() {
         ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
         ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
@@ -99,8 +105,8 @@ object Commands {
     @SuppressLint("SdCardPath")
     fun dbkp(context: Context) {
         Files.setupDbkpFiles(context)
-        Download.download(context, "https://github.com/n00b69/woa-op7/releases/download/DBKP/dbkp", "dbkp") { dbkp ->
-            Files.moveFile("${Paths.downloads}/$dbkp", Paths.data)
+        Download.download(context, "https://github.com/n00b69/woa-op7/releases/download/DBKP/dbkp", "dbkp") { dbkp, _ ->
+            Files.moveFile(dbkp, Paths.data)
             Files.setPerms(Paths.dbkpAsset, "777")
 
             val (url, fileName) = when (getDevice()) {
@@ -120,8 +126,8 @@ object Commands {
             val dbkpDir = "/sdcard/dbkp"
 
             // Execute commands
-            Download.download(context, url, fileName[0]) { name ->
-                Files.moveFile("${Paths.downloads}/$name", dbkpDir)
+            Download.download(context, url, fileName[0]) { path, _ ->
+                Files.moveFile(path, dbkpDir)
                 ShellUtils.fastCmd("cd $dbkpDir")
                 ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) unpack boot.img\" | su -c sh")
                 ShellUtils.fastCmd("su -mm -c ${Paths.data}/dbkp kernel ${fileName[0]} output dbkp8150.cfg dbkp.${fileName[1]}.bin")
