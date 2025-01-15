@@ -81,7 +81,8 @@ class ScriptToolboxActivity : ComponentActivity() {
                 image = R.drawable.edge,
                 buttons = listOf(
                     Pair("YES") {
-
+                        Files.copyFileToWin(this, Paths.edgeremover, "Toolbox/RemoveEdge.bat")
+                        Download.downloadDefenderRemover(this)
                     },
                     Pair("NO") {}
                 )

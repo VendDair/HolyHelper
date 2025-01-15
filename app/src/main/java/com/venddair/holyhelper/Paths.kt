@@ -65,6 +65,8 @@ object Paths {
     val displayAsset = "/data/local/tmp/holyhelper/display.exe"
     val RotationShortcutAsset = "/data/local/tmp/holyhelper/RotationShortcut.lnk"
 
+    val edgeremover = "/data/local/tmp/holyhelper/RemoveEdge.bat"
+
     const val version = "1.0"
 
 

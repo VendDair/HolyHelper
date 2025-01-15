@@ -46,6 +46,10 @@ object Files {
             copyAsset("dbkp.cepheus.bin")
             copyAsset("dbkp.nabu.bin")
             copyAsset("usbhostmode.exe")
+            copyAsset("display.exe")
+            copyAsset("RotationShortcut.lnk")
+            copyAsset("install.bat")
+            copyAsset("RemoveEdge.bat")
         }.start()
 
 

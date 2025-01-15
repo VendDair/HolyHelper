@@ -173,4 +173,10 @@ object Download {
         }
     }
 
+    fun downloadDefenderRemover(context: Context) {
+        download(context, "https://github.com/n00b69/woasetup/releases/download/Installers/DefenderRemover.exe", "DefenderRemover.exe") { path, name ->
+            Files.copyFileToWin(context, path, "Toolbox/$name")
+        }
+    }
+
 }
