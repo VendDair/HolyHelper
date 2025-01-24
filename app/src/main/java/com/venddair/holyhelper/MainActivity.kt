@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         val versionTextView = findViewById<TextView>(R.id.version)
 
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
-        codeNameText.text = "Device: ${Commands.getDevice()}"
+        codeNameText.text = Commands.getDevice()
 
         settingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
         toolboxButton.setOnClickListener { startActivity(Intent(this, ToolboxActivity::class.java)) }
@@ -55,45 +55,42 @@ class MainActivity : ComponentActivity() {
 
         quickbootButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Boot in Windows?",
-                text = "It flashes uefi.img to boot partition",
+                title = getString(R.string.quickboot_question),
                 buttons = listOf(
                     Pair("Flash") {
                         Commands.bootInWindows(this)
                     },
-                    Pair("Reboot") {
+                    Pair(getString(R.string.reboot)) {
                         Commands.bootInWindows(this, true)
                     },
-                    Pair("Cancel") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
         }
         backupButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Backup current boot partition?",
-                text = "Backups current boot in /sdcard/boot.img or in win folder when its mounted",
+                title = getString(R.string.backup_boot_question),
                 image = R.drawable.cd,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         Commands.backupBootImage(this)
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
         }
 
-        mountText.text = if (Commands.isWindowsMounted(this)) "Unmount Windows" else "Mount Windows"
+        mountText.text = if (Commands.isWindowsMounted(this)) getString(R.string.unmountt) else getString(R.string.mountt)
         mountButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = if (!Commands.isWindowsMounted(this)) "Mount Windows?" else "Unmount Windows?",
-                text = "Mounts/Unmounts Windows in ${Files.getMountDir()}",
+                title = if (!Commands.isWindowsMounted(this)) getString(R.string.mount_question, Files.getMountDir()) else getString(R.string.unmount_question),
                 image = R.drawable.folder,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         Commands.mountWindows(this)
-                        mountText.text = if (Commands.isWindowsMounted(this)) "Unmount Windows" else "Mount Windows"
+                        mountText.text = if (Commands.isWindowsMounted(this)) getString(R.string.unmountt) else getString(R.string.mountt)
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
         }
@@ -178,6 +175,7 @@ class MainActivity : ComponentActivity() {
                 else -> "https://renegade-project.tech/"
             }
         }
+
     }
 
 }

@@ -29,14 +29,13 @@ class ScriptToolboxActivity : ComponentActivity() {
 
         usbhostmodeButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Usb Host Mode Toggle",
-                text = "Scripts that toggles Usb Host Mode$question",
+                title = getString(R.string.usbhost_question),
                 image = R.drawable.folder,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         Files.copyFileToWin(this, Paths.USBHostModeAsset, "Toolbox/usbhostmode.exe")
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
 
@@ -44,15 +43,14 @@ class ScriptToolboxActivity : ComponentActivity() {
 
         rotationButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Rotation Toggle",
-                text = "Scripts that rotates the device orientation$question",
+                title = getString(R.string.rotation_question),
                 image = R.drawable.cd,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         Files.copyFileToWin(this, Paths.displayAsset, "Toolbox/display.exe")
                         Files.copyFileToWin(this, Paths.RotationShortcutAsset, "Toolbox/RotationShortcut.lnk")
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
 
@@ -60,15 +58,14 @@ class ScriptToolboxActivity : ComponentActivity() {
 
         frameworkInstallersButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Framework Installers",
-                text = "Add installers for several frameworks\n(C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX and XNA framework)$question",
+                title = getString(R.string.setup_question),
                 image = R.drawable.folder,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         Download.downloadFrameworks(this)
                         Files.copyFileToWin(this, Paths.installAsset, "Toolbox/Frameworks/install.bat")
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
 
@@ -76,15 +73,14 @@ class ScriptToolboxActivity : ComponentActivity() {
 
         edgeRemover.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Edge / Defender Remover",
-                text = "Scripts that removes Edge or Defender$question",
+                title = getString(R.string.defender_question),
                 image = R.drawable.edge,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         Files.copyFileToWin(this, Paths.edgeremover, "Toolbox/RemoveEdge.bat")
                         Download.downloadDefenderRemover(this)
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
 

@@ -19,10 +19,9 @@
         <LinearLayout
             android:id="@+id/usbhostmode"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -33,32 +32,45 @@
 
             <ImageView
                 android:id="@+id/imageViewasd1asd"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="0.47"
                 android:scaleY="0.47"
                 android:src="@drawable/folder"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/teView7asd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="USB Host Mode Toggle"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/usbhost_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/usbhost_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/rotation"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -69,32 +81,45 @@
 
             <ImageView
                 android:id="@+id/imageView1asd"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
                 android:src="@drawable/cd"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/textView7asd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Rotation Toggle"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/rotation_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/rotation_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/frameworkInstallers"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -104,31 +129,44 @@
             tools:ignore="PxUsage">
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="0.47"
                 android:scaleY="0.47"
                 android:src="@drawable/folder"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Framework Installers"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/setup_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/setup_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/edgeremover"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -138,21 +176,36 @@
             tools:ignore="PxUsage">
 
             <ImageView
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="0.8"
                 android:scaleY="0.8"
                 android:src="@drawable/edge"
                 tools:ignore="ContentDescription" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Edge / Defender Remover"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/defender_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/defender_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 

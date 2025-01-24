@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 object Commands {
 
@@ -80,7 +78,7 @@ object Commands {
     }
 
     fun checkUpdate(context: ComponentActivity) {
-        if (!Preferences.get("settings").getBoolean("checkUpdates", true)) return
+        if (Preferences.get("settings").getBoolean("disableUpdates", false)) return
         if (updateChecked) return
         Download.getRemoteFileContent(context, "https://github.com/VendDair/HolyHelper/releases/download/files/version") { content ->
             val version = content.replace("\n", "")
@@ -91,7 +89,7 @@ object Commands {
         }
     }
 
-    fun getDeviceBasedOnDbkpSupportedDevices(): String {
+    fun getDbkpSupportedDevice(): String {
         return when (getDevice()) {
             "guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G", "OnePlus7ProTMO" -> "ONEPLUS 7 PRO"
             "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" -> "ONEPLUS 7T PRO"

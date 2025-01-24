@@ -12,21 +12,21 @@ class SettingsActivity : ComponentActivity() {
         setContentView(R.layout.settings)
 
         val switchMountToMnt = findViewById<Switch>(R.id.MountToMnt)
-        val checkUpdates = findViewById<Switch>(R.id.CheckUpdates)
+        val disableUpdates = findViewById<Switch>(R.id.DisableUpdates)
 
         val settings = Preferences.get("settings")
         val settingsEditor = settings.edit()
 
         switchMountToMnt.isChecked = settings.getBoolean("mountToMnt", false)
-        checkUpdates.isChecked = settings.getBoolean("checkUpdates", true)
+        disableUpdates.isChecked = settings.getBoolean("disableUpdates", false)
 
         switchMountToMnt.setOnCheckedChangeListener { _, isChecked ->
             settingsEditor.putBoolean("mountToMnt", isChecked)
             settingsEditor.apply()
         }
 
-        checkUpdates.setOnCheckedChangeListener { _, isChecked ->
-            settingsEditor.putBoolean("checkUpdates", isChecked)
+        disableUpdates.setOnCheckedChangeListener { _, isChecked ->
+            settingsEditor.putBoolean("disableUpdates", isChecked)
             settingsEditor.apply()
         }
     }

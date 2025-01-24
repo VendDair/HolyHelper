@@ -16,7 +16,7 @@ class ToolboxActivity : ComponentActivity() {
 
         val staButton = findViewById<LinearLayout>(R.id.staButton)
         val scriptButton = findViewById<LinearLayout>(R.id.scriptButton)
-        val dumpModemButton = findViewById<LinearLayout>(R.id.dumpModemButton)
+        //val dumpModemButton = findViewById<LinearLayout>(R.id.dumpModemButton)
         val armButton = findViewById<LinearLayout>(R.id.armButton)
         val atlasosButton = findViewById<LinearLayout>(R.id.atlasosButton)
         val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
@@ -30,11 +30,10 @@ class ToolboxActivity : ComponentActivity() {
 
         staButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Sta creator",
-                text = "Copies sta files into win partition",
+                title = getString(R.string.sta_question),
                 image = R.drawable.adrod,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         if (!Commands.isWindowsMounted(this))
                             Info.winNotMounted(this) { mounted ->
                                 if (!mounted) return@winNotMounted
@@ -42,14 +41,14 @@ class ToolboxActivity : ComponentActivity() {
                             }
                         else Files.copyStaFiles()
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
 
         }
         scriptButton.setOnClickListener { startActivity(Intent(this, ScriptToolboxActivity::class.java)) }
 
-        dumpModemButton.setOnClickListener {
+        /*dumpModemButton.setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = "Dump modem",
                 text = "Dump modem to Windows for LTE on SIM1.\nDump modem1st and modem2st to Windows partition?\nRequired before every Windows boot",
@@ -66,30 +65,28 @@ class ToolboxActivity : ComponentActivity() {
                 )
             )
 
-        }
+        }*/
 
         armButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Arm Software",
-                text = "Copy browser shortcuts to C:\\Toolbox?",
-                image = R.drawable.ic_modem,
+                title = getString(R.string.software_question),
+                image = R.drawable.ic_sensor,
                 buttons = listOf(
-                    Pair("YES") {
+                    Pair(getString(R.string.yes)) {
                         if (!Commands.isWindowsMounted(this)) Info.winNotMounted(this) { mounted ->
                             if (!mounted) return@winNotMounted
                             Files.copyArmSoftwareLinks()
                         }
                         else Files.copyArmSoftwareLinks()
                     },
-                    Pair("NO") {}
+                    Pair(getString(R.string.no)) {}
                 )
             )
         }
 
         atlasosButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Copy AtlasOS/ReviOS files?",
-                text = "Copies AtlasOS/ReviOS files in C:\\Toolbox",
+                title = getString(R.string.atlasos_question),
                 image = R.drawable.atlasos,
                 buttons = listOf(
                     Pair("atlasos") {
@@ -102,7 +99,7 @@ class ToolboxActivity : ComponentActivity() {
                             downloadReviOS()
                         }
                     },
-                    Pair("no") {},
+                    Pair(getString(R.string.dismiss)) {},
                 )
             )
 
@@ -110,14 +107,14 @@ class ToolboxActivity : ComponentActivity() {
 
         dbkpButton.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = "Dualboot kernel Patcher",
-                text = "Patches and flashes your current kernel\nDON'T CLICK UNLESS YOUR DEVICE IS ${Commands.getDeviceBasedOnDbkpSupportedDevices()}",
+                title = getString(R.string.dbkp_question, Commands.getDbkpSupportedDevice()),
+                //text = "Patches and flashes your current kernel\nDON'T CLICK UNLESS YOUR DEVICE IS ${Commands.getDbkpSupportedDevice()}",
                 image = R.drawable.ic_uefi,
                 buttons = listOf(
-                    Pair("yes") {
+                    Pair(getString(R.string.yes)) {
                         Commands.dbkp(this)
                     },
-                    Pair("no") {}
+                    Pair(getString(R.string.no)) {}
                 )
                 )
         }

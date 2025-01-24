@@ -19,14 +19,14 @@
         android:trackTint="@color/blue"
         android:trackTintMode="src_in"
         android:thumbTintMode="multiply"
-        android:text="Mount to /mnt instead of /sdcard"
+        android:text="@string/preference10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
     <Switch
-        android:id="@+id/CheckUpdates"
+        android:id="@+id/DisableUpdates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -38,7 +38,7 @@
         android:trackTint="@color/blue"
         android:trackTintMode="src_in"
         android:thumbTintMode="multiply"
-        android:text="Check for update when app is starting"
+        android:text="@string/preference11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

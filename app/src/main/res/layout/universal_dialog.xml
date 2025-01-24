@@ -26,7 +26,8 @@
         android:layout_gravity="center"
         android:textStyle="bold"
         android:textColor="@color/light_blue"
-        android:textSize="17sp"
+        android:textSize="15sp"
+        android:paddingHorizontal="10dp"
         tools:ignore="HardcodedText,PxUsage" />
 
     <ScrollView

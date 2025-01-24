@@ -19,10 +19,9 @@
         <LinearLayout
             android:id="@+id/staButton"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -33,32 +32,45 @@
 
             <ImageView
                 android:id="@+id/imageView1asd"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="1"
                 android:scaleY="1"
                 android:src="@drawable/adrod"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/textView7asd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Sta creator"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/sta_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/sta_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/scriptButton"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -69,68 +81,45 @@
 
             <ImageView
                 android:id="@+id/imageVieasd"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="0.5"
                 android:scaleY="0.5"
                 android:src="@drawable/folder"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/textw7asd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Script Toolbox"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/script_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
 
-        <LinearLayout
-            android:id="@+id/dumpModemButton"
-            android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
-            android:background="@drawable/rounded_light_blue"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
-
-            <ImageView
-                android:id="@+id/imasieasd"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:scaleX="1.1"
-                android:scaleY="1.1"
-                android:src="@drawable/ic_modem"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/te7asd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Dump Modem"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/script_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/armButton"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -141,32 +130,45 @@
 
             <ImageView
                 android:id="@+id/imasieasagrd"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="1"
                 android:scaleY="1"
                 android:src="@drawable/ic_sensor"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/tegggsdfsd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Arm Software"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/software_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/software_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/atlasosButton"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -177,32 +179,44 @@
 
             <ImageView
                 android:id="@+id/imasisagrd"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="1"
                 android:scaleY="1"
                 android:src="@drawable/atlasos"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/tegggfsd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Copy AtlasOS/ReviOS files"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/atlasos_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/atlasos_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/dbkpButton"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50px"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded_light_blue"
             android:clickable="true"
             android:orientation="horizontal"
@@ -213,22 +227,36 @@
 
             <ImageView
                 android:id="@+id/imaasdsisagrd"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 android:src="@drawable/ic_uefi"
                 tools:ignore="ContentDescription" />
 
-            <TextView
-                android:id="@+id/tasdegggfsd"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Dualboot kernel patcher"
-                android:textColor="@color/light_blue"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/dbkp_title"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:text="@string/dbkp_subtitle" />
+            </LinearLayout>
 
         </LinearLayout>
 

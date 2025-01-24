@@ -55,6 +55,7 @@ object UniversalDialog {
             val buttonView = Button(context)
             buttonView.text = button.first
             buttonView.textSize = 14.0f
+            buttonView.setPadding(10, 0, 10, 0)
             buttonView.setBackgroundResource(R.drawable.rounded_light_blue)
             buttonView.setTextColor(context.getColor(R.color.blue))
             buttonView.setOnClickListener {
