@@ -22,7 +22,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="@string/usbhost_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textStyle="bold"
                     android:textSize="13sp"
                     tools:ignore="HardcodedText" />
@@ -60,6 +60,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textSize="11sp"
+                    android:textColor="@color/gray"
                     android:text="@string/usbhost_subtitle" />
             </LinearLayout>
 
@@ -71,7 +72,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +100,7 @@
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="@string/rotation_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textStyle="bold"
                     android:textSize="13sp"
                     tools:ignore="HardcodedText" />
@@ -109,6 +110,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textSize="11sp"
+                    android:textColor="@color/gray"
                     android:text="@string/rotation_subtitle" />
             </LinearLayout>
 
@@ -120,7 +122,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -147,7 +149,7 @@
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="@string/setup_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textStyle="bold"
                     android:textSize="13sp"
                     tools:ignore="HardcodedText" />
@@ -157,6 +159,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textSize="11sp"
+                    android:textColor="@color/gray"
                     android:text="@string/setup_subtitle" />
             </LinearLayout>
 
@@ -167,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -194,7 +197,7 @@
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="@string/defender_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textStyle="bold"
                     android:textSize="13sp"
                     tools:ignore="HardcodedText" />
@@ -204,6 +207,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:textSize="11sp"
+                    android:textColor="@color/gray"
                     android:text="@string/defender_subtitle" />
             </LinearLayout>
 

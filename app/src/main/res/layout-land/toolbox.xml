@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
+                android:background="@drawable/rounded_gray"
                 android:clickable="true"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,7 @@
                         android:layout_weight="1"
                         android:gravity="bottom"
                         android:text="@string/sta_title"
-                        android:textColor="@color/light_blue"
+                        android:textColor="@color/light_gray"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
@@ -67,6 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:textColor="@color/gray"
                         android:text="@string/sta_subtitle"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -84,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
+                android:background="@drawable/rounded_gray"
                 android:clickable="true"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +113,7 @@
                         android:layout_weight="1"
                         android:gravity="bottom"
                         android:text="@string/script_title"
-                        android:textColor="@color/light_blue"
+                        android:textColor="@color/light_gray"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
@@ -121,6 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:textColor="@color/gray"
                         android:text="@string/script_subtitle"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -141,7 +143,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
+                android:background="@drawable/rounded_gray"
                 android:clickable="true"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -169,7 +171,7 @@
                         android:layout_weight="1"
                         android:gravity="bottom"
                         android:text="@string/software_title"
-                        android:textColor="@color/light_blue"
+                        android:textColor="@color/light_gray"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
@@ -178,6 +180,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:textColor="@color/gray"
                         android:text="@string/software_subtitle"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -195,7 +198,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
+                android:background="@drawable/rounded_gray"
                 android:clickable="true"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -223,7 +226,7 @@
                         android:layout_weight="1"
                         android:gravity="bottom"
                         android:text="@string/atlasos_title"
-                        android:textColor="@color/light_blue"
+                        android:textColor="@color/light_gray"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
@@ -232,6 +235,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:textColor="@color/gray"
                         android:text="@string/atlasos_subtitle"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -254,7 +258,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_light_blue"
+                android:background="@drawable/rounded_gray"
                 android:clickable="true"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -282,7 +286,7 @@
                         android:layout_weight="1"
                         android:gravity="bottom"
                         android:text="@string/dbkp_title"
-                        android:textColor="@color/light_blue"
+                        android:textColor="@color/light_gray"
                         android:textSize="13sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText" />
@@ -291,6 +295,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:textColor="@color/gray"
                         android:text="@string/dbkp_subtitle"
                         android:textSize="11sp" />
                 </LinearLayout>

@@ -71,7 +71,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:foregroundGravity="left"
             android:scaleX="0.9"
             android:scaleY="0.9"
@@ -84,7 +84,7 @@
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:text="Windows on ARM"
-                android:textColor="@color/light_blue"
+                android:textColor="@color/light_gray"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -99,23 +99,22 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="35dp"
                 android:text="Device: "
-                android:textColor="@color/blue"
+                android:textColor="@color/slightly_lighter_gray"
                 app:layout_constraintEnd_toStartOf="@+id/textView4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/backupTime"
+                android:id="@+id/panelType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="55dp"
-                android:text="@string/last"
-                android:textColor="@color/blue"
+                android:text="@string/paneltype"
+                android:textColor="@color/slightly_lighter_gray"
                 app:layout_constraintEnd_toStartOf="@+id/textView4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/codeName"
                 tools:ignore="HardcodedText" />
 
             <LinearLayout
@@ -133,7 +132,7 @@
                     android:id="@+id/groupButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_blue"
+                    android:background="@drawable/rounded_bej"
                     android:clickable="true"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="3dp"
@@ -151,7 +150,7 @@
                     android:id="@+id/guideButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_blue"
+                    android:background="@drawable/rounded_bej"
                     android:clickable="true"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="3dp"
@@ -185,7 +184,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             tools:ignore="PxUsage">
@@ -211,7 +210,7 @@
                     android:layout_weight="0.8"
                     android:gravity="bottom"
                     android:text="@string/backup_boot_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -221,6 +220,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:paddingRight="10dp"
+                    android:textColor="@color/gray"
                     android:text="@string/backup_boot_subtitle"
                     android:textSize="11sp"
                     android:textStyle="italic" />
@@ -234,7 +234,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             tools:ignore="PxUsage">
@@ -260,7 +260,7 @@
                     android:layout_weight="0.8"
                     android:gravity="bottom"
                     android:text="@string/toolbox_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -270,6 +270,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:paddingRight="10dp"
+                    android:textColor="@color/gray"
                     android:text="@string/toolbox_subtitle"
                     android:textSize="11sp"
                     android:textStyle="italic" />
@@ -283,7 +284,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             tools:ignore="PxUsage">
@@ -309,7 +310,7 @@
                     android:layout_weight="0.8"
                     android:gravity="bottom"
                     android:text="@string/mnt_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -319,6 +320,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:paddingRight="10dp"
+                    android:textColor="@color/gray"
                     android:text="@string/mnt_subtitle"
                     android:textSize="11sp"
                     android:textStyle="italic" />
@@ -331,7 +333,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_light_blue"
+            android:background="@drawable/rounded_gray"
             android:clickable="true"
             android:orientation="horizontal"
             tools:ignore="PxUsage">
@@ -357,7 +359,7 @@
                     android:layout_weight="0.8"
                     android:gravity="bottom"
                     android:text="@string/quickboot_title"
-                    android:textColor="@color/light_blue"
+                    android:textColor="@color/light_gray"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -367,6 +369,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:paddingRight="10dp"
+                    android:textColor="@color/gray"
                     android:text="@string/quickboot_subtitle"
                     android:textSize="11sp"
                     android:textStyle="italic" />

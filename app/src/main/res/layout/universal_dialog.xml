@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="0dp"
     android:layout_margin="0dp"
-    android:background="@drawable/rounded_light_blue"
+    android:background="@drawable/rounded_gray"
     android:orientation="vertical">
 
     <ImageView
@@ -25,7 +25,7 @@
         android:text="PlaceHolder"
         android:layout_gravity="center"
         android:textStyle="bold"
-        android:textColor="@color/light_blue"
+        android:textColor="@color/light_gray"
         android:textSize="15sp"
         android:paddingHorizontal="10dp"
         tools:ignore="HardcodedText,PxUsage" />
@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textSize="13sp"
-                android:textColor="@color/blue"
+                android:textColor="@color/slightly_lighter_gray"
                 tools:ignore="HardcodedText,PxUsage" />
 
             <LinearLayout

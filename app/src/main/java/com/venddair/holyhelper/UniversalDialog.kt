@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -56,8 +57,9 @@ object UniversalDialog {
             buttonView.text = button.first
             buttonView.textSize = 14.0f
             buttonView.setPadding(10, 0, 10, 0)
-            buttonView.setBackgroundResource(R.drawable.rounded_light_blue)
-            buttonView.setTextColor(context.getColor(R.color.blue))
+            buttonView.setBackgroundResource(R.drawable.rounded_light_gray)
+            buttonView.setTextColor(context.getColor(R.color.white))
+            buttonView.setTypeface(buttonView.typeface, Typeface.BOLD)
             buttonView.setOnClickListener {
                 dialog.dismiss()
                 button.second()
