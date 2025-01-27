@@ -35,9 +35,12 @@ class MainActivity : ComponentActivity() {
         val groupButton = findViewById<TextView>(R.id.groupButton)
         val toolboxButton = findViewById<LinearLayout>(R.id.toolboxButton)
         val versionTextView = findViewById<TextView>(R.id.version)
+        val panelTypeTextView = findViewById<TextView>(R.id.panelType)
 
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
         codeNameText.text = Device.get()
+
+        panelTypeTextView.text = getString(R.string.paneltype, Device.getPanelType())
 
         settingsButton.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
         toolboxButton.setOnClickListener { startActivity(Intent(this, ToolboxActivity::class.java)) }

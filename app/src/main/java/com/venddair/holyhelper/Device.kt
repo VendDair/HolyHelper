@@ -1,13 +1,32 @@
 package com.venddair.holyhelper
 
 import android.content.Context
-import android.view.View
 import com.topjohnwu.superuser.ShellUtils
 
 object Device {
 
     fun get(): String {
         return ShellUtils.fastCmd("getprop ro.product.device").replace("\n", "")
+    }
+
+    fun getPanelType(): String {
+        val data = ShellUtils.fastCmd(" su -c cat /proc/cmdline ")
+        return if (data.isEmpty()) {
+            "Unknown"
+        } else {
+            when {
+                data.contains("j20s_42_02_0b") || data.contains("k82_42") || data.contains("ft8756_huaxing") -> "Huaxing"
+                data.contains("j20s_36_02_0a") || data.contains("k82_36") || data.contains("nt36675_tianma") || data.contains("tianma_fhd_nt36672a") -> "Tianma"
+                data.contains("ebbg_fhd_ft8719") -> "EBBG"
+                data.contains("fhd_ea8076_global") -> "global"
+                data.contains("fhd_ea8076_f1mp_cmd") -> "f1mp"
+                data.contains("fhd_ea8076_f1p2_cmd") -> "f1p2"
+                data.contains("fhd_ea8076_f1p2_2") -> "f1p2_2"
+                data.contains("fhd_ea8076_f1_cmd") -> "f1"
+                data.contains("fhd_ea8076_cmd") -> "ea8076_cmd"
+                else -> ShellUtils.fastCmd("su -c cat /proc/cmdline | tr ' :=' '\n'|grep dsi|tr ' _' '\n'|tail -3|head -1")
+            }
+        }
     }
 
     fun isDbkpSupported(): Boolean {
