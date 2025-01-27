@@ -116,4 +116,9 @@
 	<string name="preference9">Запрашивать разблокированный экран для быстрой загрузки в Windows</string>
 	<string name="preference10">Смонтировать Windows в /mnt вместо /sdcard</string>
 	<string name="preference11">Отключить проверку обновлений приложений</string>
+    <string name="flash1">Прошить</string>
+    <string name="update_question">Вы хотите скачать версию %s?</string>
+    <string name="download_failed_title">Не удалось скачать файл!</string>
+    <string name="download_failed_subtitle">Проверь интернет\\nЕсли что, спроси у разработчика</string>
+    <string name="download_file_failed_title">Не удалось скачать %s!</string>
 </resources>

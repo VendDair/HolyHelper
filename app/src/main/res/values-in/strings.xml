@@ -116,4 +116,9 @@
 	<string name="preference9">Memerlukan layar yang tidak terkunci untuk quickboot</string>
 	<string name="preference10">Pasang Windows ke /mnt bukan ke /sdcard</string>
 	<string name="preference11">Nonaktifkan Pemeriksaan Pembaruan Aplikasi</string>
+    <string name="flash1">Mem-flash</string>
+    <string name="update_question">Apakah Anda ingin mengunduh versi %s?</string>
+    <string name="download_failed_title">Gagal mengunduh file!</string>
+    <string name="download_failed_subtitle">ek internetmu\\nKalau butuh info lebih, tanya si pembuat aplikasi</string>
+    <string name="download_file_failed_title">Gagal mengunduh %s!</string>
 </resources>

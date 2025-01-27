@@ -116,4 +116,9 @@
 	<string name="preference9">Quickboot için ekran kilidi açmayı zorunlu kıl</string>
 	<string name="preference10">Mount Windows to /mnt instead of /sdcard</string>
 	<string name="preference11">Disable checking for app updates</string>
+    <string name="flash1">Flaşla</string>
+    <string name="update_question">Sürüm %s\'ı indirmek ister misiniz?</string>
+    <string name="download_failed_title">Dosya indirilemedi!</string>
+    <string name="download_failed_subtitle">Lütfen internetinizi kontrol edin\\ndaha fazla bilgi için geliştiriciyle görüşün</string>
+    <string name="download_file_failed_title">%s indirilemedi!</string>
 </resources>

@@ -18,8 +18,8 @@ object Paths {
     val bootPartition: String get() = "/dev/block/by-name/boot$(getprop ro.boot.slot_suffix)"
     const val bootImage = "/sdcard/boot.img"
 
-    const val winPath = "/sdcard/Windows"
-    const val winPath1 = "/mnt/sdcard/Windows"
+    const val winPath = "/mnt/sdcard/Windows"
+    const val winPath1 = "/mnt/Windows"
 
     val sta: String get() = Files.getMountDir() + "/sta"
     val staBin: String get() = Files.getMountDir() + "/sta/sta.exe"

@@ -116,4 +116,9 @@
 	<string name="preference9">ต้องใช้หน้าจอที่ปลดล็อคสำหรับการบูตอย่างรวดเร็ว</string>
 	<string name="preference10">เชื่อมต่อ Windows ไปที่ /mnt แทน /sdcard</string>
 	<string name="preference11">ปิดการตรวจสอบการอัปเดตแอป</string>
+    <string name="flash1">แฟลช</string>
+    <string name="update_question">คุณต้องการดาวน์โหลดเวอร์ชั่น %s หรือไม่?</string>
+    <string name="download_failed_title">ดาวน์โหลดไฟล์ไม่สำเร็จ!</string>
+    <string name="download_failed_subtitle">ลองเช็คอินเทอร์เน็ตดู\\nมีคำถามเพิ่มถามคนทำแอปได้เลย</string>
+    <string name="download_file_failed_title">ดาวน์โหลด %s ไม่สำเร็จ!</string>
 </resources>

@@ -116,4 +116,9 @@
 	<string name="preference9">Запытваць разблакаваны экран для хуткай загрузкі ў Windows</string>
 	<string name="preference10">Мантаваць Windows у /mnt замест /sdcard</string>
 	<string name="preference11">Адключыць праверку абнаўленняў прыкладання.</string>
+    <string name="flash1">Прашыць</string>
+    <string name="update_question">Вы жадаеце спампаваць версію %s?</string>
+    <string name="download_failed_title">Не ўдалося загрузіць файл!</string>
+	<string name="download_failed_subtitle">Правер свой інтэрнэт\\nКалі што, спытай у праграміста</string>
+	<string name="download_file_failed_title">Не ўдалося загрузіць %s!</string>
 </resources>

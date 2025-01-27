@@ -125,4 +125,9 @@ C:\\Toolbox?"</string>
 	<string name="preference9">نیاز به بازبودن قفل صفحه برای استفاده از رفتن سریع به ویندوز</string>
 	<string name="preference10">دسترسی به فایل های ویندوز در مسیر mnt/ به جای sdcard/</string>
 	<string name="preference11">غیر فعال کردن بروزرسانی های نرم‌افزار</string>
+    <string name="flash1">فلش</string>
+    <string name="update_question">آیا می‌خواهید نسخه %s را دانلود کنید؟</string>
+    <string name="download_failed_title">دریافت فایل ناموفق بود!</string>
+    <string name="download_failed_subtitle">لطفاً اینترنت خود را چک کنید ، برای اطلاعات بیشتر با برنامه نویس حرف بزنید</string>
+    <string name="download_file_failed_title">دریافت %s ناموفق بود!</string>
 </resources>

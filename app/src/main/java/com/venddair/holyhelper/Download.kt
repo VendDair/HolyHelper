@@ -147,6 +147,7 @@ object Download {
             "https://github.com/n00b69/woasetup/releases/download/Installers/PhysX-9.13.0604-SystemSoftware-Legacy.msi" to "PhysX-9.13.0604-SystemSoftware-Legacy.msi",
             "https://github.com/n00b69/woasetup/releases/download/Installers/PhysX_9.23.1019_SystemSoftware.exe" to "PhysX_9.23.1019_SystemSoftware.exe",
             "https://github.com/n00b69/woasetup/releases/download/Installers/xnafx40_redist.msi" to "xnafx40_redist.msi",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/opengl.appx" to "opengl.1.2409.2.0.appx",
             "https://github.com/n00b69/woasetup/releases/download/Installers/2005vcredist_x64.EXE" to "2005vcredist_x64.EXE",
             "https://github.com/n00b69/woasetup/releases/download/Installers/2005vcredist_x86.EXE" to "2005vcredist_x86.EXE",
             "https://github.com/n00b69/woasetup/releases/download/Installers/2008vcredist_x64.exe" to "2008vcredist_x64.exe",
@@ -161,9 +162,9 @@ object Download {
             "https://github.com/n00b69/woasetup/releases/download/Installers/2015VC_redist.x86.exe" to "2015VC_redist.x86.exe",
             "https://github.com/n00b69/woasetup/releases/download/Installers/2022VC_redist.arm64.exe" to "2022VC_redist.arm64.exe",
             "https://github.com/n00b69/woasetup/releases/download/Installers/dxwebsetup.exe" to "dxwebsetup.exe",
-            "https://github.com/n00b69/woasetup/releases/download/Installers/oalinst.exe" to "oalinst.exe",
+            "https://github.com/n00b69/woasetup/releases/download/Installers/oalinst.exe" to "oalinst.exe"
         )
-        Commands.askUserToMountIfNotMounted(context) {
+        if (Commands.mountWindows(context, false)) {
             for ((url, fileName) in urls) {
                 download(context, url, fileName) { path, name ->
                     Files.copyFileToWin(context, path, "Toolbox/Frameworks/$name")
@@ -173,7 +174,11 @@ object Download {
     }
 
     fun downloadDefenderRemover(context: Context) {
-        download(context, "https://github.com/n00b69/woasetup/releases/download/Installers/DefenderRemover.exe", "DefenderRemover.exe") { path, name ->
+        download(
+            context,
+            "https://github.com/n00b69/woasetup/releases/download/Installers/DefenderRemover.exe",
+            "DefenderRemover.exe"
+        ) { path, name ->
             Files.copyFileToWin(context, path, "Toolbox/$name")
         }
     }

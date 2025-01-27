@@ -116,4 +116,9 @@
 	<string name="preference9">სწრაფი ჩატვირთვისთვის საჭიროა განბლოკილი ეკრანი</string>
 	<string name="preference10">მიაბი Windows /mnt-ზე /sdcard-ის ნაცვლად</string>
 	<string name="preference11">გამორთეთ აპის განახლებების შემოწმება</string>
+    <string name="flash1">დაფლეშვა</string>
+    <string name="update_question">გსურთ ვერსია %s-ის ჩამოტვირთვა?</string>
+    <string name="download_failed_title">ფაილის გადმოწერა ვერ მოხერხდა!</string>
+    <string name="download_failed_subtitle">ინტერნეტი შეამოწმე\\nმეტი ინფოსთვის დეველოპერს დაუკავშირდი</string>
+    <string name="download_file_failed_title">%s-ის გადმოწერა ვერ მოხერხდა!</string>
 </resources>

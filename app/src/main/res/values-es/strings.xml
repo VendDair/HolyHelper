@@ -116,4 +116,9 @@
 	<string name="preference9">Requerir pantalla desbloqueada para el arranque rápido</string>
 	<string name="preference10">Inicializar la partición de Windows en /mnt en lugar de /sdcard</string>
 	<string name="preference11">Dejar de comprobar nuevas actualizaciones de la app</string>
+    <string name="flash1">Flashear</string>
+    <string name="update_question">¿Le gustaría descargar la versión %s?</string>
+    <string name="download_failed_title">¡No se pudo descargar el archivo!</string>
+    <string name="download_failed_subtitle">Revisa tu internet\\nSi necesitas más ayuda, habla con el que hizo la app</string>
+    <string name="download_file_failed_title">¡Error al descargar %s!</string>
 </resources>

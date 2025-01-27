@@ -116,4 +116,9 @@
 	<string name="preference9">Entsperrter Bildschirm für Quickboot erforderlich</string>
 	<string name="preference10">Mount Windows nach /mnt statt /sdcard</string>
 	<string name="preference11">Suchen nach App-Updates beenden</string>
+    <string name="flash1">Flashen</string>
+    <string name="update_question">Möchten Sie die Version %s herunterladen?</string>
+    <string name="download_failed_title">Die Datei konnte nicht heruntergeladen werden!</string>
+	<string name="download_failed_subtitle">Prüf deine Internetverbindung\\nFür mehr Infos frag den Programmierer</string>
+    <string name="download_file_failed_title">Fehler beim Herunterladen von %s!</string>
 </resources>

@@ -116,4 +116,9 @@
 	<string name="preference9">Require unlocked screen for quickboot</string>
 	<string name="preference10">Mount Windows to /mnt instead of /sdcard</string>
 	<string name="preference11">Disable checking for app updates</string>
+    <string name="flash1">Flasher</string>
+    <string name="update_question">Voulez-vous télécharger la version %s ?</string>
+    <string name="download_failed_title">Impossible de télécharger le fichier !</string>
+    <string name="download_failed_subtitle">Vérifie ta connexion\\nPour plus d’infos, parle au dev de l’appli</string>
+    <string name="download_file_failed_title">Échec du téléchargement de %s !</string>
 </resources>

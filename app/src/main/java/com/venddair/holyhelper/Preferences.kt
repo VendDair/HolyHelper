@@ -7,11 +7,30 @@ object Preferences {
 
     private lateinit var appContext: Context
 
+    enum class Preference(val key: String) {
+        SETTINGS("settings"),
+    }
+
+    enum class Key(val key: String) {
+        MOUNTTOMNT("mountToMnt"),
+        DISABLEUPDATES("disableUpdates")
+    }
+
     fun init(context: Context) {
         appContext = context
     }
 
-    fun get(name: String): SharedPreferences {
-        return appContext.getSharedPreferences(name, Context.MODE_PRIVATE)
+    fun get(name: Preference): SharedPreferences {
+        return appContext.getSharedPreferences(name.key, Context.MODE_PRIVATE)
+    }
+
+    fun getBoolean(preference: Preference, name: Key, defValue: Boolean): Boolean {
+        return get(preference).getBoolean(name.key, defValue)
+    }
+
+    fun putBoolean(preference: Preference, name: Key, content: Boolean) {
+        val editor = get(preference).edit()
+        editor.putBoolean(name.key, content)
+        editor.apply()
     }
 }

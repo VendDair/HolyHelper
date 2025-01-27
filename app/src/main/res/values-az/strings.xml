@@ -116,4 +116,9 @@
 	<string name="preference9">Require unlocked screen for quickboot</string>
 	<string name="preference10">Mount Windows to /mnt instead of /sdcard</string>
 	<string name="preference11">Disable checking for app updates</string>
+    <string name="flash1">Flaş et</string>
+    <string name="update_question">%s versiyasını yükləmək istəyirsiniz?</string>
+    <string name="download_failed_title">Fayl yüklənə bilmədi!</string>
+	<string name="download_failed_subtitle">Zəhmət olmasa internetinizi yoxlayın\\nəlavə məlumat üçün tərtibatçı ilə danışın</string>
+	<string name="download_file_failed_title">%s yüklənə bilmədi!</string>
 </resources>

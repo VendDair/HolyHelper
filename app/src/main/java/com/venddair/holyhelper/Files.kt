@@ -26,8 +26,6 @@ object Files {
             createFolder(Paths.uefiFolder)
             createFolder(Paths.winPath)
             createFolder(Paths.data)
-            createFolder(Paths.toolbox)
-            createFolder(Paths.frameworks)
 
             copyAsset("mount.ntfs","+x")
             copyAsset("sta.exe")
@@ -83,11 +81,8 @@ object Files {
         ShellUtils.fastCmd("su -c chmod $perms $path")
     }
 
-    fun copyFileToWin(context: Context, path: String, newPath: String, alertIfNotMounted: Boolean = true) {
-        if (!Commands.isWindowsMounted(context) && alertIfNotMounted) Info.winNotMounted(context) { mounted ->
-            if (mounted) ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
-        }
-        else {
+    fun copyFileToWin(context: Context, path: String, newPath: String) {
+        if (Commands.mountWindows(context, false)) {
             ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
         }
     }
@@ -140,7 +135,7 @@ object Files {
         copy(Paths.autoFlasherAsset, Paths.autoFlasher)
     }
     fun copyArmSoftwareLinks() {
-        createFolder(getMountDir() + "/Toolbox")
+        createFolder(Paths.toolbox)
         copy(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
         copy(Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
         copy(Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
@@ -169,7 +164,8 @@ object Files {
     }
 
     fun getMountDir(): String {
-        return if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1 else Paths.winPath
+        /*return if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1 else Paths.winPath*/
+        return if (Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)) Paths.winPath1 else Paths.winPath
     }
 
     fun getResource(id: Int): Drawable {
@@ -177,7 +173,7 @@ object Files {
     }
 
     fun getResourceFromDevice(): Drawable {
-        return when (Commands.getDevice()) {
+        return when (Device.get()) {
             "a52sxq" -> getResource(R.drawable.a52sxq)
             "dm1q" -> getResource(R.drawable.dm1q)
             "judyln", "judyp", "judypn", "joan", "andromeda", "guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7",

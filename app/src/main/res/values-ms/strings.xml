@@ -116,4 +116,9 @@
 	<string name="preference9">Memerlukan layar yang tidak terkunci untuk quickboot</string>
 	<string name="preference10">Pasang Windows ke /mnt bukan ke /sdcard</string>
 	<string name="preference11">Nonaktifkan Pemeriksaan Pembaruan Aplikasi</string>
+    <string name="flash1">Flashkan</string>
+    <string name="update_question">Adakah anda ingin memuat turun versi %s?</string>
+    <string name="download_failed_title">Gagal memuat turun fail!</string>
+    <string name="download_failed_subtitle">Periksa sambungan internet anda\\nUntuk sebarang soalan tambahan, hubungi pembangun aplikasi</string>
+    <string name="download_file_failed_title">Gagal memuat turun %s!</string>
 </resources>

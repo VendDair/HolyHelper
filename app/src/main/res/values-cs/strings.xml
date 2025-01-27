@@ -116,4 +116,9 @@
 	<string name="preference9">Vyžadovat odemčenou obrazovku pro rychlé spuštění (QUICKBOOT)</string>
 	<string name="preference10">Připojte Windows do /mnt místo /sdcard</string>
 	<string name="preference11">Zakázat kontrolu aktualizací aplikace</string>
+    <string name="flash1">Flashovat</string>
+    <string name="update_question">Chcete si stáhnout verzi %s?</string>
+    <string name="download_failed_title">Soubor se nepodařilo stáhnout!</string>
+	<string name="download_failed_subtitle">Zkontroluj si internet\\nPro víc info se zeptej programátora</string>
+    <string name="download_file_failed_title">Nepodařilo se stáhnout %s!</string>
 </resources>

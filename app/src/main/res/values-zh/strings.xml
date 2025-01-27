@@ -116,4 +116,9 @@
 	<string name="preference9">从操作中心快速启动到 Windows 需要先解锁屏幕</string>
 	<string name="preference10">把 Windows 分区挂载到 /mnt 而不是 /sdcard</string>
 	<string name="preference11">禁用应用更新检查</string>
+    <string name="flash1">刷入</string>
+    <string name="update_question">您要下载版本%s吗？</string>
+    <string name="download_failed_title">无法下载文件！</string>
+    <string name="download_failed_subtitle">检查下你的网络\\n有问题就问做这个app的人</string>
+    <string name="download_file_failed_title">无法下载%s！</string>
 </resources>

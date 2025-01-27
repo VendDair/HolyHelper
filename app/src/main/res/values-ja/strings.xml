@@ -116,4 +116,9 @@
 	<string name="preference9">クイックブートにはロック解除された画面が必要</string>
 	<string name="preference10">Windows を /mnt にマウントする代わりに /sdcard にマウント</string>
 	<string name="preference11">アプリの更新チェックを無効にする</string>
+    <string name="flash1">書き込む</string>
+    <string name="update_question">バージョン%sをダウンロードしますか？</string>
+    <string name="download_failed_title">ファイルのダウンロードに失敗しました！</string>
+    <string name="download_failed_subtitle">ネットを確認して\\n詳しくは作った人に聞いてね</string>
+    <string name="download_file_failed_title">%sのダウンロードに失敗しました！</string>
 </resources>

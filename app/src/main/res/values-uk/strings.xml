@@ -116,4 +116,9 @@
 	<string name="preference9">Для швидкого завантаження потрібен розблокований екран</string>
 	<string name="preference10">Змонтувати Windows в /mnt замість /sdcard</string>
 	<string name="preference11">Вимкнути перевірку оновлень додатка</string>
+    <string name="flash1">Прошити</string>
+    <string name="update_question">Ви бажаєте завантажити версію %s?</string>
+    <string name="download_failed_title">Не вдалося завантажити файл!</string>
+    <string name="download_failed_subtitle">Перевір свій інтернет\\nЯкщо щось — питай розробника</string>
+    <string name="download_file_failed_title">Не вдалося завантажити %s!</string>
 </resources>

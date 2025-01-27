@@ -7,11 +7,11 @@ import android.net.Uri
 class Info {
     companion object {
 
-        var isWinNotMountedDialog = false
+        /*var isWinNotMountedDialog = false*/
         var isWinUnableToMountDialog = false
         var isNoWinPartitionDialog = false
 
-        fun winNotMounted(context: Context, after: (result: Boolean) -> Unit = {}) {
+        /*fun winNotMounted(context: Context, after: (result: Boolean) -> Unit = {}) {
             if (isWinNotMountedDialog) return
             UniversalDialog.showDialog(context,
                 title = "Windows is not mounted!",
@@ -28,15 +28,15 @@ class Info {
                 isWinNotMountedDialog = false
             }
             isWinNotMountedDialog = true
-        }
+        }*/
 
         fun downloadFailed(context: Context, fileName: String) {
             UniversalDialog.showDialog(context,
-                title = "Failed to download $fileName!",
-                text = "Check your internet connection!\nOr file may not even exist",
+                title = context.getString(R.string.download_file_failed_title, fileName),
+                text = context.getString(R.string.download_failed_subtitle),
                 image = R.drawable.info,
                 buttons = listOf(
-                    Pair("OK") {},
+                    Pair(context.getString(R.string.dismiss)) {},
                 )
             )
         }
@@ -44,11 +44,14 @@ class Info {
         fun winUnableToMount(context: Context) {
             if (isWinUnableToMountDialog) return
             UniversalDialog.showDialog(context,
-                title = "Windows wasn't able to mount!",
-                text = "Try to mount to /mnt in settings\nFurther questions to the developer",
+                title = context.getString(R.string.mountfail),
+                text = context.getString(R.string.internalstorage),
                 image = R.drawable.info,
                 buttons = listOf(
-                    Pair("OK") {}
+                    Pair(context.getString(R.string.chat)) {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Device.getGroupLink())))
+                    },
+                    Pair(context.getString(R.string.dismiss)) {}
                 )
             ) {
                 isWinUnableToMountDialog = false
@@ -59,12 +62,11 @@ class Info {
         fun noWinPartition(context: Context) {
             if (isNoWinPartitionDialog) return
             UniversalDialog.showDialog(context,
-                title = "No Windows partition was found!",
-                text = "You may not have windows installed\nCheck the guide for your device",
+                title = context.getString(R.string.partition),
                 image = R.drawable.info,
                 buttons = listOf(
-                    Pair("CHECK") {context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(MainActivity.getGuideLink())))},
-                    Pair("Later") {}
+                    Pair(context.getString(R.string.guide)) {context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Device.getGuideLink())))},
+                    Pair(context.getString(R.string.later)) {}
                 )
             ) {
                 isNoWinPartitionDialog = false
@@ -74,25 +76,25 @@ class Info {
 
         fun unableToDownload(context: Context) {
             UniversalDialog.showDialog(context,
-                title = "Couldn't download the file",
-                text = "Check your internet connection\nFor any additional questions ask the developer",
+                title = context.getString(R.string.download_failed_title),
+                text = context.getString(R.string.download_failed_subtitle),
                 image = R.drawable.info,
                 buttons = listOf(
-                    Pair("OK") {},
+                    Pair(context.getString(R.string.dismiss)) {},
                 )
             )
         }
 
         fun notifyAboutUpdate(context: Context, version: String) {
             UniversalDialog.showDialog(context,
-                title = "New update was detected!",
-                text = "Would you like to download the version $version?",
+                title = context.getString(R.string.update1),
+                text = context.getString(R.string.update_question, version),
                 image = R.drawable.info,
                 buttons = listOf(
-                    Pair("YES") { Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { _, fileName ->
+                    Pair(context.getString(R.string.yes)) { Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { _, fileName ->
                         Download.installAPK(context, fileName)
                     } },
-                    Pair("LATER") {}
+                    Pair(context.getString(R.string.later)) {}
                 )
             )
         }

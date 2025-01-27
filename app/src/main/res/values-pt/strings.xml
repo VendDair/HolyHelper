@@ -116,4 +116,9 @@
 	<string name="preference9">Requer tela sem bloqueio para reinício rápido</string>
 	<string name="preference10">Montar Windows em /mnt ao invés de /sdcard</string>
 	<string name="preference11">Desativar verificação de atualizações do app</string>
+    <string name="flash1">Flashear</string>
+    <string name="update_question">Deseja baixar a versão %s?</string>
+    <string name="download_failed_title">Não foi possível baixar o arquivo!</string>
+    <string name="download_failed_subtitle">Confere sua internet\\nPra mais detalhes, fala com o programador</string>
+    <string name="download_file_failed_title">Falha ao baixar %s!</string>
 </resources>

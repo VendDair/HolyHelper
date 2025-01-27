@@ -116,4 +116,9 @@
 	<string name="preference9">Vereist ontgrendeld scherm voor quickboot</string>
 	<string name="preference10">Mount Windows naar /mnt i.p.v /sdcard</string>
 	<string name="preference11">Zoeken naar app-updates stopzetten</string>
+    <string name="flash1">Flashen</string>
+    <string name="update_question">Wilt u versie %s downloaden?</string>
+    <string name="download_failed_title">Het bestand kon niet worden gedownload!</string>
+    <string name="download_failed_subtitle">Check je internet\\nVraag de programmeur voor meer info</string>
+    <string name="download_file_failed_title">Downloaden van %s mislukt!</string>
 </resources>
