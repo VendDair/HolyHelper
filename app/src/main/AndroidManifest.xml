@@ -30,6 +30,28 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <service
+            android:name=".QSTileMountWin"
+            android:label="Mount win"
+            android:icon="@drawable/mnt2"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".QSTileQuickBoot"
+            android:label="Quickboot"
+            android:icon="@drawable/win11logo"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".ScriptToolboxActivity"
             android:exported="false"
