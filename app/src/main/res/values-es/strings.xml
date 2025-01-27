@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">Flashear UEFI a la partición de arranque</string>
 	<string name="uefi_not_found_subtitle">Descargue la imagen UEFI para %s y colóquela en la CARPETA UEFI en el ALMACENAMIENTO INTERNO (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Dumpear el módem, flashear UEFI y reiniciar a Windows con un solo click</string>
-	<string name="quickboot_subtitle_nabu">Flashear UEFI y reiniciar a Windows con un solo click</string>
-	<string name="sta_subtitle">Agrega la aplicación Cambiar a Android a Windows</string>
+    <string name="sta_subtitle">Agrega la aplicación Cambiar a Android a Windows</string>
 	<string name="usbhost_subtitle">Agrega un script a C:\\Toolbox que le permite alternar el modo del host USB</string>
 	<string name="software_subtitle">Agrega accesos directos del navegador que contienen software ARM a C:\\Toolbox</string>
 	<string name="rotation_subtitle">Agrega un script a C:\\Toolbox que te permite rotar la pantalla con un acceso directo\n(útil para dispositivos a los que no les funcionen los sensores)</string>

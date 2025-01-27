@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">Прашыць UEFI у раздзел boot</string>
 	<string name="uefi_not_found_subtitle">Калі ласка, спампуйце UEFI для %s і змясціце яго ў тэчку UEFI на ўнутраным дыску (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Дамп modem, прашыўка UEFI і перазагрузка ў Windows адным клікам</string>
-	<string name="quickboot_subtitle_nabu">Прашыць UEFI і перазагрузіцца ў Windows адным клікам!</string>
-	<string name="sta_subtitle">Дадае прыкладанне Switch to Android у Windows</string>
+    <string name="sta_subtitle">Дадае прыкладанне Switch to Android у Windows</string>
 	<string name="usbhost_subtitle">Дадае скрыпт у C:\\Toolbox для пераключэння рэжыму USB</string>
 	<string name="software_subtitle">Дадае спасылку на сайт з праграмамі для ARM у C:\\Toolbox</string>
 	<string name="rotation_subtitle">Дадае скрыпт у C:\\Toolbox для пераключэння арыентацыі экрана праз ярлык\n (Карысна для прылад без працуючых сенсараў)</string>

@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">Wgraj UEFI do partycji rozruchowej</string>
 	<string name="uefi_not_found_subtitle">Proszę pobrać obraz UEFI dla %s i umieścić go w FOLDERZE UEFI w PAMIĘCI WEWNĘTRZNEJ (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Wyczyść modem, wgraj UEFI i uruchom ponownie do Windows jednym kliknięciem</string>
-	<string name="quickboot_subtitle_nabu">Wgraj UEFI i uruchom ponownie do Windows jednym kliknięciem</string>
-	<string name="sta_subtitle">Dodaje aplikację Przełącz na Androida do systemu Windows</string>
+    <string name="sta_subtitle">Dodaje aplikację Przełącz na Androida do systemu Windows</string>
 	<string name="usbhost_subtitle">Dodaje skrypt do C:\Toolbox, który umożliwia przełączanie trybu hosta USB</string>
 	<string name="software_subtitle">Dodaje skróty przeglądarki zawierające oprogramowanie ARM do C:\Toolbox</string>
 	<string name="rotation_subtitle">Dodaje skrypt do C:\Toolbox, który pozwala na obracanie ekranu za pomocą skrótun\(przydatne dla urządzeń bez działających czujników)</string>

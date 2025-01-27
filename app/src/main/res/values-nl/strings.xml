@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">UEFI naar boot partitie flashen</string>
 	<string name="uefi_not_found_subtitle">Download de UEFI voor %s en plaats deze in de UEFI FOLDER in uw INTERNE OPSLAG (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Modem gereedmaken, UEFI flashen en Windows starten in een klik</string>
-	<string name="quickboot_subtitle_nabu">UEFI flashen en Windows starten in een klik</string>
-	<string name="sta_subtitle">Plaatst de Switch to Android app in Windows</string>
+    <string name="sta_subtitle">Plaatst de Switch to Android app in Windows</string>
 	<string name="usbhost_subtitle">Plaatst een script in C:\\Toolbox waarmee je USB Host Modus aan/uit kan zetten</string>
 	<string name="software_subtitle">Plaatst browser snelkoppelingen met ARM software in C:\\Toolbox</string>
 	<string name="rotation_subtitle">Plaatst een script in C:\\Toolbox waarmee je het scherm kan draaien\n(handig voor toestellen zonder werkende sensors)</string>

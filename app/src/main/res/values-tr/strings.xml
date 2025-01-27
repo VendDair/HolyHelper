@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">UEFI\’yi boot bölmesine flashla</string>
 	<string name="uefi_not_found_subtitle">Lütfen UEFI imajını %s için indirin ve DAHİLİ DEPOLAMANIZDAKİ UEFI KLASÖRÜNE yerleştirin (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Tek tıkla modemi dumpla, UEFI\’yi flashla ve Windows\'a reboot et</string>
-	<string name="quickboot_subtitle_nabu">Bir tıkla UEFI flashla ve Windows\’a reboot et</string>
-	<string name="sta_subtitle">Switch to Android uygulamasını Windows\’a ekler</string>
+    <string name="sta_subtitle">Switch to Android uygulamasını Windows\’a ekler</string>
 	<string name="usbhost_subtitle">USB Host Modunu geçiş yapmanızı sağlayan bir scripti C:\\Toolbox içine ekler</string>
 	<string name="software_subtitle">ARM yazılımı içeren tarayıcı kısayollarını C:\\Toolbox içine ekler</string>
 	<string name="rotation_subtitle">Kısayol ile ekranı döndürmenizi sağlayan bir scripti C:\\Toolbox içine ekler\n(çalışmayan sensörlü cihazlar için kullanışlıdır)</string>

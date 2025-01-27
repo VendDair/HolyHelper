@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">Flash UEFI untuk mem-boot partisi</string>
 	<string name="uefi_not_found_subtitle">Silakan unduh gambar UEFI untuk %s dan letakkan di FOLDER UEFI di PENYIMPANAN INTERNAL(/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Buang modem, flash UEFI, dan reboot ke Windows dalam satu klik</string>
-	<string name="quickboot_subtitle_nabu">Flash UEFI dan reboot ke Windows dalam satu klik</string>
-	<string name="sta_subtitle">Menambahkan aplikasi Beralih ke Android ke Windows</string>
+    <string name="sta_subtitle">Menambahkan aplikasi Beralih ke Android ke Windows</string>
 	<string name="usbhost_subtitle">Menambahkan skrip ke C:\\Toolbox yang memungkinkan Anda mengaktifkan Mode Host USB</string>
 	<string name="software_subtitle">Menambahkan pintasan browser yang berisi perangkat lunak ARM ke C:\\Toolbox</string>
 	<string name="rotation_subtitle">Menambahkan skrip ke C:\\Toolbox yang memungkinkan Anda memutar layar dengan pintasan(berguna untuk perangkat tanpa sensor yang berfungsi)</string>

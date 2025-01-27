@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">boot 파티션에 UEFI를 플래시합니다</string>
 	<string name="uefi_not_found_subtitle">%s의 UEFI 이미지를 다운로드하여 내부 저장소의 UEFI 폴더 (/sdcard/UEFI) 에 저장하세요</string>
 	<string name="quickboot_subtitle">modem 파티션 덤프, UEFI 플래시 및 Windows 부팅을 즉시 진행합니다</string>
-	<string name="quickboot_subtitle_nabu">UEFI 플래시 및 Windows 부팅을 즉시 진행합니다</string>
-	<string name="sta_subtitle">Windows에 Switch to Android 앱을 추가합니다</string>
+    <string name="sta_subtitle">Windows에 Switch to Android 앱을 추가합니다</string>
 	<string name="usbhost_subtitle">USB 호스트 모드를 전환할 수 있는 스크립트를 C:\\Toolbox에 추가합니다</string>
 	<string name="software_subtitle">ARM 소프트웨어가 포함된 브라우저 바로 가기를 C:\\Toolbox에 추가합니다</string>
 	<string name="rotation_subtitle">바로가기로 화면을 회전할 수 있는 스크립트를 C:\\Toolbox에 추가합니다\n(센서가 작동하지 않는 장치에 유용합니다)</string>

@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">UEFI-ს გაფლაშება boot ბლოკში</string>
 	<string name="uefi_not_found_subtitle">გთხოვთ გადმოიწერეთ UEFI image %s-სთვის და განათავსეთ იგი UEFI-ს საქაღალდეში, მთავარ მეხსიერებაში (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">დაადუმპე მოდემი, გააფლაშე UEFI და გადატვირთე Windows-ზე ერთი დაჭერით</string>
-	<string name="quickboot_subtitle_nabu">გააფლაშე UEFI და გადატვირთე Windows-ზე ერთი დაჭერით</string>
-	<string name="sta_subtitle">ამატებს გადამრთველს Android აპში Windows-ზე</string>
+    <string name="sta_subtitle">ამატებს გადამრთველს Android აპში Windows-ზე</string>
 	<string name="usbhost_subtitle">ამატებს სკრიპტს C:\\Toolbox -ში, რომელიც საშუალებას გაძლევთ გადართოთ USB ჰოსტის რეჟიმი</string>
 	<string name="software_subtitle">ამატებს ბრაუზერის მალსახმობებს, რომლებიც შეიცავს ARM პროგრამულ უზრუნველყოფას C:\\Toolbox -ში</string>
 	<string name="rotation_subtitle">ამატებს სკრიპტს C:\\Toolbox-ში, რომელიც საშუალებას გაძლევთ დაატრიალოთ ეკრანი მალსახმობის საშუალებით\n(გამოსადეგია მოწყობილობებისთვის სამუშაო სენსორების გარეშე)</string>

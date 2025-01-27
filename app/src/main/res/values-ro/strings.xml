@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">Instalează UEFI în partiția de pornire</string>
 	<string name="uefi_not_found_subtitle">Vă rugăm descărcați imaginea UEFI pentru %s și plasați-o în folderul UEFI în memoria internă (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Salvează modemul, instalați UEFI, și reporniți în Windows cu un singur click</string>
-	<string name="quickboot_subtitle_nabu">Instalați UEFI și reporniți în Windows cu un singur click</string>
-	<string name="sta_subtitle">Va adăuga aplicația Treceți la Android în Windows</string>
+    <string name="sta_subtitle">Va adăuga aplicația Treceți la Android în Windows</string>
 	<string name="usbhost_subtitle">Va adăuga un script la C:\\Toolbox care îți va permite să schimbi Modul Host USB</string>
 	<string name="software_subtitle">Va adăuga comenzi rapide pentru browser conținănd software ARM în C:\\Toolbox</string>
 	<string name="rotation_subtitle">Va adăuga un script la C:\\Toolbox care îți va permite sa rotești ecranul cu o comandă rapidă\n(folositor pentru dispozitivele cu senzori nefuncționali)</string>

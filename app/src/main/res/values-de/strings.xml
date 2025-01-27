@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">UEFI zur Boot-Partition flashen</string>
 	<string name="uefi_not_found_subtitle">Bitte downloaden Sie das UEFI für %s und schieben Sie es in der UEFI Mappe in ihrem internen Speicher (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Modem bereitstellen, UEFI flashen, und zu Windows neustarten in einem klick</string>
-	<string name="quickboot_subtitle_nabu">UEFI flashen und zu Windows neustarten in einem klick</string>
-	<string name="sta_subtitle">Installiert die Switch to Android App in Windows</string>
+    <string name="sta_subtitle">Installiert die Switch to Android App in Windows</string>
 	<string name="usbhost_subtitle">Fügt in C:\\Toolbox einen Skript hinzu, mit dem Sie den USB Host Modus umschalten können</string>
 	<string name="software_subtitle">Kopiert Browser-Verknüpfungen zur ARM Software zur C:\\Toolbox</string>
 	<string name="rotation_subtitle">Fügt in C:\\Toolbox einen Skript hinzu, mit dem Sie den Bildschirm mit einer Verknüpfung drehen können\n(nützlich für Geräte ohne funktionierende Sensoren)</string>

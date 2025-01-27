@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">刷入 UEFI 到 boot 分区</string>
 	<string name="uefi_not_found_subtitle">请为 %s 下载 UEFI 镜像，并且把其放置于内部存储中的 UEFI 文件夹 (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">一键刷入 UEFI 并提取基带同时启动到 Windows</string>
-	<string name="quickboot_subtitle_nabu">一键刷入 UEFI 并启动到 Windows</string>
-	<string name="sta_subtitle">将“切换到安卓”工具添加到 Windows</string>
+    <string name="sta_subtitle">将“切换到安卓”工具添加到 Windows</string>
 	<string name="usbhost_subtitle">将切换 USB 主机模式的脚本添加到 C:\\Toolbox</string>
 	<string name="software_subtitle">将 ARM 软件的网页链接添加到 C:\\Toolbox</string>
 	<string name="rotation_subtitle">将旋转屏幕的脚本添加到 C:\\Toolbox\n（用于重力传感器不能工作的设备）</string>

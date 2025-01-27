@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">UEFIをブートパーティションにフラッシュ</string>
 	<string name="uefi_not_found_subtitle">%sのUEFIイメージをダウンロードして、内部ストレージのUEFIフォルダー (/sdcard/UEFI)に配置してください</string>
 	<string name="quickboot_subtitle">モデムをダンプし、UEFIをフラッシュし、ワンクリックでWindowsに再起動</string>
-	<string name="quickboot_subtitle_nabu">UEFIをフラッシュし、ワンクリックでWindowsに再起動</string>
-	<string name="sta_subtitle">Switch to Android アプリをWindowsに追加</string>
+    <string name="sta_subtitle">Switch to Android アプリをWindowsに追加</string>
 	<string name="usbhost_subtitle">USBホストモードを切り替えるスクリプトをC:\\Toolbo に追加</string>
 	<string name="software_subtitle">ARMソフトウェアを含むブラウザショートカットをC:\\Toolboxに追加</string>
 	<string name="rotation_subtitle">ショートカットで画面を回転させるスクリプトをC:\\Toolboxに追加\n(センサーが動作しないデバイスに便利です)</string>

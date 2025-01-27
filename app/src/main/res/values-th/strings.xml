@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">แฟลช UEFI ไปยังพาร์ติชันสำหรับเริ่มระบบ</string>
 	<string name="uefi_not_found_subtitle">โปรดดาวน์โหลด UEFI สำหรับ %s และถ่ายโอนข้อมูลการดาวน์โหลดของคุณลงในโฟลเดอร์ UEFI ในที่จัดเก็บข้อมูลภายใน</string>
 	<string name="quickboot_subtitle">แฟลช UEFI ได้ในคลิกเดียวและสำรองข้อมูลเบสแบนด์ในขณะที่บูตเข้าสู่ Windows</string>
-	<string name="quickboot_subtitle_nabu">แฟลช UEFI และบูตเข้าสู่ Windows ได้ในคลิกเดียว</string>
-	<string name="sta_subtitle">เพิ่มแอป Switch to Android ให้กับ Windows</string>
+    <string name="sta_subtitle">เพิ่มแอป Switch to Android ให้กับ Windows</string>
 	<string name="usbhost_subtitle">เพิ่มสคริปต์ไปที่ C:\\Toolbox ซึ่งช่วยให้คุณสามารถสลับโหมดโฮสต์ USB ได้</string>
 	<string name="software_subtitle">เพิ่มทางลัดเบราว์เซอร์ที่มีซอฟต์แวร์ ARM ไปที่ C:\\Toolbox</string>
 	<string name="rotation_subtitle">เพิ่มสคริปต์ไปที่ C:\\Toolbox ที่ให้คุณหมุนหน้าจอด้วยทางลัด\n(มีประโยชน์สำหรับอุปกรณ์ที่ไม่มีเซ็นเซอร์ทำงาน)</string>

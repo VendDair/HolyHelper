@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">فلش بوت فایل ویندوز</string>
 	<string name="uefi_not_found_subtitle">بوت فایل ویندوز پیدا نشد! لطفاً فایل مناسب را دانلود کنید و در پوشه مربوطه قرار دهید</string>
 	<string name="quickboot_subtitle">دامپ مودم ، فلش زدن بوت ویندوز و رفتن به ویندوز</string>
-	<string name="quickboot_subtitle_nabu">رفتن سریع به ویندوز</string>
-	<string name="sta_subtitle">افزودن فایل اجرایی رفتن به اندروید در ویندوز</string>
+    <string name="sta_subtitle">افزودن فایل اجرایی رفتن به اندروید در ویندوز</string>
 	<string name="usbhost_subtitle">افزودن کد اجرایی USB Host به C:\\Toolbox</string>
 	<string name="software_subtitle">اضافه کردن لینک دسترسی به برنامه های ویندوز در C:\\Toolbox</string>
 	<string name="rotation_subtitle">اضافه کردن کد اجرایی برای چرخش صفحه(مخصوص دستگاه های بدون دسترسی سنسور)</string>

@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">Bölməni yükləmək üçün UEFI-ni FLASH edin</string>
 	<string name="uefi_not_found_subtitle">Lütfən, %s üçün UEFI “image” endirin və onu DAXİLİ YADDAŞdakı UEFI QOVLUĞuna yerləşdirin(/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">Bir kliklə Modemin “dump”-i, UEFI-in yüklənməsi və Windows-a reboot</string>
-	<string name="quickboot_subtitle_nabu">Bir kliklə UEFI-in yüklənməsi və Windows-a reboot</string>
-	<string name="sta_subtitle">Adds the Switch to Android app to Windows</string>
+    <string name="sta_subtitle">Adds the Switch to Android app to Windows</string>
 	<string name="usbhost_subtitle">Adds a script to C:\\Toolbox which allows you to toggle USB Host Mode</string>
 	<string name="software_subtitle">Adds browser shortcuts containing ARM software to C:\\Toolbox</string>
 	<string name="rotation_subtitle">Adds a script to C:\\Toolbox that lets you rotate the screen with a shortcut\n(useful for devices without working sensors)</string>

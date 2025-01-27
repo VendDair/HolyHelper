@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">Flashez l\’UEFI sur la partition de démarrage</string>
 	<string name="uefi_not_found_subtitle">Téléchargez l\’image UEFI pour le %s et placez-la dans le DOSSIER UEFI du STOCKAGE INTERNE (/sdcard/UEFI).</string>
 	<string name="quickboot_subtitle">Installez le modem, flashez l\’UEFI et redémarrez sous Windows en un seul clic</string>
-	<string name="quickboot_subtitle_nabu">Flashez l\’UEFI et redémarrez sous Windows en un seul clic.</string>
-	<string name="sta_subtitle">Ajout de l\’application Switch to Android à Windows</string>
+    <string name="sta_subtitle">Ajout de l\’application Switch to Android à Windows</string>
 	<string name="usbhost_subtitle">Ajoute un script à C:\\Toolbox qui vous permet de basculer le mode hôte USB</string>
 	<string name="software_subtitle">Ajoute des raccourcis de navigateur contenant des logiciels ARM à C:\\Toolbox</string>
 	<string name="rotation_subtitle">Ajoute un script à C:\\Toolbox qui vous permet de faire pivoter l\’écran à l\'aide d\'un raccourci\n(utile pour les appareils dont les capteurs ne fonctionnent pas)</string>

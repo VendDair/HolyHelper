@@ -26,8 +26,7 @@
 	<string name="flash_uefi_subtitle">CÀI UEFI vào phân vùng boot</string>
 	<string name="uefi_not_found_subtitle">Vui lòng tải xuống hình ảnh UEFI cho %s và đặt nó vào THƯ MỤC UEFI trong BỘ NHỚ NỘI BỘ (/sdcard/UEFI)</string>
 	<string name="quickboot_subtitle">1 Nhấp rã modem, cài UEFI và khởi động Windows</string>
-	<string name="quickboot_subtitle_nabu">Cài UEFI và khởi động lại Windows chỉ bằng một cú nhấp chuột</string>
-	<string name="sta_subtitle">Thêm ứng dụng Chuyển sang Android vào Windows</string>
+    <string name="sta_subtitle">Thêm ứng dụng Chuyển sang Android vào Windows</string>
 	<string name="usbhost_subtitle">Thêm tập lệnh vào C:\\Toolbox cho phép bạn chuyển đổi Chế độ máy chủ USB</string>
 	<string name="software_subtitle">Thêm lối tắt trình duyệt chứa phần mềm ARM vào C:\\Toolbox</string>
 	<string name="rotation_subtitle">Thêm tập lệnh vào C:\\Toolbox cho phép bạn xoay màn hình bằng phím tắt\n(hữu ích cho các thiết bị không có cảm biến hoạt động)</string>
