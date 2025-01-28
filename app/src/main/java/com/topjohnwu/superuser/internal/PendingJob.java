@@ -23,7 +23,6 @@ import com.topjohnwu.superuser.NoShellException;
 import com.topjohnwu.superuser.Shell;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 

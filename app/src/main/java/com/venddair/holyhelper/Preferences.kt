@@ -13,7 +13,8 @@ object Preferences {
 
     enum class Key(val key: String) {
         MOUNTTOMNT("mountToMnt"),
-        DISABLEUPDATES("disableUpdates")
+        DISABLEUPDATES("disableUpdates"),
+        AUTOMOUNT("autoMount")
     }
 
     fun init(context: Context) {

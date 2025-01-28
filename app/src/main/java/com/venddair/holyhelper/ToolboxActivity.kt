@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import com.venddair.holyhelper.Files.createFolder
 
 class ToolboxActivity : ComponentActivity() {
@@ -13,14 +14,25 @@ class ToolboxActivity : ComponentActivity() {
 
         setContentView(R.layout.toolbox)
 
-        val staButton = findViewById<LinearLayout>(R.id.staButton)
-        val scriptButton = findViewById<LinearLayout>(R.id.scriptButton)
-        val armButton = findViewById<LinearLayout>(R.id.armButton)
-        val atlasosButton = findViewById<LinearLayout>(R.id.atlasosButton)
-        val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
+        // Set up the back pressed callback
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            }
+        })
+
+        val staButton = findViewById<Button>(R.id.staButton)
+        val scriptButton = findViewById<Button>(R.id.scriptButton)
+        val armButton = findViewById<Button>(R.id.armButton)
+        val atlasosButton = findViewById<Button>(R.id.atlasosButton)
+        val dbkpButton = findViewById<Button>(R.id.dbkpButton)
 
 
-        if (!Device.isDbkpSupported()) dbkpButton.visibility = View.GONE
+        if (!Device.isDbkpSupported()) {
+            dbkpButton.visibility = View.GONE
+            if (Device.isLandscape(this)) findViewById<LinearLayout>(R.id.asd).visibility = View.GONE
+        }
 
         staButton.setOnClickListener {
             UniversalDialog.showDialog(this,
@@ -37,7 +49,10 @@ class ToolboxActivity : ComponentActivity() {
             )
 
         }
-        scriptButton.setOnClickListener { startActivity(Intent(this, ScriptToolboxActivity::class.java)) }
+        scriptButton.setOnClickListener {
+            startActivity(Intent(this, ScriptToolboxActivity::class.java))
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
 
         armButton.setOnClickListener {
             UniversalDialog.showDialog(this,

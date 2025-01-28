@@ -188,204 +188,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/box">
 
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/backupButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="20dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:ignore="PxUsage">
+            app:image="@drawable/cd"
+            app:subtitle="@string/backup_boot_subtitle"
+            app:title="@string/backup_boot_title" />
 
-            <ImageView
-                android:id="@+id/imageView1asd"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-                android:src="@drawable/cd"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView7asd"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.8"
-                    android:gravity="bottom"
-                    android:textSize="13sp"
-                    android:text="@string/backup_boot_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingRight="10dp"
-                    android:textColor="@color/gray"
-                    android:text="@string/backup_boot_subtitle"
-                    android:textSize="11sp"
-                    android:textStyle="italic" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/toolboxButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="20dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:ignore="PxUsage">
+            app:image="@drawable/toolbox"
+            app:subtitle="@string/toolbox_subtitle"
+            app:title="@string/toolbox_title" />
 
-            <ImageView
-                android:id="@+id/imageViews1asd"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-                android:src="@drawable/toolbox"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textVew7asd"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.8"
-                    android:gravity="bottom"
-                    android:textSize="13sp"
-                    android:text="@string/toolbox_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/teiew2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingRight="10dp"
-                    android:textColor="@color/gray"
-                    android:text="@string/toolbox_subtitle"
-                    android:textSize="11sp"
-                    android:textStyle="italic" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/mountButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="20dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:ignore="PxUsage">
+            app:imageScaleX="0.6"
+            app:imageScaleY="0.6"
+            app:image="@drawable/folder"
+            app:subtitle="@string/mnt_subtitle"
+            app:title="@string/mnt_title" />
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:src="@drawable/folder"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/mountText"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.8"
-                    android:gravity="bottom"
-                    android:textSize="13sp"
-                    android:text="@string/mnt_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/teiasdew2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingRight="10dp"
-                    android:textColor="@color/gray"
-                    android:text="@string/mnt_subtitle"
-                    android:textSize="11sp"
-                    android:textStyle="italic" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/quickbootButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            tools:ignore="PxUsage">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:src="@drawable/win11logo"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/asjdasjntText"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.8"
-                    android:gravity="bottom"
-                    android:textSize="13sp"
-                    android:text="@string/quickboot_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/sadasdsd"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingRight="10dp"
-                    android:textColor="@color/gray"
-                    android:text="@string/quickboot_subtitle"
-                    android:textSize="11sp"
-                    android:textStyle="italic" />
-            </LinearLayout>
-
-        </LinearLayout>
+            app:image="@drawable/win11logo"
+            app:subtitle="@string/quickboot_subtitle"
+            app:title="@string/quickboot_title" />
 
     </LinearLayout>
 

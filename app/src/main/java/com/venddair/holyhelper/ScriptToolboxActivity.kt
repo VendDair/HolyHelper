@@ -3,6 +3,7 @@ package com.venddair.holyhelper
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 
 class ScriptToolboxActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -10,10 +11,18 @@ class ScriptToolboxActivity : ComponentActivity() {
 
         setContentView(R.layout.scripttoolbox)
 
-        val usbhostmodeButton = findViewById<LinearLayout>(R.id.usbhostmode)
-        val rotationButton = findViewById<LinearLayout>(R.id.rotation)
-        val frameworkInstallersButton = findViewById<LinearLayout>(R.id.frameworkInstallers)
-        val edgeRemover = findViewById<LinearLayout>(R.id.edgeremover)
+        // Set up the back pressed callback
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            }
+        })
+
+        val usbhostmodeButton = findViewById<Button>(R.id.usbhostmode)
+        val rotationButton = findViewById<Button>(R.id.rotation)
+        val frameworkInstallersButton = findViewById<Button>(R.id.frameworkInstallers)
+        val edgeRemover = findViewById<Button>(R.id.edgeremover)
 
         usbhostmodeButton.setOnClickListener {
             UniversalDialog.showDialog(this,

@@ -16,202 +16,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/usbhostmode"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
+            app:imageScaleX=".57"
+            app:imageScaleY=".57"
+            app:image="@drawable/folder"
+            app:title="@string/usbhost_title"
+            app:subtitle="@string/usbhost_subtitle" />
 
-            <ImageView
-                android:id="@+id/imageViewasd1asd"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.47"
-                android:scaleY="0.47"
-                android:src="@drawable/folder"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/usbhost_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/usbhost_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/rotation"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
+            app:imageScaleX=".8"
+            app:imageScaleY=".8"
+            app:image="@drawable/cd"
+            app:title="@string/rotation_title"
+            app:subtitle="@string/rotation_subtitle" />
 
-            <ImageView
-                android:id="@+id/imageView1asd"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.7"
-                android:scaleY="0.7"
-                android:src="@drawable/cd"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/rotation_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/rotation_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/frameworkInstallers"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
+            app:imageScaleX=".57"
+            app:imageScaleY=".57"
+            app:image="@drawable/folder"
+            app:title="@string/setup_title"
+            app:subtitle="@string/setup_subtitle" />
 
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.47"
-                android:scaleY="0.47"
-                android:src="@drawable/folder"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/setup_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/setup_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/edgeremover"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.8"
-                android:scaleY="0.8"
-                android:src="@drawable/edge"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/defender_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/defender_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
+            app:imageScaleX=".9"
+            app:imageScaleY=".9"
+            app:image="@drawable/edge"
+            app:title="@string/defender_title"
+            app:subtitle="@string/defender_subtitle" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

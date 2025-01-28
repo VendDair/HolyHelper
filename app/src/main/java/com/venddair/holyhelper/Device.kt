@@ -1,6 +1,7 @@
 package com.venddair.holyhelper
 
 import android.content.Context
+import android.content.res.Configuration
 import com.topjohnwu.superuser.ShellUtils
 
 object Device {
@@ -72,6 +73,10 @@ object Device {
             "nabu", "pipa" -> context.getString(R.string.nabu)
             else -> ""
         }
+    }
+
+    fun isLandscape(context: Context): Boolean {
+        return context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }
 
 

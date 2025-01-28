@@ -23,7 +23,6 @@
             android:id="@+id/MountToMnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_gray"
             android:paddingEnd="10dp"
             android:paddingStart="15dp"
@@ -36,6 +35,10 @@
             android:trackTintMode="src_in"
             tools:ignore="HardcodedText" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
         <Switch
             android:id="@+id/DisableUpdates"
             android:layout_width="match_parent"
@@ -45,6 +48,26 @@
             android:paddingStart="15dp"
             android:paddingVertical="20dp"
             android:text="@string/preference11"
+            android:textColor="@color/white"
+            android:thumbTint="@color/light_gray"
+            android:thumbTintMode="multiply"
+            android:trackTint="@color/slightly_lighter_gray"
+            android:trackTintMode="src_in"
+            tools:ignore="HardcodedText" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Switch
+            android:id="@+id/AutoMount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_gray"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp"
+            android:paddingVertical="20dp"
+            android:text="@string/preference7"
             android:textColor="@color/white"
             android:thumbTint="@color/light_gray"
             android:thumbTintMode="multiply"

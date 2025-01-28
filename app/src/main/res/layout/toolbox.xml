@@ -16,254 +16,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/staButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
+            app:imageScaleX="1"
+            app:imageScaleY="1"
+            app:image="@drawable/adrod"
+            app:title="@string/sta_title"
+            app:subtitle="@string/sta_subtitle" />
 
-            <ImageView
-                android:id="@+id/imageView1asd"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="1"
-                android:scaleY="1"
-                android:src="@drawable/adrod"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/sta_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/sta_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/scriptButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
+            app:imageScaleX=".6"
+            app:imageScaleY=".6"
+            app:image="@drawable/folder"
+            app:title="@string/script_title"
+            app:subtitle="@string/script_subtitle" />
 
-            <ImageView
-                android:id="@+id/imageVieasd"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.5"
-                android:scaleY="0.5"
-                android:src="@drawable/folder"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/script_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/script_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/armButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
+            app:imageScaleX="1.1"
+            app:imageScaleY="1.1"
+            app:image="@drawable/ic_sensor"
+            app:title="@string/software_title"
+            app:subtitle="@string/software_subtitle" />
 
-            <ImageView
-                android:id="@+id/imasieasagrd"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="1"
-                android:scaleY="1"
-                android:src="@drawable/ic_sensor"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/software_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/software_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/atlasosButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
+            app:imageScaleX="1.1"
+            app:imageScaleY="1.1"
+            app:image="@drawable/atlasos"
+            app:title="@string/atlasos_title"
+            app:subtitle="@string/atlasos_subtitle" />
 
-            <ImageView
-                android:id="@+id/imasisagrd"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="1"
-                android:scaleY="1"
-                android:src="@drawable/atlasos"
-                tools:ignore="ContentDescription" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/atlasos_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/atlasos_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <com.venddair.holyhelper.Button
             android:id="@+id/dbkpButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_gray"
-            android:clickable="true"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="PxUsage">
-
-            <ImageView
-                android:id="@+id/imaasdsisagrd"
-                android:layout_width="75dp"
-                android:layout_height="match_parent"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
-                android:src="@drawable/ic_uefi"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="@string/dbkp_title"
-                    android:textColor="@color/light_gray"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textSize="11sp"
-                    android:textColor="@color/gray"
-                    android:text="@string/dbkp_subtitle" />
-            </LinearLayout>
-
-        </LinearLayout>
+            app:imageScaleX="1"
+            app:imageScaleY="1"
+            app:image="@drawable/ic_uefi"
+            app:title="@string/dbkp_title"
+            app:subtitle="@string/dbkp_subtitle" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
