@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
                 image = R.drawable.cd,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Commands.backupBootImage(this)
+                        Commands.backupBootImage(this, mountButton)
                     },
                     Pair(getString(R.string.no)) {}
                 )
