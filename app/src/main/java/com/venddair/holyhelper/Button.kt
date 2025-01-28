@@ -108,14 +108,14 @@ class Button @JvmOverloads constructor(
                     v.animate()
                         .scaleX(0.9f)
                         .scaleY(0.9f)
-                        .setDuration(150)
+                        .setDuration(75)
                         .start()
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     v.animate()
                         .scaleX(1f)
                         .scaleY(1f)
-                        .setDuration(150)
+                        .setDuration(75)
                         .start()
                 }
             }

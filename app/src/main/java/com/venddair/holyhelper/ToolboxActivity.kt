@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import com.venddair.holyhelper.Files.createFolder
@@ -31,7 +32,10 @@ class ToolboxActivity : ComponentActivity() {
 
         if (!Device.isDbkpSupported()) {
             dbkpButton.visibility = View.GONE
-            if (Device.isLandscape(this)) findViewById<LinearLayout>(R.id.asd).visibility = View.GONE
+            findViewById<Space>(R.id.space).visibility = View.GONE
+            if (Device.isLandscape(this)) {
+                findViewById<LinearLayout>(R.id.asd).visibility = View.GONE
+            }
         }
 
         staButton.setOnClickListener {
