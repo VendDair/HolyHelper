@@ -6,10 +6,11 @@ import android.os.Environment
 @SuppressLint("SdCardPath")
 object Paths {
 
-
+    const val data = "/data/local/tmp/holyhelper"
 
     const val uefiFolder = "/sdcard/UEFI"
     const val uefiImg = "/sdcard/UEFI/uefi.img"
+    //val uefiImg: String get() = "$data/uefi.img"
 
     const val internalStorage = "/sdcard"
 
@@ -35,7 +36,6 @@ object Paths {
     const val autoFlasherAsset = "/data/local/tmp/holyhelper/boot_img_auto-flasher_V1.0.exe"
     val autoFlasher: String get() = Files.getMountDir() + "/sta/boot_img_auto-flasher_V1.0.exe"
 
-    const val data = "/data/local/tmp/holyhelper"
 
     const val mountNtfs = "/data/local/tmp/holyhelper/mount.ntfs"
 

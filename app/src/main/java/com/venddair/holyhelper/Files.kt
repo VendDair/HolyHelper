@@ -3,8 +3,10 @@ package com.venddair.holyhelper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Commands.backupBootImage
+import com.venddair.holyhelper.Commands.bootInWindows
 import com.venddair.holyhelper.Commands.notifyIfNoWinPartition
 import java.io.File
 import java.io.FileOutputStream
@@ -15,6 +17,11 @@ object Files {
     @SuppressLint("SdCardPath")
 
     private lateinit var appContext: Context
+
+
+    enum class Extension(val key: String) {
+        IMG(".img"),
+    }
 
 
 
@@ -54,6 +61,10 @@ object Files {
 
     }
 
+    fun checkExtension(path: String, extension: Extension): Boolean {
+        return path.endsWith(extension.key)
+    }
+
     fun createFolder(path: String, alert: Boolean = false) {
         if (checkFolder(path)) return
         if (alert) ToastUtil.showToast("Folder $path was created")
@@ -61,16 +72,18 @@ object Files {
     }
 
     @SuppressLint("SdCardPath")
-    fun setupDbkpFiles(context: Context) {
+    fun setupDbkpFiles(context: ComponentActivity, callback: () -> Unit) {
         createFolder("/sdcard/dbkp")
-        backupBootImage(context)
-        remove("/sdcard/original-boot.img")
-        copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
-        moveFile(Paths.bootImage, "/sdcard/original-boot.img")
-        copy(Paths.dbkp8150CfgAsset, "/sdcard/dbkp")
-        copy(Paths.dbkpHotdogBinAsset, "/sdcard/dbkp")
-        copy(Paths.dbkpCepheusBinAsset, "/sdcard/dbkp")
-        copy(Paths.dbkpNabuBinAsset, "/sdcard/dbkp")
+        backupBootImage(context) {
+            remove("/sdcard/original-boot.img")
+            copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
+            moveFile(Paths.bootImage, "/sdcard/original-boot.img")
+            copy(Paths.dbkp8150CfgAsset, "/sdcard/dbkp")
+            copy(Paths.dbkpHotdogBinAsset, "/sdcard/dbkp")
+            copy(Paths.dbkpCepheusBinAsset, "/sdcard/dbkp")
+            copy(Paths.dbkpNabuBinAsset, "/sdcard/dbkp")
+            callback()
+        }
     }
 
     fun copy(path: String, newPath: String) {
@@ -164,12 +177,19 @@ object Files {
     }
 
     fun getMountDir(): String {
-        /*return if (Preferences.get("settings").getBoolean("mountToMnt", false)) Paths.winPath1 else Paths.winPath*/
         return if (Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)) Paths.winPath1 else Paths.winPath
     }
 
     fun getResource(id: Int): Drawable {
         return appContext.getDrawable(id)!!
+    }
+
+    fun selectUefiImage(callback: () -> Unit = {}) {
+        FilePicker.pickFile { path ->
+            if (!checkExtension(path, Extension.IMG)) return@pickFile
+            copy(path, Paths.uefiImg)
+            callback()
+        }
     }
 
     fun getResourceFromDevice(): Drawable {

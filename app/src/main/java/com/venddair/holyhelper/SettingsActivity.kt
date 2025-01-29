@@ -2,6 +2,7 @@ package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.Switch
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
@@ -24,6 +25,7 @@ class SettingsActivity : ComponentActivity() {
         val switchMountToMnt = findViewById<Switch>(R.id.MountToMnt)
         val disableUpdates = findViewById<Switch>(R.id.DisableUpdates)
         val autoMount = findViewById<Switch>(R.id.AutoMount)
+        val selectUefi = findViewById<LinearLayout>(R.id.selectUefiImage)
 
         switchMountToMnt.isChecked = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)
         disableUpdates.isChecked = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.DISABLEUPDATES, false)
@@ -39,6 +41,10 @@ class SettingsActivity : ComponentActivity() {
 
         autoMount.setOnCheckedChangeListener { _, isChecked ->
             Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.AUTOMOUNT, isChecked)
+        }
+
+        selectUefi.setOnClickListener {
+            Files.selectUefiImage()
         }
     }
 }

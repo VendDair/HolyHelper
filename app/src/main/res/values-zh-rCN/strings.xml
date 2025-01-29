@@ -120,4 +120,6 @@
     <string name="download_failed_title">無法下載檔案！</string>
     <string name="download_failed_subtitle">檢查一下你的網路\\n有問題就問做這個app的人</string>
     <string name="download_file_failed_title">無法下載%s！</string>
+    <string name="select">选择</string>
+    <string name="select_uefi_image">选择UEFI文件</string>
 </resources>

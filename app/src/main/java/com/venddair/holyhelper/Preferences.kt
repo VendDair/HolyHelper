@@ -14,7 +14,8 @@ object Preferences {
     enum class Key(val key: String) {
         MOUNTTOMNT("mountToMnt"),
         DISABLEUPDATES("disableUpdates"),
-        AUTOMOUNT("autoMount")
+        AUTOMOUNT("autoMount"),
+        UEFIIMG("uefiImg"),
     }
 
     fun init(context: Context) {
@@ -32,6 +33,16 @@ object Preferences {
     fun putBoolean(preference: Preference, name: Key, content: Boolean) {
         val editor = get(preference).edit()
         editor.putBoolean(name.key, content)
+        editor.apply()
+    }
+
+    fun getString(preference: Preference, name: Key, defValue: String): String {
+        return get(preference).getString(name.key, defValue)!!
+    }
+
+    fun putString(preference: Preference, name: Key, content: String) {
+        val editor = get(preference).edit()
+        editor.putString(name.key, content)
         editor.apply()
     }
 }

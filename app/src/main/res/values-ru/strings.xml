@@ -120,4 +120,6 @@
     <string name="download_failed_title">Не удалось скачать файл!</string>
     <string name="download_failed_subtitle">Проверь интернет\\nЕсли что, спроси у разработчика</string>
     <string name="download_file_failed_title">Не удалось скачать %s!</string>
+    <string name="select">Выбрать</string>
+    <string name="select_uefi_image">Выбрать файл UEFI</string>
 </resources>

@@ -3,6 +3,7 @@ package com.venddair.holyhelper
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.venddair.holyhelper.Commands.bootInWindows
 
 class Info {
     companion object {
@@ -95,6 +96,30 @@ class Info {
                         Download.installAPK(context, fileName)
                     } },
                     Pair(context.getString(R.string.later)) {}
+                )
+            )
+        }
+
+        fun bootBackedUpSuccessfully(context: Context) {
+            UniversalDialog.showDialog(context,
+                title = context.getString(R.string.backuped),
+                image = R.drawable.info,
+                buttons = listOf(
+                    Pair(context.getString(R.string.dismiss)) {}
+                )
+            )
+        }
+
+        fun uefiNotFound(context: Context, reboot: Boolean = false) {
+            UniversalDialog.showDialog(context,
+                title = context.getString(R.string.uefi_not_found),
+                image = R.drawable.info,
+                buttons = listOf(
+                    Pair(context.getString(R.string.select)) {
+                        Files.selectUefiImage {
+                            bootInWindows(context, reboot)
+                        }
+                    }
                 )
             )
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -14,11 +15,14 @@ import com.venddair.holyhelper.Permissions.requestInstallPermission
 
 class MainActivity : ComponentActivity() {
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContentView(R.layout.main)
+
+       // val filePicker = FilePicker(this)
+        FilePicker.init(this)
 
         ToastUtil.init(this)
         Preferences.init(this)
@@ -56,6 +60,11 @@ class MainActivity : ComponentActivity() {
 
         versionTextView.text = Paths.version
 
+        if (!Files.checkFile(Paths.uefiImg)) {
+            quickbootButton.isEnabled = false
+            quickbootButton.setTitle(getString(R.string.uefi_not_found))
+            quickbootButton.setSubtitle(getString(R.string.uefi_not_found_subtitle, Device.get()))
+        }
         quickbootButton.setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.quickboot_question),
@@ -77,7 +86,9 @@ class MainActivity : ComponentActivity() {
                 image = R.drawable.cd,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Commands.backupBootImage(this, mountButton)
+                        Commands.backupBootImage(this, mountButton) {
+                            Info.bootBackedUpSuccessfully(this)
+                        }
                     },
                     Pair(getString(R.string.no)) {}
                 )

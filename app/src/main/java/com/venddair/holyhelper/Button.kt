@@ -103,6 +103,7 @@ class Button @JvmOverloads constructor(
         isFocusable = true
 
         setOnTouchListener { v, event ->
+            if (!isClickable) return@setOnTouchListener false
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     v.animate()
@@ -130,5 +131,9 @@ class Button @JvmOverloads constructor(
 
     fun setTitle(text: String) {
         titleTextView.text = text
+    }
+
+    fun setSubtitle(text: String) {
+        subtitleTextView.text = text
     }
 }

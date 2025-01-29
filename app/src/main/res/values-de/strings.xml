@@ -120,4 +120,6 @@
     <string name="download_failed_title">Die Datei konnte nicht heruntergeladen werden!</string>
 	<string name="download_failed_subtitle">Prüf deine Internetverbindung\\nFür mehr Infos frag den Programmierer</string>
     <string name="download_file_failed_title">Fehler beim Herunterladen von %s!</string>
+    <string name="select">Auswählen</string>
+    <string name="select_uefi_image">UEFI-Datei auswählen</string>
 </resources>

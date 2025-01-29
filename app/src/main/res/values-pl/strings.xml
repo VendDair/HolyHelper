@@ -120,4 +120,6 @@
     <string name="download_failed_title">Nie udało się pobrać pliku!</string>
     <string name="download_failed_subtitle">Sprawdź internet\\nJak coś, pytaj programisty</string>
     <string name="download_file_failed_title">Nie udało się pobrać %s!</string>
+    <string name="select">Wybierz</string>
+    <string name="select_uefi_image">Wybierz plik UEFI</string>
 </resources>

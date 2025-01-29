@@ -120,4 +120,6 @@
     <string name="download_failed_title">تعذر تنزيل الملف!</string>
 	<string name="download_failed_subtitle">تحقق من اتصالك بالإنترنت\\nلأية أسئلة إضافية، اتصل بمطور التطبيق</string>
     <string name="download_file_failed_title">فشل تنزيل %s!</string>
+    <string name="select">حدد</string>
+    <string name="select_uefi_image">حدد ملف UEFI</string>
 </resources>
