@@ -16,7 +16,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 object UniversalDialog {
-    private lateinit var dialog: Dialog
+    lateinit var dialog: Dialog
 
     fun showDialog(
         context: Context,

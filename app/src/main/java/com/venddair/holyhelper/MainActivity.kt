@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import com.topjohnwu.superuser.Shell
 import com.venddair.holyhelper.Permissions.requestInstallPermission
 
 class MainActivity : ComponentActivity() {
@@ -20,6 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContentView(R.layout.main)
+
 
        // val filePicker = FilePicker(this)
         FilePicker.init(this)
@@ -108,6 +110,10 @@ class MainActivity : ComponentActivity() {
                     Pair(getString(R.string.no)) {}
                 )
             )
+        }
+
+        if (Shell.isAppGrantedRoot() != true) {
+            Info.noRootDetected(this)
         }
 
         // Check if the app can request package installs

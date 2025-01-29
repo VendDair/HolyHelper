@@ -123,5 +123,17 @@ class Info {
                 )
             )
         }
+
+        fun noRootDetected(context: Context) {
+            UniversalDialog.showDialog(context,
+                title = context.getString(R.string.nonroot),
+                image = R.drawable.info,
+                /*buttons = listOf(
+                    Pair(context.getString(R.string.dismiss)) {}
+                )*/
+            )
+            UniversalDialog.dialog.setCancelable(false)
+
+        }
     }
 }
