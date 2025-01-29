@@ -13,14 +13,18 @@ class QSTileQuickBoot : TileService() {
     }
 
     override fun onClick() {
-        Commands.bootInWindows(this, true)
+        Commands.bootInWindows(true)
         updateTileState(true)
     }
 
     private fun updateTileState(clicked: Boolean = false) {
         val tile = qsTile
         tile.state = Tile.STATE_INACTIVE
-        if (!Files.checkFile(Paths.uefiImg) && clicked) tile.label = "OPEN THE APP"
+        if (!Files.checkFile(Paths.uefiImg) && clicked) {
+            tile.label = "IMG NOT FOUND"
+            Thread.sleep(1000)
+            tile.label = "Quickboot"
+        }
         else tile.label = "Quickboot"
         tile.updateTile()
     }

@@ -2,6 +2,7 @@ package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
 import android.os.Environment
+import com.topjohnwu.superuser.ShellUtils
 
 @SuppressLint("SdCardPath")
 object Paths {
@@ -9,8 +10,9 @@ object Paths {
     const val data = "/data/local/tmp/holyhelper"
 
     const val uefiFolder = "/sdcard/UEFI"
-    const val uefiImg = "/sdcard/UEFI/uefi.img"
+    //const val uefiImg = "/sdcard/UEFI/uefi.img"
     //val uefiImg: String get() = "$data/uefi.img"
+    val uefiImg: String get() = ShellUtils.fastCmd("su -c find /sdcard/UEFI/ -type f | grep .img | head -n 1")
 
     const val internalStorage = "/sdcard"
 

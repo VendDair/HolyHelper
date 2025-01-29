@@ -117,7 +117,7 @@ class Info {
                 buttons = listOf(
                     Pair(context.getString(R.string.select)) {
                         Files.selectUefiImage {
-                            bootInWindows(context, reboot)
+                            bootInWindows(reboot)
                         }
                     }
                 )

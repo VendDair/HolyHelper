@@ -70,10 +70,10 @@ class MainActivity : ComponentActivity() {
                 title = getString(R.string.quickboot_question),
                 buttons = listOf(
                     Pair(getString(R.string.flash1)) {
-                        Commands.bootInWindows(this)
+                        Commands.bootInWindows()
                     },
                     Pair(getString(R.string.reboot)) {
-                        Commands.bootInWindows(this, true)
+                        Commands.bootInWindows( true)
                     },
                     Pair(getString(R.string.no)) {}
                 )

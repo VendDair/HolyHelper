@@ -3,6 +3,7 @@ package com.venddair.holyhelper
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import kotlinx.coroutines.CoroutineScope
@@ -40,13 +41,10 @@ object Commands {
 
     }
 
-    fun bootInWindows(context: Context, reboot: Boolean = false) {
-        /*if (!Files.checkFile(Paths.uefiImg)) {
-            Info.uefiNotFound(context, reboot)
-            return
-        }*/
-        ShellUtils.fastCmd("su -c dd if=${Paths.uefiImg} of=${Paths.bootPartition} bs=8M")
-        if (reboot) ShellUtils.fastCmd("su -c reboot")
+    fun bootInWindows(reboot: Boolean = false) {
+        val isUefiFound = Files.checkFile(Paths.uefiImg)
+        if (isUefiFound) ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${Paths.bootPartition} bs=8M")
+        if (reboot && isUefiFound) ShellUtils.fastCmd("su -c reboot")
         /*backupBootImage(context) {
 
         }*/

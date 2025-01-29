@@ -3,6 +3,7 @@ package com.venddair.holyhelper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Commands.backupBootImage
@@ -163,6 +164,7 @@ object Files {
         val file = File(path)
         return file.exists() && file.isFile
     }
+
 
     fun getWinPartition(context: Context, callback: (realPath: String) -> Unit = {}) {
         listOf("/dev/block/by-name/win", "/dev/block/by-name/windows", "/dev/block/by-name/mindows").forEach { path ->
