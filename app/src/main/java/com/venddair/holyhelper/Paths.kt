@@ -10,6 +10,7 @@ object Paths {
     const val data = "/data/local/tmp/holyhelper"
 
     const val uefiFolder = "/sdcard/UEFI"
+
     //const val uefiImg = "/sdcard/UEFI/uefi.img"
     //val uefiImg: String get() = "$data/uefi.img"
     val uefiImg: String get() = ShellUtils.fastCmd("su -c find /sdcard/UEFI/ -type f | grep .img | head -n 1")
@@ -20,6 +21,7 @@ object Paths {
 
     val bootPartition: String get() = "/dev/block/by-name/boot$(getprop ro.boot.slot_suffix)"
     const val bootImage = "/sdcard/boot.img"
+    const val bootImage1 = "/sdcard/Windows/boot.img"
 
     const val winPath = "/mnt/sdcard/Windows"
     const val winPath1 = "/mnt/Windows"

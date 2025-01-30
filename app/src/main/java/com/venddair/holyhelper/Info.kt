@@ -3,7 +3,10 @@ package com.venddair.holyhelper
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.venddair.holyhelper.Commands.bootInWindows
+import androidx.activity.ComponentActivity
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class Info {
     companion object {
@@ -31,11 +34,12 @@ class Info {
             isWinNotMountedDialog = true
         }*/
 
-        fun downloadFailed(context: Context, fileName: String) {
-            UniversalDialog.showDialog(context,
+        fun downloadFailed(context: Context, fileName: String = "") {
+            UniversalDialog.showDialog(
+                context,
                 title = context.getString(R.string.download_file_failed_title, fileName),
                 text = context.getString(R.string.download_failed_subtitle),
-                image = R.drawable.info,
+                image = R.drawable.error,
                 buttons = listOf(
                     Pair(context.getString(R.string.dismiss)) {},
                 )
@@ -47,10 +51,15 @@ class Info {
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.mountfail),
                 text = context.getString(R.string.internalstorage),
-                image = R.drawable.info,
+                image = R.drawable.error,
                 buttons = listOf(
                     Pair(context.getString(R.string.chat)) {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Device.getGroupLink())))
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(Device.getGroupLink())
+                            )
+                        )
                     },
                     Pair(context.getString(R.string.dismiss)) {}
                 )
@@ -64,9 +73,16 @@ class Info {
             if (isNoWinPartitionDialog) return
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.partition),
-                image = R.drawable.info,
+                image = R.drawable.error,
                 buttons = listOf(
-                    Pair(context.getString(R.string.guide)) {context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Device.getGuideLink())))},
+                    Pair(context.getString(R.string.guide)) {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(Device.getGuideLink())
+                            )
+                        )
+                    },
                     Pair(context.getString(R.string.later)) {}
                 )
             ) {
@@ -76,10 +92,11 @@ class Info {
         }
 
         fun unableToDownload(context: Context) {
-            UniversalDialog.showDialog(context,
+            UniversalDialog.showDialog(
+                context,
                 title = context.getString(R.string.download_failed_title),
                 text = context.getString(R.string.download_failed_subtitle),
-                image = R.drawable.info,
+                image = R.drawable.error,
                 buttons = listOf(
                     Pair(context.getString(R.string.dismiss)) {},
                 )
@@ -92,48 +109,123 @@ class Info {
                 text = context.getString(R.string.update_question, version),
                 image = R.drawable.info,
                 buttons = listOf(
-                    Pair(context.getString(R.string.yes)) { Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { _, fileName ->
-                        Download.installAPK(context, fileName)
-                    } },
+                    Pair(context.getString(R.string.yes)) {
+                        pleaseWait(context, R.string.done, R.drawable.info, {
+                            Download.download(
+                                context,
+                                "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk",
+                                "HolyHelper.apk"
+                            )
+                        }, {
+                            Download.installAPK(context, "HolyHelper.apk")
+                        })
+                    },
                     Pair(context.getString(R.string.later)) {}
                 )
             )
         }
 
-        fun bootBackedUpSuccessfully(context: Context) {
-            UniversalDialog.showDialog(context,
-                title = context.getString(R.string.backuped),
-                image = R.drawable.info,
-                buttons = listOf(
-                    Pair(context.getString(R.string.dismiss)) {}
-                )
-            )
-        }
-
-        fun uefiNotFound(context: Context, reboot: Boolean = false) {
-            UniversalDialog.showDialog(context,
-                title = context.getString(R.string.uefi_not_found),
-                image = R.drawable.info,
-                buttons = listOf(
-                    Pair(context.getString(R.string.select)) {
-                        Files.selectUefiImage {
-                            bootInWindows(reboot)
-                        }
-                    }
-                )
-            )
-        }
+        /*        fun uefiNotFound(context: Context, reboot: Boolean = false) {
+                    UniversalDialog.showDialog(context,
+                        title = context.getString(R.string.uefi_not_found),
+                        image = R.drawable.info,
+                        buttons = listOf(
+                            Pair(context.getString(R.string.select)) {
+                                Files.selectUefiImage {
+                                    bootInWindows(reboot)
+                                }
+                            }
+                        )
+                    )
+                }*/
 
         fun noRootDetected(context: Context) {
-            UniversalDialog.showDialog(context,
+            UniversalDialog.showDialog(
+                context,
                 title = context.getString(R.string.nonroot),
-                image = R.drawable.info,
-                /*buttons = listOf(
-                    Pair(context.getString(R.string.dismiss)) {}
-                )*/
+                image = R.drawable.error,
             )
             UniversalDialog.dialog.setCancelable(false)
 
+        }
+
+        fun done(context: Context, text: String, imageId: Int) {
+            UniversalDialog.showDialog(context,
+                title = text,
+                image = imageId,
+                buttons = listOf(
+                    Pair(context.getString(R.string.dismiss)) {}
+                )
+            )
+        }
+
+        fun done(context: Context, textId: Int, imageId: Int) {
+            done(context, context.getString(textId), imageId)
+        }
+
+        @OptIn(DelicateCoroutinesApi::class)
+        fun pleaseWait(
+            context: Context,
+            doneText: String,
+            imageId: Int,
+            async: suspend () -> Unit = {},
+            onThread: () -> Unit = {},
+        ) {
+            UniversalDialog.showDialog(
+                context,
+                title = context.getString(R.string.please_wait),
+                image = imageId,
+            ) { dialog ->
+                dialog.setCancelable(false)
+                GlobalScope.launch {
+                    async()
+                    (context as ComponentActivity).runOnUiThread {
+                        onThread()
+                        dialog.cancel()
+                        if (!State.failed) done(context, doneText, imageId)
+                        else State.failed = false
+                    }
+                }
+            }
+        }
+
+        @OptIn(DelicateCoroutinesApi::class)
+        fun pleaseWait(
+            context: Context,
+            doneText: Int,
+            imageId: Int,
+            async: suspend () -> Unit = {},
+            onThread: () -> Unit = {},
+        ) {
+            pleaseWait(context, context.getString(doneText), imageId, async, onThread)
+        }
+
+        @OptIn(DelicateCoroutinesApi::class)
+        fun pleaseWaitDownload(
+            context: Context,
+            doneText: Int,
+            imageId: Int,
+            downloadMax: Int,
+            async: suspend () -> Unit = {},
+            onThread: () -> Unit = {},
+        ) {
+            UniversalDialog.showDialog(
+                context,
+                title = context.getString(R.string.please_wait),
+                image = imageId,
+                download = true,
+                downloadMax = downloadMax
+            ) { dialog ->
+                dialog.setCancelable(false)
+                GlobalScope.launch {
+                    async()
+                    (context as ComponentActivity).runOnUiThread {
+                        onThread()
+                        dialog.cancel()
+                        done(context, doneText, imageId)
+                    }
+                }
+            }
         }
     }
 }

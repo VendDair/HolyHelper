@@ -1,7 +1,6 @@
 package com.venddair.holyhelper
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 
@@ -30,8 +29,14 @@ class ScriptToolboxActivity : ComponentActivity() {
                 image = R.drawable.folder,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Files.createFolder(Paths.toolbox)
-                        Files.copyFileToWin(this, Paths.USBHostModeAsset, "Toolbox/usbhostmode.exe")
+                        Info.pleaseWait(this, R.string.done, R.drawable.folder) {
+                            Files.createFolder(Paths.toolbox)
+                            Files.copyFileToWin(
+                                this,
+                                Paths.USBHostModeAsset,
+                                "Toolbox/usbhostmode.exe"
+                            )
+                        }
                     },
                     Pair(getString(R.string.no)) {}
                 )
@@ -45,9 +50,15 @@ class ScriptToolboxActivity : ComponentActivity() {
                 image = R.drawable.cd,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Files.createFolder(Paths.toolbox)
-                        Files.copyFileToWin(this, Paths.displayAsset, "Toolbox/display.exe")
-                        Files.copyFileToWin(this, Paths.RotationShortcutAsset, "Toolbox/RotationShortcut.lnk")
+                        Info.pleaseWait(this, R.string.done, R.drawable.cd) {
+                            Files.createFolder(Paths.toolbox)
+                            Files.copyFileToWin(this, Paths.displayAsset, "Toolbox/display.exe")
+                            Files.copyFileToWin(
+                                this,
+                                Paths.RotationShortcutAsset,
+                                "Toolbox/RotationShortcut.lnk"
+                            )
+                        }
                     },
                     Pair(getString(R.string.no)) {}
                 )
@@ -61,10 +72,17 @@ class ScriptToolboxActivity : ComponentActivity() {
                 image = R.drawable.folder,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Files.createFolder(Paths.toolbox)
-                        Files.createFolder(Paths.frameworks)
-                        Download.downloadFrameworks(this)
-                        Files.copyFileToWin(this, Paths.installAsset, "Toolbox/Frameworks/install.bat")
+                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.folder, 19, {
+                            Files.createFolder(Paths.toolbox)
+                            Files.createFolder(Paths.frameworks)
+                            Download.downloadFrameworks(this)
+                        }) {
+                            Files.copyFileToWin(
+                                this,
+                                Paths.installAsset,
+                                "Toolbox/Frameworks/install.bat"
+                            )
+                        }
                     },
                     Pair(getString(R.string.no)) {}
                 )
@@ -78,9 +96,13 @@ class ScriptToolboxActivity : ComponentActivity() {
                 image = R.drawable.edge,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Files.createFolder(Paths.toolbox)
-                        Files.copyFileToWin(this, Paths.edgeremover, "Toolbox/RemoveEdge.bat")
-                        Download.downloadDefenderRemover(this)
+                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.edge, 1, {
+                            Files.createFolder(Paths.toolbox)
+                            Download.downloadDefenderRemover(this)
+                        }, {
+                            Files.copyFileToWin(this, Paths.edgeremover, "Toolbox/RemoveEdge.bat")
+
+                        })
                     },
                     Pair(getString(R.string.no)) {}
                 )

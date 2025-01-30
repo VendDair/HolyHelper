@@ -17,7 +17,10 @@ object Device {
         } else {
             when {
                 data.contains("j20s_42_02_0b") || data.contains("k82_42") || data.contains("ft8756_huaxing") -> "Huaxing"
-                data.contains("j20s_36_02_0a") || data.contains("k82_36") || data.contains("nt36675_tianma") || data.contains("tianma_fhd_nt36672a") -> "Tianma"
+                data.contains("j20s_36_02_0a") || data.contains("k82_36") || data.contains("nt36675_tianma") || data.contains(
+                    "tianma_fhd_nt36672a"
+                ) -> "Tianma"
+
                 data.contains("ebbg_fhd_ft8719") -> "EBBG"
                 data.contains("fhd_ea8076_global") -> "global"
                 data.contains("fhd_ea8076_f1mp_cmd") -> "f1mp"
@@ -35,6 +38,7 @@ object Device {
             "cepheus", "guacamole", "guacamolet", "pipa", "OnePlus7Pro", "OnePlus7Pro4G", "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "nabu" -> {
                 true
             }
+
             else -> false
         }
     }
@@ -53,22 +57,45 @@ object Device {
     fun getDbkpDownloadInfo(): Pair<String, List<String>> {
         return when (get()) {
             "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" ->
-                "https://github.com/n00b69/woa-op7/releases/download/DBKP/guacamole.fd" to listOf("guacamole.fd", "hotdog")
+                "https://github.com/n00b69/woa-op7/releases/download/DBKP/guacamole.fd" to listOf(
+                    "guacamole.fd",
+                    "hotdog"
+                )
+
             "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" ->
-                "https://github.com/n00b69/woa-op7/releases/download/DBKP/hotdog.fd" to listOf("hotdog.fd", "hotdog")
+                "https://github.com/n00b69/woa-op7/releases/download/DBKP/hotdog.fd" to listOf(
+                    "hotdog.fd",
+                    "hotdog"
+                )
+
             "cepheus" ->
-                "https://github.com/n00b69/woa-everything/releases/download/Files/cepheus.fd" to listOf("cepheus.fd", "cepheus")
+                "https://github.com/n00b69/woa-everything/releases/download/Files/cepheus.fd" to listOf(
+                    "cepheus.fd",
+                    "cepheus"
+                )
+
             "nabu" ->
-                "https://github.com/erdilS/Port-Windows-11-Xiaomi-Pad-5/releases/download/1.0/nabu.fd" to listOf("nabu.fd", "nabu")
+                "https://github.com/erdilS/Port-Windows-11-Xiaomi-Pad-5/releases/download/1.0/nabu.fd" to listOf(
+                    "nabu.fd",
+                    "nabu"
+                )
+
             "pipa" ->
-                "https://github.com/n00b69/woa-everything/releases/download/Files/pipa.fd" to listOf("pipa.fd", "pipa")
+                "https://github.com/n00b69/woa-everything/releases/download/Files/pipa.fd" to listOf(
+                    "pipa.fd",
+                    "pipa"
+                )
+
             else -> "" to listOf("", "")
         }
     }
 
     fun getDbkpButton(context: Context): String {
         return when (get()) {
-            "guacamole", "OnePlus7Pro", "OnePlus7Pro4G", "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" -> context.getString(R.string.op7)
+            "guacamole", "OnePlus7Pro", "OnePlus7Pro4G", "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" -> context.getString(
+                R.string.op7
+            )
+
             "cepheus" -> context.getString(R.string.cepheus)
             "nabu", "pipa" -> context.getString(R.string.nabu)
             else -> ""
@@ -89,13 +116,17 @@ object Device {
             "mh2plus_lao_com", "mh2lm_lao_com", "mh2lm5g", "mh2lm5g_lao_com", "bhima", "vayu",
             "G973F", "SM-G973F", "beyond1lte", "beyond1qlte", "G973U", "G973U1", "SM-G973U",
             "SM-G973U1", "G9730", "SM-G9730", "G973N", "SM-G973N", "G973X", "SM-G973X",
-            "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1", "xpeng" -> "https://t.me/woahelperchat"
+            "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1", "xpeng",
+                -> "https://t.me/woahelperchat"
+
             "beryllium" -> "https://t.me/WinOnF1"
             "cepheus" -> "http://t.me/woacepheus"
             "cheeseburger", "chiron", "dumpling", "sagit" -> "https://t.me/joinchat/MNjTmBqHIokjweeN0SpoyA"
             "curtana", "curtana2", "curtana_india", "curtana_cn", "curtanacn", "durandal",
             "durandal_india", "excalibur", "excalibur2", "excalibur_india", "gram", "joyeuse",
-            "miatoll" -> "http://t.me/woamiatoll"
+            "miatoll",
+                -> "http://t.me/woamiatoll"
+
             "dipper" -> "https://t.me/woadipper"
             "equuleus", "ursa" -> "https://t.me/woaequuleus"
             "lisa" -> "https://t.me/woalisa"
@@ -111,7 +142,9 @@ object Device {
             "OnePlus6", "fajita", "OnePlus6T", "enchilada" -> "https://t.me/WinOnOP6"
             "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "guacamolet",
             "OnePlus7Pro", "OnePlus7Pro4G", "guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7",
-            "OnePlus7TPro5G", "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr" -> "https://t.me/onepluswoachat"
+            "OnePlus7TPro5G", "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr",
+                -> "https://t.me/onepluswoachat"
+
             "davinci" -> "https://t.me/woa_davinci"
             "marble" -> "https://t.me/woa_marble"
             "venus", "alioth", "ingres", "vili", "lavender", "star2qlte", "star2qltechn", "r3q" -> "https://discord.gg/Dx2QgMx7Sv"
@@ -135,12 +168,16 @@ object Device {
             "chiron", "cheeseburger", "dumpling" -> "https://renegade-project.tech/"
             "curtana", "curtana2", "curtana_india", "curtana_cn", "curtanacn",
             "durandal", "durandal_india", "excalibur", "excalibur2", "excalibur_india",
-            "gram", "joyeuse", "miatoll" -> "https://github.com/woa-miatoll/Port-Windows-11-Redmi-Note-9-Pro"
+            "gram", "joyeuse", "miatoll",
+                -> "https://github.com/woa-miatoll/Port-Windows-11-Redmi-Note-9-Pro"
+
             "dipper" -> "https://github.com/n00b69/woa-dipper"
             "equuleus", "ursa" -> "https://github.com/n00b69/woa-equuleus"
             "G973F", "SM-G973F", "beyond1lte", "beyond1qlte", "G973U", "G973U1",
             "SM-G973U", "SM-G973U1", "G9730", "SM-G9730", "G973N", "SM-G973N",
-            "G973X", "SM-G973X", "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1" -> "https://github.com/sonic011gamer/Mu-Samsung"
+            "G973X", "SM-G973X", "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1",
+                -> "https://github.com/sonic011gamer/Mu-Samsung"
+
             "lisa" -> "https://github.com/ETCHDEV/Port-Windows-11-Xiaomi-11-Lite-NE"
             "nabu" -> "https://github.com/erdilS/Port-Windows-11-Xiaomi-Pad-5"
             "perseus" -> "https://github.com/n00b69/woa-perseus"
@@ -154,14 +191,20 @@ object Device {
             "joan" -> "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md"
             "OnePlus6", "fajita", "OnePlus6T", "enchilada" -> "https://github.com/n00b69/woa-op6"
             "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "guacamole", "guacamolet",
-            "OnePlus7Pro", "OnePlus7Pro4G" -> "https://github.com/n00b69/woa-op7"
+            "OnePlus7Pro", "OnePlus7Pro4G",
+                -> "https://github.com/n00b69/woa-op7"
+
             "guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7", "OnePlus7TPro5G",
-            "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr", "t860", "t865", "q2q", "andromeda" -> "https://project-aloha.github.io/"
+            "OnePlus7TProNR", "hotdogg", "OP7ProNRSpr", "t860", "t865", "q2q", "andromeda",
+                -> "https://project-aloha.github.io/"
+
             "sagit" -> "https://renegade-project.tech/"
             "winnerx", "winner" -> "https://github.com/n00b69/woa-winner"
             "venus", "alioth", "ingres", "vili", "lavender", "xpeng", "RMX2061",
             "RMX2170", "cmi", "houji", "meizu20pro", "husky", "redfin", "e3q",
-            "dm3q", "dm3" -> "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md"
+            "dm3q", "dm3",
+                -> "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md"
+
             "davinci" -> "https://github.com/zxcwsurx/woa-davinci"
             "marble" -> "https://github.com/Xhdsos/woa-marble"
             else -> "https://renegade-project.tech/"

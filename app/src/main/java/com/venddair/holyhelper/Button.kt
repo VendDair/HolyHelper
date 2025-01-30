@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat
 class Button @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val imageView: ImageView
@@ -112,6 +112,7 @@ class Button @JvmOverloads constructor(
                         .setDuration(75)
                         .start()
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     v.animate()
                         .scaleX(1f)

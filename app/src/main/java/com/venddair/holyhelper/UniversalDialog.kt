@@ -1,5 +1,6 @@
 package com.venddair.holyhelper
 
+import android.animation.ObjectAnimator
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -13,10 +14,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
+import java.lang.ref.WeakReference
 
 object UniversalDialog {
     lateinit var dialog: Dialog
+    lateinit var progressBar: WeakReference<ProgressBar>
 
     fun showDialog(
         context: Context,
@@ -24,8 +28,10 @@ object UniversalDialog {
         text: String = "",
         textGravity: Int = Gravity.CENTER,
         image: Int = R.drawable.win11logo,
+        download: Boolean = false,
+        downloadMax: Int = 1,
         buttons: List<Pair<String, () -> Unit>> = listOf(),
-        after: (dialog: Dialog) -> Unit = {}
+        after: (dialog: Dialog) -> Unit = {},
     ) {
 
         // Inflate the custom layout
@@ -82,8 +88,28 @@ object UniversalDialog {
         dialog = dialogBuilder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialog.setOnDismissListener { after(dialog) }
+        //dialog.setOnDismissListener { after(dialog) }
+        dialog.setOnShowListener { after(dialog) }
 
+        // Progress Bar logic
+        progressBar = WeakReference(dialogView.findViewById(R.id.progressBar))
+        if (!download) progressBar.get()?.visibility = View.GONE
+        else {
+            progressBar.get()?.max = downloadMax * 10
+            progressBar.get()?.progress = 0
+        }
         dialog.show()
+    }
+
+    fun increaseProgress(progress: Int) {
+        val newProgress = progressBar.get()!!.progress + (progress * 10)
+        val animation = ObjectAnimator.ofInt(
+            progressBar.get(),
+            "progress",
+            progressBar.get()!!.progress,
+            newProgress
+        )
+        animation.duration = 250 // Set duration for smooth animation (500ms)
+        animation.start()
     }
 }

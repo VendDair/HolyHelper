@@ -1,21 +1,23 @@
 package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.Shell
+import com.venddair.holyhelper.Commands.isWindowsMounted
 import com.venddair.holyhelper.Permissions.requestInstallPermission
+import kotlinx.coroutines.DelicateCoroutinesApi
+import java.lang.ref.WeakReference
 
 class MainActivity : ComponentActivity() {
 
+
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("SetTextI18n", "StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.main)
 
 
-       // val filePicker = FilePicker(this)
+        // val filePicker = FilePicker(this)
         FilePicker.init(this)
 
         ToastUtil.init(this)
@@ -35,7 +37,7 @@ class MainActivity : ComponentActivity() {
         val quickbootButton = findViewById<Button>(R.id.quickbootButton)
         val backupButton = findViewById<Button>(R.id.backupButton)
         val deviceImageView = findViewById<ImageView>(R.id.device)
-        val mountButton = findViewById<Button>(R.id.mountButton)
+        mountButton = WeakReference(findViewById(R.id.mountButton))
         val codeNameText = findViewById<TextView>(R.id.codeName)
         val settingsButton = findViewById<ImageView>(R.id.settingsButton)
         val guideButton = findViewById<TextView>(R.id.guideButton)
@@ -57,8 +59,22 @@ class MainActivity : ComponentActivity() {
             startActivity(Intent(this, ToolboxActivity::class.java))
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
-        guideButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Device.getGuideLink())))}
-        groupButton.setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Device.getGroupLink())))}
+        guideButton.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Device.getGuideLink())
+                )
+            )
+        }
+        groupButton.setOnClickListener {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Device.getGroupLink())
+                )
+            )
+        }
 
         versionTextView.text = Paths.version
 
@@ -72,10 +88,10 @@ class MainActivity : ComponentActivity() {
                 title = getString(R.string.quickboot_question),
                 buttons = listOf(
                     Pair(getString(R.string.flash1)) {
-                        Commands.bootInWindows()
+                        Commands.bootInWindows(this)
                     },
                     Pair(getString(R.string.reboot)) {
-                        Commands.bootInWindows( true)
+                        Commands.bootInWindows(this, true)
                     },
                     Pair(getString(R.string.no)) {}
                 )
@@ -87,25 +103,38 @@ class MainActivity : ComponentActivity() {
                 title = getString(R.string.backup_boot_question),
                 image = R.drawable.cd,
                 buttons = listOf(
-                    Pair(getString(R.string.yes)) {
-                        Commands.backupBootImage(this, mountButton) {
-                            Info.bootBackedUpSuccessfully(this)
-                        }
+                    Pair("windows") {
+                        Info.pleaseWait(this, R.string.backuped, R.drawable.cd, {
+                            Commands.backupBootImage(this@MainActivity, true)
+                        })
+                    },
+                    Pair("android") {
+                        Info.pleaseWait(this, R.string.backuped, R.drawable.cd, {
+                            Commands.backupBootImage(this@MainActivity)
+                        })
                     },
                     Pair(getString(R.string.no)) {}
                 )
             )
         }
 
-        mountButton.setTitle(if (Commands.isWindowsMounted(this)) getString(R.string.mnt_title, getString(R.string.unmountt)) else getString(R.string.mnt_title, getString(R.string.mountt)))
-        mountButton.setOnClickListener {
+        updateMountText(this)
+        mountButton.get()?.setOnClickListener {
             UniversalDialog.showDialog(this,
-                title = if (!Commands.isWindowsMounted(this)) getString(R.string.mount_question, Files.getMountDir()) else getString(R.string.unmount_question),
+                title = if (!isWindowsMounted(this)) getString(
+                    R.string.mount_question,
+                    Files.getMountDir()
+                ) else getString(R.string.unmount_question),
                 image = R.drawable.folder,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Commands.mountWindows(this)
-                        mountButton.setTitle(if (Commands.isWindowsMounted(this)) getString(R.string.mnt_title, getString(R.string.unmountt)) else getString(R.string.mnt_title, getString(R.string.mountt)))
+                        val text =
+                            if (!isWindowsMounted(this)) R.string.mounted else R.string.unmounted
+                        Info.pleaseWait(this, text, R.drawable.folder) {
+                            Commands.mountWindows(this)
+                            updateMountText(this)
+                        }
+
                     },
                     Pair(getString(R.string.no)) {}
                 )
@@ -121,6 +150,20 @@ class MainActivity : ComponentActivity() {
             // Request permission to install unknown apps
             requestInstallPermission(this)
             return
+        }
+
+    }
+
+    companion object {
+        lateinit var mountButton: WeakReference<Button>
+
+        fun updateMountText(context: Context) {
+            mountButton.get()?.setTitle(
+                if (isWindowsMounted(context)) context.getString(
+                    R.string.mnt_title,
+                    context.getString(R.string.unmountt)
+                ) else context.getString(R.string.mnt_title, context.getString(R.string.mountt))
+            )
         }
     }
 

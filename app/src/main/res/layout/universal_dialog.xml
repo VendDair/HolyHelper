@@ -30,7 +30,19 @@
         android:paddingHorizontal="10dp"
         tools:ignore="HardcodedText,PxUsage" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="20dp"
+        android:progressDrawable="@drawable/progress_bar_animation"
+        android:max="2"
+        android:progress="0" />
+
     <ScrollView
+        android:id="@+id/textWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

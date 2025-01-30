@@ -8,6 +8,10 @@ import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import com.venddair.holyhelper.Files.createFolder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 class ToolboxActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +48,10 @@ class ToolboxActivity : ComponentActivity() {
                 image = R.drawable.adrod,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
+                        Info.pleaseWait(this, R.string.done, R.drawable.adrod) {
                             if (Commands.mountWindows(this, false)) {
-                            Files.copyStaFiles()
+                                Files.copyStaFiles()
+                            }
                         }
                     },
                     Pair(getString(R.string.no)) {}
@@ -64,8 +70,10 @@ class ToolboxActivity : ComponentActivity() {
                 image = R.drawable.ic_sensor,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        if (Commands.mountWindows(this, false)) {
-                            Files.copyArmSoftwareLinks()
+                        Info.pleaseWait(this, R.string.done, R.drawable.ic_sensor) {
+                            if (Commands.mountWindows(this, false)) {
+                                Files.copyArmSoftwareLinks()
+                            }
                         }
                     },
                     Pair(getString(R.string.no)) {}
@@ -74,19 +82,21 @@ class ToolboxActivity : ComponentActivity() {
         }
 
         atlasosButton.setOnClickListener {
-            UniversalDialog.showDialog(this,
+            UniversalDialog.showDialog(
+                this,
                 title = getString(R.string.atlasos_question),
                 image = R.drawable.atlasos,
                 buttons = listOf(
                     Pair("atlasos") {
-                        if (Commands.mountWindows(this, false)) {
+                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.atlasos, 2, {
                             downloadAtlasOS()
-                        }
+                        })
                     },
                     Pair("revios") {
-                        if (Commands.mountWindows(this, false)) {
+                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.atlasos, 2, {
                             downloadReviOS()
-                        }
+
+                        })
                     },
                     Pair(getString(R.string.dismiss)) {},
                 )
@@ -97,39 +107,84 @@ class ToolboxActivity : ComponentActivity() {
         dbkpButton.setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.dbkp_question, Device.getDbkpDeviceName()),
-                //text = "Patches and flashes your current kernel\nDON'T CLICK UNLESS YOUR DEVICE IS ${Commands.getDbkpSupportedDevice()}",
                 image = R.drawable.ic_uefi,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Commands.dbkp(this)
+                        Info.pleaseWait(
+                            this,
+                            getString(R.string.dbkp, Device.getDbkpButton(this)),
+                            R.drawable.ic_uefi,
+                            {
+                                Commands.dbkp(this)
+                            }) {
+                        }
                     },
                     Pair(getString(R.string.no)) {}
                 )
-                )
-        }
-
-
-    }
-
-    private fun downloadAtlasOS() {
-        createFolder(Paths.toolbox)
-        Download.download(this,"https://github.com/n00b69/modified-playbooks/releases/download/AtlasOS/AtlasPlaybook.apbx", "AtlasPlaybook.apbx") { path, _ ->
-            Files.copyFileToWin(this, path, "Toolbox/AtlasPlaybook.apbx")
-        }
-
-        Download.download(this, "https://download.ameliorated.io/AME%20Wizard%20Beta.zip", "AMEWizardBeta.zip") { path, _ ->
-            Files.copyFileToWin(this, path, "Toolbox/AMEWizardBeta.zip")
+            )
         }
     }
 
-    private fun downloadReviOS() {
+    private suspend fun downloadAtlasOS() = coroutineScope {
         createFolder(Paths.toolbox)
-        Download.download(this,"https://github.com/n00b69/modified-playbooks/releases/download/ReviOS/ReviPlaybook.apbx", "ReviPlaybook.apbx") { path, _ ->
-            Files.copyFileToWin(this, path, "Toolbox/ReviPlaybook.apbx")
+        val download1 = async(Dispatchers.IO) {
+            val path = Download.download(
+                this@ToolboxActivity,
+                "https://github.com/n00b69/modified-playbooks/releases/download/AtlasOS/AtlasPlaybook.apbx",
+                "AtlasPlaybook.apbx"
+            )
+                ?: return@async
+            runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/AtlasPlaybook.apbx")
+            }
         }
 
-        Download.download(this, "https://download.ameliorated.io/AME%20Wizard%20Beta.zip", "AMEWizardBeta.zip") { path, _ ->
-            Files.copyFileToWin(this, path, "Toolbox/AMEWizardBeta.zip")
+        val download2 = async(Dispatchers.IO) {
+            val path = Download.download(
+                this@ToolboxActivity,
+                "https://download.ameliorated.io/AME%20Wizard%20Beta.zip",
+                "AMEWizardBeta.zip"
+            )
+                ?: return@async
+            runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/AMEWizardBeta.zip")
+            }
         }
+
+        awaitAll(download1, download2)
+    }
+
+    private suspend fun downloadReviOS() = coroutineScope {
+        createFolder(Paths.toolbox)
+
+        val download1 = async(Dispatchers.IO) {
+            val path = Download.download(
+                this@ToolboxActivity,
+                "https://github.com/n00b69/modified-playbooks/releases/download/ReviOS/ReviPlaybook.apbx",
+                "ReviPlaybook.apbx"
+            )
+                ?: return@async
+            runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/ReviPlaybook.apbx")
+            }
+        }
+
+        val download2 = async(Dispatchers.IO) {
+            val path = Download.download(
+                this@ToolboxActivity,
+                "https://download.ameliorated.io/AME%20Wizard%20Beta.zip",
+                "AMEWizardBeta.zip"
+            )
+                ?: return@async
+            runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/AMEWizardBeta.zip")
+            }
+        }
+
+        awaitAll(download1, download2)
     }
 }

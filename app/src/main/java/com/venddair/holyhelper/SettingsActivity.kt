@@ -27,20 +27,44 @@ class SettingsActivity : ComponentActivity() {
         val autoMount = findViewById<Switch>(R.id.AutoMount)
         val selectUefi = findViewById<LinearLayout>(R.id.selectUefiImage)
 
-        switchMountToMnt.isChecked = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)
-        disableUpdates.isChecked = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.DISABLEUPDATES, false)
-        autoMount.isChecked = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.AUTOMOUNT, false)
+        switchMountToMnt.isChecked = Preferences.getBoolean(
+            Preferences.Preference.SETTINGS,
+            Preferences.Key.MOUNTTOMNT,
+            false
+        )
+        disableUpdates.isChecked = Preferences.getBoolean(
+            Preferences.Preference.SETTINGS,
+            Preferences.Key.DISABLEUPDATES,
+            false
+        )
+        autoMount.isChecked = Preferences.getBoolean(
+            Preferences.Preference.SETTINGS,
+            Preferences.Key.AUTOMOUNT,
+            false
+        )
 
         switchMountToMnt.setOnCheckedChangeListener { _, isChecked ->
-            Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, isChecked)
+            Preferences.putBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.MOUNTTOMNT,
+                isChecked
+            )
         }
 
         disableUpdates.setOnCheckedChangeListener { _, isChecked ->
-            Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.DISABLEUPDATES, isChecked)
+            Preferences.putBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.DISABLEUPDATES,
+                isChecked
+            )
         }
 
         autoMount.setOnCheckedChangeListener { _, isChecked ->
-            Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.AUTOMOUNT, isChecked)
+            Preferences.putBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.AUTOMOUNT,
+                isChecked
+            )
         }
 
         selectUefi.setOnClickListener {

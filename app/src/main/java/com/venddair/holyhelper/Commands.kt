@@ -1,15 +1,11 @@
 package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.coroutineScope
+
 
 object Commands {
 
@@ -26,29 +22,21 @@ object Commands {
         return isMounted
     }
 
-    fun backupBootImage(context: Context, mountButton: Button? = null, callback: () -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            ShellUtils.fastCmd("su -c dd bs=8M if=${Paths.bootPartition} of=${Paths.bootImage}")
-
-            withContext(Dispatchers.Main) {
-                if (mountWindows(context, false)) {
-                    Files.copyFileToWin(context, Paths.bootImage, "boot.img")
-                    mountButton?.setTitle(if (isWindowsMounted(context)) context.getString(R.string.mnt_title, context.getString(R.string.unmountt)) else context.getString(R.string.mnt_title, context.getString(R.string.mountt)))
-                    callback()
-                }
-            }
-        }
-
+    fun backupBootImage(context: Context, windows: Boolean = false) {
+        if (windows && !isWindowsMounted(context)) tryMount(context, Files.getMountDir())
+        val bootImage = if (windows) Paths.bootImage1 else Paths.bootImage
+        ShellUtils.fastCmd("su -c dd bs=8M if=${Paths.bootPartition} of=${bootImage}")
+        MainActivity.updateMountText(context)
     }
 
-    fun bootInWindows(reboot: Boolean = false) {
-        val isUefiFound = Files.checkFile(Paths.uefiImg)
-        if (isUefiFound) ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${Paths.bootPartition} bs=8M")
-        if (reboot && isUefiFound) ShellUtils.fastCmd("su -c reboot")
-        /*backupBootImage(context) {
+    fun bootInWindows(context: Context, reboot: Boolean = false) {
+        if (!Files.checkFile(Paths.uefiImg)) return
 
-        }*/
+        if (!Files.checkFile(Paths.bootImage)) backupBootImage(context)
+        if (!Files.checkFile(Paths.bootImage1)) backupBootImage(context, true)
 
+        ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${Paths.bootPartition} bs=8M")
+        if (reboot) ShellUtils.fastCmd("su -c reboot")
     }
 
     private fun tryMount(context: Context, mountPath: String) {
@@ -61,13 +49,16 @@ object Commands {
 
     fun mountWindows(context: Context, unmountIfMounted: Boolean = true): Boolean {
 
+
         if (isWindowsMounted(context) && unmountIfMounted) {
             ShellUtils.fastCmd("su -mm -c umount ${Files.getMountDir()}")
             Files.remove(Files.getMountDir())
             return true
         }
 
-        if (isWindowsMounted(context)) return true
+        if (isWindowsMounted(context)) {
+            return true
+        }
 
         Files.createFolder(Files.getMountDir())
 
@@ -75,11 +66,20 @@ object Commands {
 
         // Mount to /mnt if /mnt/sdcard failed
         if (!isWindowsMounted(context) && Files.getMountDir() == Paths.winPath) {
-            Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, true)
+            Preferences.putBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.MOUNTTOMNT,
+                true
+            )
             tryMount(context, Files.getMountDir())
-            if (!isWindowsMounted(context)) Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)
+            if (!isWindowsMounted(context)) Preferences.putBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.MOUNTTOMNT,
+                false
+            )
         }
         if (!isWindowsMounted(context)) {
+            State.failed = true
             Info.winUnableToMount(context)
             return false
         }
@@ -88,9 +88,17 @@ object Commands {
     }
 
     fun checkUpdate(context: ComponentActivity) {
-        if (Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.DISABLEUPDATES, false)) return
+        if (Preferences.getBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.DISABLEUPDATES,
+                false
+            )
+        ) return
         if (updateChecked) return
-        Download.getRemoteFileContent(context, "https://github.com/VendDair/HolyHelper/releases/download/files/version") { content ->
+        Download.getRemoteFileContent(
+            context,
+            "https://github.com/VendDair/HolyHelper/releases/download/files/version"
+        ) { content ->
             val version = content.replace("\n", "")
             if (version != Paths.version) {
                 Info.notifyAboutUpdate(context, version)
@@ -100,49 +108,48 @@ object Commands {
     }
 
     @SuppressLint("SdCardPath", "StringFormatInvalid")
-    fun dbkp(context: ComponentActivity) {
-        Files.setupDbkpFiles(context) {
-            Download.download(context, "https://github.com/n00b69/woa-op7/releases/download/DBKP/dbkp", "dbkp") { dbkp, _ ->
-                Files.moveFile(dbkp, Paths.data)
-                Files.setPerms(Paths.dbkpAsset, "777")
+    suspend fun dbkp(context: ComponentActivity) = coroutineScope {
+        Files.setupDbkpFiles(context)
 
-                val (url, fileName) = Device.getDbkpDownloadInfo()
+        val dbkp = Download.download(
+            context,
+            "https://github.com/n00b69/woa-op7/releases/download/DBKP/dbkp",
+            "dbkp"
+        )
+        if (dbkp == null) {
+            State.failed = true
+            return@coroutineScope
+        }
 
-                val dbkpButton = Device.getDbkpButton(context)
+        Files.moveFile(dbkp, Paths.data)
+        Files.setPerms(Paths.dbkpAsset, "777")
 
-                val dbkpDir = "/sdcard/dbkp"
+        val (url, fileName) = Device.getDbkpDownloadInfo()
 
-                // Execute commands
-                Download.download(context, url, fileName[0]) { path, _ ->
-                    Files.moveFile(path, dbkpDir)
-                    ShellUtils.fastCmd("cd $dbkpDir")
-                    ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) unpack boot.img\" | su -c sh")
-                    ShellUtils.fastCmd("su -mm -c ${Paths.data}/dbkp kernel ${fileName[0]} output dbkp8150.cfg dbkp.${fileName[1]}.bin")
-                    ShellUtils.fastCmd("su -mm -c rm kernel")
-                    ShellUtils.fastCmd("su -mm -c mv output kernel")
-                    ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) repack boot.img\" | su -c sh")
-                    ShellUtils.fastCmd("su -mm -c cp new-boot.img /sdcard/patched-boot.img")
-                    ShellUtils.fastCmd("rm -r $dbkpDir")
 
-                    if (Device.get() == "cepheus") {
-                        ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot bs=16M")
-                    }
-                    else {
-                        ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_a bs=16M")
-                        ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_b bs=16M")
-                    }
+        val dbkpDir = "/sdcard/dbkp"
 
-                    UniversalDialog.showDialog(context,
-                        title = context.getString(R.string.dbkp, dbkpButton),
-                        image = R.drawable.ic_uefi,
-                        buttons = listOf(
-                            Pair(context.getString(R.string.dismiss)) {}
-                        )
-                    )
+        // Execute commands
+        val path = Download.download(context, url, fileName[0])
+        if (path == null) {
+            State.failed = true
+            return@coroutineScope
+        }
+        Files.moveFile(path, dbkpDir)
+        ShellUtils.fastCmd("cd $dbkpDir")
+        ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) unpack boot.img\" | su -c sh")
+        ShellUtils.fastCmd("su -mm -c ${Paths.data}/dbkp kernel ${fileName[0]} output dbkp8150.cfg dbkp.${fileName[1]}.bin")
+        ShellUtils.fastCmd("su -mm -c rm kernel")
+        ShellUtils.fastCmd("su -mm -c mv output kernel")
+        ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) repack boot.img\" | su -c sh")
+        ShellUtils.fastCmd("su -mm -c cp new-boot.img /sdcard/patched-boot.img")
+        ShellUtils.fastCmd("rm -r $dbkpDir")
 
-                }
-
-            }
+        if (Device.get() == "cepheus") {
+            ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot bs=16M")
+        } else {
+            ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_a bs=16M")
+            ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_b bs=16M")
         }
     }
 }

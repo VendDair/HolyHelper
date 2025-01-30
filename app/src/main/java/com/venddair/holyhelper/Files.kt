@@ -3,12 +3,11 @@ package com.venddair.holyhelper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Commands.backupBootImage
-import com.venddair.holyhelper.Commands.bootInWindows
 import com.venddair.holyhelper.Commands.notifyIfNoWinPartition
+import kotlinx.coroutines.coroutineScope
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -25,7 +24,6 @@ object Files {
     }
 
 
-
     @SuppressLint("SdCardPath")
     fun init(context: Context) {
         appContext = context
@@ -35,7 +33,7 @@ object Files {
             createFolder(Paths.winPath)
             createFolder(Paths.data)
 
-            copyAsset("mount.ntfs","+x")
+            copyAsset("mount.ntfs", "+x")
             copyAsset("sta.exe")
             copyAsset("sdd.exe")
             copyAsset("boot_img_auto-flasher_V1.0.exe")
@@ -73,18 +71,15 @@ object Files {
     }
 
     @SuppressLint("SdCardPath")
-    fun setupDbkpFiles(context: ComponentActivity, callback: () -> Unit) {
-        createFolder("/sdcard/dbkp")
-        backupBootImage(context) {
-            remove("/sdcard/original-boot.img")
-            copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
-            moveFile(Paths.bootImage, "/sdcard/original-boot.img")
-            copy(Paths.dbkp8150CfgAsset, "/sdcard/dbkp")
-            copy(Paths.dbkpHotdogBinAsset, "/sdcard/dbkp")
-            copy(Paths.dbkpCepheusBinAsset, "/sdcard/dbkp")
-            copy(Paths.dbkpNabuBinAsset, "/sdcard/dbkp")
-            callback()
-        }
+    suspend fun setupDbkpFiles(context: ComponentActivity) = coroutineScope {
+        backupBootImage(context)
+        remove("/sdcard/original-boot.img")
+        copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
+        moveFile(Paths.bootImage, "/sdcard/original-boot.img")
+        copy(Paths.dbkp8150CfgAsset, "/sdcard/dbkp")
+        copy(Paths.dbkpHotdogBinAsset, "/sdcard/dbkp")
+        copy(Paths.dbkpCepheusBinAsset, "/sdcard/dbkp")
+        copy(Paths.dbkpNabuBinAsset, "/sdcard/dbkp")
     }
 
     fun copy(path: String, newPath: String) {
@@ -98,7 +93,17 @@ object Files {
     fun copyFileToWin(context: Context, path: String, newPath: String) {
         if (Commands.mountWindows(context, false)) {
             ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
+            return
         }
+        ShellUtils.fastCmd("su -c cp $path /sdcard/${newPath.split("/").last()}")
+    }
+
+    fun moveFileToWin(context: Context, path: String, newPath: String) {
+        if (Commands.mountWindows(context, false)) {
+            ShellUtils.fastCmd("su -c mv $path ${getMountDir()}/$newPath")
+            return
+        }
+        ShellUtils.fastCmd("su -c mv $path /sdcard/${newPath.split("/").last()}")
     }
 
     fun moveFile(path: String, newPath: String) {
@@ -148,6 +153,7 @@ object Files {
 
         copy(Paths.autoFlasherAsset, Paths.autoFlasher)
     }
+
     fun copyArmSoftwareLinks() {
         createFolder(Paths.toolbox)
         copy(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
@@ -160,6 +166,7 @@ object Files {
         val folder = File(path)
         return folder.exists() && folder.isDirectory
     }
+
     fun checkFile(path: String): Boolean {
         val file = File(path)
         return file.exists() && file.isFile
@@ -167,7 +174,11 @@ object Files {
 
 
     fun getWinPartition(context: Context, callback: (realPath: String) -> Unit = {}) {
-        listOf("/dev/block/by-name/win", "/dev/block/by-name/windows", "/dev/block/by-name/mindows").forEach { path ->
+        listOf(
+            "/dev/block/by-name/win",
+            "/dev/block/by-name/windows",
+            "/dev/block/by-name/mindows"
+        ).forEach { path ->
             val realPath = ShellUtils.fastCmd("su -c realpath $path")
             if (realPath.contains("/dev/block/sda")) {
                 callback(realPath)
@@ -179,7 +190,12 @@ object Files {
     }
 
     fun getMountDir(): String {
-        return if (Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)) Paths.winPath1 else Paths.winPath
+        return if (Preferences.getBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.MOUNTTOMNT,
+                false
+            )
+        ) Paths.winPath1 else Paths.winPath
     }
 
     fun getResource(id: Int): Drawable {
@@ -199,11 +215,22 @@ object Files {
             "a52sxq" -> getResource(R.drawable.a52sxq)
             "dm1q" -> getResource(R.drawable.dm1q)
             "judyln", "judyp", "judypn", "joan", "andromeda", "guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7",
-            "sagit", "t860", "t865" -> getResource(R.drawable.unknown)
-            "alphalm", "alphaplus", "alpha_lao_com", "alphalm_lao_com", "alphaplus_lao_com" -> getResource(R.drawable.alphaplus)
-            "betaplus", "betalm", "beta_lao_com", "betaplus_lao_com", "betalm_lao_com" -> getResource(R.drawable.betalm)
+            "sagit", "t860", "t865",
+                -> getResource(R.drawable.unknown)
+
+            "alphalm", "alphaplus", "alpha_lao_com", "alphalm_lao_com", "alphaplus_lao_com" -> getResource(
+                R.drawable.alphaplus
+            )
+
+            "betaplus", "betalm", "beta_lao_com", "betaplus_lao_com", "betalm_lao_com" -> getResource(
+                R.drawable.betalm
+            )
+
             "flashlmdd", "flash_lao_com", "flashlm", "flashlmdd_lao_com" -> getResource(R.drawable.flashlmdd)
-            "mh2lm", "mh2plus", "mh2plus_lao_com", "mh2lm_lao_com", "mh2lm5g", "mh2lm5g_lao_com" -> getResource(R.drawable.mh2lm)
+            "mh2lm", "mh2plus", "mh2plus_lao_com", "mh2lm_lao_com", "mh2lm5g", "mh2lm5g_lao_com" -> getResource(
+                R.drawable.mh2lm
+            )
+
             "beryllium" -> getResource(R.drawable.beryllium)
             "bhima", "vayu" -> getResource(R.drawable.vayu)
             "cepheus" -> getResource(R.drawable.cepheus)
@@ -211,11 +238,15 @@ object Files {
             "dumpling" -> getResource(R.drawable.dumpling)
             "chiron" -> getResource(R.drawable.chiron)
             "curtana2", "curtana_india", "curtana_cn", "curtanacn", "durandal", "durandal_india",
-            "excalibur", "excalibur2", "excalibur_india", "gram", "joyeuse", "miatoll" -> getResource(R.drawable.miatoll)
+            "excalibur", "excalibur2", "excalibur_india", "gram", "joyeuse", "miatoll",
+                -> getResource(R.drawable.miatoll)
+
             "dipper" -> getResource(R.drawable.dipper)
             "equuleus" -> getResource(R.drawable.equuleus)
             "G973F", "SM-G973F", "beyond1lte", "beyond1qlte", "G973U", "G973U1", "SM-G973U", "SM-G973U1", "G9730",
-            "SM-G9730", "G973N", "SM-G973N", "G973X", "SM-G973X", "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1" -> getResource(R.drawable.beyond1)
+            "SM-G9730", "G973N", "SM-G973N", "G973X", "SM-G973X", "G973C", "SM-G973C", "SCV41", "SM-SC41", "beyond1",
+                -> getResource(R.drawable.beyond1)
+
             "lisa" -> getResource(R.drawable.lisa)
             "nabu" -> getResource(R.drawable.nabu)
             "perseus" -> getResource(R.drawable.perseus)
@@ -226,8 +257,14 @@ object Files {
             "surya" -> getResource(R.drawable.vayu)
             "OnePlus6", "fajita" -> getResource(R.drawable.fajita)
             "OnePlus6T", "enchilada" -> getResource(R.drawable.enchilada)
-            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "OnePlus7TPro5G", "OnePlus7TProNR" -> getResource(R.drawable.hotdog)
-            "guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G", "hotdogg", "OP7ProNRSpr" -> getResource(R.drawable.guacamole)
+            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G", "OnePlus7TPro5G", "OnePlus7TProNR" -> getResource(
+                R.drawable.hotdog
+            )
+
+            "guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G", "hotdogg", "OP7ProNRSpr" -> getResource(
+                R.drawable.guacamole
+            )
+
             "q2q" -> getResource(R.drawable.q2q)
             "winnerx", "winner" -> getResource(R.drawable.winner)
             "xpeng" -> getResource(R.drawable.xpeng)
