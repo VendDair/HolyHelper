@@ -202,21 +202,6 @@
             android:layout_height="10dp"/>
 
         <com.venddair.holyhelper.Button
-            android:id="@+id/toolboxButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:imageScaleX=".85"
-            app:imageScaleY=".85"
-            app:image="@drawable/toolbox"
-            app:subtitle="@string/toolbox_subtitle"
-            app:title="@string/toolbox_title" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="10dp"/>
-
-        <com.venddair.holyhelper.Button
             android:id="@+id/mountButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -226,6 +211,21 @@
             app:image="@drawable/folder"
             app:subtitle="@string/mnt_subtitle"
             app:title="@string/mnt_title" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"/>
+
+        <com.venddair.holyhelper.Button
+            android:id="@+id/toolboxButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:imageScaleX=".85"
+            app:imageScaleY=".85"
+            app:image="@drawable/toolbox"
+            app:subtitle="@string/toolbox_subtitle"
+            app:title="@string/toolbox_title" />
 
         <Space
             android:layout_width="wrap_content"

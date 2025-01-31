@@ -48,8 +48,6 @@ object Commands {
     }
 
     fun mountWindows(context: Context, unmountIfMounted: Boolean = true): Boolean {
-
-
         if (isWindowsMounted(context) && unmountIfMounted) {
             ShellUtils.fastCmd("su -mm -c umount ${Files.getMountDir()}")
             Files.remove(Files.getMountDir())

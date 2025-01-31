@@ -27,6 +27,7 @@ class ScriptToolboxActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.usbhost_question),
                 image = R.drawable.folder,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.folder) {
@@ -48,6 +49,7 @@ class ScriptToolboxActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.rotation_question),
                 image = R.drawable.cd,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.cd) {
@@ -70,9 +72,10 @@ class ScriptToolboxActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.setup_question),
                 image = R.drawable.folder,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.folder, 19, {
+                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.folder, 19, {
                             Files.createFolder(Paths.toolbox)
                             Files.createFolder(Paths.frameworks)
                             Download.downloadFrameworks(this)
@@ -94,9 +97,10 @@ class ScriptToolboxActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.defender_question),
                 image = R.drawable.edge,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.edge, 1, {
+                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.edge, 1, {
                             Files.createFolder(Paths.toolbox)
                             Download.downloadDefenderRemover(this)
                         }, {

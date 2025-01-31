@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:text="PlaceHolder"
         android:layout_gravity="center"
+        android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/light_gray"
         android:textSize="15sp"

@@ -46,6 +46,7 @@ class ToolboxActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.sta_question),
                 image = R.drawable.adrod,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.adrod) {
@@ -68,6 +69,7 @@ class ToolboxActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.software_question),
                 image = R.drawable.ic_sensor,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.ic_sensor) {
@@ -86,14 +88,15 @@ class ToolboxActivity : ComponentActivity() {
                 this,
                 title = getString(R.string.atlasos_question),
                 image = R.drawable.atlasos,
+                dismissible = false,
                 buttons = listOf(
                     Pair("atlasos") {
-                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.atlasos, 2, {
+                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.atlasos, 2, {
                             downloadAtlasOS()
                         })
                     },
                     Pair("revios") {
-                        Info.pleaseWaitDownload(this, R.string.done, R.drawable.atlasos, 2, {
+                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.atlasos, 2, {
                             downloadReviOS()
 
                         })
@@ -108,6 +111,7 @@ class ToolboxActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.dbkp_question, Device.getDbkpDeviceName()),
                 image = R.drawable.ic_uefi,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(

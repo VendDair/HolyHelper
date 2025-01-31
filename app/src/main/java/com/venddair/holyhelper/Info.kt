@@ -3,9 +3,13 @@ package com.venddair.holyhelper
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import androidx.activity.ComponentActivity
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class Info {
@@ -125,20 +129,6 @@ class Info {
             )
         }
 
-        /*        fun uefiNotFound(context: Context, reboot: Boolean = false) {
-                    UniversalDialog.showDialog(context,
-                        title = context.getString(R.string.uefi_not_found),
-                        image = R.drawable.info,
-                        buttons = listOf(
-                            Pair(context.getString(R.string.select)) {
-                                Files.selectUefiImage {
-                                    bootInWindows(reboot)
-                                }
-                            }
-                        )
-                    )
-                }*/
-
         fun noRootDetected(context: Context) {
             UniversalDialog.showDialog(
                 context,
@@ -150,13 +140,14 @@ class Info {
         }
 
         fun done(context: Context, text: String, imageId: Int) {
-            UniversalDialog.showDialog(context,
-                title = text,
-                image = imageId,
-                buttons = listOf(
-                    Pair(context.getString(R.string.dismiss)) {}
-                )
-            )
+            UniversalDialog.clear()
+            UniversalDialog.dialogText.get()?.text = text
+            UniversalDialog.imageView.get()?.setImageResource(imageId)
+            UniversalDialog.dialog.setCancelable(true)
+            UniversalDialog.progressBar.get()?.visibility = View.GONE
+            UniversalDialog.setButtons(context, true, listOf(
+                Pair(context.getString(R.string.dismiss)) {}
+            ))
         }
 
         fun done(context: Context, textId: Int, imageId: Int) {
@@ -171,25 +162,20 @@ class Info {
             async: suspend () -> Unit = {},
             onThread: () -> Unit = {},
         ) {
-            UniversalDialog.showDialog(
-                context,
-                title = context.getString(R.string.please_wait),
-                image = imageId,
-            ) { dialog ->
-                dialog.setCancelable(false)
-                GlobalScope.launch {
-                    async()
-                    (context as ComponentActivity).runOnUiThread {
-                        onThread()
-                        dialog.cancel()
-                        if (!State.failed) done(context, doneText, imageId)
-                        else State.failed = false
-                    }
+            UniversalDialog.clear()
+            UniversalDialog.dialogText.get()?.text = context.getString(R.string.please_wait)
+            UniversalDialog.imageView.get()?.setImageResource(imageId)
+            UniversalDialog.dialog.setCancelable(false)
+            GlobalScope.launch {
+                async()
+                (context as ComponentActivity).runOnUiThread {
+                    onThread()
+                    if (!State.failed) done(context, doneText, imageId)
+                    else State.failed = false
                 }
             }
         }
 
-        @OptIn(DelicateCoroutinesApi::class)
         fun pleaseWait(
             context: Context,
             doneText: Int,
@@ -201,29 +187,25 @@ class Info {
         }
 
         @OptIn(DelicateCoroutinesApi::class)
-        fun pleaseWaitDownload(
+        fun pleaseWaitProgress(
             context: Context,
             doneText: Int,
             imageId: Int,
-            downloadMax: Int,
+            steps: Int,
             async: suspend () -> Unit = {},
             onThread: () -> Unit = {},
         ) {
-            UniversalDialog.showDialog(
-                context,
-                title = context.getString(R.string.please_wait),
-                image = imageId,
-                download = true,
-                downloadMax = downloadMax
-            ) { dialog ->
-                dialog.setCancelable(false)
-                GlobalScope.launch {
-                    async()
-                    (context as ComponentActivity).runOnUiThread {
-                        onThread()
-                        dialog.cancel()
-                        done(context, doneText, imageId)
-                    }
+            UniversalDialog.clear()
+            UniversalDialog.setupProgressBar(true, steps)
+            UniversalDialog.dialogText.get()?.text = context.getString(R.string.please_wait)
+            UniversalDialog.imageView.get()?.setImageResource(imageId)
+            UniversalDialog.dialog.setCancelable(false)
+            GlobalScope.launch {
+                async()
+                (context as ComponentActivity).runOnUiThread {
+                    onThread()
+                    if (!State.failed) done(context, doneText, imageId)
+                    else State.failed = false
                 }
             }
         }

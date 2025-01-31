@@ -102,6 +102,7 @@ class MainActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.backup_boot_question),
                 image = R.drawable.cd,
+                dismissible = false,
                 buttons = listOf(
                     Pair("windows") {
                         Info.pleaseWait(this, R.string.backuped, R.drawable.cd, {
@@ -126,6 +127,7 @@ class MainActivity : ComponentActivity() {
                     Files.getMountDir()
                 ) else getString(R.string.unmount_question),
                 image = R.drawable.folder,
+                dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         val text =
