@@ -320,6 +320,7 @@ object Download {
             // Create a list of deferred results for each download
             val downloadJobs = urls.map { (url, fileName) ->
                 async {
+                    if (State.getFailed()) return@async null
                     val path = download(context, url, fileName) ?: return@async null
                     (context as ComponentActivity).runOnUiThread {
                         UniversalDialog.increaseProgress(1)

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import androidx.activity.ComponentActivity
 import kotlinx.coroutines.CoroutineScope
@@ -53,6 +54,7 @@ class Info {
 
         fun winUnableToMount(context: Context) {
             if (isWinUnableToMountDialog) return
+            if (State.getFailed()) UniversalDialog.dialog.dismiss()
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.mountfail),
                 text = context.getString(R.string.internalstorage),
@@ -68,8 +70,12 @@ class Info {
                     },
                     Pair(context.getString(R.string.dismiss)) {}
                 )
-            ) {
-                isWinUnableToMountDialog = false
+            ) { dialog ->
+                dialog.setOnDismissListener {
+                    Log.d("INFO", "LKE")
+                    State.setFailed(false)
+                    isWinUnableToMountDialog = false
+                }
             }
             isWinUnableToMountDialog = true
         }
@@ -173,8 +179,7 @@ class Info {
                 async()
                 context.runOnUiThread {
                     onThread()
-                    if (!State.failed) done(context, doneText, imageId)
-                    else State.failed = false
+                    if (!State.getFailed()) done(context, doneText, imageId)
                 }
             }
         }
@@ -208,8 +213,7 @@ class Info {
                 async()
                 context.runOnUiThread {
                     onThread()
-                    if (!State.failed) done(context, doneText, imageId)
-                    else State.failed = false
+                    if (!State.getFailed()) done(context, doneText, imageId)
                 }
             }
         }

@@ -90,6 +90,12 @@ object Files {
         ShellUtils.fastCmd("su -c chmod $perms $path")
     }
 
+    fun createWinFolder(context: Context, path: String) {
+        if (Commands.mountWindows(context, false)) {
+            ShellUtils.fastCmd("su -c mkdir $path ")
+        }
+    }
+
     fun copyFileToWin(context: Context, path: String, newPath: String) {
         if (Commands.mountWindows(context, false)) {
             ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
@@ -143,23 +149,23 @@ object Files {
         }
     }
 
-    fun copyStaFiles() {
-        createFolder(Paths.sta)
-        copy(Paths.staAsset, Paths.staBin)
-        copy(Paths.staLinkAsset, Paths.staLink)
+    fun copyStaFiles(context: Context) {
+        createWinFolder(context, Paths.sta)
+        copyFileToWin(context, Paths.staAsset, Paths.staBin)
+        copyFileToWin(context, Paths.staLinkAsset, Paths.staLink)
 
-        copy(Paths.sddAsset, Paths.sdd)
-        copy(Paths.sddConfigAsset, Paths.sddConfig)
+        copyFileToWin(context, Paths.sddAsset, Paths.sdd)
+        copyFileToWin(context, Paths.sddConfigAsset, Paths.sddConfig)
 
-        copy(Paths.autoFlasherAsset, Paths.autoFlasher)
+        copyFileToWin(context, Paths.autoFlasherAsset, Paths.autoFlasher)
     }
 
-    fun copyArmSoftwareLinks() {
+    fun copyArmSoftwareLinks(context: Context) {
         createFolder(Paths.toolbox)
-        copy(Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
-        copy(Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
-        copy(Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
-        copy(Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
+        copyFileToWin(context, Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
+        copyFileToWin(context, Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
+        copyFileToWin(context, Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
+        copyFileToWin(context, Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
     }
 
     fun checkFolder(path: String): Boolean {

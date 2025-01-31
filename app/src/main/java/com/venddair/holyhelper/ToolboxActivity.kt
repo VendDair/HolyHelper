@@ -50,9 +50,7 @@ class ToolboxActivity : ComponentActivity() {
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.adrod) {
-                            if (Commands.mountWindows(this, false)) {
-                                Files.copyStaFiles()
-                            }
+                            Files.copyStaFiles(this)
                         }
                     },
                     Pair(getString(R.string.no)) {}
@@ -73,9 +71,7 @@ class ToolboxActivity : ComponentActivity() {
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.ic_sensor) {
-                            if (Commands.mountWindows(this, false)) {
-                                Files.copyArmSoftwareLinks()
-                            }
+                            Files.copyArmSoftwareLinks(this)
                         }
                     },
                     Pair(getString(R.string.no)) {}

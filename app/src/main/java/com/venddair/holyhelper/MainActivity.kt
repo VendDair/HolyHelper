@@ -106,14 +106,16 @@ class MainActivity : ComponentActivity() {
                 dismissible = false,
                 buttons = listOf(
                     Pair("windows") {
-                        Info.pleaseWait(this, R.string.backuped, R.drawable.cd, {
+                        Info.pleaseWait(this, R.string.backuped, R.drawable.cd) {
                             Commands.backupBootImage(this@MainActivity, true)
-                        })
+
+                        }
                     },
                     Pair("android") {
-                        Info.pleaseWait(this, R.string.backuped, R.drawable.cd, {
+                        Info.pleaseWait(this, R.string.backuped, R.drawable.cd) {
                             Commands.backupBootImage(this@MainActivity)
-                        })
+
+                        }
                     },
                     Pair(getString(R.string.no)) {}
                 )

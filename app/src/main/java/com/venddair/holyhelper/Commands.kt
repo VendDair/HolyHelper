@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 
 object Commands {
@@ -23,10 +26,16 @@ object Commands {
     }
 
     fun backupBootImage(context: Context, windows: Boolean = false) {
-        if (windows && !isWindowsMounted(context)) tryMount(context, Files.getMountDir())
+        //if (windows && !isWindowsMounted(context)) tryMount(context, Files.getMountDir())
+        if (windows && !isWindowsMounted(context)) mountWindows(context, false)
         val bootImage = if (windows) Paths.bootImage1 else Paths.bootImage
-        ShellUtils.fastCmd("su -c dd bs=8M if=${Paths.bootPartition} of=${bootImage}")
-        MainActivity.updateMountText(context)
+        CoroutineScope(Dispatchers.IO).launch {
+            ShellUtils.fastCmd("su -c dd bs=8M if=${Paths.bootPartition} of=${bootImage}")
+
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            MainActivity.updateMountText(context)
+        }
     }
 
     fun bootInWindows(context: Context, reboot: Boolean = false) {
@@ -48,7 +57,13 @@ object Commands {
     }
 
     fun mountWindows(context: Context, unmountIfMounted: Boolean = true): Boolean {
-        if (isWindowsMounted(context) && unmountIfMounted) {
+        if(!State.getFailed()) State.setFailed(true)
+
+
+        Info.winUnableToMount(context)
+
+        return false
+        /*if (isWindowsMounted(context) && unmountIfMounted) {
             ShellUtils.fastCmd("su -mm -c umount ${Files.getMountDir()}")
             Files.remove(Files.getMountDir())
             return true
@@ -82,7 +97,7 @@ object Commands {
             return false
         }
 
-        return true
+        return true*/
     }
 
     fun checkUpdate(context: ComponentActivity) {
@@ -115,7 +130,7 @@ object Commands {
             "dbkp"
         )
         if (dbkp == null) {
-            State.failed = true
+            State.setFailed(true)
             return@coroutineScope
         }
 
@@ -130,7 +145,7 @@ object Commands {
         // Execute commands
         val path = Download.download(context, url, fileName[0])
         if (path == null) {
-            State.failed = true
+            State.setFailed(true)
             return@coroutineScope
         }
         Files.moveFile(path, dbkpDir)

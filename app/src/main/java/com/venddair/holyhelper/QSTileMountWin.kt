@@ -21,10 +21,10 @@ class QSTileMountWin : TileService() {
         Commands.mountWindows(this)
         updateTileState()
 
-        if (State.failed) {
+        if (State.getFailed()) {
             val tile = qsTile
 
-            State.failed = false
+            State.setFailed(false)
             tile.label = "FAILED"
             tile.updateTile()
 

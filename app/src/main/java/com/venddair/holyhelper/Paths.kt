@@ -26,19 +26,19 @@ object Paths {
     const val winPath = "/mnt/sdcard/Windows"
     const val winPath1 = "/mnt/Windows"
 
-    val sta: String get() = Files.getMountDir() + "/sta"
-    val staBin: String get() = Files.getMountDir() + "/sta/sta.exe"
-    val staLink: String get() = Files.getMountDir() + "/Users/Public/Desktop/Android.lnk"
+    val sta: String get() = "sta"
+    val staBin: String get() = "sta/sta.exe"
+    val staLink: String get() = "Users/Public/Desktop/Android.lnk"
     const val staLinkAsset = "/data/local/tmp/holyhelper/Android.lnk"
     const val staAsset = "/data/local/tmp/holyhelper/sta.exe"
 
     const val sddAsset = "/data/local/tmp/holyhelper/sdd.exe"
-    val sdd: String get() = Files.getMountDir() + "/sta/sdd.exe"
+    val sdd: String get() = "sta/sdd.exe"
     const val sddConfigAsset = "/data/local/tmp/holyhelper/sdd.conf"
-    val sddConfig: String get() = Files.getMountDir() + "/sta/sdd.conf"
+    val sddConfig: String get() = "sta/sdd.conf"
 
     const val autoFlasherAsset = "/data/local/tmp/holyhelper/boot_img_auto-flasher_V1.0.exe"
-    val autoFlasher: String get() = Files.getMountDir() + "/sta/boot_img_auto-flasher_V1.0.exe"
+    val autoFlasher: String get() = "sta/boot_img_auto-flasher_V1.0.exe"
 
 
     const val mountNtfs = "/data/local/tmp/holyhelper/mount.ntfs"
@@ -53,10 +53,10 @@ object Paths {
 
     val installAsset = "/data/local/tmp/holyhelper/install.bat"
 
-    val ARMRepoLink get() = Files.getMountDir() + "/Toolbox/ARMRepo.url"
-    val ARMSoftwareLink get() = Files.getMountDir() + "/Toolbox/ARMSoftware.url"
-    val TestedSoftwareLink get() = Files.getMountDir() + "/Toolbox/TestedSoftware.url"
-    val WorksOnWoaLink get() = Files.getMountDir() + "/Toolbox/WorksOnWoa.url"
+    val ARMRepoLink get() = "Toolbox/ARMRepo.url"
+    val ARMSoftwareLink get() = "Toolbox/ARMSoftware.url"
+    val TestedSoftwareLink get() = "Toolbox/TestedSoftware.url"
+    val WorksOnWoaLink get() = "Toolbox/WorksOnWoa.url"
 
     val dbkp8150CfgAsset = "/data/local/tmp/holyhelper/dbkp8150.cfg"
     val dbkpHotdogBinAsset = "/data/local/tmp/holyhelper/dbkp.hotdog.bin"
