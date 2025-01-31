@@ -57,8 +57,8 @@ object Commands {
     }
 
     fun mountWindows(context: Context, unmountIfMounted: Boolean = true): Boolean {
-        if(!State.getFailed()) State.setFailed(true)
 
+        State.setFailed(true)
 
         Info.winUnableToMount(context)
 
@@ -92,7 +92,7 @@ object Commands {
             )
         }
         if (!isWindowsMounted(context)) {
-            State.failed = true
+            if(!State.getFailed()) State.setFailed(true)
             Info.winUnableToMount(context)
             return false
         }

@@ -72,7 +72,6 @@ class Info {
                 )
             ) { dialog ->
                 dialog.setOnDismissListener {
-                    Log.d("INFO", "LKE")
                     State.setFailed(false)
                     isWinUnableToMountDialog = false
                 }

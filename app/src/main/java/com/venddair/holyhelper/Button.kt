@@ -23,10 +23,6 @@ class Button @JvmOverloads constructor(
     private val titleTextView: TextView
     private val subtitleTextView: TextView
 
-    // Animation properties
-    private val scaleDuration = 150L // milliseconds
-    private val pressedScale = 0.7f
-
     init {
         orientation = HORIZONTAL
         background = ContextCompat.getDrawable(context, R.drawable.rounded_gray)

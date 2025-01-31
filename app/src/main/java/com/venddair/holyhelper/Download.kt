@@ -13,10 +13,13 @@ import android.os.Environment
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.FileProvider
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.File
@@ -316,16 +319,16 @@ object Download {
             "https://github.com/n00b69/woasetup/releases/download/Installers/oalinst.exe" to "oalinst.exe"
         )
 
-        coroutineScope {
+        State.coroutine.launch{
             // Create a list of deferred results for each download
             val downloadJobs = urls.map { (url, fileName) ->
                 async {
-                    if (State.getFailed()) return@async null
                     val path = download(context, url, fileName) ?: return@async null
                     (context as ComponentActivity).runOnUiThread {
                         UniversalDialog.increaseProgress(1)
 
                         Files.copyFileToWin(context, path, "Toolbox/Frameworks/$fileName")
+
                     }
                     path // Return the path for further processing if needed
                 }
