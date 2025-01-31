@@ -2,6 +2,7 @@ package com.venddair.holyhelper
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.view.View
 import androidx.activity.ComponentActivity
@@ -148,6 +149,7 @@ class Info {
             UniversalDialog.setButtons(context, true, listOf(
                 Pair(context.getString(R.string.dismiss)) {}
             ))
+            (context as ComponentActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         }
 
         fun done(context: Context, textId: Int, imageId: Int) {
@@ -162,6 +164,7 @@ class Info {
             async: suspend () -> Unit = {},
             onThread: () -> Unit = {},
         ) {
+            (context as ComponentActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
             UniversalDialog.clear()
             UniversalDialog.dialogText.get()?.text = context.getString(R.string.please_wait)
             UniversalDialog.imageView.get()?.setImageResource(imageId)
@@ -195,6 +198,7 @@ class Info {
             async: suspend () -> Unit = {},
             onThread: () -> Unit = {},
         ) {
+            (context as ComponentActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
             UniversalDialog.clear()
             UniversalDialog.setupProgressBar(true, steps)
             UniversalDialog.dialogText.get()?.text = context.getString(R.string.please_wait)
