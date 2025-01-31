@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -148,11 +149,12 @@ class MainActivity : ComponentActivity() {
         }
 
         // Check if the app can request package installs
-        if (!packageManager.canRequestPackageInstalls()) {
-            // Request permission to install unknown apps
-            requestInstallPermission(this)
-            return
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (!packageManager.canRequestPackageInstalls()) {
+                requestInstallPermission(this)
+                return
+            }
+        } else requestInstallPermission(this)
 
     }
 
