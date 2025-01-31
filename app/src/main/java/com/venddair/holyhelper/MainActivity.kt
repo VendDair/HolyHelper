@@ -49,8 +49,6 @@ class MainActivity : ComponentActivity() {
         val versionTextView = findViewById<TextView>(R.id.version)
         val panelTypeTextView = findViewById<TextView>(R.id.panelType)
 
-        State.pendingJobView = WeakReference(findViewById(R.id.pendingJob))
-
         deviceImageView.setImageDrawable(Files.getResourceFromDevice())
         codeNameText.text = Device.get()
 
@@ -110,17 +108,13 @@ class MainActivity : ComponentActivity() {
                 dismissible = false,
                 buttons = listOf(
                     Pair("windows") {
-                        State.pendingJobView.get()?.setText(getString(R.string.backup_boot_title))
                         Info.pleaseWait(this, R.string.backuped, R.drawable.cd) {
                             Commands.backupBootImage(this@MainActivity, true)
-                            State.pendingJobView.get()?.hide()
                         }
                     },
                     Pair("android") {
-                        State.pendingJobView.get()?.setText(getString(R.string.backup_boot_title))
                         Info.pleaseWait(this, R.string.backuped, R.drawable.cd) {
                             Commands.backupBootImage(this@MainActivity)
-                            State.pendingJobView.get()?.hide()
                         }
                     },
                     Pair(getString(R.string.no)) {}

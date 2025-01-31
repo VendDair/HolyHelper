@@ -23,7 +23,6 @@ class ScriptToolboxActivity : ComponentActivity() {
         val rotationButton = findViewById<Button>(R.id.rotation)
         val frameworkInstallersButton = findViewById<Button>(R.id.frameworkInstallers)
         val edgeRemover = findViewById<Button>(R.id.edgeremover)
-        State.pendingJobView = WeakReference(findViewById(R.id.pendingJob))
 
         usbhostmodeButton.setOnClickListener {
             UniversalDialog.showDialog(this,
@@ -77,7 +76,6 @@ class ScriptToolboxActivity : ComponentActivity() {
                 dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        State.pendingJobView.get()?.setText(getString(R.string.setup_title))
                         Info.pleaseWaitProgress(this, R.string.done, R.drawable.folder, 19, {
                             Files.createFolder(Paths.toolbox)
                             Files.createFolder(Paths.frameworks)
@@ -88,7 +86,6 @@ class ScriptToolboxActivity : ComponentActivity() {
                                 Paths.installAsset,
                                 "Toolbox/Frameworks/install.bat"
                             )
-                            State.pendingJobView.get()?.hide()
 
                         }
                     },

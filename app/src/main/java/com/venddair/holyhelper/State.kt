@@ -7,7 +7,7 @@ import java.lang.ref.WeakReference
 
 object State {
 
-    lateinit var pendingJobView: WeakReference<PendingJob>
+    //lateinit var pendingJobView: WeakReference<PendingJob>
 
     lateinit var coroutine: CoroutineScope
 
