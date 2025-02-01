@@ -57,13 +57,7 @@ object Commands {
     }
 
     fun mountWindows(context: Context, unmountIfMounted: Boolean = true): Boolean {
-
-        State.setFailed(true)
-
-        Info.winUnableToMount(context)
-
-        return false
-        /*if (isWindowsMounted(context) && unmountIfMounted) {
+        if (isWindowsMounted(context) && unmountIfMounted) {
             ShellUtils.fastCmd("su -mm -c umount ${Files.getMountDir()}")
             Files.remove(Files.getMountDir())
             return true
@@ -97,7 +91,7 @@ object Commands {
             return false
         }
 
-        return true*/
+        return true
     }
 
     fun checkUpdate(context: ComponentActivity) {
