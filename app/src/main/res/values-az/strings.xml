@@ -122,4 +122,5 @@
 	<string name="download_file_failed_title">%s yüklənə bilmədi!</string>
     <string name="select">Seç</string>
     <string name="select_uefi_image">UEFI faylını seç</string>
+    <string name="loading">Yüklənir...</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.venddair.holyhelper
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -10,6 +11,8 @@ object State {
     //lateinit var pendingJobView: WeakReference<PendingJob>
 
     lateinit var coroutine: CoroutineScope
+
+    var isWindowsMounted = false
 
     fun coroutineInit() {
         coroutine = CoroutineScope(Dispatchers.Main)
@@ -23,5 +26,17 @@ object State {
     }
 
     fun getFailed(): Boolean { return failed }
+
+
+    fun measureTime(name: String, function: () -> Unit) {
+        val startTime = System.currentTimeMillis()
+
+        function()
+
+        val endTime = System.currentTimeMillis()
+        val elapsedTime = endTime - startTime
+
+        Log.d("INFO", "$name: $elapsedTime")
+    }
 
 }

@@ -122,4 +122,5 @@
     <string name="download_file_failed_title">فشل تنزيل %s!</string>
     <string name="select">حدد</string>
     <string name="select_uefi_image">حدد ملف UEFI</string>
+    <string name="loading">جاري التحميل...</string>
 </resources>

@@ -122,4 +122,5 @@
     <string name="download_file_failed_title">Échec du téléchargement de %s !</string>
     <string name="select">Sélectionner</string>
     <string name="select_uefi_image">Sélectionner le fichier UEFI</string>
+    <string name="loading">Chargement...</string>
 </resources>

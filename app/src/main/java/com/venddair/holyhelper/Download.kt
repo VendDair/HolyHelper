@@ -13,13 +13,10 @@ import android.os.Environment
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.FileProvider
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.File
@@ -72,136 +69,6 @@ object Download {
             }
         }
 
-    @SuppressLint("InlinedApi")
-            /*suspend fun download(context: Context, url: String, fileName: String): List<String> =
-                suspendCancellableCoroutine { continuation ->
-                    val finalFileName = getUniqueFileName(fileName)
-                    val path = Paths.downloads + "/$finalFileName"
-
-                    val request = DownloadManager.Request(Uri.parse(url)).apply {
-                        setTitle("Downloading $finalFileName")
-                        setDescription("Downloading file...")
-                        setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                        setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalFileName)
-                    }
-
-                    val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                    val downloadId = downloadManager.enqueue(request)
-
-                    val receiver = object : BroadcastReceiver() {
-                        @SuppressLint("Range")
-                        override fun onReceive(context: Context, intent: Intent) {
-                            if (intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1) == downloadId) {
-                                context.unregisterReceiver(this)
-                                val query = DownloadManager.Query().setFilterById(downloadId)
-                                val cursor = downloadManager.query(query)
-
-                                try {
-                                    if (cursor?.moveToFirst() == true) {
-                                        val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                                        //if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                                        if (false) {
-                                            continuation.resume(listOf(path, finalFileName))
-                                        } else {
-                                            (context as ComponentActivity).runOnUiThread {
-                                                Info.downloadFailed(context, finalFileName)
-                                            }
-                                            continuation.cancel()
-                                            //continuation.resumeWithException(Exception("Download failed"))
-                                        }
-                                    }
-                                } catch (e: Exception) {
-                                    continuation.resumeWithException(e)
-                                } finally {
-                                    cursor?.close()
-                                }
-                            }
-                        }
-                    }
-
-                    // Handle coroutine cancellation
-                    continuation.invokeOnCancellation {
-                        context.unregisterReceiver(receiver)
-                        downloadManager.remove(downloadId)
-                    }
-
-                    context.registerReceiver(
-                        receiver,
-                        IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
-                        Context.RECEIVER_EXPORTED
-                    )
-                }*/
-
-    fun download(
-        context: Context,
-        url: String,
-        fileName: String,
-        callback: (path: String, finalFileName: String) -> Unit,
-    ) {
-        // Generate a unique file name if the file already exists
-        val finalFileName = getUniqueFileName(fileName)
-        val path = Paths.downloads + "/$finalFileName"
-
-        val request = DownloadManager.Request(Uri.parse(url)).apply {
-            setTitle("Downloading $finalFileName")
-            setDescription("Downloading file...")
-            setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, finalFileName)
-        }
-
-        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val downloadId = downloadManager.enqueue(request)
-
-        // Register the receiver to listen for download completion
-        val receiver = object : BroadcastReceiver() {
-            @SuppressLint("Range")
-            override fun onReceive(context: Context, intent: Intent) {
-                if (intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1) == downloadId) {
-                    context.unregisterReceiver(this) // Unregister the receiver
-                    val query = DownloadManager.Query().setFilterById(downloadId)
-                    val cursor = downloadManager.query(query)
-
-                    if (cursor != null && cursor.moveToFirst()) {
-                        val status =
-                            cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
-                        if (status == DownloadManager.STATUS_FAILED) {
-                            Info.downloadFailed(context, finalFileName)
-                        }
-                        callback(path, finalFileName) // Call the callback with the final file name
-                    }
-                    cursor?.close() // Close the cursor safely
-                }
-            }
-        }
-
-        context.registerReceiver(
-            receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
-            Context.RECEIVER_EXPORTED
-        )
-    }
-
-    private fun getUniqueFileName(fileName: String): String {
-        val downloadsDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        var finalFileName = fileName
-        var counter = 1
-
-        // Check if the file already exists and generate a new name if necessary
-        while (File(downloadsDir, finalFileName).exists()) {
-            val extensionIndex = fileName.lastIndexOf('.')
-            if (extensionIndex != -1) {
-                val nameWithoutExtension = fileName.substring(0, extensionIndex)
-                val extension = fileName.substring(extensionIndex)
-                finalFileName = "$nameWithoutExtension-$counter$extension"
-            } else {
-                finalFileName = "$fileName-$counter"
-            }
-            counter++
-        }
-
-        return finalFileName
-    }
-
     @SuppressLint("SdCardPath", "ObsoleteSdkInt", "QueryPermissionsNeeded")
     fun installAPK(context: Context, fileName: String) {
         // Get root external storage directory (usually /sdcard/)
@@ -219,14 +86,12 @@ object Download {
         }
 
         try {
-            // Create content URI using FileProvider
             val apkUri = FileProvider.getUriForFile(
                 context,
                 "${context.packageName}.fileprovider",
                 apkFile
             )
 
-            // Create install intent
             val installIntent = Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(apkUri, "application/vnd.android.package-archive")
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -238,7 +103,6 @@ object Download {
                 }
             }
 
-            // Verify intent can be handled
             if (installIntent.resolveActivity(context.packageManager) != null) {
                 context.startActivity(installIntent)
             } else {
@@ -296,7 +160,7 @@ object Download {
 
     }
 
-    suspend fun downloadFrameworks(context: Context) {
+    suspend fun downloadFrameworks(context: Context) = coroutineScope {
         val urls = mapOf(
             "https://github.com/n00b69/woasetup/releases/download/Installers/PhysX-9.13.0604-SystemSoftware-Legacy.msi" to "PhysX-9.13.0604-SystemSoftware-Legacy.msi",
             "https://github.com/n00b69/woasetup/releases/download/Installers/PhysX_9.23.1019_SystemSoftware.exe" to "PhysX_9.23.1019_SystemSoftware.exe",
@@ -319,23 +183,19 @@ object Download {
             "https://github.com/n00b69/woasetup/releases/download/Installers/oalinst.exe" to "oalinst.exe"
         )
 
-        State.coroutine.launch{
-            // Create a list of deferred results for each download
-            val downloadJobs = urls.map { (url, fileName) ->
-                async {
-                    val path = download(context, url, fileName) ?: return@async null
-                    (context as ComponentActivity).runOnUiThread {
-                        UniversalDialog.increaseProgress(1)
+        val downloadJobs = urls.map { (url, fileName) ->
+            async(Dispatchers.IO) {
+                val path = download(context, url, fileName) ?: return@async null
 
-                        Files.copyFileToWin(context, path, "Toolbox/Frameworks/$fileName")
-
-                    }
-                    path // Return the path for further processing if needed
+                withContext(Dispatchers.Main) {
+                    UniversalDialog.increaseProgress(1)
+                    Files.copyFileToWin(context, path, "Toolbox/Frameworks/$fileName")
                 }
+                path
             }
-            // Await all downloads to complete
-            downloadJobs.awaitAll()
         }
+
+        downloadJobs.awaitAll()
 
     }
 

@@ -122,4 +122,5 @@
     <string name="download_file_failed_title">Nepodařilo se stáhnout %s!</string>
     <string name="select">Vybrat</string>
     <string name="select_uefi_image">Vybrat soubor UEFI</string>
+    <string name="loading">Načítání...</string>
 </resources>

@@ -3,11 +3,22 @@ package com.venddair.holyhelper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Commands.backupBootImage
 import com.venddair.holyhelper.Commands.notifyIfNoWinPartition
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -24,11 +35,40 @@ object Files {
     }
 
 
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("SdCardPath")
     fun init(context: Context) {
         appContext = context
 
-        Thread {
+        CoroutineScope(Dispatchers.Main).launch {
+            createFolder(Paths.data)
+            createFolder(Paths.uefiFolder)
+            createFolder(Paths.winPath)
+
+            copyAsset("mount.ntfs", "+x")
+            copyAsset("sta.exe")
+            copyAsset("sdd.exe")
+            copyAsset("boot_img_auto-flasher_V1.0.exe")
+            copyAsset("sdd.conf")
+            copyAsset("libntfs-3g.so", "777")
+            copyAsset("libfuse-lite.so", "777")
+            copyAsset("Android.lnk")
+            copyAsset("ARMRepo.url")
+            copyAsset("ARMSoftware.url")
+            copyAsset("TestedSoftware.url")
+            copyAsset("WorksOnWoa.url")
+            copyAsset("dbkp8150.cfg")
+            copyAsset("dbkp.hotdog.bin")
+            copyAsset("dbkp.cepheus.bin")
+            copyAsset("dbkp.nabu.bin")
+            copyAsset("usbhostmode.exe")
+            copyAsset("display.exe")
+            copyAsset("RotationShortcut.lnk")
+            copyAsset("install.bat")
+            copyAsset("RemoveEdge.bat")
+        }
+
+/*        Thread {
             createFolder(Paths.uefiFolder)
             createFolder(Paths.winPath)
             createFolder(Paths.data)
@@ -55,7 +95,7 @@ object Files {
             copyAsset("RotationShortcut.lnk")
             copyAsset("install.bat")
             copyAsset("RemoveEdge.bat")
-        }.start()
+        }.start()*/
 
 
     }
@@ -91,25 +131,29 @@ object Files {
     }
 
     fun createWinFolder(context: Context, path: String) {
-        if (Commands.mountWindows(context, false)) {
-            ShellUtils.fastCmd("su -c mkdir $path ")
-        }
+        if (!State.isWindowsMounted) Commands.mountWindows(context, false)
+        if (State.getFailed()) return
+
+        ShellUtils.fastCmd("su -c mkdir ${getMountDir()}/$path ")
+
     }
 
     fun copyFileToWin(context: Context, path: String, newPath: String) {
-        if (Commands.mountWindows(context, false)) {
-            ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
+        if (!State.isWindowsMounted) Commands.mountWindows(context, false)
+        if (State.getFailed()) {
+            ShellUtils.fastCmd("su -c cp $path /sdcard/${newPath.split("/").last()}")
             return
         }
-        ShellUtils.fastCmd("su -c cp $path /sdcard/${newPath.split("/").last()}")
+        ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
     }
 
     fun moveFileToWin(context: Context, path: String, newPath: String) {
-        if (Commands.mountWindows(context, false)) {
-            ShellUtils.fastCmd("su -c mv $path ${getMountDir()}/$newPath")
+        if (!State.isWindowsMounted) Commands.mountWindows(context, false)
+        if (State.getFailed()) {
+            ShellUtils.fastCmd("su -c mv $path /sdcard/${newPath.split("/").last()}")
             return
         }
-        ShellUtils.fastCmd("su -c mv $path /sdcard/${newPath.split("/").last()}")
+        ShellUtils.fastCmd("su -c mv $path ${getMountDir()}/$newPath")
     }
 
     fun moveFile(path: String, newPath: String) {
@@ -178,22 +222,62 @@ object Files {
         return file.exists() && file.isFile
     }
 
+    fun getBootPartition(): String? {
+        val paths = listOf("boot", "BOOT")
 
-    fun getWinPartition(context: Context, callback: (realPath: String) -> Unit = {}) {
-        listOf(
-            "/dev/block/by-name/win",
-            "/dev/block/by-name/windows",
-            "/dev/block/by-name/mindows"
-        ).forEach { path ->
-            val realPath = ShellUtils.fastCmd("su -c realpath $path")
-            if (realPath.contains("/dev/block/sda")) {
-                callback(realPath)
-                return
+        val partition = paths
+            .map { ShellUtils.fastCmd("find /dev/block | grep $it$(getprop ro.boot.slot_suffix)") }
+            .firstOrNull { it.isNotEmpty() }
+            ?: return run {
+                null
+            }
+
+        return ShellUtils.fastCmd("su -c realpath $partition")
+    }
+
+    fun getWinPartition(context: Context): String? = runBlocking {
+        val paths = listOf("win", "windows", "mindows", "Win", "Windows", "Mindows")
+
+        coroutineScope {  // All coroutines must complete before returning
+            paths.map { path ->
+                async(Dispatchers.IO) {  // Check all paths in parallel
+                    ShellUtils.fastCmd("find /dev/block | grep $path").takeIf { it.isNotEmpty() }
+                }
+            }.firstOrNull { deferred ->  // Get first successful result
+                deferred.await() != null
+            }?.let { result ->
+                ShellUtils.fastCmd("su -c realpath ${result.await()}")
+            } ?: run {  // If all failed
+                if (notifyIfNoWinPartition) {
+                    withContext(Dispatchers.Main) {
+                        Info.noWinPartition(context)
+                    }
+                }
+                null
             }
         }
-        if (notifyIfNoWinPartition) Info.noWinPartition(context)
-
     }
+
+    /*fun getWinPartition(context: Context): String? {
+        val paths = listOf(
+            "win",
+            "windows",
+            "mindows",
+            "Win",
+            "Windows",
+            "Mindows"
+        )
+
+        val partition = paths
+            .map { ShellUtils.fastCmd("find /dev/block | grep $it") }
+            .firstOrNull { it.isNotEmpty() }
+            ?: return run {
+                if (notifyIfNoWinPartition) Info.noWinPartition(context)
+                null
+            }
+
+        return ShellUtils.fastCmd("su -c realpath $partition")
+    }*/
 
     fun getMountDir(): String {
         return if (Preferences.getBoolean(

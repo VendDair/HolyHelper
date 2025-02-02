@@ -38,7 +38,7 @@ class QSTileMountWin : TileService() {
 
     private fun updateTileState() {
         val tile = qsTile
-        tile.state = if (Commands.isWindowsMounted(this)) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        tile.state = if (State.isWindowsMounted) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
 
         tile.updateTile()
     }

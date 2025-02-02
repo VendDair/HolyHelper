@@ -19,7 +19,7 @@ object Paths {
 
     val downloads: String get() = "/sdcard/${Environment.DIRECTORY_DOWNLOADS}"
 
-    val bootPartition: String get() = "/dev/block/by-name/boot$(getprop ro.boot.slot_suffix)"
+    //val bootPartition: String get() = "/dev/block/by-name/boot$(getprop ro.boot.slot_suffix)"
     const val bootImage = "/sdcard/boot.img"
     const val bootImage1 = "/sdcard/Windows/boot.img"
 

@@ -122,4 +122,5 @@
     <string name="download_file_failed_title">%s을(를) 다운로드하지 못했습니다!</string>
     <string name="select">선택</string>
     <string name="select_uefi_image">UEFI 파일 선택</string>
+    <string name="loading">로드 중...</string>
 </resources>

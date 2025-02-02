@@ -122,4 +122,5 @@
     <string name="download_file_failed_title">Nu s-a putut descărca %s!</string>
     <string name="select">Selectați</string>
     <string name="select_uefi_image">Selectați fișierul UEFI</string>
+    <string name="loading">Se încarcă...</string>
 </resources>

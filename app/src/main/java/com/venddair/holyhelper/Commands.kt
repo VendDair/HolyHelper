@@ -2,6 +2,7 @@ package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import kotlinx.coroutines.CoroutineScope
@@ -17,24 +18,20 @@ object Commands {
     var notifyIfNoWinPartition = true
 
     fun isWindowsMounted(context: Context): Boolean {
-        var isMounted = false
-        Files.getWinPartition(context) { path ->
-            isMounted = ShellUtils.fastCmd("su -c mount | grep $path").isNotEmpty()
-        }
+        val winPartition = Files.getWinPartition(context) ?: return false
 
-        return isMounted
+        return ShellUtils.fastCmd("mount | grep $winPartition").isNotEmpty()
     }
 
-    fun backupBootImage(context: Context, windows: Boolean = false) {
-        //if (windows && !isWindowsMounted(context)) tryMount(context, Files.getMountDir())
-        if (windows && !isWindowsMounted(context)) mountWindows(context, false)
-        val bootImage = if (windows) Paths.bootImage1 else Paths.bootImage
-        CoroutineScope(Dispatchers.IO).launch {
-            ShellUtils.fastCmd("su -c dd bs=8M if=${Paths.bootPartition} of=${bootImage}")
 
-        }
+    fun backupBootImage(context: Context, windows: Boolean = false) {
+        if (windows && !State.isWindowsMounted) mountWindows(context, false)
+        val bootImage = if (windows) Paths.bootImage1 else Paths.bootImage
+        val bootPartition = Files.getBootPartition()
+            ?: return
+        ShellUtils.fastCmd("su -c dd bs=8m if=${bootPartition} of=${bootImage}")
+        MainActivity.updateMountText(context)
         CoroutineScope(Dispatchers.Main).launch {
-            MainActivity.updateMountText(context)
         }
     }
 
@@ -44,52 +41,74 @@ object Commands {
         if (!Files.checkFile(Paths.bootImage)) backupBootImage(context)
         if (!Files.checkFile(Paths.bootImage1)) backupBootImage(context, true)
 
-        ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${Paths.bootPartition} bs=8M")
+        val bootPartition = Files.getBootPartition()
+            ?: return
+        ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${bootPartition} bs=8M")
         if (reboot) ShellUtils.fastCmd("su -c reboot")
     }
 
     private fun tryMount(context: Context, mountPath: String) {
-        Files.getWinPartition(context) { path ->
-            ShellUtils.fastCmd("cd ${Paths.data}")
-            ShellUtils.fastCmd("su -mm -c ./mount.ntfs $path $mountPath")
-            ShellUtils.fastCmd("cd")
-        }
+        val winPartition = Files.getWinPartition(context) ?: return
+
+        val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs $winPartition $mountPath'"
+        ShellUtils.fastCmd(command)
     }
 
+
     fun mountWindows(context: Context, unmountIfMounted: Boolean = true): Boolean {
-        if (isWindowsMounted(context) && unmountIfMounted) {
-            ShellUtils.fastCmd("su -mm -c umount ${Files.getMountDir()}")
-            Files.remove(Files.getMountDir())
-            return true
+        val startTime = System.currentTimeMillis()
+
+/*        State.setFailed(true)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            Info.winUnableToMount(context)
         }
+
+        return false*/
+
+        val mountDir = Files.getMountDir()
 
         if (isWindowsMounted(context)) {
+            if (unmountIfMounted) {
+                ShellUtils.fastCmd("su -mm -c umount $mountDir")
+                Files.remove(mountDir)
+                State.isWindowsMounted = false
+                return true
+            }
+            State.isWindowsMounted = true
             return true
         }
 
-        Files.createFolder(Files.getMountDir())
+        Files.createFolder(mountDir)
+        tryMount(context, mountDir)
 
-        tryMount(context, Files.getMountDir())
+        var mounted = isWindowsMounted(context)
 
-        // Mount to /mnt if /mnt/sdcard failed
-        if (!isWindowsMounted(context) && Files.getMountDir() == Paths.winPath) {
-            Preferences.putBoolean(
-                Preferences.Preference.SETTINGS,
-                Preferences.Key.MOUNTTOMNT,
-                true
-            )
-            tryMount(context, Files.getMountDir())
-            if (!isWindowsMounted(context)) Preferences.putBoolean(
-                Preferences.Preference.SETTINGS,
-                Preferences.Key.MOUNTTOMNT,
-                false
-            )
+        if (!mounted && mountDir == Paths.winPath) {
+            Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, true)
+            tryMount(context, mountDir)
+            mounted = isWindowsMounted(context)
+            if (!mounted) {
+                Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)
+            }
         }
-        if (!isWindowsMounted(context)) {
-            if(!State.getFailed()) State.setFailed(true)
+
+        if (!mounted) {
+            if (!State.getFailed()) {
+                State.setFailed(true)
+            }
             Info.winUnableToMount(context)
+            State.isWindowsMounted = false
             return false
         }
+
+        State.isWindowsMounted = true
+        MainActivity.updateMountText(context)
+
+        val endTime = System.currentTimeMillis()
+        val elapsedTime = endTime - startTime
+
+        Log.d("INFO", "mounting: $elapsedTime")
 
         return true
     }

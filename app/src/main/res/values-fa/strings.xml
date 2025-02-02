@@ -131,4 +131,5 @@ C:\\Toolbox?"</string>
     <string name="download_file_failed_title">دریافت %s ناموفق بود!</string>
     <string name="select">انتخاب کنید</string>
     <string name="select_uefi_image">انتخاب فایل UEFI</string>
+    <string name="loading">در حال بارگذاری...</string>
 </resources>

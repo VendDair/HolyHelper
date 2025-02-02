@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -81,6 +82,7 @@ class Info {
 
         fun noWinPartition(context: Context) {
             if (isNoWinPartitionDialog) return
+            if (State.getFailed()) UniversalDialog.dialog.dismiss()
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.partition),
                 image = R.drawable.error,
@@ -93,12 +95,16 @@ class Info {
                             )
                         )
                     },
-                    Pair(context.getString(R.string.later)) {}
+                    //Pair(context.getString(R.string.later)) {}
                 )
-            ) {
-                isNoWinPartitionDialog = false
+            ) { dialog ->
+                dialog.setCancelable(false)
+/*                dialog.setOnDismissListener {
+                    State.setFailed(false)
+                    isNoWinPartitionDialog = false
+                }*/
             }
-            isNoWinPartitionDialog = true
+            //isNoWinPartitionDialog = true
         }
 
         fun unableToDownload(context: Context) {
@@ -209,7 +215,7 @@ class Info {
             UniversalDialog.imageView.get()?.setImageResource(imageId)
             UniversalDialog.dialog.setCancelable(false)
             GlobalScope.launch {
-                async()
+async()
                 context.runOnUiThread {
                     onThread()
                     if (!State.getFailed()) done(context, doneText, imageId)
