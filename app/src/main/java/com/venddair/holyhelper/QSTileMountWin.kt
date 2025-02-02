@@ -33,7 +33,9 @@ class QSTileMountWin : TileService() {
                 tile.label = "Mount win"
                 tile.updateTile()
             }
+            return
         }
+
     }
 
     private fun updateTileState() {

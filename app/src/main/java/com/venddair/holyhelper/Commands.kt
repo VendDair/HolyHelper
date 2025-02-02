@@ -17,22 +17,31 @@ object Commands {
 
     var notifyIfNoWinPartition = true
 
-    fun isWindowsMounted(context: Context): Boolean {
-        val winPartition = Files.getWinPartition(context) ?: return false
+    fun isWindowsMounted(): Boolean {
+        //val winPartition = Files.getWinPartition(context) ?: return false
 
-        return ShellUtils.fastCmd("mount | grep $winPartition").isNotEmpty()
+        //return ShellUtils.fastCmd("mount | grep $winPartition").isNotEmpty()
+        //return Cmd.execute("mount | grep $winPartition").isNotEmpty()
+        return Cmd.execute("grep -B1 -A5 \"${State.winPartition}\" /proc/mounts | tail -10").isNotEmpty()
     }
 
 
     fun backupBootImage(context: Context, windows: Boolean = false) {
+        val startTime = System.currentTimeMillis()
+
         if (windows && !State.isWindowsMounted) mountWindows(context, false)
         val bootImage = if (windows) Paths.bootImage1 else Paths.bootImage
-        val bootPartition = Files.getBootPartition()
-            ?: return
-        ShellUtils.fastCmd("su -c dd bs=8m if=${bootPartition} of=${bootImage}")
+
+        if (State.bootPartition == null) return
+
+        //ShellUtils.fastCmd("su -c dd bs=8m if=${bootPartition} of=${bootImage}")
+        Cmd.execute("su -c dd bs=8m if=${State.bootPartition} of=${bootImage}")
         MainActivity.updateMountText(context)
-        CoroutineScope(Dispatchers.Main).launch {
-        }
+
+        val endTime = System.currentTimeMillis()
+        val elapsedTime = endTime - startTime
+
+        Log.d("INFO", "Backup boot image: $elapsedTime")
     }
 
     fun bootInWindows(context: Context, reboot: Boolean = false) {
@@ -41,17 +50,20 @@ object Commands {
         if (!Files.checkFile(Paths.bootImage)) backupBootImage(context)
         if (!Files.checkFile(Paths.bootImage1)) backupBootImage(context, true)
 
-        val bootPartition = Files.getBootPartition()
-            ?: return
-        ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${bootPartition} bs=8M")
+        if (State.bootPartition == null) return
+
+        ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${State.bootPartition} bs=8M")
         if (reboot) ShellUtils.fastCmd("su -c reboot")
     }
 
-    private fun tryMount(context: Context, mountPath: String) {
-        val winPartition = Files.getWinPartition(context) ?: return
+    private fun tryMount(mountPath: String) {
+        //val winPartition = Files.getWinPartition(context) ?: return
 
-        val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs $winPartition $mountPath'"
-        ShellUtils.fastCmd(command)
+        val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs ${State.winPartition} $mountPath'"
+        //val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs -o big_writes,noatime,norecovery $winPartition $mountPath'"
+        //ShellUtils.fastCmd(command)
+        val result = Cmd.execute(command)
+        State.isWindowsMounted = result.isEmpty()
     }
 
 
@@ -68,11 +80,22 @@ object Commands {
 
         val mountDir = Files.getMountDir()
 
-        if (isWindowsMounted(context)) {
+        //if (isWindowsMounted(context)) {
+        if (State.isWindowsMounted) {
             if (unmountIfMounted) {
-                ShellUtils.fastCmd("su -mm -c umount $mountDir")
-                Files.remove(mountDir)
+                //ShellUtils.fastCmd("su -mm -c umount $mountDir")
+                Cmd.execute("su -mm -c umount $mountDir")
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    Files.remove(mountDir)
+                }
                 State.isWindowsMounted = false
+                MainActivity.updateMountText(context)
+
+                val endTime = System.currentTimeMillis()
+                val elapsedTime = endTime - startTime
+
+                Log.d("INFO", "unmounting: $elapsedTime")
                 return true
             }
             State.isWindowsMounted = true
@@ -80,23 +103,20 @@ object Commands {
         }
 
         Files.createFolder(mountDir)
-        tryMount(context, mountDir)
+        tryMount(mountDir)
 
-        var mounted = isWindowsMounted(context)
+        //var mounted = isWindowsMounted(context)
 
-        if (!mounted && mountDir == Paths.winPath) {
+        if (!State.isWindowsMounted && mountDir == Paths.winPath) {
             Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, true)
-            tryMount(context, mountDir)
-            mounted = isWindowsMounted(context)
-            if (!mounted) {
+            tryMount(mountDir)
+            if (!State.isWindowsMounted) {
                 Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)
             }
         }
 
-        if (!mounted) {
-            if (!State.getFailed()) {
-                State.setFailed(true)
-            }
+        if (!State.isWindowsMounted) {
+            State.setFailed(true)
             Info.winUnableToMount(context)
             State.isWindowsMounted = false
             return false

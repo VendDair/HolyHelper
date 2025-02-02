@@ -52,7 +52,7 @@ class MainViewModel : ViewModel() {
                 val endTime = System.currentTimeMillis()
                 val elapsedTime = endTime - startTime
 
-                Log.d("INFO", elapsedTime.toString())
+                Log.d("INFO", "Creating data: $elapsedTime")
 
             }
             isLoading.postValue(false)

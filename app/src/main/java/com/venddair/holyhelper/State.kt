@@ -14,6 +14,9 @@ object State {
 
     var isWindowsMounted = false
 
+    var winPartition: String? = null
+    var bootPartition: String? = null
+
     fun coroutineInit() {
         coroutine = CoroutineScope(Dispatchers.Main)
     }

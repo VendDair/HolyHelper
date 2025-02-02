@@ -40,7 +40,7 @@ class ScriptToolboxActivity : ComponentActivity() {
                             )
                         }
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
 
@@ -63,7 +63,7 @@ class ScriptToolboxActivity : ComponentActivity() {
                             )
                         }
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
 
@@ -89,7 +89,7 @@ class ScriptToolboxActivity : ComponentActivity() {
 
                         }
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
 
@@ -110,7 +110,7 @@ class ScriptToolboxActivity : ComponentActivity() {
 
                         })
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
 

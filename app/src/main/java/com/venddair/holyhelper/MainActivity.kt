@@ -38,8 +38,7 @@ class MainActivity : ComponentActivity() {
         setContentView(R.layout.main)
 
         State.coroutineInit()
-        FilePicker.init(this@MainActivity)
-        ToastUtil.init(this@MainActivity)
+        //FilePicker.init(this@MainActivity)
         ToastUtil.init(this@MainActivity)
         Preferences.init(this@MainActivity)
         Files.init(this@MainActivity)
@@ -82,7 +81,12 @@ class MainActivity : ComponentActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 Commands.checkUpdate(this@MainActivity)
             }
-            State.isWindowsMounted = isWindowsMounted(this)
+            State.winPartition = Files.getWinPartition(this)
+
+            CoroutineScope(Dispatchers.Main).launch {
+                State.bootPartition = Files.getBootPartition()
+            }
+            State.isWindowsMounted = isWindowsMounted()
             viewModel.loadData(this)
         }
 
@@ -91,7 +95,7 @@ class MainActivity : ComponentActivity() {
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime
 
-        Log.d("INFO", elapsedTime.toString())
+        Log.d("INFO", "Main activity: $elapsedTime")
 
         settingsButton.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
@@ -128,7 +132,7 @@ class MainActivity : ComponentActivity() {
                     Pair(getString(R.string.reboot)) {
                         Commands.bootInWindows(this, true)
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
         }
@@ -149,12 +153,13 @@ class MainActivity : ComponentActivity() {
                             Commands.backupBootImage(this@MainActivity)
                         }
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
         }
 
         mountButton.get()?.setOnClickListener {
+            State.isWindowsMounted = isWindowsMounted()
             UniversalDialog.showDialog(this,
                 title = if (!State.isWindowsMounted) getString(
                     R.string.mount_question,
@@ -172,7 +177,9 @@ class MainActivity : ComponentActivity() {
                         }
 
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) {
+                        UniversalDialog.dialog.dismiss()
+                    }
                 )
             )
         }
@@ -341,12 +348,19 @@ class MainActivity : ComponentActivity() {
         lateinit var mountButton: WeakReference<Button>
 
         fun updateMountText(context: Context) {
-                mountButton.get()?.setTitle(
-                    if (State.isWindowsMounted) context.getString(
-                        R.string.mnt_title,
-                        context.getString(R.string.unmountt)
-                    ) else context.getString(R.string.mnt_title, context.getString(R.string.mountt))
-                )
+            val startTime = System.currentTimeMillis()
+
+            mountButton.get()?.setTitle(
+                if (State.isWindowsMounted) context.getString(
+                    R.string.mnt_title,
+                    context.getString(R.string.unmountt)
+                ) else context.getString(R.string.mnt_title, context.getString(R.string.mountt))
+            )
+
+            val endTime = System.currentTimeMillis()
+            val elapsedTime = endTime - startTime
+
+            Log.d("INFO", "Changing mount text: $elapsedTime")
         }
     }
 

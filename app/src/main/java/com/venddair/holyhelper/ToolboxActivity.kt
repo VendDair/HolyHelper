@@ -53,7 +53,7 @@ class ToolboxActivity : ComponentActivity() {
                             Files.copyStaFiles(this)
                         }
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
 
@@ -74,7 +74,7 @@ class ToolboxActivity : ComponentActivity() {
                             Files.copyArmSoftwareLinks(this)
                         }
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
         }
@@ -97,7 +97,7 @@ class ToolboxActivity : ComponentActivity() {
 
                         })
                     },
-                    Pair(getString(R.string.dismiss)) {},
+                    Pair(getString(R.string.dismiss)) { UniversalDialog.dialog.dismiss() },
                 )
             )
 
@@ -119,7 +119,7 @@ class ToolboxActivity : ComponentActivity() {
                             }) {
                         }
                     },
-                    Pair(getString(R.string.no)) {}
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
         }

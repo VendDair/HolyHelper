@@ -242,6 +242,7 @@ object Files {
             paths.map { path ->
                 async(Dispatchers.IO) {  // Check all paths in parallel
                     ShellUtils.fastCmd("find /dev/block | grep $path").takeIf { it.isNotEmpty() }
+                    //Cmd.execute("su -c find /dev/block | grep $path").takeIf { it.isNotEmpty() }
                 }
             }.firstOrNull { deferred ->  // Get first successful result
                 deferred.await() != null
@@ -258,7 +259,7 @@ object Files {
         }
     }
 
-    /*fun getWinPartition(context: Context): String? {
+/*    fun getWinPartition(context: Context): String? {
         val paths = listOf(
             "win",
             "windows",
