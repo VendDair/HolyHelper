@@ -35,6 +35,8 @@ object Files {
     fun init(context: Context) {
         appContext = context
 
+        Paths.data = context.filesDir.toString()
+
         CoroutineScope(Dispatchers.IO).launch {
             createFolder(Paths.data)
             createFolder(Paths.uefiFolder)

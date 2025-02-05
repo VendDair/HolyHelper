@@ -1,13 +1,15 @@
 package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Environment
+import androidx.core.content.ContextCompat
 import com.topjohnwu.superuser.ShellUtils
 
 @SuppressLint("SdCardPath")
 object Paths {
 
-    const val data = "/data/data/com.venddair.holyhelper/files"
+    lateinit var data: String
 
     const val uefiFolder = "/sdcard/UEFI"
 

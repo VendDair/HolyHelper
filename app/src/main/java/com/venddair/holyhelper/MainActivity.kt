@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
             mountButton.get()?.setTitle(mountText)
         }
         viewModel.lastBackupDate.observe(this) { lastBackupDate ->
-            if (lastBackupDate != null)
+            if (lastBackupDate != "")
                 lastBackup.get()?.text = lastBackupDate
             else
                 lastBackup.get()?.visibility = View.GONE

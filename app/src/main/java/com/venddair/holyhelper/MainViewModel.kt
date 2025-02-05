@@ -20,7 +20,7 @@ class MainViewModel : ViewModel() {
     val isUefiFilePresent = MutableLiveData<Boolean>()
     val mountText = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
-    val lastBackupDate = MutableLiveData<String?>()
+    val lastBackupDate = MutableLiveData<String>()
 
     fun loadData(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -35,7 +35,7 @@ class MainViewModel : ViewModel() {
                 }
                 val drawableDeferred = async { Device.getImage() }
                 val isUefiFileDeferred = async { Files.checkFile(Paths.uefiImg) }
-                val lastBackupDateDeferred = async { Preferences.getString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, null) }
+                val lastBackupDateDeferred = async { Preferences.getString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, "") }
                 val mountTextDeferred = async {
                     if (State.isWindowsMounted)
                         context.getString(R.string.mnt_title, context.getString(R.string.unmountt))
