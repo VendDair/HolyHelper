@@ -167,6 +167,7 @@ class MainActivity : ComponentActivity() {
 
         mountButton.get()?.setOnClickListener {
             State.isWindowsMounted = isWindowsMounted()
+            updateMountText(this)
             UniversalDialog.showDialog(this,
                 title = if (!State.isWindowsMounted) getString(
                     R.string.mount_question,
