@@ -25,7 +25,7 @@ class MainViewModel : ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
     val lastBackupDate = MutableLiveData<String>()
     val totalRam = MutableLiveData<Float>()
-    val slot = MutableLiveData<String>()
+    val slot = MutableLiveData<String?>()
 
     fun loadData(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
