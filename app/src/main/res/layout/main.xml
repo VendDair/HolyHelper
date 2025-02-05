@@ -132,10 +132,28 @@
                     tools:ignore="HardcodedText" />
 
                 <TextView
+                    android:id="@+id/totalRam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ramvalue"
+                    android:textSize="13sp"
+                    android:textColor="@color/slightly_lighter_gray"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
                     android:id="@+id/lastBackup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/last"
+                    android:textSize="13sp"
+                    android:textColor="@color/slightly_lighter_gray"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/slot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/slot"
                     android:textSize="13sp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />

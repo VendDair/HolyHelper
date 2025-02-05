@@ -49,6 +49,8 @@ class MainActivity : ComponentActivity() {
         val panelTypeTextView = findViewById<TextView>(R.id.panelType)
         val loading = findViewById<LinearLayout>(R.id.loading)
         lastBackup = WeakReference(findViewById(R.id.lastBackup))
+        val totalRam = findViewById<TextView>(R.id.totalRam)
+        val slot = findViewById<TextView>(R.id.slot)
 
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -80,6 +82,17 @@ class MainActivity : ComponentActivity() {
                 lastBackup.get()?.visibility = View.GONE
         }
 
+        viewModel.totalRam.observe(this) { ramValue ->
+            totalRam.text = getString(R.string.ramvalue, ramValue.toFloat())
+        }
+
+        viewModel.slot.observe(this) { value ->
+            if (value != null)
+                slot.text = getString(R.string.slot, value)
+            else
+                slot.visibility = View.GONE
+        }
+
         viewModel.isLoading.observe(this) { isLoading ->
             loading.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
@@ -96,8 +109,6 @@ class MainActivity : ComponentActivity() {
             State.isWindowsMounted = isWindowsMounted()
             viewModel.loadData(this)
         }
-
-
 
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.topjohnwu.superuser.ShellUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -23,6 +24,8 @@ class MainViewModel : ViewModel() {
     val mountText = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
     val lastBackupDate = MutableLiveData<String>()
+    val totalRam = MutableLiveData<Float>()
+    val slot = MutableLiveData<String>()
 
     fun loadData(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -30,7 +33,7 @@ class MainViewModel : ViewModel() {
 
             coroutineScope {
                 val versionDeferred = async { Paths.version }
-                val deviceNameDeferred = async { Device.get() }
+                val deviceNameDeferred = async { "${Device.getModel()} (${Device.get()})" }
                 val panelTypeDeferred = async {
                     if (!Device.isPanelCheckingSupported()) return@async null
                     context.getString(R.string.paneltype, Device.getPanelType())
@@ -44,6 +47,8 @@ class MainViewModel : ViewModel() {
                     else
                         context.getString(R.string.mnt_title, context.getString(R.string.mountt))
                 }
+                val totalRamDeferred = async { Device.getTotalRam(context) }
+                val slotDeferred = async { Device.getSlot() }
 
                 // Await all async operations and post results
                 val startTime = System.currentTimeMillis()
@@ -54,6 +59,8 @@ class MainViewModel : ViewModel() {
                 isUefiFilePresent.postValue(isUefiFileDeferred.await())
                 mountText.postValue(mountTextDeferred.await())
                 lastBackupDate.postValue(lastBackupDateDeferred.await())
+                totalRam.postValue(totalRamDeferred.await())
+                slot.postValue(slotDeferred.await())
 
                 val endTime = System.currentTimeMillis()
                 val elapsedTime = endTime - startTime

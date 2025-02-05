@@ -1,15 +1,47 @@
 package com.venddair.holyhelper
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Files.getResource
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 object Device {
 
     fun get(): String {
         return ShellUtils.fastCmd("getprop ro.product.device").replace("\n", "")
+    }
+
+    fun getModel(): String {
+        return ShellUtils.fastCmd("getprop ro.product.model").replace("\n", "")
+    }
+
+    fun getTotalRam(context: Context): Float {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+        val memInfo = ActivityManager.MemoryInfo().apply {
+            activityManager?.getMemoryInfo(this)
+        }
+
+        return memInfo.totalMem.let { bytes ->
+            when {
+                bytes >= 1L shl 60 -> bytes / (1L shl 60).toFloat() // EB
+                bytes >= 1L shl 50 -> bytes / (1L shl 50).toFloat() // PB
+                bytes >= 1L shl 40 -> bytes / (1L shl 40).toFloat() // TB
+                bytes >= 1L shl 30 -> bytes / (1L shl 30).toFloat() // GB
+                bytes >= 1L shl 20 -> bytes / (1L shl 20).toFloat() // MB
+                bytes >= 1L shl 10 -> bytes / (1L shl 10).toFloat() // KB
+                else -> bytes.toFloat() // Bytes
+            }
+        }
+    }
+
+    fun getSlot(): String? {
+        val slot = ShellUtils.fastCmd("getprop ro.boot.slot_suffix")
+        if (slot == "") return null
+        return slot
     }
 
     fun isPanelCheckingSupported(): Boolean {
