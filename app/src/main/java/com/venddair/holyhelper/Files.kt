@@ -11,14 +11,9 @@ import com.venddair.holyhelper.Commands.notifyIfNoWinPartition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -40,7 +35,7 @@ object Files {
     fun init(context: Context) {
         appContext = context
 
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             createFolder(Paths.data)
             createFolder(Paths.uefiFolder)
             createFolder(Paths.winPath)
@@ -50,7 +45,7 @@ object Files {
             copyAsset("sdd.exe")
             copyAsset("boot_img_auto-flasher_V1.0.exe")
             copyAsset("sdd.conf")
-            copyAsset("libntfs-3g.so", "777")
+            copyAsset("libntfs-3g.so")
             copyAsset("libfuse-lite.so", "777")
             copyAsset("Android.lnk")
             copyAsset("ARMRepo.url")
@@ -105,8 +100,8 @@ object Files {
     }
 
     fun createFolder(path: String, alert: Boolean = false) {
-        if (checkFolder(path)) return
-        if (alert) ToastUtil.showToast("Folder $path was created")
+/*        if (checkFolder(path)) return
+        if (alert) ToastUtil.showToast("Folder $path was created")*/
         ShellUtils.fastCmd("su -c mkdir $path")
     }
 
@@ -165,6 +160,31 @@ object Files {
     }
 
     fun copyAsset(name: String, perms: String? = null, alert: Boolean = false) {
+        val outputFilePath = File(Paths.data, name) // Ensure Paths.data isn't NTFS-mounted
+
+        try {
+            val inputStream: InputStream = appContext.assets.open(name)
+            val outputStream = FileOutputStream(outputFilePath)
+
+            inputStream.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            // Only set permissions if NOT on NTFS and necessary
+            if (perms != null) {
+                Runtime.getRuntime().exec(arrayOf("chmod", perms, outputFilePath.absolutePath))
+            }
+
+            if (alert) ToastUtil.showToast("Asset $name copied to ${outputFilePath.parent}")
+        } catch (e: IOException) {
+            e.printStackTrace()
+            println("Error copying file: ${e.message}")
+        }
+    }
+
+    /*fun copyAsset(name: String, perms: String? = null, alert: Boolean = false) {
 
         val outputFilePath = Paths.data + "/$name"
 
@@ -191,7 +211,7 @@ object Files {
             e.printStackTrace()
             println("Process was interrupted: ${e.message}")
         }
-    }
+    }*/
 
     fun copyStaFiles(context: Context) {
         createWinFolder(context, Paths.sta)
@@ -236,6 +256,26 @@ object Files {
     }
 
     fun getWinPartition(context: Context): String? = runBlocking {
+        val regex = "win|windows|mindows|Win|Windows|Mindows"
+
+        val findCmd = "su -c find /dev/block | grep -E '$regex'"
+        val result = ShellUtils.fastCmd(findCmd).trim()
+
+        if (result.isNotEmpty()) {
+            val firstMatch = result.lines().first().trim()
+
+            Log.d("INFO", ShellUtils.fastCmd("su -c realpath $firstMatch").trim())
+
+            ShellUtils.fastCmd("su -c realpath $firstMatch").trim()
+        } else {
+            if (notifyIfNoWinPartition) {
+                Info.noWinPartition(context)
+            }
+            null
+        }
+    }
+
+    /*fun getWinPartition(context: Context): String? = runBlocking {
         val paths = listOf("win", "windows", "mindows", "Win", "Windows", "Mindows")
 
         coroutineScope {  // All coroutines must complete before returning
@@ -257,7 +297,7 @@ object Files {
                 null
             }
         }
-    }
+    }*/
 
 /*    fun getWinPartition(context: Context): String? {
         val paths = listOf(

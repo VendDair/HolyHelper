@@ -16,6 +16,7 @@ object Preferences {
         DISABLEUPDATES("disableUpdates"),
         AUTOMOUNT("autoMount"),
         UEFIIMG("uefiImg"),
+        LASTBACKUPDATE("lastBackupDate")
     }
 
     fun init(context: Context) {
@@ -36,7 +37,7 @@ object Preferences {
         editor.apply()
     }
 
-    fun getString(preference: Preference, name: Key, defValue: String): String {
+    fun getString(preference: Preference, name: Key, defValue: String?): String {
         return get(preference).getString(name.key, defValue)!!
     }
 

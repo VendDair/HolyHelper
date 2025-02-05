@@ -1,10 +1,8 @@
 package com.venddair.holyhelper
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,20 +11,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.topjohnwu.superuser.Shell
 import com.venddair.holyhelper.Commands.isWindowsMounted
-import com.venddair.holyhelper.Permissions.requestInstallPermission
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
 
@@ -35,6 +27,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val startTime = System.currentTimeMillis()
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.main)
 
         State.coroutineInit()
@@ -55,6 +48,8 @@ class MainActivity : ComponentActivity() {
         val versionTextView = findViewById<TextView>(R.id.version)
         val panelTypeTextView = findViewById<TextView>(R.id.panelType)
         val loading = findViewById<LinearLayout>(R.id.loading)
+        lastBackup = WeakReference(findViewById(R.id.lastBackup))
+
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -64,7 +59,13 @@ class MainActivity : ComponentActivity() {
 
         viewModel.versionText.observe(this) { versionTextView.text = it }
         viewModel.deviceName.observe(this) { codeNameText.text = it }
-        viewModel.panelType.observe(this) { panelTypeTextView.text = it }
+        viewModel.panelType.observe(this) {
+            if (it == null) {
+                panelTypeTextView.visibility = View.GONE
+                return@observe
+            }
+            panelTypeTextView.text = it
+        }
         viewModel.drawable.observe(this) { deviceImageView.setImageDrawable(it) }
         viewModel.isUefiFilePresent.observe(this) { isPresent ->
             if (!isPresent) {
@@ -75,6 +76,12 @@ class MainActivity : ComponentActivity() {
         }
         viewModel.mountText.observe(this) { mountText ->
             mountButton.get()?.setTitle(mountText)
+        }
+        viewModel.lastBackupDate.observe(this) { lastBackupDate ->
+            if (lastBackupDate != null)
+                lastBackup.get()?.text = lastBackupDate
+            else
+                lastBackup.get()?.visibility = View.GONE
         }
 
         if (savedInstanceState == null) {
@@ -185,7 +192,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
+
+
+    /////////////////////////////////////////////////////////////////////
+
+    //@OptIn(DelicateCoroutinesApi::class)
     /*@SuppressLint("SetTextI18n", "StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         val startTime = System.currentTimeMillis()
@@ -346,6 +357,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         lateinit var mountButton: WeakReference<Button>
+        lateinit var lastBackup: WeakReference<TextView>
 
         fun updateMountText(context: Context) {
             val startTime = System.currentTimeMillis()
@@ -361,6 +373,22 @@ class MainActivity : ComponentActivity() {
             val elapsedTime = endTime - startTime
 
             Log.d("INFO", "Changing mount text: $elapsedTime")
+        }
+
+        fun updateLastBackupDate(context: Context) {
+            val startTime = System.currentTimeMillis()
+
+            val formatter = SimpleDateFormat("dd-MM HH:mm", Locale.US)
+            val date = context.getString(R.string.last, formatter.format(Date()))
+            Preferences.putString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, date)
+            lastBackup.get()?.text = date
+            lastBackup.get()?.visibility = View.VISIBLE
+
+
+            val endTime = System.currentTimeMillis()
+            val elapsedTime = endTime - startTime
+
+            Log.d("INFO", "Changing last backup date: $elapsedTime")
         }
     }
 

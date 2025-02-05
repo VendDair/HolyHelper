@@ -37,6 +37,7 @@ object Commands {
         //ShellUtils.fastCmd("su -c dd bs=8m if=${bootPartition} of=${bootImage}")
         Cmd.execute("su -c dd bs=8m if=${State.bootPartition} of=${bootImage}")
         MainActivity.updateMountText(context)
+        MainActivity.updateLastBackupDate(context)
 
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime
@@ -62,7 +63,8 @@ object Commands {
         val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs ${State.winPartition} $mountPath'"
         //val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs -o big_writes,noatime,norecovery $winPartition $mountPath'"
         //ShellUtils.fastCmd(command)
-        val result = Cmd.execute(command)
+        //val result = Cmd.execute(command)
+        val result = ShellUtils.fastCmd(command)
         State.isWindowsMounted = result.isEmpty()
     }
 

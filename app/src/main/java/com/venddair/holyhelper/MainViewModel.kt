@@ -3,11 +3,9 @@ package com.venddair.holyhelper
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
-import android.widget.MultiAutoCompleteTextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.venddair.holyhelper.Commands.isWindowsMounted
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -17,11 +15,12 @@ class MainViewModel : ViewModel() {
 
     val versionText = MutableLiveData<String>()
     val deviceName = MutableLiveData<String>()
-    val panelType = MutableLiveData<String>()
+    val panelType = MutableLiveData<String?>()
     val drawable = MutableLiveData<Drawable>()
     val isUefiFilePresent = MutableLiveData<Boolean>()
     val mountText = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
+    val lastBackupDate = MutableLiveData<String?>()
 
     fun loadData(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -30,9 +29,13 @@ class MainViewModel : ViewModel() {
             coroutineScope {
                 val versionDeferred = async { Paths.version }
                 val deviceNameDeferred = async { Device.get() }
-                val panelTypeDeferred = async { context.getString(R.string.paneltype, Device.getPanelType()) }
-                val drawableDeferred = async { Files.getResourceFromDevice() }
+                val panelTypeDeferred = async {
+                    if (!Device.isPanelCheckingSupported()) return@async null
+                    context.getString(R.string.paneltype, Device.getPanelType())
+                }
+                val drawableDeferred = async { Device.getImage() }
                 val isUefiFileDeferred = async { Files.checkFile(Paths.uefiImg) }
+                val lastBackupDateDeferred = async { Preferences.getString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, null) }
                 val mountTextDeferred = async {
                     if (State.isWindowsMounted)
                         context.getString(R.string.mnt_title, context.getString(R.string.unmountt))
@@ -48,11 +51,12 @@ class MainViewModel : ViewModel() {
                 drawable.postValue(drawableDeferred.await())
                 isUefiFilePresent.postValue(isUefiFileDeferred.await())
                 mountText.postValue(mountTextDeferred.await())
+                lastBackupDate.postValue(lastBackupDateDeferred.await())
 
                 val endTime = System.currentTimeMillis()
                 val elapsedTime = endTime - startTime
-
                 Log.d("INFO", "Creating data: $elapsedTime")
+
 
             }
             isLoading.postValue(false)

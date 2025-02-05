@@ -3,7 +3,6 @@ package com.venddair.holyhelper
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
-import java.lang.ref.WeakReference
 
 class ScriptToolboxActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

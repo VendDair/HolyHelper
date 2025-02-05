@@ -7,7 +7,7 @@ import com.topjohnwu.superuser.ShellUtils
 @SuppressLint("SdCardPath")
 object Paths {
 
-    const val data = "/data/local/tmp/holyhelper"
+    const val data = "/data/data/com.venddair.holyhelper/files"
 
     const val uefiFolder = "/sdcard/UEFI"
 

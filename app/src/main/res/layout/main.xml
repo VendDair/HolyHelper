@@ -103,31 +103,44 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/codeName"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="35dp"
-                android:text="Device: "
-                android:textColor="@color/slightly_lighter_gray"
-                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="HardcodedText" />
+                app:layout_constraintTop_toBottomOf="@+id/textView4">
 
+                <TextView
+                    android:id="@+id/codeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Device: "
+                    android:textSize="14sp"
+                    android:textColor="@color/slightly_lighter_gray"
+                    tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/panelType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/paneltype"
-                android:textColor="@color/slightly_lighter_gray"
-                app:layout_constraintEnd_toStartOf="@+id/textView4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/codeName"
-                tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/panelType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/paneltype"
+                    android:textSize="13sp"
+                    android:textColor="@color/slightly_lighter_gray"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/lastBackup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last"
+                    android:textSize="13sp"
+                    android:textColor="@color/slightly_lighter_gray"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -281,6 +294,7 @@
 
     <LinearLayout
         android:id="@+id/loading"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FF202020"
