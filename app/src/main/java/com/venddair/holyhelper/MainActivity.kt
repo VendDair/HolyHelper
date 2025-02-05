@@ -53,10 +53,6 @@ class MainActivity : ComponentActivity() {
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        viewModel.isLoading.observe(this) { isLoading ->
-            loading.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
-
         viewModel.versionText.observe(this) { versionTextView.text = it }
         viewModel.deviceName.observe(this) { codeNameText.text = it }
         viewModel.panelType.observe(this) {
@@ -82,6 +78,10 @@ class MainActivity : ComponentActivity() {
                 lastBackup.get()?.text = lastBackupDate
             else
                 lastBackup.get()?.visibility = View.GONE
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            loading.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         if (savedInstanceState == null) {

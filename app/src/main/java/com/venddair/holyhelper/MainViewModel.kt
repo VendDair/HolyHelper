@@ -6,9 +6,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -59,7 +61,10 @@ class MainViewModel : ViewModel() {
 
 
             }
-            isLoading.postValue(false)
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(75)
+                isLoading.postValue(false)
+            }
         }
     }
 }
