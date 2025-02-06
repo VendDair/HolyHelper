@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
+import androidx.compose.ui.text.capitalize
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Files.getResource
 import java.io.BufferedReader
@@ -41,7 +42,7 @@ object Device {
     fun getSlot(): String? {
         val slot = ShellUtils.fastCmd("getprop ro.boot.slot_suffix")
         if (slot == "") return null
-        return slot
+        return slot.replace("_", "").uppercase()
     }
 
     fun isPanelCheckingSupported(): Boolean {
