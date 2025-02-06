@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -109,7 +110,10 @@ object Files {
 
     @SuppressLint("SdCardPath")
     suspend fun setupDbkpFiles(context: ComponentActivity) = coroutineScope {
-        backupBootImage(context)
+        withContext(Dispatchers.Main) {
+            backupBootImage(context)
+        }
+        createFolder("/sdcard/dbkp")
         remove("/sdcard/original-boot.img")
         copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
         moveFile(Paths.bootImage, "/sdcard/original-boot.img")

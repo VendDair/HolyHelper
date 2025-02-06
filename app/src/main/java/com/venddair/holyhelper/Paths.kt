@@ -31,47 +31,47 @@ object Paths {
     val sta: String get() = "sta"
     val staBin: String get() = "sta/sta.exe"
     val staLink: String get() = "Users/Public/Desktop/Android.lnk"
-    const val staLinkAsset = "/data/local/tmp/holyhelper/Android.lnk"
-    const val staAsset = "/data/local/tmp/holyhelper/sta.exe"
+    val staLinkAsset: String get() = "${data}/Android.lnk"
+    val staAsset: String get() = "${data}/sta.exe"
 
-    const val sddAsset = "/data/local/tmp/holyhelper/sdd.exe"
+    val sddAsset: String get() = "${data}/sdd.exe"
     val sdd: String get() = "sta/sdd.exe"
-    const val sddConfigAsset = "/data/local/tmp/holyhelper/sdd.conf"
+    val sddConfigAsset: String get() = "${data}/sdd.conf"
     val sddConfig: String get() = "sta/sdd.conf"
 
-    const val autoFlasherAsset = "/data/local/tmp/holyhelper/boot_img_auto-flasher_V1.0.exe"
+    val autoFlasherAsset: String get() = "${data}/boot_img_auto-flasher_V1.0.exe"
     val autoFlasher: String get() = "sta/boot_img_auto-flasher_V1.0.exe"
 
 
-    const val mountNtfs = "/data/local/tmp/holyhelper/mount.ntfs"
+    val mountNtfs: String get() = "${data}/mount.ntfs"
 
-    const val ARMRepoLinkAsset = "/data/local/tmp/holyhelper/ARMRepo.url"
-    const val ARMSoftwareLinkAsset = "/data/local/tmp/holyhelper/ARMSoftware.url"
-    const val TestedSoftwareLinkAsset = "/data/local/tmp/holyhelper/TestedSoftware.url"
-    const val WorksOnWoaLinkAsset = "/data/local/tmp/holyhelper/WorksOnWoa.url"
+    val ARMRepoLinkAsset: String get() = "${data}/ARMRepo.url"
+    val ARMSoftwareLinkAsset: String get() = "${data}/ARMSoftware.url"
+    val TestedSoftwareLinkAsset: String get() = "${data}/TestedSoftware.url"
+    val WorksOnWoaLinkAsset: String get() = "${data}/WorksOnWoa.url"
 
     val toolbox: String get() = Files.getMountDir() + "/Toolbox"
     val frameworks: String get() = Files.getMountDir() + "/Toolbox/Frameworks"
 
-    val installAsset = "/data/local/tmp/holyhelper/install.bat"
+    val installAsset: String get() = "${data}/install.bat"
 
     val ARMRepoLink get() = "Toolbox/ARMRepo.url"
     val ARMSoftwareLink get() = "Toolbox/ARMSoftware.url"
     val TestedSoftwareLink get() = "Toolbox/TestedSoftware.url"
     val WorksOnWoaLink get() = "Toolbox/WorksOnWoa.url"
 
-    val dbkp8150CfgAsset = "/data/local/tmp/holyhelper/dbkp8150.cfg"
-    val dbkpHotdogBinAsset = "/data/local/tmp/holyhelper/dbkp.hotdog.bin"
-    val dbkpCepheusBinAsset = "/data/local/tmp/holyhelper/dbkp.cepheus.bin"
-    val dbkpNabuBinAsset = "/data/local/tmp/holyhelper/dbkp.nabu.bin"
-    val dbkpAsset = "/data/local/tmp/holyhelper/dbkp"
+    val dbkp8150CfgAsset: String get() = "${data}/dbkp8150.cfg"
+    val dbkpHotdogBinAsset: String get() = "${data}/dbkp.hotdog.bin"
+    val dbkpCepheusBinAsset: String get() = "${data}/dbkp.cepheus.bin"
+    val dbkpNabuBinAsset: String get() = "${data}/dbkp.nabu.bin"
+    val dbkpAsset: String get() = "${data}/dbkp"
 
-    val USBHostModeAsset = "/data/local/tmp/holyhelper/usbhostmode.exe"
+    val USBHostModeAsset: String get() = "${data}/usbhostmode.exe"
 
-    val displayAsset = "/data/local/tmp/holyhelper/display.exe"
-    val RotationShortcutAsset = "/data/local/tmp/holyhelper/RotationShortcut.lnk"
+    val displayAsset: String get() = "${data}/display.exe"
+    val RotationShortcutAsset: String get() = "${data}/RotationShortcut.lnk"
 
-    val edgeremover = "/data/local/tmp/holyhelper/RemoveEdge.bat"
+    val edgeremover: String get() = "${data}/RemoveEdge.bat"
 
     const val version = "1.0"
 

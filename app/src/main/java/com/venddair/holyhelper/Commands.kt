@@ -156,7 +156,7 @@ object Commands {
     }
 
     @SuppressLint("SdCardPath", "StringFormatInvalid")
-    suspend fun dbkp(context: ComponentActivity) = coroutineScope {
+    suspend fun dbkp(context: ComponentActivity) {
         Files.setupDbkpFiles(context)
 
         val dbkp = Download.download(
@@ -166,7 +166,7 @@ object Commands {
         )
         if (dbkp == null) {
             State.setFailed(true)
-            return@coroutineScope
+            return
         }
 
         Files.moveFile(dbkp, Paths.data)
@@ -181,7 +181,7 @@ object Commands {
         val path = Download.download(context, url, fileName[0])
         if (path == null) {
             State.setFailed(true)
-            return@coroutineScope
+            return
         }
         Files.moveFile(path, dbkpDir)
         ShellUtils.fastCmd("cd $dbkpDir")
@@ -191,7 +191,7 @@ object Commands {
         ShellUtils.fastCmd("su -mm -c mv output kernel")
         ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) repack boot.img\" | su -c sh")
         ShellUtils.fastCmd("su -mm -c cp new-boot.img /sdcard/patched-boot.img")
-        ShellUtils.fastCmd("rm -r $dbkpDir")
+        ShellUtils.fastCmd("rm -rf $dbkpDir")
 
         if (Device.get() == "cepheus") {
             ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot bs=16M")
