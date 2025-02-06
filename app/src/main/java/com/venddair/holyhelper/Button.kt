@@ -31,7 +31,7 @@ class Button @JvmOverloads constructor(
         // ImageView
         imageView = ImageView(context).apply {
             id = generateViewId()
-            layoutParams = LayoutParams(65.dp, LayoutParams.MATCH_PARENT).apply {
+            layoutParams = LayoutParams(resources.getDimension(R.dimen._65dp).toInt(), LayoutParams.MATCH_PARENT).apply {
                 setMargins(0, 0, 8.dp, 0)
             }
             scaleX = 0.7f
@@ -51,7 +51,7 @@ class Button @JvmOverloads constructor(
             id = generateViewId()
             layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 0, 0.8f)
             text = context.getString(R.string.backup_boot_title) // Default title
-            textSize = 13f
+            textSize = resources.getDimension(R.dimen._5sp)
             setTextColor(ContextCompat.getColor(context, R.color.light_gray))
             setTypeface(typeface, BOLD)
             gravity = BOTTOM
@@ -65,7 +65,7 @@ class Button @JvmOverloads constructor(
                 setPadding(0, 0, 10.dp, 0)
             }
             text = context.getString(R.string.backup_boot_subtitle) // Default subtitle
-            textSize = 11f
+            textSize = resources.getDimension(R.dimen._3_5sp)
             setTextColor(ContextCompat.getColor(context, R.color.gray))
             setTypeface(typeface, ITALIC)
         }
