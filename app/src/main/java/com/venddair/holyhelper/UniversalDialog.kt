@@ -103,7 +103,7 @@ object UniversalDialog {
         for ((index, button) in buttons.withIndex()) {
             val buttonView = Button(context)
             buttonView.text = button.first
-            buttonView.textSize = context.resources.getDimension(R.dimen._5sp)
+            buttonView.textSize = context.resources.getDimension(R.dimen._4sp)
             val padding = context.resources.getDimension(R.dimen._10dp).toInt()
             buttonView.setPadding(padding, 0, padding, 0)
             buttonView.setBackgroundResource(R.drawable.rounded_light_gray)

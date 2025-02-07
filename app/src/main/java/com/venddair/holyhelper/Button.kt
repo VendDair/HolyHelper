@@ -51,7 +51,7 @@ class Button @JvmOverloads constructor(
             id = generateViewId()
             layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 0, 0.8f)
             text = context.getString(R.string.backup_boot_title) // Default title
-            textSize = resources.getDimension(R.dimen._5sp)
+            textSize = resources.getDimension(R.dimen._4sp)
             setTextColor(ContextCompat.getColor(context, R.color.light_gray))
             setTypeface(typeface, BOLD)
             gravity = BOTTOM
