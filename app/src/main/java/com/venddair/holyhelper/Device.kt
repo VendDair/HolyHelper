@@ -55,56 +55,6 @@ object Device {
     }
 
     fun getPanelType(): String {
-        val panel = ShellUtils.fastCmd("su -c cat /proc/cmdline | tr ' :=' '\n' | grep dsi | tr ' _' '\n' | tail -3 | head -1")
-        return when (panel) {
-            "j20s_42_02_0b", "k82_42", "ft8756_huaxing" -> "Huaxing"
-            "j20s_36_02_0a", "k82_36", "nt36675_tianma", "tianma_fhd_nt36672a" -> "Tianma"
-            "ebbg_fhd_ft8719" -> "EBBG"
-            "fhd_ea8076_global" -> "global"
-            "fhd_ea8076_f1mp_cmd" -> "f1mp"
-            "fhd_ea8076_f1p2_cmd" -> "f1p2"
-            "fhd_ea8076_f1p2_2" -> "f1p2_2"
-            "fhd_ea8076_f1_cmd" -> "f1"
-            "fhd_ea8076_cmd" -> "ea8076_cmd"
-            else -> panel
-        }
-    }
-
-    /*fun getPanelType(): String {
-        val data = ShellUtils.fastCmd("su -c cat /proc/cmdline")
-        if (data.isEmpty()) {
-            return "Unknown"
-        }
-
-        val panelMap = mapOf(
-            "j20s_42_02_0b" to "Huaxing",
-            "k82_42" to "Huaxing",
-            "ft8756_huaxing" to "Huaxing",
-            "j20s_36_02_0a" to "Tianma",
-            "k82_36" to "Tianma",
-            "nt36675_tianma" to "Tianma",
-            "tianma_fhd_nt36672a" to "Tianma",
-            "ebbg_fhd_ft8719" to "EBBG",
-            "fhd_ea8076_global" to "global",
-            "fhd_ea8076_f1mp_cmd" to "f1mp",
-            "fhd_ea8076_f1p2_cmd" to "f1p2",
-            "fhd_ea8076_f1p2_2" to "f1p2_2",
-            "fhd_ea8076_f1_cmd" to "f1",
-            "fhd_ea8076_cmd" to "ea8076_cmd"
-        )
-
-        panelMap.forEach { (key, panelType) ->
-            if (data.contains(key)) {
-                return panelType
-            }
-        }
-
-        return ShellUtils.fastCmd("su -c cat /proc/cmdline | tr ' :=' '\n' | grep dsi | tr ' _' '\n' | tail -3 | head -1")
-    }*/
-
-
-
-    /*fun getPanelType(): String {
         val data = ShellUtils.fastCmd(" su -c cat /proc/cmdline ")
         return if (data.isEmpty()) {
             "Unknown"
@@ -125,7 +75,7 @@ object Device {
                 else -> ShellUtils.fastCmd("su -c cat /proc/cmdline | tr ' :=' '\n'|grep dsi|tr ' _' '\n'|tail -3|head -1")
             }
         }
-    }*/
+    }
 
     fun isDbkpSupported(): Boolean {
         return when (get()) {
