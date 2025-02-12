@@ -81,6 +81,7 @@ class Info {
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.partition),
                 image = R.drawable.error,
+                dismissible = false,
                 buttons = listOf(
                     Pair(context.getString(R.string.guide)) {
                         context.startActivity(
@@ -92,13 +93,8 @@ class Info {
                     },
                     //Pair(context.getString(R.string.later)) {}
                 )
-            ) { dialog ->
-                dialog.setCancelable(false)
-/*                dialog.setOnDismissListener {
-                    State.setFailed(false)
-                    isNoWinPartitionDialog = false
-                }*/
-            }
+            )
+            UniversalDialog.dialog.setCancelable(false)
             //isNoWinPartitionDialog = true
         }
 
@@ -114,24 +110,28 @@ class Info {
             )
         }
 
-        fun notifyAboutUpdate(context: Context, version: String) {
+        fun notifyAboutUpdate(context: ComponentActivity, version: String) {
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.update1),
                 text = context.getString(R.string.update_question, version),
                 image = R.drawable.info,
                 buttons = listOf(
                     Pair(context.getString(R.string.yes)) {
+                        pleaseWait(context, R.string.done, R.drawable.info) {
+                            Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { _, name ->
+                                Download.installAPK(context, name)
+                            }
+                        }
+                    },
+                    Pair(context.getString(R.string.later)) {
                         pleaseWait(context, R.string.done, R.drawable.info, {
                             Download.download(
                                 context,
                                 "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk",
                                 "HolyHelper.apk"
                             )
-                        }, {
-                            Download.installAPK(context, "HolyHelper.apk")
                         })
-                    },
-                    Pair(context.getString(R.string.later)) {}
+                    }
                 )
             )
         }

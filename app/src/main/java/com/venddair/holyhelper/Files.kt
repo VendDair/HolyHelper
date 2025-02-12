@@ -43,68 +43,35 @@ object Files {
             createFolder(Paths.uefiFolder)
             createFolder(Paths.winPath)
 
-            copyAsset("mount.ntfs", "+x")
-            copyAsset("sta.exe")
-            copyAsset("sdd.exe")
-            copyAsset("boot_img_auto-flasher_V1.0.exe")
-            copyAsset("sdd.conf")
-            copyAsset("libntfs-3g.so")
-            copyAsset("libfuse-lite.so", "777")
-            copyAsset("Android.lnk")
-            copyAsset("ARMRepo.url")
-            copyAsset("ARMSoftware.url")
-            copyAsset("TestedSoftware.url")
-            copyAsset("WorksOnWoa.url")
-            copyAsset("dbkp8150.cfg")
-            copyAsset("dbkp.hotdog.bin")
-            copyAsset("dbkp.cepheus.bin")
-            copyAsset("dbkp.nabu.bin")
-            copyAsset("usbhostmode.exe")
-            copyAsset("display.exe")
-            copyAsset("RotationShortcut.lnk")
-            copyAsset("install.bat")
-            copyAsset("RemoveEdge.bat")
+            copyAsset("mount.ntfs", "+x", true)
+            copyAsset("sta.exe", ignoreIfPresent = true)
+            copyAsset("sdd.exe", ignoreIfPresent = true)
+            copyAsset("boot_img_auto-flasher_V1.0.exe", ignoreIfPresent = true)
+            copyAsset("sdd.conf", ignoreIfPresent = true)
+            copyAsset("libntfs-3g.so", ignoreIfPresent = true)
+            copyAsset("libfuse-lite.so", ignoreIfPresent = true)
+            copyAsset("Android.lnk", ignoreIfPresent = true)
+            copyAsset("ARMRepo.url", ignoreIfPresent = true)
+            copyAsset("ARMSoftware.url", ignoreIfPresent = true)
+            copyAsset("TestedSoftware.url", ignoreIfPresent = true)
+            copyAsset("WorksOnWoa.url", ignoreIfPresent = true)
+            copyAsset("dbkp8150.cfg", ignoreIfPresent = true)
+            copyAsset("dbkp.hotdog.bin", ignoreIfPresent = true)
+            copyAsset("dbkp.cepheus.bin", ignoreIfPresent = true)
+            copyAsset("dbkp.nabu.bin", ignoreIfPresent = true)
+            copyAsset("usbhostmode.exe", ignoreIfPresent = true)
+            copyAsset("display.exe", ignoreIfPresent = true)
+            copyAsset("RotationShortcut.lnk", ignoreIfPresent = true)
+            copyAsset("install.bat", ignoreIfPresent = true)
+            copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
         }
-
-/*        Thread {
-            createFolder(Paths.uefiFolder)
-            createFolder(Paths.winPath)
-            createFolder(Paths.data)
-
-            copyAsset("mount.ntfs", "+x")
-            copyAsset("sta.exe")
-            copyAsset("sdd.exe")
-            copyAsset("boot_img_auto-flasher_V1.0.exe")
-            copyAsset("sdd.conf")
-            copyAsset("boot_img_auto-flasher_V1.0.exe")
-            copyAsset("libntfs-3g.so", "777")
-            copyAsset("libfuse-lite.so", "777")
-            copyAsset("Android.lnk")
-            copyAsset("ARMRepo.url")
-            copyAsset("ARMSoftware.url")
-            copyAsset("TestedSoftware.url")
-            copyAsset("WorksOnWoa.url")
-            copyAsset("dbkp8150.cfg")
-            copyAsset("dbkp.hotdog.bin")
-            copyAsset("dbkp.cepheus.bin")
-            copyAsset("dbkp.nabu.bin")
-            copyAsset("usbhostmode.exe")
-            copyAsset("display.exe")
-            copyAsset("RotationShortcut.lnk")
-            copyAsset("install.bat")
-            copyAsset("RemoveEdge.bat")
-        }.start()*/
-
-
     }
 
     fun checkExtension(path: String, extension: Extension): Boolean {
         return path.endsWith(extension.key)
     }
 
-    fun createFolder(path: String, alert: Boolean = false) {
-/*        if (checkFolder(path)) return
-        if (alert) ToastUtil.showToast("Folder $path was created")*/
+    fun createFolder(path: String) {
         ShellUtils.fastCmd("su -c mkdir $path")
     }
 
@@ -165,8 +132,10 @@ object Files {
         ShellUtils.fastCmd("su -c rm -rf $path")
     }
 
-    fun copyAsset(name: String, perms: String? = null, alert: Boolean = false) {
-        val outputFilePath = File(Paths.data, name) // Ensure Paths.data isn't NTFS-mounted
+    fun copyAsset(name: String, perms: String? = null, ignoreIfPresent: Boolean = false) {
+        val outputFilePath = File(Paths.data, name)
+
+        if (checkFile("${Paths.data}/$name") && ignoreIfPresent) return
 
         try {
             val inputStream: InputStream = appContext.assets.open(name)
@@ -182,8 +151,6 @@ object Files {
             if (perms != null) {
                 Runtime.getRuntime().exec(arrayOf("chmod", perms, outputFilePath.absolutePath))
             }
-
-            if (alert) ToastUtil.showToast("Asset $name copied to ${outputFilePath.parent}")
         } catch (e: IOException) {
             e.printStackTrace()
             println("Error copying file: ${e.message}")

@@ -123,7 +123,7 @@
     <string name="flash1">flash</string>
     <string name="update_question">Would you like to download version %s</string>
     <string name="download_failed_title">Couldn\'t download the file!</string>
-    <string name="download_failed_subtitle">Check your internet connection\\nFor any additional questions ask the developer of the app</string>
+    <string name="download_failed_subtitle">Check your internet connection\nFor any additional questions ask the developer of the app</string>
     <string name="download_file_failed_title">Failed to download %s</string>
     <string name="select">select</string>
     <string name="select_uefi_image">Select UEFI image</string>

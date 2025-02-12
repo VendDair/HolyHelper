@@ -72,9 +72,8 @@
             android:id="@+id/device"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.8"
-            android:scaleX="0.9"
-            android:scaleY="0.9"
+            android:layout_weight="0.75"
+            android:layout_marginStart="20dp"
             android:src="@drawable/ic_launcher_background"
             tools:ignore="ContentDescription" />
 

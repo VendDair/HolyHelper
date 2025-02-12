@@ -22,7 +22,7 @@ object Commands {
 
         //return ShellUtils.fastCmd("mount | grep $winPartition").isNotEmpty()
         //return Cmd.execute("mount | grep $winPartition").isNotEmpty()
-        return Cmd.execute("grep -B1 -A5 \"${State.winPartition}\" /proc/mounts | tail -10").isNotEmpty()
+        return ShellUtils.fastCmd("grep -B1 -A5 \"${State.winPartition}\" /proc/mounts | tail -10").isNotEmpty()
     }
 
 

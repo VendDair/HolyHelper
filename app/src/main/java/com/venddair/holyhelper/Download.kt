@@ -1,13 +1,18 @@
 package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
+import android.app.DownloadManager
 import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -23,6 +28,52 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object Download {
+
+    fun download(
+        context: Context,
+        url: String,
+        fileName: String,
+        callback: (path: String, fileName: String) -> Unit,
+    ) {
+        // Generate a unique file name if the file already exists
+        val path = "${context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)}/$fileName"
+
+        val request = DownloadManager.Request(Uri.parse(url)).apply {
+            setTitle("Downloading $fileName")
+            setDescription("Downloading file...")
+            setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+        }
+
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val downloadId = downloadManager.enqueue(request)
+
+        // Register the receiver to listen for download completion
+        val receiver = object : BroadcastReceiver() {
+            @SuppressLint("Range")
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1) == downloadId) {
+                    context.unregisterReceiver(this) // Unregister the receiver
+                    val query = DownloadManager.Query().setFilterById(downloadId)
+                    val cursor = downloadManager.query(query)
+
+                    if (cursor != null && cursor.moveToFirst()) {
+                        val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                        if (status == DownloadManager.STATUS_FAILED) {
+                            Info.downloadFailed(context, fileName)
+                        }
+                        callback(path, fileName) // Call the callback with the final file name
+                    }
+                    cursor?.close() // Close the cursor safely
+                }
+            }
+        }
+
+        ContextCompat.registerReceiver(
+            context, receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+            ContextCompat.RECEIVER_EXPORTED
+        )
+    }
 
     @SuppressLint("SdCardPath")
     suspend fun download(context: Context, fileUrl: String, fileName: String): String? =
@@ -65,58 +116,24 @@ object Download {
             }
         }
 
-    @SuppressLint("SdCardPath", "ObsoleteSdkInt", "QueryPermissionsNeeded")
     fun installAPK(context: Context, fileName: String) {
-        // Get root external storage directory (usually /sdcard/)
-        val externalDir = Environment.getExternalStorageDirectory()
-        val apkFile = File(externalDir, fileName)
+        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val apkFile = File(downloadsDir, fileName)
 
-        // Check file existence
         if (!apkFile.exists()) {
-            Toast.makeText(
-                context,
-                "APK file $fileName not found in root storage",
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(context, "APK file does not exist", Toast.LENGTH_SHORT).show()
             return
         }
 
-        try {
-            val apkUri = FileProvider.getUriForFile(
-                context,
-                "${context.packageName}.fileprovider",
-                apkFile
-            )
+        val apkUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
 
-            val installIntent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(apkUri, "application/vnd.android.package-archive")
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-                // For Android 8.0+ devices
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    putExtra(Intent.EXTRA_NOT_UNKNOWN_SOURCE, true)
-                }
-            }
-
-            if (installIntent.resolveActivity(context.packageManager) != null) {
-                context.startActivity(installIntent)
-            } else {
-                Toast.makeText(
-                    context,
-                    "No app found to handle APK installation",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, "Installation failed: ${e.message}", Toast.LENGTH_SHORT).show()
-        } catch (e: IllegalArgumentException) {
-            Toast.makeText(context, "Invalid APK file path", Toast.LENGTH_SHORT).show()
-        } catch (e: SecurityException) {
-            Toast.makeText(context, "Permission denied to access APK file", Toast.LENGTH_SHORT)
-                .show()
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(apkUri, "application/vnd.android.package-archive")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
+
+        context.startActivity(intent)
     }
 
 

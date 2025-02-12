@@ -118,7 +118,7 @@
     <string name="flash1">Nạp</string>
     <string name="update_question">Bạn có muốn tải xuống phiên bản %s không?</string>
     <string name="download_failed_title">Không thể tải xuống tệp!</string>
-    <string name="download_failed_subtitle">Kiểm tra mạng đi\\nCần gì thêm thì hỏi người làm app</string>
+    <string name="download_failed_subtitle">Kiểm tra mạng đi\nCần gì thêm thì hỏi người làm app</string>
     <string name="download_file_failed_title">Không thể tải xuống %s!</string>
     <string name="select">Chọn</string>
     <string name="select_uefi_image">Chọn tệp UEFI</string>

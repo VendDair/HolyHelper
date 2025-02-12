@@ -118,7 +118,7 @@
     <string name="flash1">Flash</string>
     <string name="update_question">Doriți să descărcați versiunea %s?</string>
     <string name="download_failed_title">Nu s-a putut descărca fișierul!</string>
-    <string name="download_failed_subtitle">Verifică-ți internetul\\nPentru mai multe detalii, întreabă programatorul</string>
+    <string name="download_failed_subtitle">Verifică-ți internetul\nPentru mai multe detalii, întreabă programatorul</string>
     <string name="download_file_failed_title">Nu s-a putut descărca %s!</string>
     <string name="select">Selectați</string>
     <string name="select_uefi_image">Selectați fișierul UEFI</string>

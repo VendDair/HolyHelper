@@ -11,10 +11,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
+import com.topjohnwu.superuser.Shell
 import com.venddair.holyhelper.Commands.isWindowsMounted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -108,6 +110,10 @@ class MainActivity : ComponentActivity() {
             }
             State.isWindowsMounted = isWindowsMounted()
             viewModel.loadData(this)
+        }
+
+        if (Shell.isAppGrantedRoot() != true) {
+            Info.noRootDetected(this)
         }
 
         val endTime = System.currentTimeMillis()

@@ -118,7 +118,7 @@
     <string name="flash1">Прашыць</string>
     <string name="update_question">Вы жадаеце спампаваць версію %s?</string>
     <string name="download_failed_title">Не ўдалося загрузіць файл!</string>
-	<string name="download_failed_subtitle">Правер свой інтэрнэт\\nКалі што, спытай у праграміста</string>
+	<string name="download_failed_subtitle">Правер свой інтэрнэт\nКалі што, спытай у праграміста</string>
 	<string name="download_file_failed_title">Не ўдалося загрузіць %s!</string>
     <string name="select">Выберыце</string>
     <string name="select_uefi_image">Выбраць файл UEFI</string>

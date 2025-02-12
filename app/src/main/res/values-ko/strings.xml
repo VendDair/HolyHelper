@@ -118,7 +118,7 @@
     <string name="flash1">플래시하기</string>
     <string name="update_question">버전 %s을(를) 다운로드하시겠습니까?</string>
     <string name="download_failed_title">파일을 다운로드할 수 없습니다!</string>
-    <string name="download_failed_subtitle">인터넷 확인해\\n더 궁금한 거 있으면 개발자한테 물어봐</string>
+    <string name="download_failed_subtitle">인터넷 확인해\n더 궁금한 거 있으면 개발자한테 물어봐</string>
     <string name="download_file_failed_title">%s을(를) 다운로드하지 못했습니다!</string>
     <string name="select">선택</string>
     <string name="select_uefi_image">UEFI 파일 선택</string>

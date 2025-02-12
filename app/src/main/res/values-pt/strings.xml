@@ -118,7 +118,7 @@
     <string name="flash1">Flashear</string>
     <string name="update_question">Deseja baixar a versão %s?</string>
     <string name="download_failed_title">Não foi possível baixar o arquivo!</string>
-    <string name="download_failed_subtitle">Confere sua internet\\nPra mais detalhes, fala com o programador</string>
+    <string name="download_failed_subtitle">Confere sua internet\nPra mais detalhes, fala com o programador</string>
     <string name="download_file_failed_title">Falha ao baixar %s!</string>
     <string name="select">Selecionar</string>
     <string name="select_uefi_image">Selecionar arquivo UEFI</string>
