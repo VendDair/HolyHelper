@@ -109,12 +109,15 @@ class MainActivity : ComponentActivity() {
                 State.bootPartition = Files.getBootPartition()
             }
             State.isWindowsMounted = isWindowsMounted()
+
+            if (Shell.isAppGrantedRoot() != true) {
+                Info.noRootDetected(this)
+            }
+
             viewModel.loadData(this)
         }
 
-        if (Shell.isAppGrantedRoot() != true) {
-            Info.noRootDetected(this)
-        }
+
 
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime

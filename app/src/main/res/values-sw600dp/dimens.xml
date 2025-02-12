@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="_17sp">21sp</dimen>
     <dimen name="_16sp">20sp</dimen>
     <dimen name="_15sp">19sp</dimen>
     <dimen name="_14sp">19sp</dimen>
     <dimen name="_13sp">18sp</dimen>
+    <dimen name="_12sp">18sp</dimen>
+    <dimen name="_11sp">17sp</dimen>
     <dimen name="_4sp">10sp</dimen>
     <dimen name="_3.5sp">9sp</dimen>
 

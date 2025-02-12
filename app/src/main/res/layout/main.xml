@@ -72,20 +72,21 @@
             android:id="@+id/device"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:layout_marginStart="20dp"
+            android:layout_weight="0.85"
+            android:layout_marginStart="30dp"
             android:src="@drawable/ic_launcher_background"
             tools:ignore="ContentDescription" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="0dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
+            android:layout_marginRight="30dp"
+            android:layout_weight="0.9"
             android:background="@drawable/rounded_gray"
-            android:foregroundGravity="left"
-            android:scaleX="0.9"
-            android:scaleY="0.9"
             tools:ignore="RtlHardcoded">
 
             <TextView
@@ -118,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Device: "
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/_12sp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -127,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/paneltype"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -136,7 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ramvalue"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -145,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/last"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -154,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/slot"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
@@ -181,7 +182,7 @@
                     android:paddingHorizontal="@dimen/_10dp"
                     android:paddingVertical="@dimen/_3dp"
                     android:text="@string/group"
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/_12sp"
                     android:textColor="@color/light_bej"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
@@ -201,7 +202,7 @@
                     android:paddingHorizontal="@dimen/_10dp"
                     android:paddingVertical="@dimen/_3dp"
                     android:text="@string/guide"
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/_12sp"
                     android:textColor="@color/light_bej"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
@@ -316,6 +317,7 @@
 
     <LinearLayout
         android:id="@+id/loading"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FF202020"
