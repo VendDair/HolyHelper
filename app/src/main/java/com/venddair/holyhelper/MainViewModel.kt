@@ -28,9 +28,9 @@ class MainViewModel : ViewModel() {
     val slot = MutableLiveData<String?>()
 
     fun loadData(context: Context) {
-        viewModelScope.launch(Dispatchers.IO) {
-            isLoading.postValue(true)
+        isLoading.postValue(true)
 
+        viewModelScope.launch(Dispatchers.IO) {
             coroutineScope {
                 val versionDeferred = async { Paths.version }
                 val deviceNameDeferred = async { "${Device.getModel()} (${Device.get()})" }

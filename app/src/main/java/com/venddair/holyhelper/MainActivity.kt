@@ -55,6 +55,8 @@ class MainActivity : ComponentActivity() {
         val slot = findViewById<TextView>(R.id.slot)
 
 
+
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.versionText.observe(this) { versionTextView.text = it }
@@ -95,27 +97,29 @@ class MainActivity : ComponentActivity() {
                 slot.visibility = View.GONE
         }
 
-        viewModel.isLoading.observe(this) { isLoading ->
-            loading.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
-
         if (savedInstanceState == null) {
-            CoroutineScope(Dispatchers.Main).launch {
-                Commands.checkUpdate(this@MainActivity)
+            loading.visibility = View.VISIBLE
+            viewModel.isLoading.observe(this) { isLoading ->
+                loading.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
-            State.winPartition = Files.getWinPartition(this)
-
-            CoroutineScope(Dispatchers.Main).launch {
-                State.bootPartition = Files.getBootPartition()
-            }
-            State.isWindowsMounted = isWindowsMounted()
-
-            if (Shell.isAppGrantedRoot() != true) {
-                Info.noRootDetected(this)
-            }
-
-            viewModel.loadData(this)
         }
+
+
+        CoroutineScope(Dispatchers.Main).launch {
+            Commands.checkUpdate(this@MainActivity)
+        }
+        State.winPartition = Files.getWinPartition(this)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            State.bootPartition = Files.getBootPartition()
+        }
+        State.isWindowsMounted = isWindowsMounted()
+
+        if (Shell.isAppGrantedRoot() != true) {
+            Info.noRootDetected(this)
+        }
+
+        viewModel.loadData(this)
 
 
 
