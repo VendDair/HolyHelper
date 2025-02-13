@@ -50,7 +50,6 @@ class MainViewModel : ViewModel() {
                 val totalRamDeferred = async { Device.getTotalRam(context) }
                 val slotDeferred = async { Device.getSlot() }
 
-                // Await all async operations and post results
                 val startTime = System.currentTimeMillis()
                 versionText.postValue(versionDeferred.await())
                 deviceName.postValue(deviceNameDeferred.await())

@@ -1,5 +1,6 @@
 package com.venddair.holyhelper
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -16,7 +17,6 @@ import com.venddair.holyhelper.Commands.isWindowsMounted
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var viewModel: MainViewModel
 
+    @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         val startTime = System.currentTimeMillis()
         super.onCreate(savedInstanceState)

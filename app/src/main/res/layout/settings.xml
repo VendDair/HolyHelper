@@ -22,7 +22,7 @@
         <Switch
             android:id="@+id/MountToMnt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_gray"
             android:paddingEnd="@dimen/_10dp"
             android:paddingStart="@dimen/_15dp"
@@ -43,7 +43,7 @@
         <Switch
             android:id="@+id/DisableUpdates"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_gray"
             android:paddingEnd="@dimen/_10dp"
             android:paddingStart="@dimen/_15dp"
@@ -64,7 +64,7 @@
         <Switch
             android:id="@+id/AutoMount"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/rounded_gray"
             android:paddingEnd="@dimen/_10dp"
             android:paddingStart="@dimen/_15dp"
