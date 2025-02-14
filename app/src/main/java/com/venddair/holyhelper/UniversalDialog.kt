@@ -1,6 +1,7 @@
 package com.venddair.holyhelper
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -99,16 +100,13 @@ object UniversalDialog {
         container.get()?.removeAllViews()
     }
 
+    @SuppressLint("InflateParams")
     fun setButtons(context: Context, dismissible: Boolean, buttons: List<Pair<String, () -> Unit>> = listOf()) {
         for ((index, button) in buttons.withIndex()) {
-            val buttonView = Button(context)
-            buttonView.text = button.first
-            buttonView.textSize = context.resources.getDimension(R.dimen._4sp)
-            val padding = context.resources.getDimension(R.dimen._10dp).toInt()
-            buttonView.setPadding(padding, 0, padding, 0)
-            buttonView.setBackgroundResource(R.drawable.rounded_light_gray)
-            buttonView.setTextColor(context.getColor(R.color.white))
-            buttonView.setTypeface(buttonView.typeface, Typeface.BOLD)
+            //val buttonView = Button(context)
+            val buttonView = LayoutInflater.from(context).inflate(R.layout.button, null)
+            val textView = buttonView.findViewById<TextView>(R.id.text)
+            textView.text = button.first.uppercase()
             buttonView.setOnClickListener {
                 button.second()
                 if (dismissible) dialog.dismiss()

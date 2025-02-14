@@ -64,6 +64,7 @@ object Files {
             copyAsset("RotationShortcut.lnk", ignoreIfPresent = true)
             copyAsset("install.bat", ignoreIfPresent = true)
             copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
+            copyAsset("RotationShortcutReverseLandscape.lnk", ignoreIfPresent = true)
         }
     }
 
@@ -72,7 +73,7 @@ object Files {
     }
 
     fun createFolder(path: String) {
-        ShellUtils.fastCmd("su -c mkdir $path")
+        ShellUtils.fastCmd("su -c mkdir -p $path")
     }
 
     @SuppressLint("SdCardPath")

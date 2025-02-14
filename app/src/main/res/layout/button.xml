@@ -1,46 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/rounded_gray"
-    android:orientation="horizontal">
+    android:id="@+id/custom_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/rounded_light_gray"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:paddingVertical="@dimen/_5sdp"
+    android:paddingHorizontal="@dimen/_20sdp"
+    tools:ignore="RtlHardcoded">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="65dp"
-        android:layout_height="match_parent"
-        android:scaleX="0.7"
-        android:scaleY="0.7"
-        android:src="@drawable/cd"
-        tools:ignore="ContentDescription" />
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            android:gravity="bottom"
-            android:textSize="13sp"
-            android:text="@string/backup_boot_title"
-            android:textColor="@color/light_gray"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingRight="10dp"
-            android:textColor="@color/gray"
-            android:text="@string/backup_boot_subtitle"
-            android:textSize="11sp"
-            android:textStyle="italic" />
-    </LinearLayout>
-
+        android:layout_height="wrap_content"
+        android:text="@string/backup_boot_title"
+        android:textSize="@dimen/_11ssp"
+        android:textColor="@color/light_gray"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:gravity="center"
+         />
 </LinearLayout>

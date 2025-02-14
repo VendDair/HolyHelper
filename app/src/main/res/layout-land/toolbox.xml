@@ -6,116 +6,529 @@
     android:background="@drawable/walp4"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <include
+        android:id="@+id/topBar"
+        layout="@layout/topbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarSize="@dimen/_4sdp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:fillViewport="true"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/topBar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:paddingTop="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:orientation="vertical">
 
-            <com.venddair.holyhelper.Button
-                android:id="@+id/staButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:imageScaleX="1"
-                app:imageScaleY="1"
-                app:image="@drawable/adrod"
-                app:title="@string/sta_title"
-                app:subtitle="@string/sta_subtitle" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/staButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/adrod"
+                        android:layout_marginEnd="8dp"
+                        android:scaleX="0.9"
+                        android:scaleY="0.9"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sta_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sta_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/armButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_sensor"
+                        android:layout_marginEnd="8dp"
+                        android:scaleX="0.9"
+                        android:scaleY="0.9"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/software_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/software_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <Space
-                android:layout_width="10dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
 
-            <com.venddair.holyhelper.Button
-                android:id="@+id/scriptButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:imageScaleX=".6"
-                app:imageScaleY=".6"
-                app:image="@drawable/folder"
-                app:title="@string/script_title"
-                app:subtitle="@string/script_subtitle" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/atlasosButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    tools:ignore="NestedWeights">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/atlasos"
+                        android:layout_marginEnd="8dp"
+                        android:scaleX="0.9"
+                        android:scaleY="0.9"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
 
-            <com.venddair.holyhelper.Button
-                android:id="@+id/armButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:imageScaleX="1.1"
-                app:imageScaleY="1.1"
-                app:image="@drawable/ic_sensor"
-                app:title="@string/software_title"
-                app:subtitle="@string/software_subtitle" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/software_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/software_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <LinearLayout
+                    android:id="@+id/usbhostmode"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/folder"
+                        android:layout_marginEnd="8dp"
+                        android:scaleX=".57"
+                        android:scaleY=".57"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/usbhost_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/usbhost_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <Space
-                android:layout_width="10dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
 
-            <com.venddair.holyhelper.Button
-                android:id="@+id/atlasosButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:imageScaleX="1.1"
-                app:imageScaleY="1.1"
-                app:image="@drawable/atlasos"
-                app:title="@string/atlasos_title"
-                app:subtitle="@string/atlasos_subtitle" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:id="@+id/rotation"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    tools:ignore="NestedWeights">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/cd"
+                        android:layout_marginEnd="8dp"
+                        android:scaleX=".8"
+                        android:scaleY=".8"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rotation_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rotation_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <LinearLayout
+                    android:id="@+id/frameworkInstallers"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/folder"
+                        android:layout_marginEnd="8dp"
+                        android:scaleX=".57"
+                        android:scaleY=".57"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/setup_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/setup_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/edgeremover"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    tools:ignore="NestedWeights">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/edge"
+                        android:layout_marginEnd="8dp"
+                        android:scaleX=".9"
+                        android:scaleY=".9"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/defender_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/defender_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:id="@+id/space1"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <LinearLayout
+                    android:id="@+id/dbkpButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_uefi"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="a"
+                        tools:ignore="HardcodedText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical"
+                        tools:ignore="NestedWeights">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dbkp_title"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/light_gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:paddingTop="6dp"
+                            android:layout_marginBottom="-3dp"
+                             />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dbkp_subtitle"
+                            android:textSize="@dimen/_9ssp"
+                            android:textColor="@color/gray"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="italic"
+                            android:paddingBottom="5dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
-
-        <Space
-            android:id="@+id/space"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <LinearLayout
-            android:id="@+id/asd"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-
-            <com.venddair.holyhelper.Button
-                android:id="@+id/dbkpButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:imageScaleX="1"
-                app:imageScaleY="1"
-                app:image="@drawable/ic_uefi"
-                app:title="@string/dbkp_title"
-                app:subtitle="@string/dbkp_subtitle" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

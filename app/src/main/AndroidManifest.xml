@@ -15,11 +15,11 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/win11logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/win11logo"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:localeConfig="@xml/locale_config"
-        android:theme="@style/BaseTheme"
+        android:theme="@style/MainMenuTheme"
         tools:targetApi="tiramisu">
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -63,16 +63,14 @@
         </service>
 
         <activity
-            android:name=".ScriptToolboxActivity"
-            android:exported="false"
-            android:label="@string/title_activity_script_toolbox" />
-        <activity
             android:name=".ToolboxActivity"
             android:exported="false"
+            android:theme="@style/MainTheme"
             android:label="@string/title_activity_toolbox" />
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
+            android:theme="@style/MainTheme"
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".MainActivity"

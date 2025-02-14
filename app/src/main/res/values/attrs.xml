@@ -7,9 +7,13 @@
         <attr name="image" format="reference" />
         <attr name="imageScaleX" format="float" />
         <attr name="imageScaleY" format="float" />
+        <attr name="centered" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="PendingJob">
         <attr name="text" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="TopBar" />
+
 </resources>

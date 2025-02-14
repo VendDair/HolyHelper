@@ -10,10 +10,10 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="@dimen/_50dp"
-        android:layout_height="@dimen/_50dp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/win11logo"
         tools:ignore="ContentDescription,PxUsage" />
@@ -27,7 +27,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/light_gray"
-        android:textSize="@dimen/_17sp"
+        android:textSize="@dimen/_14ssp"
         android:paddingHorizontal="10dp"
         tools:ignore="HardcodedText,PxUsage" />
 
@@ -62,7 +62,7 @@
                 android:paddingHorizontal="20dp"
                 android:gravity="center"
                 android:text="TextView"
-                android:textSize="@dimen/_14sp"
+                android:textSize="@dimen/_11ssp"
                 android:textColor="@color/slightly_lighter_gray"
                 tools:ignore="HardcodedText,PxUsage" />
 

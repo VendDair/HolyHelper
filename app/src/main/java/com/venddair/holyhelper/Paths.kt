@@ -51,6 +51,7 @@ object Paths {
     val WorksOnWoaLinkAsset: String get() = "${data}/WorksOnWoa.url"
 
     val toolbox: String get() = Files.getMountDir() + "/Toolbox"
+    val rotation: String get() = Files.getMountDir() + "/Toolbox/Rotation"
     val frameworks: String get() = Files.getMountDir() + "/Toolbox/Frameworks"
 
     val installAsset: String get() = "${data}/install.bat"
@@ -70,6 +71,10 @@ object Paths {
 
     val displayAsset: String get() = "${data}/display.exe"
     val RotationShortcutAsset: String get() = "${data}/RotationShortcut.lnk"
+    val RotationShortcutReverseLandscapeAsset: String get() = "${data}/RotationShortcutReverseLandscape.lnk"
+
+    val RotationShortcut = "Users/Public/Desktop/RotationShortcut.lnk"
+    val RotationShortcutReverseLandscape = "Users/Public/Desktop/RotationShortcutReverseLandscape.lnk"
 
     val edgeremover: String get() = "${data}/RemoveEdge.bat"
 

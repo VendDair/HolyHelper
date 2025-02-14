@@ -1,10 +1,12 @@
 package com.venddair.holyhelper
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Space
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import com.venddair.holyhelper.Files.createFolder
@@ -14,12 +16,14 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
 class ToolboxActivity : ComponentActivity() {
+    @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.toolbox)
 
-        // Set up the back pressed callback
+        findViewById<TextView>(R.id.topBarText).text = getString(R.string.toolbox_title)
+
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 finish()
@@ -27,22 +31,19 @@ class ToolboxActivity : ComponentActivity() {
             }
         })
 
-        val staButton = findViewById<Button>(R.id.staButton)
-        val scriptButton = findViewById<Button>(R.id.scriptButton)
-        val armButton = findViewById<Button>(R.id.armButton)
-        val atlasosButton = findViewById<Button>(R.id.atlasosButton)
-        val dbkpButton = findViewById<Button>(R.id.dbkpButton)
+        val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
 
 
         if (!Device.isDbkpSupported()) {
             dbkpButton.visibility = View.GONE
-            findViewById<Space>(R.id.space).visibility = View.GONE
-            if (Device.isLandscape(this)) {
-                findViewById<LinearLayout>(R.id.asd).visibility = View.GONE
+            if (!Device.isLandscape(this)) {
+                findViewById<Space>(R.id.space).visibility = View.GONE
+            } else {
+                findViewById<Space>(R.id.space1).visibility = View.GONE
             }
         }
 
-        staButton.setOnClickListener {
+        findViewById<LinearLayout>(R.id.staButton).setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.sta_question),
                 image = R.drawable.adrod,
@@ -56,14 +57,9 @@ class ToolboxActivity : ComponentActivity() {
                     Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
-
-        }
-        scriptButton.setOnClickListener {
-            startActivity(Intent(this, ScriptToolboxActivity::class.java))
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
-        armButton.setOnClickListener {
+        findViewById<LinearLayout>(R.id.armButton).setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.software_question),
                 image = R.drawable.ic_sensor,
@@ -79,7 +75,7 @@ class ToolboxActivity : ComponentActivity() {
             )
         }
 
-        atlasosButton.setOnClickListener {
+        findViewById<LinearLayout>(R.id.atlasosButton).setOnClickListener {
             UniversalDialog.showDialog(
                 this,
                 title = getString(R.string.atlasos_question),
@@ -100,7 +96,6 @@ class ToolboxActivity : ComponentActivity() {
                     Pair(getString(R.string.dismiss)) { UniversalDialog.dialog.dismiss() },
                 )
             )
-
         }
 
         dbkpButton.setOnClickListener {
@@ -122,6 +117,102 @@ class ToolboxActivity : ComponentActivity() {
                     Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
+        }
+
+        findViewById<LinearLayout>(R.id.usbhostmode).setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = getString(R.string.usbhost_question),
+                image = R.drawable.folder,
+                dismissible = false,
+                buttons = listOf(
+                    Pair(getString(R.string.yes)) {
+                        Info.pleaseWait(this, R.string.done, R.drawable.folder) {
+                            Files.createFolder(Paths.toolbox)
+                            Files.copyFileToWin(
+                                this,
+                                Paths.USBHostModeAsset,
+                                "Toolbox/usbhostmode.exe"
+                            )
+                        }
+                    },
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+                )
+            )
+
+        }
+
+        findViewById<LinearLayout>(R.id.rotation).setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = getString(R.string.rotation_question),
+                image = R.drawable.cd,
+                dismissible = false,
+                buttons = listOf(
+                    Pair(getString(R.string.yes)) {
+                        Info.pleaseWait(this, R.string.done, R.drawable.cd) {
+                            createFolder(Paths.rotation)
+                            Files.copyFileToWin(this, Paths.displayAsset, "Toolbox/Rotation/display.exe")
+                            Files.copyFileToWin(
+                                this,
+                                Paths.RotationShortcutAsset,
+                                "Toolbox/RotationShortcut.lnk"
+                            )
+                            Files.copyFileToWin(this, Paths.RotationShortcutReverseLandscapeAsset, "Toolbox/RotationShortcutReverseLandscape.lnk")
+
+                            Files.copyFileToWin(this, Paths.RotationShortcutReverseLandscapeAsset, Paths.RotationShortcutReverseLandscape)
+                            Files.copyFileToWin(this, Paths.RotationShortcutAsset, Paths.RotationShortcut)
+                        }
+                    },
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+                )
+            )
+
+        }
+
+        findViewById<LinearLayout>(R.id.frameworkInstallers).setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = getString(R.string.setup_question),
+                image = R.drawable.folder,
+                dismissible = false,
+                buttons = listOf(
+                    Pair(getString(R.string.yes)) {
+                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.folder, 19, {
+                            Files.createFolder(Paths.toolbox)
+                            Files.createFolder(Paths.frameworks)
+                            Download.downloadFrameworks(this)
+                        }) {
+                            Files.copyFileToWin(
+                                this,
+                                Paths.installAsset,
+                                "Toolbox/Frameworks/install.bat"
+                            )
+
+                        }
+                    },
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+                )
+            )
+
+        }
+
+        findViewById<LinearLayout>(R.id.edgeremover).setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = getString(R.string.defender_question),
+                image = R.drawable.edge,
+                dismissible = false,
+                buttons = listOf(
+                    Pair(getString(R.string.yes)) {
+                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.edge, 1, {
+                            createFolder(Paths.toolbox)
+                            Download.downloadDefenderRemover(this)
+                        }, {
+                            Files.copyFileToWin(this, Paths.edgeremover, "Toolbox/RemoveEdge.bat")
+
+                        })
+                    },
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+                )
+            )
+
         }
     }
 

@@ -39,15 +39,16 @@ class MainActivity : ComponentActivity() {
         Preferences.init(this@MainActivity)
         Files.init(this@MainActivity)
 
-        val quickbootButton = findViewById<Button>(R.id.quickbootButton)
-        val backupButton = findViewById<Button>(R.id.backupButton)
+        val quickbootButton = findViewById<LinearLayout>(R.id.quickbootButton)
+        val backupButton = findViewById<LinearLayout>(R.id.backupButton)
         val deviceImageView = findViewById<ImageView>(R.id.device)
         mountButton = WeakReference(findViewById(R.id.mountButton))
+        mount_title = WeakReference(findViewById(R.id.mount_title))
         val codeNameText = findViewById<TextView>(R.id.codeName)
         val settingsButton = findViewById<ImageView>(R.id.settingsButton)
         val guideButton = findViewById<TextView>(R.id.guideButton)
         val groupButton = findViewById<TextView>(R.id.groupButton)
-        val toolboxButton = findViewById<Button>(R.id.toolboxButton)
+        val toolboxButton = findViewById<LinearLayout>(R.id.toolboxButton)
         val versionTextView = findViewById<TextView>(R.id.version)
         val panelTypeTextView = findViewById<TextView>(R.id.panelType)
         val loading = findViewById<LinearLayout>(R.id.loading)
@@ -72,13 +73,15 @@ class MainActivity : ComponentActivity() {
         viewModel.drawable.observe(this) { deviceImageView.setImageDrawable(it) }
         viewModel.isUefiFilePresent.observe(this) { isPresent ->
             if (!isPresent) {
+                val title = findViewById<TextView>(R.id.quickboot_title)
+                val subtitle = findViewById<TextView>(R.id.quickboot_subtitle)
                 quickbootButton.isEnabled = false
-                quickbootButton.setTitle(getString(R.string.uefi_not_found))
-                quickbootButton.setSubtitle(getString(R.string.uefi_not_found_subtitle, Device.get()))
+                title.text = getString(R.string.uefi_not_found)
+                subtitle.text = getString(R.string.uefi_not_found_subtitle, Device.get())
             }
         }
         viewModel.mountText.observe(this) { mountText ->
-            mountButton.get()?.setTitle(mountText)
+            mount_title.get()?.text = mountText
         }
         viewModel.lastBackupDate.observe(this) { lastBackupDate ->
             if (lastBackupDate != "")
@@ -219,18 +222,18 @@ class MainActivity : ComponentActivity() {
     }
 
     companion object {
-        lateinit var mountButton: WeakReference<Button>
+        lateinit var mountButton: WeakReference<LinearLayout>
+        lateinit var mount_title: WeakReference<TextView>
         lateinit var lastBackup: WeakReference<TextView>
 
         fun updateMountText(context: Context) {
             val startTime = System.currentTimeMillis()
 
-            mountButton.get()?.setTitle(
-                if (State.isWindowsMounted) context.getString(
+            mount_title.get()?.text = if (State.isWindowsMounted) context.getString(
                     R.string.mnt_title,
                     context.getString(R.string.unmountt)
                 ) else context.getString(R.string.mnt_title, context.getString(R.string.mountt))
-            )
+
 
             val endTime = System.currentTimeMillis()
             val elapsedTime = endTime - startTime

@@ -8,28 +8,44 @@
     android:background="@drawable/walp2"
     android:orientation="horizontal">
 
+
     <LinearLayout
         android:id="@+id/top"
-        android:layout_width="@dimen/_400dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="107dp"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UseCompoundDrawables">
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="150px"
-            android:layout_marginStart="@dimen/_20dp"
-            android:gravity="center"
-            android:paddingTop="@dimen/_10dp"
-            android:text="Holy Helper"
-            android:textColor="@color/white"
-            android:textSize="50px"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText,PxUsage" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="version"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_12ssp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="center"
+                android:text="Holy Helper"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,PxUsage,RtlSymmetry" />
+        </LinearLayout>
 
         <Space
             android:layout_width="0dp"
@@ -40,19 +56,18 @@
             android:id="@+id/settingsButton"
             android:layout_width="100px"
             android:layout_height="100px"
-            android:layout_marginTop="@dimen/_10dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:clickable="true"
-
+            android:focusable="true"
             android:src="@drawable/settings"
-            tools:ignore="ContentDescription,PxUsage" />
+            tools:ignore="ContentDescription,PxUsage,RtlSymmetry" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="@dimen/_400dp"
-        android:layout_height="@dimen/_200dp"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_150sdp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top">
@@ -80,11 +95,11 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15dp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:gravity="center"
                 android:text="Windows on ARM"
                 android:textColor="@color/light_gray"
-                android:textSize="@dimen/_15sp"
+                android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,8 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginStart="@dimen/_10dp"
-                android:layout_marginTop="@dimen/_40dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -106,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Device: "
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -115,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/paneltype"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -124,7 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ramvalue"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -133,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/last"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -142,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/slot"
-                    android:textSize="@dimen/_13sp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
@@ -150,9 +165,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15dp"
-                android:layout_marginEnd="@dimen/_15dp"
-                android:layout_marginBottom="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -164,10 +179,11 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_bej"
                     android:clickable="true"
-                    android:paddingHorizontal="@dimen/_10dp"
-                    android:paddingVertical="@dimen/_3dp"
+                    android:focusable="true"
+                    android:paddingHorizontal="@dimen/_7sdp"
+                    android:paddingVertical="@dimen/_3sdp"
                     android:text="@string/group"
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/light_bej"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
@@ -183,10 +199,11 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_bej"
                     android:clickable="true"
-                    android:paddingHorizontal="@dimen/_10dp"
-                    android:paddingVertical="@dimen/_3dp"
+                    android:focusable="true"
+                    android:paddingHorizontal="@dimen/_7sdp"
+                    android:paddingVertical="@dimen/_3sdp"
                     android:text="@string/guide"
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/_11sdp"
                     android:textColor="@color/light_bej"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
@@ -200,9 +217,9 @@
         android:layout_width="0dp"
 
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="bottom"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -210,21 +227,65 @@
         app:layout_constraintStart_toEndOf="@+id/linearLayout3"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.venddair.holyhelper.Button
+        <LinearLayout
             android:id="@+id/backupButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:image="@drawable/cd"
-            app:subtitle="@string/backup_boot_subtitle"
-            app:title="@string/backup_boot_title" />
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_gray"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:src="@drawable/cd"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="asdasd"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/backup_boot_title"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/light_gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:paddingTop="6dp"
+                    android:layout_marginBottom="-3dp"
+                     />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/backup_boot_subtitle"
+                    android:textSize="@dimen/_9ssp"
+                    android:textColor="@color/gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="italic"
+                    android:paddingBottom="5dp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_10dp"/>
+            android:layout_height="@dimen/_7sdp"/>
 
-
-        <com.venddair.holyhelper.Button
+        <!--<com.venddair.holyhelper.Button
             android:id="@+id/mountButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -233,13 +294,68 @@
             app:imageScaleY="0.6"
             app:image="@drawable/folder"
             app:subtitle="@string/mnt_subtitle"
-            app:title="@string/mnt_title" />
+            app:title="@string/mnt_title" />-->
+
+        <LinearLayout
+            android:id="@+id/mountButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_gray"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:scaleX="0.65"
+                android:scaleY="0.65"
+                android:src="@drawable/folder"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="asdasd"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:id="@+id/mount_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mnt_title"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/light_gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:paddingTop="6dp"
+                    android:layout_marginBottom="-3dp"
+                     />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mnt_subtitle"
+                    android:textSize="@dimen/_9ssp"
+                    android:textColor="@color/gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="italic"
+                    android:paddingBottom="5dp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_10dp"/>
+            android:layout_height="@dimen/_7sdp"/>
 
-        <com.venddair.holyhelper.Button
+        <!--<com.venddair.holyhelper.Button
             android:id="@+id/toolboxButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -248,48 +364,133 @@
             app:imageScaleY=".85"
             app:image="@drawable/toolbox"
             app:subtitle="@string/toolbox_subtitle"
-            app:title="@string/toolbox_title" />
+            app:title="@string/toolbox_title" />-->
+
+        <LinearLayout
+            android:id="@+id/toolboxButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_gray"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:scaleX="0.85"
+                android:scaleY="0.85"
+                android:src="@drawable/toolbox"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="asdasd"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/toolbox_title"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/light_gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:paddingTop="6dp"
+                    android:layout_marginBottom="-3dp"
+                     />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/toolbox_subtitle"
+                    android:textSize="@dimen/_9ssp"
+                    android:textColor="@color/gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="italic"
+                    android:paddingBottom="5dp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <Space
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_10dp"/>
+            android:layout_height="@dimen/_7sdp"/>
 
-        <com.venddair.holyhelper.Button
+        <!--<com.venddair.holyhelper.Button
             android:id="@+id/quickbootButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             app:image="@drawable/win11logo"
             app:subtitle="@string/quickboot_subtitle"
-            app:title="@string/quickboot_title" />
+            app:title="@string/quickboot_title" />-->
+
+        <LinearLayout
+            android:id="@+id/quickbootButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_gray"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:src="@drawable/win11logo"
+                android:layout_marginEnd="8dp"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:contentDescription="asdasd"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:id="@+id/quickboot_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quickboot_title"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/light_gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:paddingTop="6dp"
+                    android:layout_marginBottom="-3dp"
+                     />
+
+                <TextView
+                    android:id="@+id/quickboot_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quickboot_subtitle"
+                    android:textSize="@dimen/_9ssp"
+                    android:textColor="@color/gray"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="italic"
+                    android:paddingBottom="5dp" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:text="TextView"
-        android:textSize="@dimen/_13sp"
-        android:textColor="@color/gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
-
-<!--    <com.venddair.holyhelper.PendingJob
-        android:id="@+id/pendingJob"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />-->
     <LinearLayout
         android:id="@+id/loading"
         android:visibility="gone"
