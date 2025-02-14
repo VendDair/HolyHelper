@@ -32,6 +32,14 @@ class ToolboxActivity : ComponentActivity() {
         })
 
         val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
+        val flashUefiButton = findViewById<LinearLayout>(R.id.flashUefi)
+        if (!Files.checkFile(Paths.uefiImg)) {
+            val title = findViewById<TextView>(R.id.flashUefiTitle)
+            val subtitle = findViewById<TextView>(R.id.flashUefiSubtitle)
+            flashUefiButton.isEnabled = false
+            title.text = getString(R.string.uefi_not_found)
+            subtitle.text = getString(R.string.uefi_not_found_subtitle, Device.get())
+        }
 
 
         if (!Device.isDbkpSupported()) {
@@ -215,7 +223,7 @@ class ToolboxActivity : ComponentActivity() {
             )
         }
 
-        findViewById<LinearLayout>(R.id.flashUefi).setOnClickListener {
+        flashUefiButton.setOnClickListener {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.flash_uefi_question),
                 image = R.drawable.ic_uefi,

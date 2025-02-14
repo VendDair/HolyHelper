@@ -506,6 +506,7 @@
                         tools:ignore="NestedWeights">
 
                         <TextView
+                            android:id="@+id/flashUefiTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/flash_uefi_title"
@@ -518,6 +519,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/flashUefiSubtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/flash_uefi_subtitle"
