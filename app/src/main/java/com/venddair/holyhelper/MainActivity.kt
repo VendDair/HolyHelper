@@ -161,9 +161,6 @@ class MainActivity : ComponentActivity() {
             UniversalDialog.showDialog(this,
                 title = getString(R.string.quickboot_question),
                 buttons = listOf(
-                    Pair(getString(R.string.flash1)) {
-                        Commands.bootInWindows(this)
-                    },
                     Pair(getString(R.string.reboot)) {
                         Commands.bootInWindows(this, true)
                     },

@@ -40,6 +40,7 @@ class ToolboxActivity : ComponentActivity() {
                 findViewById<Space>(R.id.space).visibility = View.GONE
             } else {
                 findViewById<Space>(R.id.space1).visibility = View.GONE
+                findViewById<LinearLayout>(R.id.uhh).visibility = View.GONE
             }
         }
 
@@ -212,7 +213,22 @@ class ToolboxActivity : ComponentActivity() {
                     Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
+        }
 
+        findViewById<LinearLayout>(R.id.flashUefi).setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = getString(R.string.flash_uefi_question),
+                image = R.drawable.ic_uefi,
+                dismissible = false,
+                buttons = listOf(
+                    Pair(getString(R.string.yes)) {
+                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.edge, 1) {
+                            Commands.bootInWindows(this)
+                        }
+                    },
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+                )
+            )
         }
     }
 

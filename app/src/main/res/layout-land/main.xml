@@ -11,8 +11,8 @@
 
     <LinearLayout
         android:id="@+id/top"
-        android:layout_width="@dimen/_300sdp"
-        android:layout_height="107dp"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="60dp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -65,6 +65,156 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/panel"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top">
+
+        <ImageView
+            android:id="@+id/device"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:contentDescription="asd"
+            android:src="@drawable/ic_launcher_background"
+            tools:ignore="HardcodedText" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_gray"
+            android:foregroundGravity="left"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            tools:ignore="RtlHardcoded">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:gravity="center"
+                android:text="Windows on ARM"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+                <TextView
+                    android:id="@+id/codeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Device: "
+                    android:textColor="@color/slightly_lighter_gray"
+                    android:textSize="@dimen/_11sdp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/panelType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/paneltype"
+                    android:textColor="@color/slightly_lighter_gray"
+                    android:textSize="@dimen/_11sdp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/totalRam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ramvalue"
+                    android:textColor="@color/slightly_lighter_gray"
+                    android:textSize="@dimen/_11sdp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/lastBackup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last"
+                    android:textColor="@color/slightly_lighter_gray"
+                    android:textSize="@dimen/_11sdp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/slot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/slot"
+                    android:textColor="@color/slightly_lighter_gray"
+                    android:textSize="@dimen/_11sdp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/groupButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_bej"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="@dimen/_7sdp"
+                    android:paddingVertical="@dimen/_3sdp"
+                    android:text="@string/group"
+                    android:textColor="@color/light_bej"
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/guideButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_bej"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingHorizontal="@dimen/_7sdp"
+                    android:paddingVertical="@dimen/_3sdp"
+                    android:text="@string/guide"
+                    android:textColor="@color/light_bej"
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+    <!--<LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="@dimen/_300sdp"
         android:layout_height="@dimen/_150sdp"
@@ -210,7 +360,7 @@
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -224,7 +374,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+        app:layout_constraintStart_toEndOf="@+id/panel"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
