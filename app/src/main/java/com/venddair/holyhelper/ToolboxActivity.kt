@@ -222,7 +222,7 @@ class ToolboxActivity : ComponentActivity() {
                 dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Info.pleaseWaitProgress(this, R.string.done, R.drawable.edge, 1) {
+                        Info.pleaseWait(this, R.string.done, R.drawable.edge) {
                             Commands.bootInWindows(this)
                         }
                     },
