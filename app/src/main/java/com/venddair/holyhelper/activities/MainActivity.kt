@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,6 +22,8 @@ import com.venddair.holyhelper.utils.Commands
 import com.venddair.holyhelper.utils.Commands.isWindowsMounted
 import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.Files
+import com.venddair.holyhelper.utils.Permissions
+import com.venddair.holyhelper.utils.Permissions.requestInstallPermission
 import com.venddair.holyhelper.utils.Preferences
 import com.venddair.holyhelper.utils.State
 import com.venddair.holyhelper.utils.ToastUtil
@@ -133,7 +136,15 @@ class MainActivity : ComponentActivity() {
             Info.noRootDetected(this)
         }
 
+
         viewModel.loadData(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (!packageManager.canRequestPackageInstalls()) {
+                requestInstallPermission(this)
+                return
+            }
+        } else requestInstallPermission(this)
 
 
 
