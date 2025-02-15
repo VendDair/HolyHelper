@@ -6,6 +6,9 @@ import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.view.View
 import androidx.activity.ComponentActivity
+import com.venddair.holyhelper.utils.Device
+import com.venddair.holyhelper.utils.Download
+import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

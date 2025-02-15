@@ -1,4 +1,4 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.utils
 
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope

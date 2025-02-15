@@ -7,9 +7,13 @@
 
     <style name="MainMenuTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:statusBarColor">#FF000000</item>
+        <item name="android:textDirection">ltr</item>
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
     <style name="MainTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:statusBarColor">#FF404040</item>
+        <item name="android:textDirection">firstStrongLtr</item>
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 </resources>

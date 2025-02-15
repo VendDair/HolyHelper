@@ -1,13 +1,15 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
+import com.venddair.holyhelper.Info
+import com.venddair.holyhelper.activities.MainActivity
+import com.venddair.holyhelper.Strings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -30,12 +32,11 @@ object Commands {
         val startTime = System.currentTimeMillis()
 
         if (windows && !State.isWindowsMounted) mountWindows(context, false)
-        val bootImage = if (windows) Paths.bootImage1 else Paths.bootImage
+        val bootImage = if (windows) Strings.bootImage1 else Strings.bootImage
 
         if (State.bootPartition == null) return
 
-        //ShellUtils.fastCmd("su -c dd bs=8m if=${bootPartition} of=${bootImage}")
-        Cmd.execute("su -c dd bs=8m if=${State.bootPartition} of=${bootImage}")
+        ShellUtils.fastCmd("su -c dd bs=8m if=${State.bootPartition} of=${bootImage}")
         MainActivity.updateMountText(context)
         MainActivity.updateLastBackupDate(context)
 
@@ -46,21 +47,21 @@ object Commands {
     }
 
     fun bootInWindows(context: Context, reboot: Boolean = false) {
-        if (!Files.checkFile(Paths.uefiImg)) return
+        if (!Files.checkFile(Strings.uefiImg)) return
 
-        if (!Files.checkFile(Paths.bootImage)) backupBootImage(context)
-        if (!Files.checkFile(Paths.bootImage1)) backupBootImage(context, true)
+        if (!Files.checkFile(Strings.bootImage)) backupBootImage(context)
+        if (!Files.checkFile(Strings.bootImage1)) backupBootImage(context, true)
 
         if (State.bootPartition == null) return
 
-        ShellUtils.fastCmd("su -c dd if=\"${Paths.uefiImg}\" of=${State.bootPartition} bs=8M")
+        ShellUtils.fastCmd("su -c dd if=\"${Strings.uefiImg}\" of=${State.bootPartition} bs=8M")
         if (reboot) ShellUtils.fastCmd("su -c reboot")
     }
 
     private fun tryMount(mountPath: String) {
         //val winPartition = Files.getWinPartition(context) ?: return
 
-        val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs ${State.winPartition} $mountPath'"
+        val command = "su -mm -c 'cd ${Strings.assets.data} && ./mount.ntfs ${State.winPartition} $mountPath'"
         //val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs -o big_writes,noatime,norecovery $winPartition $mountPath'"
         //ShellUtils.fastCmd(command)
         //val result = Cmd.execute(command)
@@ -82,11 +83,9 @@ object Commands {
 
         val mountDir = Files.getMountDir()
 
-        //if (isWindowsMounted(context)) {
         if (State.isWindowsMounted) {
             if (unmountIfMounted) {
-                //ShellUtils.fastCmd("su -mm -c umount $mountDir")
-                Cmd.execute("su -mm -c umount $mountDir")
+                ShellUtils.fastCmd("su -mm -c umount $mountDir")
 
                 CoroutineScope(Dispatchers.Main).launch {
                     Files.remove(mountDir)
@@ -109,11 +108,19 @@ object Commands {
 
         //var mounted = isWindowsMounted(context)
 
-        if (!State.isWindowsMounted && mountDir == Paths.winPath) {
-            Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, true)
+        if (!State.isWindowsMounted && mountDir == Strings.folders.win) {
+            Preferences.putBoolean(
+                Preferences.Preference.SETTINGS,
+                Preferences.Key.MOUNTTOMNT,
+                true
+            )
             tryMount(mountDir)
             if (!State.isWindowsMounted) {
-                Preferences.putBoolean(Preferences.Preference.SETTINGS, Preferences.Key.MOUNTTOMNT, false)
+                Preferences.putBoolean(
+                    Preferences.Preference.SETTINGS,
+                    Preferences.Key.MOUNTTOMNT,
+                    false
+                )
             }
         }
 
@@ -148,7 +155,7 @@ object Commands {
             "https://github.com/VendDair/HolyHelper/releases/download/files/version"
         ) { content ->
             val version = content.replace("\n", "")
-            if (version != Paths.version) {
+            if (version != Strings.version) {
                 Info.notifyAboutUpdate(context, version)
                 updateChecked = true
             }
@@ -169,8 +176,8 @@ object Commands {
             return
         }
 
-        Files.moveFile(dbkp, Paths.data)
-        Files.setPerms(Paths.dbkpAsset, "777")
+        Files.moveFile(dbkp, Strings.assets.data)
+        Files.setPerms(Strings.assets.dbkp, "777")
 
         val (url, fileName) = Device.getDbkpDownloadInfo()
 
@@ -186,7 +193,7 @@ object Commands {
         Files.moveFile(path, dbkpDir)
         ShellUtils.fastCmd("cd $dbkpDir")
         ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) unpack boot.img\" | su -c sh")
-        ShellUtils.fastCmd("su -mm -c ${Paths.data}/dbkp kernel ${fileName[0]} output dbkp8150.cfg dbkp.${fileName[1]}.bin")
+        ShellUtils.fastCmd("su -mm -c ${Strings.assets.data}/dbkp kernel ${fileName[0]} output dbkp8150.cfg dbkp.${fileName[1]}.bin")
         ShellUtils.fastCmd("su -mm -c rm kernel")
         ShellUtils.fastCmd("su -mm -c mv output kernel")
         ShellUtils.fastCmd("echo \"$(su -mm -c find /data/adb -name magiskboot) repack boot.img\" | su -c sh")

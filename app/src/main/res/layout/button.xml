@@ -9,8 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:gravity="center_vertical"
-    android:paddingVertical="@dimen/_5sdp"
-    android:paddingHorizontal="@dimen/_20sdp"
+    android:paddingVertical="@dimen/_10sdp"
     tools:ignore="RtlHardcoded">
 
     <TextView

@@ -1,4 +1,4 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,8 +6,10 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
-import com.venddair.holyhelper.Commands.backupBootImage
-import com.venddair.holyhelper.Commands.notifyIfNoWinPartition
+import com.venddair.holyhelper.Info
+import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.utils.Commands.backupBootImage
+import com.venddair.holyhelper.utils.Commands.notifyIfNoWinPartition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -36,12 +38,11 @@ object Files {
     fun init(context: Context) {
         appContext = context
 
-        Paths.data = context.filesDir.toString()
+        Strings.assets.data = context.filesDir.toString()
 
         CoroutineScope(Dispatchers.IO).launch {
-            createFolder(Paths.data)
-            createFolder(Paths.uefiFolder)
-            createFolder(Paths.winPath)
+            createFolder(Strings.assets.data)
+            createFolder(Strings.folders.uefi)
 
             copyAsset("mount.ntfs", "+x", true)
             copyAsset("sta.exe", ignoreIfPresent = true)
@@ -83,12 +84,12 @@ object Files {
         }
         createFolder("/sdcard/dbkp")
         remove("/sdcard/original-boot.img")
-        copy(Paths.bootImage, "/sdcard/dbkp/boot.img")
-        moveFile(Paths.bootImage, "/sdcard/original-boot.img")
-        copy(Paths.dbkp8150CfgAsset, "/sdcard/dbkp")
-        copy(Paths.dbkpHotdogBinAsset, "/sdcard/dbkp")
-        copy(Paths.dbkpCepheusBinAsset, "/sdcard/dbkp")
-        copy(Paths.dbkpNabuBinAsset, "/sdcard/dbkp")
+        copy(Strings.bootImage, "/sdcard/dbkp/boot.img")
+        moveFile(Strings.bootImage, "/sdcard/original-boot.img")
+        copy(Strings.assets.dbkp8150Cfg, "/sdcard/dbkp")
+        copy(Strings.assets.dbkpHotdogBin, "/sdcard/dbkp")
+        copy(Strings.assets.dbkpCepheusBin, "/sdcard/dbkp")
+        copy(Strings.assets.dbkpNabuBin, "/sdcard/dbkp")
     }
 
     fun copy(path: String, newPath: String) {
@@ -134,9 +135,9 @@ object Files {
     }
 
     fun copyAsset(name: String, perms: String? = null, ignoreIfPresent: Boolean = false) {
-        val outputFilePath = File(Paths.data, name)
+        val outputFilePath = File(Strings.assets.data, name)
 
-        if (checkFile("${Paths.data}/$name") && ignoreIfPresent) return
+        if (checkFile("${Strings.assets.data}/$name") && ignoreIfPresent) return
 
         try {
             val inputStream: InputStream = appContext.assets.open(name)
@@ -189,22 +190,22 @@ object Files {
 
     fun copyStaFiles(context: Context) {
         remove("${getMountDir()}/switchtoandroid")
-        createWinFolder(context, Paths.sta)
-        copyFileToWin(context, Paths.staAsset, Paths.staBin)
-        copyFileToWin(context, Paths.staLinkAsset, Paths.staLink)
+        createWinFolder(context, Strings.win.folders.sta)
+        copyFileToWin(context, Strings.assets.sta, Strings.win.staBin)
+        copyFileToWin(context, Strings.assets.staLink, Strings.win.staLink)
 
-        copyFileToWin(context, Paths.sddAsset, Paths.sdd)
-        copyFileToWin(context, Paths.sddConfigAsset, Paths.sddConfig)
+        copyFileToWin(context, Strings.assets.sdd, Strings.win.sddBin)
+        copyFileToWin(context, Strings.assets.sddConfig, Strings.win.sddConfig)
 
-        copyFileToWin(context, Paths.autoFlasherAsset, Paths.autoFlasher)
+        copyFileToWin(context, Strings.assets.autoFlasher, Strings.win.autoFlasher)
     }
 
     fun copyArmSoftwareLinks(context: Context) {
-        createFolder(Paths.toolbox)
-        copyFileToWin(context, Paths.ARMRepoLinkAsset, Paths.ARMRepoLink)
-        copyFileToWin(context, Paths.ARMSoftwareLinkAsset, Paths.ARMSoftwareLink)
-        copyFileToWin(context, Paths.TestedSoftwareLinkAsset, Paths.TestedSoftwareLink)
-        copyFileToWin(context, Paths.WorksOnWoaLinkAsset, Paths.WorksOnWoaLink)
+        createWinFolder(context, Strings.win.folders.toolbox)
+        copyFileToWin(context, Strings.assets.ARMRepoLink, Strings.win.ARMRepoLink)
+        copyFileToWin(context, Strings.assets.ARMSoftwareLink, Strings.win.ARMSoftwareLink)
+        copyFileToWin(context, Strings.assets.TestedSoftwareLink, Strings.win.TestedSoftwareLink)
+        copyFileToWin(context, Strings.assets.WorksOnWoaLink, Strings.win.WorksOnWoaLink)
     }
 
     fun checkFolder(path: String): Boolean {
@@ -301,7 +302,7 @@ object Files {
                 Preferences.Key.MOUNTTOMNT,
                 false
             )
-        ) Paths.winPath1 else Paths.winPath
+        ) Strings.folders.win1 else Strings.folders.win
     }
 
     fun getResource(id: Int): Drawable {
@@ -311,7 +312,7 @@ object Files {
     fun selectUefiImage(callback: () -> Unit = {}) {
         FilePicker.pickFile { path ->
             if (!checkExtension(path, Extension.IMG)) return@pickFile
-            copy(path, Paths.uefiImg)
+            copy(path, Strings.uefiImg)
             callback()
         }
     }

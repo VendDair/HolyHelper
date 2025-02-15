@@ -115,12 +115,13 @@ object UniversalDialog {
             }
 
             val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
+            params.weight = 1f
             if (index < buttons.size - 1) {
-                params.rightMargin = 20
+                params.rightMargin = 2
             }
 
             buttonView.layoutParams = params

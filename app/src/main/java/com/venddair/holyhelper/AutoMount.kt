@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.venddair.holyhelper.utils.Commands
+import com.venddair.holyhelper.utils.Preferences
 
 class AutoMount : BroadcastReceiver() {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")

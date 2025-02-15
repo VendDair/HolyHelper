@@ -1,4 +1,4 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,9 @@ import android.widget.LinearLayout
 import android.widget.Switch
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
+import com.venddair.holyhelper.R
+import com.venddair.holyhelper.utils.Files
+import com.venddair.holyhelper.utils.Preferences
 
 class SettingsActivity : ComponentActivity() {
     @SuppressLint("CommitPrefEdits")

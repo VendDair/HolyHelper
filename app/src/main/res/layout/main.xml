@@ -124,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="Device: "
                     android:textSize="@dimen/_9ssp"
+                    android:gravity="left"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
 
@@ -132,6 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/paneltype"
+                    android:gravity="left"
                     android:textSize="@dimen/_9ssp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
@@ -141,6 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ramvalue"
+                    android:gravity="left"
                     android:textSize="@dimen/_9ssp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
@@ -150,6 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/last"
+                    android:gravity="left"
                     android:textSize="@dimen/_9ssp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
@@ -159,6 +163,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/slot"
+                    android:gravity="left"
                     android:textSize="@dimen/_9ssp"
                     android:textColor="@color/slightly_lighter_gray"
                     tools:ignore="HardcodedText" />
@@ -277,6 +282,7 @@
                     android:textColor="@color/light_gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
+                    android:gravity="left"
                     android:paddingTop="6dp"
                     android:layout_marginBottom="-3dp"
                      />
@@ -289,6 +295,7 @@
                     android:textColor="@color/gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="italic"
+                    android:gravity="left"
                     android:paddingBottom="5dp" />
             </LinearLayout>
         </LinearLayout>
@@ -347,6 +354,7 @@
                     android:textColor="@color/light_gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
+                    android:gravity="left"
                     android:paddingTop="6dp"
                     android:layout_marginBottom="-3dp"
                      />
@@ -359,6 +367,7 @@
                     android:textColor="@color/gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="italic"
+                    android:gravity="left"
                     android:paddingBottom="5dp" />
             </LinearLayout>
         </LinearLayout>
@@ -416,6 +425,7 @@
                     android:textColor="@color/light_gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
+                    android:gravity="left"
                     android:paddingTop="6dp"
                     android:layout_marginBottom="-5dp"
                      />
@@ -428,6 +438,7 @@
                     android:textColor="@color/gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="italic"
+                    android:gravity="left"
                     android:paddingBottom="5dp" />
             </LinearLayout>
         </LinearLayout>
@@ -484,6 +495,7 @@
                     android:textColor="@color/light_gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
+                    android:gravity="left"
                     android:paddingTop="6dp"
                     android:layout_marginBottom="-5dp"
                      />
@@ -497,6 +509,7 @@
                     android:textColor="@color/gray"
                     android:fontFamily="sans-serif"
                     android:textStyle="italic"
+                    android:gravity="left"
                     android:paddingBottom="5dp" />
             </LinearLayout>
         </LinearLayout>

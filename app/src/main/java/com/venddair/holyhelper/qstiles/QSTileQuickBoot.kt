@@ -1,13 +1,16 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.qstiles
 
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import com.venddair.holyhelper.utils.Files
+import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.utils.Commands
 
 class QSTileQuickBoot : TileService() {
     override fun onStartListening() {
         updateTileState()
         val tile = qsTile
-        if (!Files.checkFile(Paths.uefiImg)) tile.state = 0
+        if (!Files.checkFile(Strings.uefiImg)) tile.state = 0
         else tile.state = 1
         tile.updateTile()
     }

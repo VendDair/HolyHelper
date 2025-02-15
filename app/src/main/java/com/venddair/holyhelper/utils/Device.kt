@@ -1,14 +1,12 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.utils
 
 import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
-import androidx.compose.ui.text.capitalize
 import com.topjohnwu.superuser.ShellUtils
-import com.venddair.holyhelper.Files.getResource
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import com.venddair.holyhelper.utils.Files.getResource
+import com.venddair.holyhelper.R
 
 object Device {
 

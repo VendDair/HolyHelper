@@ -1,7 +1,6 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.activities
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -9,7 +8,16 @@ import android.widget.Space
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
-import com.venddair.holyhelper.Files.createFolder
+import com.venddair.holyhelper.utils.Download
+import com.venddair.holyhelper.Info
+import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.R
+import com.venddair.holyhelper.UniversalDialog
+import com.venddair.holyhelper.utils.Files.createFolder
+import com.venddair.holyhelper.utils.Commands
+import com.venddair.holyhelper.utils.Device
+import com.venddair.holyhelper.utils.Files
+import com.venddair.holyhelper.utils.Files.createWinFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -33,7 +41,7 @@ class ToolboxActivity : ComponentActivity() {
 
         val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
         val flashUefiButton = findViewById<LinearLayout>(R.id.flashUefi)
-        if (!Files.checkFile(Paths.uefiImg)) {
+        if (!Files.checkFile(Strings.uefiImg)) {
             val title = findViewById<TextView>(R.id.flashUefiTitle)
             val subtitle = findViewById<TextView>(R.id.flashUefiSubtitle)
             flashUefiButton.isEnabled = false
@@ -136,11 +144,11 @@ class ToolboxActivity : ComponentActivity() {
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.folder) {
-                            Files.createFolder(Paths.toolbox)
+                            createWinFolder(this, Strings.win.folders.toolbox)
                             Files.copyFileToWin(
                                 this,
-                                Paths.USBHostModeAsset,
-                                "Toolbox/usbhostmode.exe"
+                                Strings.assets.USBHostMode,
+                                Strings.win.USBHostMode
                             )
                         }
                     },
@@ -158,17 +166,33 @@ class ToolboxActivity : ComponentActivity() {
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWait(this, R.string.done, R.drawable.cd) {
-                            createFolder(Paths.rotation)
-                            Files.copyFileToWin(this, Paths.displayAsset, "Toolbox/Rotation/display.exe")
+                            createFolder(Strings.win.folders.rotation)
                             Files.copyFileToWin(
                                 this,
-                                Paths.RotationShortcutAsset,
-                                "Toolbox/RotationShortcut.lnk"
+                                Strings.assets.display,
+                                Strings.win.display
                             )
-                            Files.copyFileToWin(this, Paths.RotationShortcutReverseLandscapeAsset, "Toolbox/RotationShortcutReverseLandscape.lnk")
+                            Files.copyFileToWin(
+                                this,
+                                Strings.assets.RotationShortcut,
+                                Strings.win.RotationShortcut
+                            )
+                            Files.copyFileToWin(
+                                this,
+                                Strings.assets.RotationShortcutReverseLandscape,
+                                Strings.win.RotationShortcutReverseLandscape
+                            )
 
-                            Files.copyFileToWin(this, Paths.RotationShortcutReverseLandscapeAsset, Paths.RotationShortcutReverseLandscape)
-                            Files.copyFileToWin(this, Paths.RotationShortcutAsset, Paths.RotationShortcut)
+                            Files.copyFileToWin(
+                                this,
+                                Strings.assets.RotationShortcutReverseLandscape,
+                                Strings.RotationShortcutReverseLandscape
+                            )
+                            Files.copyFileToWin(
+                                this,
+                                Strings.assets.RotationShortcut,
+                                Strings.RotationShortcut
+                            )
                         }
                     },
                     Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
@@ -185,14 +209,14 @@ class ToolboxActivity : ComponentActivity() {
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWaitProgress(this, R.string.done, R.drawable.folder, 19, {
-                            Files.createFolder(Paths.toolbox)
-                            Files.createFolder(Paths.frameworks)
+                            createWinFolder(this, Strings.win.folders.toolbox)
+                            createWinFolder(this, Strings.win.folders.frameworks)
                             Download.downloadFrameworks(this)
                         }) {
                             Files.copyFileToWin(
                                 this,
-                                Paths.installAsset,
-                                "Toolbox/Frameworks/install.bat"
+                                Strings.assets.installBat,
+                                Strings.win.installBat
                             )
 
                         }
@@ -211,10 +235,10 @@ class ToolboxActivity : ComponentActivity() {
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
                         Info.pleaseWaitProgress(this, R.string.done, R.drawable.edge, 1, {
-                            createFolder(Paths.toolbox)
+                            createWinFolder(this, Strings.win.folders.toolbox)
                             Download.downloadDefenderRemover(this)
                         }, {
-                            Files.copyFileToWin(this, Paths.edgeremover, "Toolbox/RemoveEdge.bat")
+                            Files.copyFileToWin(this, Strings.assets.edgeremover, Strings.win.edgeremover)
 
                         })
                     },
@@ -241,7 +265,9 @@ class ToolboxActivity : ComponentActivity() {
     }
 
     private suspend fun downloadAtlasOS() = coroutineScope {
-        createFolder(Paths.toolbox)
+        runOnUiThread {
+            createWinFolder(this@ToolboxActivity, Strings.win.folders.toolbox)
+        }
         val download1 = async(Dispatchers.IO) {
             val path = Download.download(
                 this@ToolboxActivity,
@@ -251,7 +277,7 @@ class ToolboxActivity : ComponentActivity() {
                 ?: return@async
             runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/AtlasPlaybook.apbx")
+                Files.moveFileToWin(this@ToolboxActivity, path, Strings.win.atlasPlaybook)
             }
         }
 
@@ -264,7 +290,7 @@ class ToolboxActivity : ComponentActivity() {
                 ?: return@async
             runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/AMEWizardBeta.zip")
+                Files.moveFileToWin(this@ToolboxActivity, path, Strings.win.ameWizard)
             }
         }
 
@@ -272,7 +298,9 @@ class ToolboxActivity : ComponentActivity() {
     }
 
     private suspend fun downloadReviOS() = coroutineScope {
-        createFolder(Paths.toolbox)
+        runOnUiThread {
+            createWinFolder(this@ToolboxActivity, Strings.win.folders.toolbox)
+        }
 
         val download1 = async(Dispatchers.IO) {
             val path = Download.download(
@@ -283,7 +311,7 @@ class ToolboxActivity : ComponentActivity() {
                 ?: return@async
             runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/ReviPlaybook.apbx")
+                Files.moveFileToWin(this@ToolboxActivity, path, Strings.win.reviPlaybook)
             }
         }
 
@@ -296,7 +324,7 @@ class ToolboxActivity : ComponentActivity() {
                 ?: return@async
             runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(this@ToolboxActivity, path, "Toolbox/AMEWizardBeta.zip")
+                Files.moveFileToWin(this@ToolboxActivity, path, Strings.win.ameWizard)
             }
         }
 

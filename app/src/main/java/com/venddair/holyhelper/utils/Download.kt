@@ -1,19 +1,20 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.utils
 
 import android.annotation.SuppressLint
 import android.app.DownloadManager
-import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.venddair.holyhelper.Info
+import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.UniversalDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -202,7 +203,7 @@ object Download {
 
                 withContext(Dispatchers.Main) {
                     UniversalDialog.increaseProgress(1)
-                    Files.copyFileToWin(context, path, "Toolbox/Frameworks/$fileName")
+                    Files.copyFileToWin(context, path, "${Strings.win.folders.frameworks}/$fileName")
                 }
                 path
             }
@@ -222,7 +223,7 @@ object Download {
             ?: return
         (context as ComponentActivity).runOnUiThread {
             UniversalDialog.progressBar.get()?.progress = 1
-            Files.moveFileToWin(context, path, "Toolbox/DefenderRemover.exe")
+            Files.moveFileToWin(context, path, Strings.win.defenderRemover)
         }
     }
 

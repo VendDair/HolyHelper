@@ -6,7 +6,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.topjohnwu.superuser.ShellUtils
+import com.venddair.holyhelper.utils.Device
+import com.venddair.holyhelper.utils.Files
+import com.venddair.holyhelper.utils.Preferences
+import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -32,14 +35,14 @@ class MainViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO) {
             coroutineScope {
-                val versionDeferred = async { Paths.version }
+                val versionDeferred = async { Strings.version }
                 val deviceNameDeferred = async { "${Device.getModel()} (${Device.get()})" }
                 val panelTypeDeferred = async {
                     if (!Device.isPanelCheckingSupported()) return@async null
                     context.getString(R.string.paneltype, Device.getPanelType())
                 }
                 val drawableDeferred = async { Device.getImage() }
-                val isUefiFileDeferred = async { Files.checkFile(Paths.uefiImg) }
+                val isUefiFileDeferred = async { Files.checkFile(Strings.uefiImg) }
                 val lastBackupDateDeferred = async { Preferences.getString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, "") }
                 val mountTextDeferred = async {
                     if (State.isWindowsMounted)

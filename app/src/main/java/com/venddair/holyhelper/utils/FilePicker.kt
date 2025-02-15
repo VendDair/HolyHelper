@@ -1,4 +1,4 @@
-package com.venddair.holyhelper
+package com.venddair.holyhelper.utils
 
 import android.app.Activity
 import android.content.Context
@@ -35,7 +35,7 @@ object FilePicker {
 
 
     fun pickFile(callback: (path: String) -> Unit) {
-        this.callback = callback
+        FilePicker.callback = callback
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "*/*"
             addCategory(Intent.CATEGORY_OPENABLE)

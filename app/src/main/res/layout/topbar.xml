@@ -34,6 +34,7 @@
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:textSize="@dimen/_16sdp"
+            android:gravity="left"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"
             android:text="Menu"
