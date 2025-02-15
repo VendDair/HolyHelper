@@ -69,4 +69,8 @@ dependencies {
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
 
+    implementation(libs.com.github.topjohnwu.libsu.core)
+    implementation(libs.com.github.topjohnwu.libsu.service)
+    implementation(libs.com.github.topjohnwu.libsu.nio)
+
 }
