@@ -63,7 +63,7 @@ class Info {
                         context.startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(Device.getGroupLink())
+                                Uri.parse(State.deviceConfig.groupLink)
                             )
                         )
                     },
@@ -90,7 +90,7 @@ class Info {
                         context.startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(Device.getGuideLink())
+                                Uri.parse(State.deviceConfig.guideLink)
                             )
                         )
                     },
@@ -126,15 +126,7 @@ class Info {
                             }
                         }
                     },
-                    Pair(context.getString(R.string.later)) {
-                        pleaseWait(context, R.string.done, R.drawable.info, {
-                            Download.download(
-                                context,
-                                "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk",
-                                "HolyHelper.apk"
-                            )
-                        })
-                    }
+                    Pair(context.getString(R.string.later)) {}
                 )
             )
         }

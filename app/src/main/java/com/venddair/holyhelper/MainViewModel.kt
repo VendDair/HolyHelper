@@ -3,10 +3,12 @@ package com.venddair.holyhelper
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.venddair.holyhelper.utils.Device
+import com.venddair.holyhelper.utils.DeviceConfigProvider
 import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.utils.Preferences
 import com.venddair.holyhelper.utils.State
@@ -22,6 +24,7 @@ class MainViewModel : ViewModel() {
     val versionText = MutableLiveData<String>()
     val deviceName = MutableLiveData<String>()
     val panelType = MutableLiveData<String?>()
+
     val drawable = MutableLiveData<Drawable>()
     val isUefiFilePresent = MutableLiveData<Boolean>()
     val mountText = MutableLiveData<String>()
@@ -33,15 +36,19 @@ class MainViewModel : ViewModel() {
     fun loadData(context: Context) {
         isLoading.postValue(true)
 
+        val deviceConfig = DeviceConfigProvider.getConfig(Device.get())
+
+        State.deviceConfig = deviceConfig
+
         viewModelScope.launch(Dispatchers.IO) {
             coroutineScope {
                 val versionDeferred = async { Strings.version }
                 val deviceNameDeferred = async { "${Device.getModel()} (${Device.get()})" }
                 val panelTypeDeferred = async {
-                    if (!Device.isPanelCheckingSupported()) return@async null
+                    if (!deviceConfig.isPanel) return@async null
                     context.getString(R.string.paneltype, Device.getPanelType())
                 }
-                val drawableDeferred = async { Device.getImage() }
+                val drawableDeferred = async { context.getDrawable(deviceConfig.imageResId)!! }
                 val isUefiFileDeferred = async { Files.checkFile(Strings.uefiImg) }
                 val lastBackupDateDeferred = async { Preferences.getString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, "") }
                 val mountTextDeferred = async {

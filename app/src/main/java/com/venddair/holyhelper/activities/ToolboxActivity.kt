@@ -3,6 +3,7 @@ package com.venddair.holyhelper.activities
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
@@ -18,6 +19,7 @@ import com.venddair.holyhelper.utils.Commands
 import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.utils.Files.createWinFolder
+import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -41,6 +43,8 @@ class ToolboxActivity : ComponentActivity() {
 
         val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
         val flashUefiButton = findViewById<LinearLayout>(R.id.flashUefi)
+        val dumpModemButton = findViewById<LinearLayout>(R.id.dumpModem)
+
         if (!Files.checkFile(Strings.uefiImg)) {
             val title = findViewById<TextView>(R.id.flashUefiTitle)
             val subtitle = findViewById<TextView>(R.id.flashUefiSubtitle)
@@ -50,13 +54,27 @@ class ToolboxActivity : ComponentActivity() {
         }
 
 
-        if (!Device.isDbkpSupported()) {
+        if (!State.deviceConfig.isDbkp) {
             dbkpButton.visibility = View.GONE
             if (!Device.isLandscape(this)) {
                 findViewById<Space>(R.id.space).visibility = View.GONE
             } else {
                 findViewById<Space>(R.id.space1).visibility = View.GONE
-                findViewById<LinearLayout>(R.id.uhh).visibility = View.GONE
+            }
+        }
+
+        if (!State.deviceConfig.isDbkp && !State.deviceConfig.isDumpModem && Device.isLandscape(this)) {
+            findViewById<LinearLayout>(R.id.uhh).visibility = View.GONE
+            findViewById<Space>(R.id.space).visibility = View.GONE
+        }
+
+
+        if (!State.deviceConfig.isDumpModem) {
+            dumpModemButton.visibility = View.GONE
+            if (!Device.isLandscape(this)) {
+                findViewById<Space>(R.id.modem_space).visibility = View.GONE
+            } else {
+                findViewById<Space>(R.id.space1).visibility = View.GONE
             }
         }
 
@@ -155,7 +173,6 @@ class ToolboxActivity : ComponentActivity() {
                     Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
                 )
             )
-
         }
 
         findViewById<LinearLayout>(R.id.rotation).setOnClickListener {
@@ -254,8 +271,24 @@ class ToolboxActivity : ComponentActivity() {
                 dismissible = false,
                 buttons = listOf(
                     Pair(getString(R.string.yes)) {
-                        Info.pleaseWait(this, R.string.done, R.drawable.edge) {
+                        Info.pleaseWait(this, R.string.done, R.drawable.ic_uefi) {
                             Commands.bootInWindows(this)
+                        }
+                    },
+                    Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+                )
+            )
+        }
+
+        dumpModemButton.setOnClickListener {
+            UniversalDialog.showDialog(this,
+                title = getString(R.string.dump_modem_question),
+                image = R.drawable.ic_modem,
+                dismissible = false,
+                buttons = listOf(
+                    Pair(getString(R.string.yes)) {
+                        Info.pleaseWait(this, R.string.done, R.drawable.ic_modem) {
+                            Commands.dumpModem(this)
                         }
                     },
                     Pair(getString(R.string.no)) { UniversalDialog.dialog.dismiss() }

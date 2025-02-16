@@ -19,6 +19,13 @@ object Commands {
 
     var notifyIfNoWinPartition = true
 
+    fun dumpModem(context: Context) {
+        if (!State.isWindowsMounted) mountWindows(context, false)
+        if (State.getFailed()) return
+        ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
+        ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
+    }
+
     fun isWindowsMounted(): Boolean {
         //val winPartition = Files.getWinPartition(context) ?: return false
 

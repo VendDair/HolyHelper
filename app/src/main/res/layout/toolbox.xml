@@ -245,6 +245,66 @@
             </LinearLayout>
 
             <Space
+                android:id="@+id/modem_space"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/dumpModem"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:orientation="horizontal"
+                android:background="@drawable/rounded_gray"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_modem"
+                    android:layout_marginEnd="8dp"
+                    android:scaleX="1.1"
+                    android:scaleY="1.1"
+                    android:contentDescription="a"
+                    tools:ignore="HardcodedText" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    tools:ignore="NestedWeights">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dump_modem_title"
+                        android:textSize="@dimen/_11ssp"
+                        android:textColor="@color/light_gray"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:gravity="left"
+                        android:paddingTop="6dp"
+                        android:layout_marginBottom="-3dp"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dump_modem_subtitle"
+                        android:textSize="@dimen/_9ssp"
+                        android:textColor="@color/gray"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="italic"
+                        android:gravity="left"
+                        android:paddingBottom="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 

@@ -13,6 +13,8 @@ object State {
 
     var isWindowsMounted = false
 
+    lateinit var deviceConfig: DeviceConfig
+
     var winPartition: String? = null
     var bootPartition: String? = null
 

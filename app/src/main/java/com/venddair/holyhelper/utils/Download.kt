@@ -7,7 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
@@ -117,7 +119,8 @@ object Download {
             }
         }
 
-    fun installAPK(context: Context, fileName: String) {
+    fun installAPK(context: ComponentActivity, fileName: String) {
+        //Permissions.requestInstallPermission(context)
         val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val apkFile = File(downloadsDir, fileName)
 
@@ -128,13 +131,41 @@ object Download {
 
         val apkUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
 
-        val intent = Intent(Intent.ACTION_VIEW).apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (!context.packageManager.canRequestPackageInstalls()) {
+                // Open settings to allow unknown apps installation for this app
+                val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                    data = Uri.parse("package:${context.packageName}")
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+
+                // Start a background thread to wait for permission and retry installation
+                Thread {
+                    while (!context.packageManager.canRequestPackageInstalls()) {
+                        Thread.sleep(200) // Wait until permission is granted
+                    }
+                    installAPK(context, fileName) // Retry APK installation
+                }.start()
+
+                return
+            }
+        }
+
+        // Install APK for API 24+
+        val installIntent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(apkUri, "application/vnd.android.package-archive")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(installIntent)
+        /*val intent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(apkUri, "application/vnd.android.package-archive")
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
-        context.startActivity(intent)
+        context.startActivity(intent)*/
     }
 
 

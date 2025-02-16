@@ -136,17 +136,7 @@ class MainActivity : ComponentActivity() {
             Info.noRootDetected(this)
         }
 
-
         viewModel.loadData(this)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (!packageManager.canRequestPackageInstalls()) {
-                requestInstallPermission(this)
-                return
-            }
-        } else requestInstallPermission(this)
-
-
 
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime
@@ -165,7 +155,7 @@ class MainActivity : ComponentActivity() {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(Device.getGuideLink())
+                    Uri.parse(State.deviceConfig.guideLink)
                 )
             )
         }
@@ -173,7 +163,7 @@ class MainActivity : ComponentActivity() {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse(Device.getGroupLink())
+                    Uri.parse(State.deviceConfig.groupLink)
                 )
             )
         }
