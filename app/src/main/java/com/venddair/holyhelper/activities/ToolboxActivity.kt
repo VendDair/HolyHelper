@@ -206,12 +206,12 @@ class ToolboxActivity : ComponentActivity() {
                             Files.copyFileToWin(
                                 this,
                                 Strings.assets.RotationShortcutReverseLandscape,
-                                Strings.RotationShortcutReverseLandscape
+                                Strings.win.RotationShortcutReverseLandscape
                             )
                             Files.copyFileToWin(
                                 this,
                                 Strings.assets.RotationShortcut,
-                                Strings.RotationShortcut
+                                Strings.win.RotationShortcut
                             )
                         }
                     },

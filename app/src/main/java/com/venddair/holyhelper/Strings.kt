@@ -90,32 +90,11 @@ object Strings {
         const val win1 = "/mnt/Windows"
     }
 
+    const val holyHelperAPK = "/sdcard/Download/HolyHelper.apk"
 
     val uefiImg: String get() = ShellUtils.fastCmd("su -c find /sdcard/UEFI/ -type f | grep .img | head -n 1")
 
     const val bootImage = "/sdcard/boot.img"
     const val bootImage1 = "/sdcard/Windows/boot.img"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    val RotationShortcut = "Users/Public/Desktop/RotationShortcut.lnk"
-    val RotationShortcutReverseLandscape = "Users/Public/Desktop/RotationShortcutReverseLandscape.lnk"
-
-
 
 }
