@@ -3,27 +3,27 @@ package com.venddair.holyhelper.activities
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
-import com.venddair.holyhelper.utils.Download
 import com.venddair.holyhelper.Info
-import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.R
+import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.UniversalDialog
-import com.venddair.holyhelper.utils.Files.createFolder
 import com.venddair.holyhelper.utils.Commands
 import com.venddair.holyhelper.utils.Device
+import com.venddair.holyhelper.utils.Download
 import com.venddair.holyhelper.utils.Files
+import com.venddair.holyhelper.utils.Files.createFolder
 import com.venddair.holyhelper.utils.Files.createWinFolder
 import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import java.lang.ref.WeakReference
 
 class ToolboxActivity : ComponentActivity() {
     @SuppressLint("StringFormatInvalid")
@@ -44,6 +44,9 @@ class ToolboxActivity : ComponentActivity() {
         val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
         val flashUefiButton = findViewById<LinearLayout>(R.id.flashUefi)
         val dumpModemButton = findViewById<LinearLayout>(R.id.dumpModem)
+
+        State.rootView = WeakReference(findViewById(R.id.root))
+        State.imageBlur = WeakReference(findViewById(R.id.blur))
 
         if (!Files.checkFile(Strings.uefiImg)) {
             val title = findViewById<TextView>(R.id.flashUefiTitle)

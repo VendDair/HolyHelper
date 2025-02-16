@@ -6,8 +6,8 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Info
-import com.venddair.holyhelper.activities.MainActivity
 import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.activities.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -22,8 +21,6 @@ import com.venddair.holyhelper.utils.Commands
 import com.venddair.holyhelper.utils.Commands.isWindowsMounted
 import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.Files
-import com.venddair.holyhelper.utils.Permissions
-import com.venddair.holyhelper.utils.Permissions.requestInstallPermission
 import com.venddair.holyhelper.utils.Preferences
 import com.venddair.holyhelper.utils.State
 import com.venddair.holyhelper.utils.ToastUtil
@@ -69,8 +66,8 @@ class MainActivity : ComponentActivity() {
         val totalRam = findViewById<TextView>(R.id.totalRam)
         val slot = findViewById<TextView>(R.id.slot)
 
-
-
+        State.rootView = WeakReference(findViewById(R.id.root))
+        State.imageBlur = WeakReference(findViewById(R.id.blur))
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 

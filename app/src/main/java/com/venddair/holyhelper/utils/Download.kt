@@ -40,6 +40,7 @@ object Download {
     ) {
         // Generate a unique file name if the file already exists
         val path = "${context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)}/$fileName"
+        Files.remove(path)
 
         val request = DownloadManager.Request(Uri.parse(url)).apply {
             setTitle("Downloading $fileName")

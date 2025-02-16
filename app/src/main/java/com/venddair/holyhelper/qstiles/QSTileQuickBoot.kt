@@ -2,9 +2,9 @@ package com.venddair.holyhelper.qstiles
 
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.utils.Commands
+import com.venddair.holyhelper.utils.Files
 
 class QSTileQuickBoot : TileService() {
     override fun onStartListening() {

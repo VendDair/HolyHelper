@@ -2,12 +2,11 @@ package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
 import com.topjohnwu.superuser.ShellUtils
-import com.venddair.holyhelper.Strings.assets.data
 
 @SuppressLint("SdCardPath")
 object Strings {
 
-    const val version = "1.0.2"
+    const val version = "1.0.3"
 
 
     object assets {

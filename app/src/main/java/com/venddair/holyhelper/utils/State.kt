@@ -1,9 +1,12 @@
 package com.venddair.holyhelper.utils
 
 import android.util.Log
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import java.lang.ref.WeakReference
 
 object State {
 
@@ -14,6 +17,9 @@ object State {
     var isWindowsMounted = false
 
     lateinit var deviceConfig: DeviceConfig
+
+    lateinit var rootView: WeakReference<ConstraintLayout>
+    lateinit var imageBlur: WeakReference<ImageView>
 
     var winPartition: String? = null
     var bootPartition: String? = null

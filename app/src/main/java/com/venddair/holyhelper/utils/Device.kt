@@ -3,11 +3,8 @@ package com.venddair.holyhelper.utils
 import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
-import androidx.activity.ComponentActivity
 import androidx.annotation.DrawableRes
 import com.topjohnwu.superuser.ShellUtils
-import com.venddair.holyhelper.utils.Files.getResource
 import com.venddair.holyhelper.R
 
 data class DeviceConfig(
