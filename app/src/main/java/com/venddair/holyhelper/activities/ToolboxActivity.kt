@@ -23,7 +23,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.lang.ref.WeakReference
 
 class ToolboxActivity : ComponentActivity() {
     @SuppressLint("StringFormatInvalid")
@@ -44,9 +43,6 @@ class ToolboxActivity : ComponentActivity() {
         val dbkpButton = findViewById<LinearLayout>(R.id.dbkpButton)
         val flashUefiButton = findViewById<LinearLayout>(R.id.flashUefi)
         val dumpModemButton = findViewById<LinearLayout>(R.id.dumpModem)
-
-        State.rootView = WeakReference(findViewById(R.id.root))
-        State.imageBlur = WeakReference(findViewById(R.id.blur))
 
         if (!Files.checkFile(Strings.uefiImg)) {
             val title = findViewById<TextView>(R.id.flashUefiTitle)

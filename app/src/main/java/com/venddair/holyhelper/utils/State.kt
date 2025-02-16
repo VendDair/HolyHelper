@@ -18,9 +18,6 @@ object State {
 
     lateinit var deviceConfig: DeviceConfig
 
-    lateinit var rootView: WeakReference<ConstraintLayout>
-    lateinit var imageBlur: WeakReference<ImageView>
-
     var winPartition: String? = null
     var bootPartition: String? = null
 

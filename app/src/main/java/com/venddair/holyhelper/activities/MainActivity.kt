@@ -66,9 +66,6 @@ class MainActivity : ComponentActivity() {
         val totalRam = findViewById<TextView>(R.id.totalRam)
         val slot = findViewById<TextView>(R.id.slot)
 
-        State.rootView = WeakReference(findViewById(R.id.root))
-        State.imageBlur = WeakReference(findViewById(R.id.blur))
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.versionText.observe(this) { versionTextView.text = it }

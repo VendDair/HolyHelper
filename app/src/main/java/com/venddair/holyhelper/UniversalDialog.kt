@@ -15,7 +15,8 @@
     import android.widget.LinearLayout
     import android.widget.ProgressBar
     import android.widget.TextView
-    import com.venddair.holyhelper.utils.State
+    import androidx.activity.ComponentActivity
+    import androidx.constraintlayout.widget.ConstraintLayout
     import jp.wasabeef.blurry.Blurry
     import java.lang.ref.WeakReference
 
@@ -73,19 +74,22 @@
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             if (animations) dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
 
+            val rootView = (context as ComponentActivity).findViewById<ConstraintLayout>(R.id.root)
+            val imageView = context.findViewById<ImageView>(R.id.blur)
 
             dialog.setOnDismissListener {
-                State.imageBlur.get()?.setImageDrawable(null)
+                imageView.setImageDrawable(null)
                 after(dialog)
             }
             dialog.setOnShowListener {
-                Blurry.with(context).radius(25).sampling(1).capture(State.rootView.get()!!).into(State.imageBlur.get()!!)
                 after(dialog)
             }
 
             // Progress Bar logic
             setupProgressBar(progress, progressMax)
             dialog.show()
+
+            Blurry.with(context).radius(10).sampling(1).capture(rootView).into(imageView)
         }
 
         fun increaseProgress(progress: Int) {
