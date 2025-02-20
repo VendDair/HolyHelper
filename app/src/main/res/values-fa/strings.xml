@@ -87,6 +87,7 @@ C:⧹Toolbox?"</string>
 	<string name="nonroot">دسترسی روت پیدا نشد</string>
 	<string name="unsupported">"هشدار!!!
 دستگاه شما توسط این برنامه پشتیبانی نمیشود، با مسولیت خودتان استفاده کنید"</string>
+	<string name="unsupported2">دستگاه شما توسط این برنامه پشتیبانی نمیشود</string>
 	<string name="sure">باشه! اجازه بده از نرم‌افزار استفاده کنم</string>
 	<string name="upanel">نوع صفحه نمایش شما پشتیبانی نشده است، لطفاً تجربه شخصی خود را در تلگرام به اشتراک بگذارید</string>
 	<string name="chat">چت</string>

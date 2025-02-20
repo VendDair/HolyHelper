@@ -77,7 +77,8 @@
 	<string name="bwarn">!! УВАГА!!\n UFS можа выйсці з ладу з-за гэтай функцыі, уключайце яе толькі калі вам часта прыходзяць OTA абнаўленні</string>
 	<string name="agree">Згодны</string>
 	<string name="nonroot">Рут-права не выяўлена</string>
-	<string name="unsupported">!! УВАГА!!\nПрылада не падтрымліваецца!\nВыкарыстоўвайце гэтае прыкладанне на свой страх і рызыку.</string>
+	<string name="unsupported">!!УВАГА!!\nПрылада не падтрымліваецца!\nВыкарыстоўвайце гэтае прыкладанне на свой страх і рызыку.</string>
+	<string name="unsupported2">Прылада не падтрымліваецца!</string>
 	<string name="sure">Добра, я разумею магчымыя наступствы.</string>
 	<string name="upanel">Ваша панэль можа не падтрымлівацца, падзяліцеся сваім вопытам з Windows у чаце ў Telegram</string>
 	<string name="chat">Чат</string>

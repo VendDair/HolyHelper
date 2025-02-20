@@ -78,6 +78,7 @@
 	<string name="agree">Onayla</string>
 	<string name="nonroot">Root algılanmadı</string>
 	<string name="unsupported">!!DİKKAT!!\nCihaz desteklenmiyor\nUygulamayı riski göze alıyorsanız kullanın</string>
+	<string name="unsupported2">Cihaz desteklenmiyor</string>
 	<string name="sure">TAMAM, kullanmama müsade et</string>
 	<string name="upanel">Panelinizin çalıştığı teyit edilmemiştir, lütfen Telegram grubunda deneyiminizi paylaşın</string>
 	<string name="chat">Sohbet</string>

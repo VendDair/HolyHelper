@@ -78,6 +78,7 @@
 	<string name="agree">Приймаю</string>
 	<string name="nonroot">Root не знайдено</string>
 	<string name="unsupported">!!УВАГА!!\nПристрій не підтримується\nВикористовуйте цю програму на свій страх і ризик</string>
+	<string name="unsupported2">Пристрій не підтримується</string>
 	<string name="sure">ОК, просто дозвольте мені використовувати цей додаток</string>
 	<string name="upanel">Робота вашої панелі не підтверджена, будь ласка, поділіться проблемою від Windows у чаті Telegram</string>
 	<string name="chat">Чат</string>

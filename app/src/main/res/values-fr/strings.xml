@@ -78,6 +78,7 @@
 	<string name="agree">Acceptez</string>
 	<string name="nonroot">“Root” non détecté</string>
 	<string name="unsupported">ATTENTION !\n Appareil non pris en charge.\nL\’utilisation de cette application est à vos risques et périls.</string>
+	<string name="unsupported2">Appareil non pris en charge</string>
 	<string name="sure">OK, laissez-moi utiliser l\’application</string>
 	<string name="upanel">Le fonctionnement de votre panneau n\’a pas été confirmé, veuillez partager votre expérience de Windows dans le chat Telegram.</string>
 	<string name="chat">Discutez</string>

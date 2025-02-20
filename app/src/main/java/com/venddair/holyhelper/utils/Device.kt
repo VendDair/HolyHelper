@@ -511,4 +511,11 @@ object Device {
         return context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }
 
+    fun isRestricted(): Boolean {
+        return when (get()) {
+            "duo", "duo2", "duoeu", "duoatt", "a0", "b1", "c1", "c2" -> true
+            else -> false
+        }
+    }
+
 }

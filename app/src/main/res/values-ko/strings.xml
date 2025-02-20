@@ -78,6 +78,7 @@
 	<string name="agree">동의</string>
 	<string name="nonroot">루트 권한을 사용할 수 없습니다</string>
 	<string name="unsupported">!!경고!!\n지원되지 않는 기기입니다\n이 앱을 사용할 때 발생할 수 있는 위험은 사용자 본인의 책임입니다</string>
+	<string name="unsupported2">지원되지 않는 기기입니다</string>
 	<string name="sure">동의하고 앱을 사용하겠습니다</string>
 	<string name="upanel">이 기기의 패널이 작동하는지 확인되지 않았습니다. 텔레그램 채팅에서 Windows에서의 상황이 어떠한지 알려주세요</string>
 	<string name="chat">채팅</string>

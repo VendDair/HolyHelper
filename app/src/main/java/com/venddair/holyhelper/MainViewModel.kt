@@ -1,7 +1,6 @@
 package com.venddair.holyhelper
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,15 +23,19 @@ class MainViewModel : ViewModel() {
     val deviceName = MutableLiveData<String>()
     val panelType = MutableLiveData<String?>()
 
-    val drawable = MutableLiveData<Drawable>()
+    val drawable = MutableLiveData<Int>()
     val isUefiFilePresent = MutableLiveData<Boolean>()
     val mountText = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
     val lastBackupDate = MutableLiveData<String>()
-    val totalRam = MutableLiveData<Float>()
+    val totalRam = MutableLiveData<String>()
     val slot = MutableLiveData<String?>()
 
+    val hadLoaded = MutableLiveData<Boolean>()
+
     fun loadData(context: Context) {
+        if (hadLoaded.value == true) return
+
         isLoading.postValue(true)
 
         val deviceConfig = DeviceConfigProvider.getConfig(Device.get())
@@ -47,7 +50,7 @@ class MainViewModel : ViewModel() {
                     if (!deviceConfig.isPanel) return@async null
                     context.getString(R.string.paneltype, Device.getPanelType())
                 }
-                val drawableDeferred = async { context.getDrawable(deviceConfig.imageResId)!! }
+                val drawableDeferred = async { deviceConfig.imageResId }
                 val isUefiFileDeferred = async { Files.checkFile(Strings.uefiImg) }
                 val lastBackupDateDeferred = async { Preferences.getString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, "") }
                 val mountTextDeferred = async {
@@ -56,7 +59,9 @@ class MainViewModel : ViewModel() {
                     else
                         context.getString(R.string.mnt_title, context.getString(R.string.mountt))
                 }
-                val totalRamDeferred = async { Device.getTotalRam(context) }
+                val totalRamDeferred = async {
+                    context.getString(R.string.ramvalue, Device.getTotalRam(context))
+                }
                 val slotDeferred = async { Device.getSlot() }
 
                 val startTime = System.currentTimeMillis()
@@ -79,6 +84,7 @@ class MainViewModel : ViewModel() {
             CoroutineScope(Dispatchers.Main).launch {
                 delay(75)
                 isLoading.postValue(false)
+                hadLoaded.postValue(true)
             }
         }
     }

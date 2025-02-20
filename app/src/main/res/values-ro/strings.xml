@@ -78,6 +78,7 @@
 	<string name="agree">De acord</string>
 	<string name="nonroot">Root nu a fost găsit</string>
 	<string name="unsupported">!!AVERTISMENT!!\nDispozitivul nu este suportat\nFolosiți această aplicație pe riscul dumneavoastră</string>
+	<string name="unsupported2">Dispozitivul nu este suportat</string>
 	<string name="sure">OK, lasă-mă să folosesc aplicația</string>
 	<string name="upanel">Ecranul dumneavoastră nu a fost confirmat ca funcționând, vă rugăm să împărtășiți experiența dumneavoastră cu Windows în chatul de Telegram</string>
 	<string name="chat">Chat</string>

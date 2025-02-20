@@ -17,6 +17,7 @@ import androidx.core.content.FileProvider
 import com.venddair.holyhelper.Info
 import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.UniversalDialog
+import com.venddair.holyhelper.utils.Files.createWinFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -257,6 +258,73 @@ object Download {
             UniversalDialog.progressBar.get()?.progress = 1
             Files.moveFileToWin(context, path, Strings.win.defenderRemover)
         }
+    }
+
+    suspend fun downloadAtlasOS(context: ComponentActivity) = coroutineScope {
+        context.runOnUiThread {
+            createWinFolder(context, Strings.win.folders.toolbox)
+        }
+        val download1 = async(Dispatchers.IO) {
+            val path = download(
+                context,
+                "https://github.com/n00b69/modified-playbooks/releases/download/AtlasOS/AtlasPlaybook.apbx",
+                "AtlasPlaybook.apbx"
+            )
+                ?: return@async
+            context.runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(context, path, Strings.win.atlasPlaybook)
+            }
+        }
+
+        val download2 = async(Dispatchers.IO) {
+            val path = download(
+                context,
+                "https://download.ameliorated.io/AME%20Wizard%20Beta.zip",
+                "AMEWizardBeta.zip"
+            )
+                ?: return@async
+            context.runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(context, path, Strings.win.ameWizard)
+            }
+        }
+
+        awaitAll(download1, download2)
+    }
+
+    suspend fun downloadReviOS(context: ComponentActivity) = coroutineScope {
+        context.runOnUiThread {
+            createWinFolder(context, Strings.win.folders.toolbox)
+        }
+
+        val download1 = async(Dispatchers.IO) {
+            val path = download(
+                context,
+                "https://github.com/n00b69/modified-playbooks/releases/download/ReviOS/ReviPlaybook.apbx",
+                "ReviPlaybook.apbx"
+            )
+                ?: return@async
+            context.runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(context, path, Strings.win.reviPlaybook)
+            }
+        }
+
+        val download2 = async(Dispatchers.IO) {
+            val path = download(
+                context,
+                "https://download.ameliorated.io/AME%20Wizard%20Beta.zip",
+                "AMEWizardBeta.zip"
+            )
+                ?: return@async
+            context.runOnUiThread {
+                UniversalDialog.increaseProgress(1)
+                Files.moveFileToWin(context, path, Strings.win.ameWizard)
+            }
+        }
+
+        awaitAll(download1, download2)
     }
 
 }

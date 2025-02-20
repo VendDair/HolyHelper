@@ -78,6 +78,7 @@
 	<string name="agree">Aceptar</string>
 	<string name="nonroot">Root no detectado</string>
 	<string name="unsupported">!!ADVERTENCIA!!\nDispositivo no compatible\nUtilice esta aplicación bajo su propio riesgo</string>
+	<string name="unsupported2">Dispositivo no compatible</string>
 	<string name="sure">OK, permítame usar la aplicación</string>
 	<string name="upanel">No está confirmado que su panel funcione, comparta su experiencia con Windows en el chat de Telegram</string>
 	<string name="chat">Chat</string>

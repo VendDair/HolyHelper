@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.gridlayout)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -68,6 +69,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.sdp.android)
     implementation(libs.ssp.android)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7")
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.7")
 
     implementation(libs.com.github.topjohnwu.libsu.core)
     implementation(libs.com.github.topjohnwu.libsu.service)

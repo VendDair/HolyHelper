@@ -78,6 +78,7 @@
 	<string name="agree">同意</string>
 	<string name="nonroot">没有 root 权限</string>
 	<string name="unsupported">!!警告!!\n设备不支持！\n继续操作很可能导致设备变砖！\n本程序概不负责。</string>
+	<string name="unsupported2">设备不支持！</string>
 	<string name="sure">无论如何我都要用</string>
 	<string name="upanel">你的设备使用的显示面板兼容性未知，请在 Telegram 中分享你的 Windows 情况。</string>
 	<string name="chat">聊天</string>

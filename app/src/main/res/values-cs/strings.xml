@@ -78,6 +78,7 @@
 	<string name="agree">Souhlasit</string>
 	<string name="nonroot">Root nebyl nalezen</string>
 	<string name="unsupported">!!UPOZORNĚNÍ!!\nZařízení není podporováno\nPoužívejte tuto aplikaci na vlastní riziko</string>
+	<string name="unsupported2">Zařízení není podporováno</string>
 	<string name="sure">Dobře, nech mě používat aplikaci</string>
 	<string name="upanel">Nebylo potvrzeno, že váše obrazovka (touchscreen) funguje v režimu Windows, podělte se prosím o své zkušenosti s Windows v chatu Telegram</string>
 	<string name="chat">Chat</string>

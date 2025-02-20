@@ -78,6 +78,7 @@
 	<string name="agree">أوافق</string>
 	<string name="nonroot">لم يتم اكتشاف روت</string>
 	<string name="unsupported">!!تحذير!!\nجهازك غير مدعوم\nاستخدمه على مسؤوليتك الشخصية.</string>
+	<string name="unsupported2">جهازك غير مدعوم</string>
 	<string name="sure">موافق، دعني أستخدم التطبيق</string>
 	<string name="upanel">لم يتم تحديد نوع شاشتك، يرجى مشاركة ملاحظاتك عبر مجموعة التيليجرام.</string>
 	<string name="chat">الدردشة</string>

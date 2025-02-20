@@ -78,6 +78,7 @@
 	<string name="agree">เห็นด้วย</string>
 	<string name="nonroot">ไม่รูท</string>
 	<string name="unsupported">!!คำเตือน!!\nอุปกรณ์นี้ไม่ได้รับการสนับสนุน\nหากอุปกรณ์มีปัญหาก็ไม่ใช่เรื่องของฉัน</string>
+	<string name="unsupported2">อุปกรณ์นี้ไม่ได้รับการสนับสนุน</string>
 	<string name="sure">ฉันจะใช้มันต่อไป</string>
 	<string name="upanel">ฉันไม่รู้ว่าแผงควบคุมทำงานปกติหรือไม่ โปรดแชร์สถานการณ์ Windows ของคุณใน Telegram</string>
 	<string name="chat">แชท</string>

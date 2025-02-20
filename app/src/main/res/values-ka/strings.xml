@@ -78,6 +78,7 @@
 	<string name="agree">ვეთანხმები</string>
 	<string name="nonroot">Root ვერ მოიძებნა</string>
 	<string name="unsupported">!!გაფრთხილება!!\nმოწყობილობა მხარდაუჭერელია\nგამოიყენეთ ეს აპი თქვენი რისკით</string>
+	<string name="unsupported2">მოწყობილობა მხარდაუჭერელია</string>
 	<string name="sure">კარგი, უბრალოდ ნება მომეცი გამოვიყენო აპლიკაცია</string>
 	<string name="upanel">თქვენი პანელის მუშაობა არ არის დადასტურებული, გთხოვ გააზიარო Windows-ის თქვენი გამოცდილება Telegram-ის ჩატში</string>
 	<string name="chat">ჩატი</string>

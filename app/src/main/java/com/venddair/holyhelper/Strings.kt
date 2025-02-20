@@ -42,6 +42,8 @@ object Strings {
         val RotationShortcutReverseLandscape: String get() = "${data}/RotationShortcutReverseLandscape.lnk"
 
         val edgeremover: String get() = "${data}/RemoveEdge.bat"
+
+        val dataZip: String get() = "${data}/data.zip"
     }
 
     object win {

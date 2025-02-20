@@ -78,6 +78,7 @@
 	<string name="agree">同意する</string>
 	<string name="nonroot">Rootが検出されません</string>
 	<string name="unsupported">!!警告!!\nデバイスがサポートされていません\nこのアプリを使用する場合は自己責任で行ってください</string>
+	<string name="unsupported2">デバイスがサポートされていません</string>
 	<string name="sure">OK、このアプリを使わせてください</string>
 	<string name="upanel">お使いのパネルは動作確認されていません。Windowsの使用感をTelegramチャットで共有してください</string>
 	<string name="chat">チャット</string>

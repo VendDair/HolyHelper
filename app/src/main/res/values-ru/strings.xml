@@ -78,6 +78,7 @@
 	<string name="agree">Согласен</string>
 	<string name="nonroot">ROOT права не обнаружены</string>
 	<string name="unsupported">!! ВНИМАНИЕ!!\nУстройство не поддерживается!\nИспользуйте это приложение на свой страх и риск.</string>
+	<string name="unsupported2">Устройство не поддерживается!</string>
 	<string name="sure">Хорошо, я понимаю возможные последствия.</string>
 	<string name="upanel">Ваша панель может не поддерживаться, поделитесь своим опытом с Windows в чате в Telegram</string>
 	<string name="chat">Чат</string>

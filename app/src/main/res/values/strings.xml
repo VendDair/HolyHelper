@@ -83,6 +83,7 @@
     <string name="agree">Agree</string>
     <string name="nonroot">Root not detected</string>
     <string name="unsupported">!!WARNING!!\nDevice unsupported\nUse this app at your own risk</string>
+    <string name="unsupported2">Device unsupported</string>
     <string name="sure">OK, just let me use the app</string>
     <string name="upanel">Your panel has not been confirmed to work, please share your Windows experience in the Telegram chat</string>
     <string name="chat">Chat</string>

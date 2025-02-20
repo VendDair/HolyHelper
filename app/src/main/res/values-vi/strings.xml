@@ -78,6 +78,7 @@
 	<string name="agree">Điều này có thể bị hao mòn, chỉ kích hoạt nếu bạn nhận được nhiều bản cập nhật OTA</string>
 	<string name="nonroot">Không thấy đã Root</string>
 	<string name="unsupported">!!Cảnh báo!!\nThiết bị không được hỗ trợ\n Sử dụng ứng dụng này lỗi tự chịu</string>
+	<string name="unsupported2">Thiết bị không được hỗ trợ</string>
 	<string name="sure">Đếc sợ</string>
 	<string name="upanel">Bảng điều khiển của bạn chưa được xác nhận là hoạt động, vui lòng chia sẻ trải nghiệm Windows của bạn trong cuộc trò chuyện Telegram</string>
 	<string name="chat">Nhắn tin</string>

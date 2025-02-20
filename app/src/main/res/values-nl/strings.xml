@@ -78,6 +78,7 @@
 	<string name="agree">Toestemmen</string>
 	<string name="nonroot">Root niet gedetecteerd</string>
 	<string name="unsupported">!!WARNING!!\nToestel word niet ondersteund\nGebruik van de app is op eigen risico</string>
+	<string name="unsupported2">Toestel word niet ondersteund</string>
 	<string name="sure">OK, laat mij toch de app gebruiken</string>
 	<string name="upanel">Uw display-paneel is tot op heden nog niet getest, stuur a.u.b feedback omtrent uw Windows belevenis in de Telegram chat</string>
 	<string name="chat">Chat</string>

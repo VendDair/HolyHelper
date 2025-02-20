@@ -78,6 +78,7 @@
 	<string name="agree">Concordar</string>
 	<string name="nonroot">Root não detectado</string>
 	<string name="unsupported">!!AVISO!!\nDispositivo não suportado\nVocê pode danificá-lo se usar o app</string>
+	<string name="unsupported2">Dispositivo não suportado</string>
 	<string name="sure">Tudo bem, eu sei o que estou fazendo</string>
 	<string name="upanel">A tela do seu dispositivo não teve o funcionamento oficialmente confirmado. Por favor, compartilhe a sua experiência com o Windows no grupo do Telegram</string>
 	<string name="chat">Grupo</string>

@@ -137,7 +137,15 @@ class Info {
                 image = R.drawable.error,
             )
             UniversalDialog.dialog.setCancelable(false)
+        }
 
+        fun appRestricted(context: Context) {
+            UniversalDialog.showDialog(
+                context,
+                title = context.getString(R.string.unsupported2),
+                image = R.drawable.error,
+            )
+            UniversalDialog.dialog.setCancelable(false)
         }
 
         fun done(context: Context, text: String, imageId: Int) {
