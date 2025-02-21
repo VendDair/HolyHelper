@@ -16,7 +16,10 @@ object Preferences {
         DISABLEUPDATES("disableUpdates"),
         AUTOMOUNT("autoMount"),
         UEFIIMG("uefiImg"),
-        LASTBACKUPDATE("lastBackupDate")
+        LASTBACKUPDATE("lastBackupDate"),
+        BACKUPBOOT("backupBoot"),
+        BACKUPBOOTANDROID("backupBootToAndroid"),
+        BACKUPBOOTWINDOWS("backupBootToWindows"),
     }
 
     fun init(context: Context) {

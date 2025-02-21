@@ -6,7 +6,7 @@ import com.topjohnwu.superuser.ShellUtils
 @SuppressLint("SdCardPath")
 object Strings {
 
-    const val version = "1.0.3"
+    const val version = "1.1.0"
 
 
     object assets {

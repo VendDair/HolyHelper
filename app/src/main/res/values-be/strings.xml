@@ -107,7 +107,7 @@
 
 	<string name="preference1">Заўсёды рабіць бэкап boot.img падчас хуткай загрузкі (Windows)</string>
 	<string name="preference2">Заўсёды рабіць бэкап boot.img падчас хуткай загрузкі (Android)</string>
-	<string name="preference3">Рабіць бэкап boot.img, калі ён не знойдзены (Windows)</string>
+	<string name="preference3">Рабіць бэкап boot.img, калі ён не знойдзены</string>
 	<string name="preference4">Рабіць бэкап boot.img, калі ён не знойдзены (Android)</string>
 	<string name="preference5">Запытваць пацвярджэнне для хуткай загрузкі ў фіраначцы</string>
 	<string name="preference6">Выбраць мову</string>

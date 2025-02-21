@@ -107,7 +107,7 @@
 
 	<string name="preference1">Boot.img Backup erstellen beim jeden Schnellstart (Windows)</string>
 	<string name="preference2">Boot.img Backup erstellen beim jeden Schnellstart (Android)</string>
-	<string name="preference3">Boot.img Backup erstellen indem keins vorhanden ist (Windows)</string>
+	<string name="preference3">Boot.img Backup erstellen indem keins vorhanden ist</string>
 	<string name="preference4">Boot.img Backup erstellen indem keins vorhanden ist (Android)</string>
 	<string name="preference5">Bestätigung erforderlich beim QS quickboot Knopf </string>
 	<string name="preference6">Sprache auswählen</string>

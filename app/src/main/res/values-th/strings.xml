@@ -107,7 +107,7 @@
 
 	<string name="preference1">บังคับให้สำรองข้อมูล boot.img เมื่อทำการบูตอย่างรวดเร็ว (Windows)</string>
 	<string name="preference2">บังคับให้สำรองข้อมูล boot.img เมื่อทำการบูตอย่างรวดเร็ว (Android)</string>
-	<string name="preference3">สำรองข้อมูล boot.img หากตรวจไม่พบ (Windows)</string>
+	<string name="preference3">สำรองข้อมูล boot.img หากตรวจไม่พบ</string>
 	<string name="preference4">สำรองข้อมูล boot.img หากตรวจไม่พบ (Android)</string>
 	<string name="preference5">ต้องมีการยืนยันสำหรับไทล์ QS การบูตด่วน</string>
 	<string name="preference6">เลือกภาษา</string>

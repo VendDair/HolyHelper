@@ -8,7 +8,7 @@ import androidx.activity.compose.setContent
 import com.topjohnwu.superuser.Shell
 import com.venddair.holyhelper.Info
 import com.venddair.holyhelper.R
-import com.venddair.holyhelper.ui.themes.DefaultTheme
+import com.venddair.holyhelper.ui.themes.main.MainTheme
 import com.venddair.holyhelper.utils.Commands
 import com.venddair.holyhelper.utils.Commands.isWindowsMounted
 import com.venddair.holyhelper.utils.Device
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
             Info.appRestricted(this)
 
         setContent {
-            DefaultTheme()
+            MainTheme()
         }
     }
 

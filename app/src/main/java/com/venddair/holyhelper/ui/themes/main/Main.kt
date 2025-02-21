@@ -1,7 +1,9 @@
-package com.venddair.holyhelper.ui.themes
+package com.venddair.holyhelper.ui.themes.main
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -78,7 +80,7 @@ val buttonPadding = PaddingValues(
 )
 
 @Composable
-fun DefaultTheme() {
+fun MainTheme() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -111,381 +113,6 @@ fun DefaultTheme() {
         composable("home") { MainMenu(navController) }
         composable("toolbox") { Toolbox() }
         composable("settings") { Settings() }
-    }
-}
-
-@Composable
-fun Settings() {
-    val context = LocalContext.current
-
-    Column {
-        TopBar(context.getString(R.string.preferences))
-
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .fillMaxHeight()
-                .padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp) // Add space between items
-        ) {
-            var mountToMntChecked by remember {
-                mutableStateOf(
-                    Preferences.getBoolean(
-                        Preferences.Preference.SETTINGS,
-                        Preferences.Key.MOUNTTOMNT,
-                        false
-                    )
-                )
-            }
-            var disableUpdatedChecked by remember {
-                mutableStateOf(
-                    Preferences.getBoolean(
-                        Preferences.Preference.SETTINGS,
-                        Preferences.Key.DISABLEUPDATES,
-                        false
-                    )
-                )
-            }
-
-            var autoMountChecked by remember {
-                mutableStateOf(
-                    Preferences.getBoolean(
-                        Preferences.Preference.SETTINGS,
-                        Preferences.Key.AUTOMOUNT,
-                        false
-                    )
-                )
-            }
-
-            SettingsItem(
-                text = context.getString(R.string.preference10),
-                checked = mountToMntChecked,
-                onCheckedChange = {
-                    mountToMntChecked = it
-                    Preferences.putBoolean(
-                        Preferences.Preference.SETTINGS,
-                        Preferences.Key.MOUNTTOMNT,
-                        it
-                    )
-                }
-            )
-            SettingsItem(
-                text = context.getString(R.string.preference11),
-                checked = disableUpdatedChecked,
-                onCheckedChange = {
-                    disableUpdatedChecked = it
-                    Preferences.putBoolean(
-                        Preferences.Preference.SETTINGS,
-                        Preferences.Key.DISABLEUPDATES,
-                        it
-                    )
-                }
-            )
-            SettingsItem(
-                text = context.getString(R.string.preference7),
-                checked = autoMountChecked,
-                onCheckedChange = {
-                    autoMountChecked = it
-                    Preferences.putBoolean(
-                        Preferences.Preference.SETTINGS,
-                        Preferences.Key.AUTOMOUNT,
-                        it
-                    )
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun SettingsItem(text: String, checked: Boolean = false, onCheckedChange: (Boolean) -> Unit = {}) {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFF404040))
-            .padding(horizontal = 8.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth() // Ensure it takes up full width
-                .wrapContentHeight() // Keep it wrapped to content height
-                .padding(vertical = 8.dp), // Optional padding for spacing
-            horizontalArrangement = Arrangement.SpaceBetween // Space between text and switch
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .weight(1f),
-            ) {
-                Text(
-                    text = text,
-                    color = colorResource(R.color.white),
-                    fontSize = dimensionResource(com.intuit.ssp.R.dimen._12ssp).value.sp,
-                )
-            }
-            Switch(
-                checked = checked,
-                onCheckedChange = onCheckedChange,
-            )
-        }
-    }
-}
-
-@SuppressLint("StringFormatInvalid")
-@Composable
-fun Toolbox() {
-
-    val context = LocalContext.current as ComponentActivity
-
-    Box(
-        modifier = Modifier
-            .background(Color(0xFF202020))
-            .fillMaxSize()
-            .blur(State.blurAmount)
-    ) {
-        Column {
-            TopBar(context.getString(R.string.toolbox_title))
-
-            val configuration = LocalConfiguration.current
-
-            when (configuration.orientation) {
-                Configuration.ORIENTATION_PORTRAIT -> {
-                    ToolboxButtons()
-                }
-
-                Configuration.ORIENTATION_LANDSCAPE -> {
-                    ToolboxButtonsLandscape()
-                }
-            }
-
-
-        }
-    }
-}
-
-@SuppressLint("StringFormatInvalid")
-@Composable
-fun ToolboxButtonsLandscape() {
-    val context = LocalContext.current as ComponentActivity
-
-
-    val isUefiPresent by State.viewModel.isUefiFilePresent.observeAsState(false)
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxHeight()
-            .padding(
-                10.dp,
-                dimensionResource(com.intuit.sdp.R.dimen._10sdp),
-                10.dp,
-                10.dp
-            ),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        val modifier = Modifier
-            //.padding(buttonPadding)
-            .weight(1f)
-            .height(dimensionResource(com.intuit.sdp.R.dimen._90sdp))
-        val rowArrangement = Arrangement.spacedBy(10.dp)
-        Row(
-            horizontalArrangement = rowArrangement
-        ) {
-            Button(
-                image = R.drawable.adrod,
-                modifier = modifier,
-                title = context.getString(R.string.sta_title),
-                subtitle = context.getString(R.string.sta_subtitle),
-                onClick = { MainActivityFunctions.sta_creator(context) }
-            )
-            Button(
-                image = R.drawable.ic_sensor,
-                modifier = modifier,
-                title = context.getString(R.string.software_title),
-                subtitle = context.getString(R.string.software_subtitle),
-                onClick = { MainActivityFunctions.arm_software(context) }
-            )
-        }
-        Row(
-            horizontalArrangement = rowArrangement
-        ) {
-
-            Button(
-                image = R.drawable.ic_uefi,
-                modifier = modifier,
-                disabled = !isUefiPresent,
-                title = if (isUefiPresent) context.getString(R.string.flash_uefi_title) else context.getString(R.string.uefi_not_found),
-                subtitle = if (isUefiPresent) context.getString(R.string.flash_uefi_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
-                onClick = { MainActivityFunctions.flash_uefi(context) }
-            )
-            Button(
-                image = R.drawable.atlasos,
-                modifier = modifier,
-                title = context.getString(R.string.atlasos_title),
-                subtitle = context.getString(R.string.atlasos_subtitle),
-                onClick = { MainActivityFunctions.atlasos(context) }
-            )
-        }
-        Row(
-            horizontalArrangement = rowArrangement
-        ) {
-
-            Button(
-                image = R.drawable.folder,
-                modifier = modifier,
-                imageScale = .8f,
-                title = context.getString(R.string.usbhost_title),
-                subtitle = context.getString(R.string.usbhost_subtitle),
-                onClick = { MainActivityFunctions.usb_host_mode(context) }
-            )
-            Button(
-                image = R.drawable.cd,
-                modifier = modifier,
-                title = context.getString(R.string.rotation_title),
-                subtitle = context.getString(R.string.rotation_subtitle),
-                onClick = { MainActivityFunctions.rotation(context) }
-            )
-        }
-        Row(
-            horizontalArrangement = rowArrangement
-        ) {
-
-            Button(
-                image = R.drawable.folder,
-                modifier = modifier,
-                imageScale = .8f,
-                title = context.getString(R.string.setup_title),
-                subtitle = context.getString(R.string.setup_subtitle),
-                onClick = { MainActivityFunctions.frameworks(context) }
-            )
-            Button(
-                image = R.drawable.edge,
-                modifier = modifier,
-                title = context.getString(R.string.defender_title),
-                subtitle = context.getString(R.string.defender_subtitle),
-                onClick = { MainActivityFunctions.edge(context) }
-            )
-        }
-        Row(
-            horizontalArrangement = rowArrangement
-        ) {
-
-            if (State.deviceConfig.isDumpModem)
-                Button(
-                    image = R.drawable.ic_modem,
-                    modifier = modifier,
-                    title = context.getString(R.string.dump_modem_title),
-                    subtitle = context.getString(R.string.dump_modem_subtitle),
-                    onClick = { MainActivityFunctions.dump_modem(context) }
-                )
-            if (State.deviceConfig.isDbkp)
-                Button(
-                    image = R.drawable.ic_uefi,
-                    modifier = modifier,
-                    title = context.getString(R.string.dbkp_title),
-                    subtitle = context.getString(R.string.dbkp_subtitle),
-                    onClick = { MainActivityFunctions.dbkp(context) }
-                )
-        }
-    }
-}
-
-@SuppressLint("StringFormatInvalid")
-@Composable
-fun ToolboxButtons() {
-    val context = LocalContext.current as ComponentActivity
-
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxHeight()
-            .padding(
-                10.dp,
-                dimensionResource(com.intuit.sdp.R.dimen._10sdp),
-                10.dp,
-                10.dp
-            )
-    ) {
-        val modifier = Modifier
-            .padding(buttonPadding)
-            .height(dimensionResource(com.intuit.sdp.R.dimen._90sdp))
-
-        val isUefiPresent by State.viewModel.isUefiFilePresent.observeAsState(false)
-
-        Button(
-            image = R.drawable.adrod,
-            modifier = modifier,
-            title = context.getString(R.string.sta_title),
-            subtitle = context.getString(R.string.sta_subtitle),
-            onClick = { MainActivityFunctions.sta_creator(context) }
-        )
-        Button(
-            image = R.drawable.ic_sensor,
-            modifier = modifier,
-            title = context.getString(R.string.software_title),
-            subtitle = context.getString(R.string.software_subtitle),
-            onClick = { MainActivityFunctions.arm_software(context) }
-        )
-        Button(
-            image = R.drawable.ic_uefi,
-            modifier = modifier,
-            disabled = !isUefiPresent,
-            title = if (isUefiPresent) context.getString(R.string.flash_uefi_title) else context.getString(R.string.uefi_not_found),
-            subtitle = if (isUefiPresent) context.getString(R.string.flash_uefi_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
-            onClick = { MainActivityFunctions.flash_uefi(context) }
-        )
-        if (State.deviceConfig.isDumpModem)
-            Button(
-                image = R.drawable.ic_modem,
-                modifier = modifier,
-                title = context.getString(R.string.dump_modem_title),
-                subtitle = context.getString(R.string.dump_modem_subtitle),
-                onClick = { MainActivityFunctions.dump_modem(context) }
-            )
-        Button(
-            image = R.drawable.atlasos,
-            modifier = modifier,
-            title = context.getString(R.string.atlasos_title),
-            subtitle = context.getString(R.string.atlasos_subtitle),
-            onClick = { MainActivityFunctions.atlasos(context) }
-        )
-        if (State.deviceConfig.isDbkp)
-            Button(
-                image = R.drawable.ic_uefi,
-                modifier = modifier,
-                title = context.getString(R.string.dbkp_title),
-                subtitle = context.getString(R.string.dbkp_subtitle),
-                onClick = { MainActivityFunctions.dbkp(context) }
-            )
-        Button(
-            image = R.drawable.folder,
-            modifier = modifier,
-            imageScale = .8f,
-            title = context.getString(R.string.usbhost_title),
-            subtitle = context.getString(R.string.usbhost_subtitle),
-            onClick = { MainActivityFunctions.usb_host_mode(context) }
-        )
-        Button(
-            image = R.drawable.cd,
-            modifier = modifier,
-            title = context.getString(R.string.rotation_title),
-            subtitle = context.getString(R.string.rotation_subtitle),
-            onClick = { MainActivityFunctions.rotation(context) }
-        )
-        Button(
-            image = R.drawable.folder,
-            modifier = modifier,
-            imageScale = .8f,
-            title = context.getString(R.string.setup_title),
-            subtitle = context.getString(R.string.setup_subtitle),
-            onClick = { MainActivityFunctions.frameworks(context) }
-        )
-        Button(
-            image = R.drawable.edge,
-            modifier = modifier,
-            title = context.getString(R.string.defender_title),
-            subtitle = context.getString(R.string.defender_subtitle),
-            onClick = { MainActivityFunctions.edge(context) }
-        )
     }
 }
 
@@ -878,8 +505,22 @@ fun Panel(modifier: Modifier = Modifier) {
                         .padding(10.dp, 0.dp, 10.dp, 10.dp)
                         .fillMaxWidth()
                 ) {
-                    MiniButton(context.getString(R.string.group))
-                    MiniButton(context.getString(R.string.guide))
+                    MiniButton(context.getString(R.string.group)) {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(State.deviceConfig.groupLink)
+                            )
+                        )
+                    }
+                    MiniButton(context.getString(R.string.guide)) {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(State.deviceConfig.guideLink)
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -887,7 +528,7 @@ fun Panel(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MiniButton(text: String) {
+fun MiniButton(text: String, onClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .background(Color(0xFFFFF0F0), shape = RoundedCornerShape(16.dp))
@@ -898,6 +539,7 @@ fun MiniButton(text: String) {
             fontSize = dimensionResource(com.intuit.ssp.R.dimen._10ssp).value.sp,
             modifier = Modifier
                 .padding(dimensionResource(com.intuit.sdp.R.dimen._7sdp), dimensionResource(com.intuit.sdp.R.dimen._3sdp))
+                .clickable { onClick() }
         )
     }
 }
