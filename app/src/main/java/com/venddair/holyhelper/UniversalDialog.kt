@@ -5,6 +5,7 @@
     import android.app.AlertDialog
     import android.app.Dialog
     import android.content.Context
+    import android.content.pm.ActivityInfo
     import android.graphics.Color
     import android.graphics.drawable.ColorDrawable
     import android.view.Gravity
@@ -15,6 +16,7 @@
     import android.widget.LinearLayout
     import android.widget.ProgressBar
     import android.widget.TextView
+    import androidx.activity.ComponentActivity
     import androidx.compose.ui.unit.dp
     import com.venddair.holyhelper.utils.State
     import java.lang.ref.WeakReference
@@ -76,10 +78,15 @@
             /*val rootView = (context as ComponentActivity).findViewById<ConstraintLayout>(R.id.root)
             val imageView = context.findViewById<ImageView>(R.id.blur)*/
 
+            context as ComponentActivity
+
             dialog.setOnDismissListener {
                 //imageView.setImageDrawable(null)
                 State.blurAmount = 0.dp
+
                 after(dialog)
+
+                context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             }
             dialog.setOnShowListener {
                 after(dialog)
@@ -87,6 +94,7 @@
 
             // Progress Bar logic
             setupProgressBar(progress, progressMax)
+            context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
             dialog.show()
 
             //Blurry.with(context).radius(10).sampling(1).capture(rootView).into(imageView)
