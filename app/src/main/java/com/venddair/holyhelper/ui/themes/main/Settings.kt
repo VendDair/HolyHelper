@@ -95,7 +95,7 @@ fun Settings() {
                     Preferences.getBoolean(
                         Preferences.Preference.SETTINGS,
                         Preferences.Key.BACKUPBOOT,
-                        false
+                        true
                     )
                 )
             }
@@ -105,7 +105,7 @@ fun Settings() {
                     Preferences.getBoolean(
                         Preferences.Preference.SETTINGS,
                         Preferences.Key.BACKUPBOOTANDROID,
-                        false
+                        true
                     )
                 )
             }
@@ -115,7 +115,7 @@ fun Settings() {
                     Preferences.getBoolean(
                         Preferences.Preference.SETTINGS,
                         Preferences.Key.BACKUPBOOTWINDOWS,
-                        false
+                        true
                     )
                 )
             }

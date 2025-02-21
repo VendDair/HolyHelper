@@ -56,9 +56,9 @@ object Commands {
     fun bootInWindows(context: Context, reboot: Boolean = false) {
         if (!Files.checkFile(Strings.uefiImg)) return
 
-        val backupBoot = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOT, false)
-        val backupToAndroid = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOTANDROID, false)
-        val backupToWindows = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOTWINDOWS, false)
+        val backupBoot = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOT, true)
+        val backupToAndroid = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOTANDROID, true)
+        val backupToWindows = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOTWINDOWS, true)
 
         if (!Files.checkFile(Strings.bootImage) && backupBoot && backupToAndroid) backupBootImage(context)
         if (!Files.checkFile(Strings.bootImage1) && backupBoot && backupToWindows) backupBootImage(context, true)
