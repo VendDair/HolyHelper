@@ -75,6 +75,7 @@ object MainActivityFunctions {
     fun quickboot(context: Context) {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.quickboot_question),
+            imageScale = 2f,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
                     Commands.bootInWindows(context, true)

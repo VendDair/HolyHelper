@@ -34,7 +34,8 @@
             title: String = "",
             text: String = "",
             textGravity: Int = Gravity.CENTER,
-            image: Int = R.drawable.win11logo,
+            image: Int = R.drawable.ic_launcher_foreground,
+            imageScale: Float = 1f,
             progress: Boolean = false,
             progressMax: Int = 1,
             animations: Boolean = true,
@@ -63,6 +64,8 @@
             textText.get()?.text = text
             textText.get()?.gravity = textGravity
             imageView.get()?.setImageResource(image)
+            imageView.get()?.scaleX = imageScale
+            imageView.get()?.scaleY = imageScale
 
             if (text == "") {
                 val textTextParams = textText.get()?.layoutParams as ViewGroup.MarginLayoutParams

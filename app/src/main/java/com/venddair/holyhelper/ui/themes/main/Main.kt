@@ -125,9 +125,10 @@ fun TopBar(text: String) {
             .padding(20.dp, 0.dp, 20.dp, 5.dp)
     ) {
         Image(
-            painter = painterResource(R.drawable.win11logo),
+            painter = painterResource(R.drawable.ic_launcher_foreground),
             contentDescription = "image",
             modifier = Modifier
+                .scale(2f)
                 .size(dimensionResource(com.intuit.sdp.R.dimen._30sdp))
         )
 
@@ -275,8 +276,8 @@ fun Buttons(navController: NavController) {
         Button(
             modifier = Modifier
                 .weight(1f),
-            image = R.drawable.win11logo,
-            imageScale = .9f,
+            image = R.drawable.ic_launcher_foreground,
+            imageScale = 2f,
             disabled = !isUefiPresent,
             title = if (isUefiPresent) context.getString(R.string.quickboot_title) else context.getString(R.string.uefi_not_found),
             subtitle = if (isUefiPresent) context.getString(R.string.quickboot_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
@@ -587,10 +588,11 @@ fun Topbar(navController: NavController) {
     ) {
         Row {
             Image(
-                painter = painterResource(R.drawable.win11logo),
+                painter = painterResource(R.drawable.ic_launcher_foreground),
                 contentDescription = "logo",
                 alignment = Alignment.Center,
                 modifier = Modifier
+                    .scale(2f)
                     .fillMaxHeight()
                     .padding(0.dp, 0.dp, 10.dp, 0.dp)
                     .size(dimensionResource(com.intuit.sdp.R.dimen._30sdp))
