@@ -20,6 +20,8 @@ object Preferences {
         BACKUPBOOT("backupBoot"),
         BACKUPBOOTANDROID("backupBootToAndroid"),
         BACKUPBOOTWINDOWS("backupBootToWindows"),
+        QSCONFIRMATION("qsConfirmation"),
+        REQUIREUNLOCKED("requireUnlocked"),
     }
 
     fun init(context: Context) {

@@ -120,6 +120,26 @@ fun Settings() {
                 )
             }
 
+            var qsQuickbootChecked by remember {
+                mutableStateOf(
+                    Preferences.getBoolean(
+                        Preferences.Preference.SETTINGS,
+                        Preferences.Key.QSCONFIRMATION,
+                        false
+                    )
+                )
+            }
+
+            var requireUnlockedChecked by remember {
+                mutableStateOf(
+                    Preferences.getBoolean(
+                        Preferences.Preference.SETTINGS,
+                        Preferences.Key.REQUIREUNLOCKED,
+                        false
+                    )
+                )
+            }
+
             SettingsItem(
                 text = context.getString(R.string.preference3),
                 checked = backupBootChecked,
@@ -191,6 +211,32 @@ fun Settings() {
                     Preferences.putBoolean(
                         Preferences.Preference.SETTINGS,
                         Preferences.Key.AUTOMOUNT,
+                        it
+                    )
+                }
+            )
+
+            SettingsItem(
+                text = context.getString(R.string.preference5),
+                checked = qsQuickbootChecked,
+                onCheckedChange = {
+                    qsQuickbootChecked = it
+                    Preferences.putBoolean(
+                        Preferences.Preference.SETTINGS,
+                        Preferences.Key.QSCONFIRMATION,
+                        it
+                    )
+                }
+            )
+
+            SettingsItem(
+                text = context.getString(R.string.preference9),
+                checked = requireUnlockedChecked,
+                onCheckedChange = {
+                    requireUnlockedChecked = it
+                    Preferences.putBoolean(
+                        Preferences.Preference.SETTINGS,
+                        Preferences.Key.REQUIREUNLOCKED,
                         it
                     )
                 }
@@ -273,49 +319,6 @@ fun SettingsItem(text: String, checked: Boolean = false, buttons: List<ButtonCon
                             )
                         }
                     }
-                    /*Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .clip(RoundedCornerShape(16.dp))
-                            .height(dimensionResource(com.intuit.sdp.R.dimen._30sdp))
-                            .clickable { }
-                            .background(if (backupBootAndroid) Color(0xFF43ff0b) else Color(0xFFFF420B)),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = "Android",
-                            textAlign = TextAlign.Center
-                        )
-                    }
-
-                    Spacer(
-                        modifier = Modifier
-                            .weight(0.05f)
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .clip(RoundedCornerShape(16.dp))
-                            .height(dimensionResource(com.intuit.sdp.R.dimen._30sdp))
-                            .clickable {
-                                backupBootWindows = !backupBootWindows
-                                Preferences.putBoolean(
-                                    Preferences.Preference.SETTINGS,
-                                    Preferences.Key.BACKUPBOOTWINDOWS,
-                                    backupBootWindows
-                                )
-                            }
-                            .background(if (backupBootWindows) Color(0xFF43ff0b) else Color(0xFFFF420B)),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = "Windows",
-                            textAlign = TextAlign.Center
-                        )
-                    }*/
                 }
             }
         }
