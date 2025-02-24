@@ -215,42 +215,20 @@ object MainActivityFunctions {
         )
     }
 
-    fun rotation(context: Context) {
+    fun rotation(context: ComponentActivity) {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.rotation_question),
             image = R.drawable.cd,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.cd) {
-                        createFolder(Strings.win.folders.rotation)
-                        Files.copyFileToWin(
-                            context,
-                            Strings.assets.display,
-                            Strings.win.display
-                        )
-                        Files.copyFileToWin(
-                            context,
-                            Strings.assets.RotationShortcut,
-                            Strings.win.RotationShortcut
-                        )
-                        Files.copyFileToWin(
-                            context,
-                            Strings.assets.RotationShortcutReverseLandscape,
-                            Strings.win.RotationShortcutReverseLandscape
-                        )
-
-                        Files.copyFileToWin(
-                            context,
-                            Strings.assets.RotationShortcutReverseLandscape,
-                            Strings.win.RotationShortcutReverseLandscape
-                        )
-                        Files.copyFileToWin(
-                            context,
-                            Strings.assets.RotationShortcut,
-                            Strings.win.RotationShortcut
-                        )
-                    }
+                    if (Files.checkFile(Strings.assets.display))
+                        Info.pleaseWait(context, R.string.done, R.drawable.cd, {
+                            Files.copyRotationFiles(context)
+                        })
+                    else Info.pleaseWaitProgress(context, R.string.done, R.drawable.cd, 2, {
+                        Files.copyRotationFiles(context)
+                    })
                 },
                 Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
             )

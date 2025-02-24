@@ -7,7 +7,9 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Info
+import com.venddair.holyhelper.R
 import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.UniversalDialog
 import com.venddair.holyhelper.utils.Commands.backupBootImage
 import com.venddair.holyhelper.utils.Commands.notifyIfNoWinPartition
 import kotlinx.coroutines.CoroutineScope
@@ -61,7 +63,7 @@ object Files {
             copyAsset("dbkp.cepheus.bin", ignoreIfPresent = true)
             copyAsset("dbkp.nabu.bin", ignoreIfPresent = true)
             copyAsset("usbhostmode.exe", ignoreIfPresent = true)
-            copyAsset("display.exe", ignoreIfPresent = true)
+            //copyAsset("display.exe", ignoreIfPresent = true)
             copyAsset("RotationShortcut.lnk", ignoreIfPresent = true)
             copyAsset("install.bat", ignoreIfPresent = true)
             copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
@@ -104,7 +106,7 @@ object Files {
         if (!State.isWindowsMounted) Commands.mountWindows(context, false)
         if (State.getFailed()) return
 
-        ShellUtils.fastCmd("su -c mkdir ${getMountDir()}/$path ")
+        ShellUtils.fastCmd("su -c mkdir -p ${getMountDir()}/$path")
 
     }
 
@@ -206,6 +208,58 @@ object Files {
         copyFileToWin(context, Strings.assets.ARMSoftwareLink, Strings.win.ARMSoftwareLink)
         copyFileToWin(context, Strings.assets.TestedSoftwareLink, Strings.win.TestedSoftwareLink)
         copyFileToWin(context, Strings.assets.WorksOnWoaLink, Strings.win.WorksOnWoaLink)
+    }
+
+    suspend fun copyRotationFiles(context: ComponentActivity) {
+        createWinFolder(context, Strings.win.folders.rotation)
+
+        if (!checkFile(Strings.assets.display)) {
+            val path = Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/files/display.exe", "display.exe")
+            if (path != null) {
+                context.runOnUiThread {
+                    moveFile(path, Strings.assets.display)
+                    UniversalDialog.increaseProgress(1)
+                }
+            }
+        }
+
+        if (State.getFailed()) return
+        copyFileToWin(
+            context,
+            Strings.assets.display,
+            Strings.win.display
+        )
+        copyFileToWin(
+            context,
+            Strings.assets.RotationShortcut,
+            Strings.win.RotationShortcut
+        )
+        copyFileToWin(
+            context,
+            Strings.assets.RotationShortcutReverseLandscape,
+            Strings.win.RotationShortcutReverseLandscape
+        )
+
+        copyFileToWin(
+            context,
+            Strings.assets.RotationShortcutReverseLandscape,
+            Strings.win.RotationShortcutReverseLandscape
+        )
+        copyFileToWin(
+            context,
+            Strings.assets.RotationShortcut,
+            Strings.win.RotationShortcut
+        )
+        copyFileToWin(
+            context,
+            Strings.assets.RotationShortcut,
+            Strings.win.RotationShortcutDesktop
+        )
+        copyFileToWin(
+            context,
+            Strings.assets.RotationShortcutReverseLandscape,
+            Strings.win.RotationShortcutReverseLandscapeDesktop
+        )
     }
 
     fun checkFolder(path: String): Boolean {

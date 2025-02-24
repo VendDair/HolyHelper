@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
@@ -408,7 +409,7 @@ fun Button(
                     text = title,
                     color = colorResource(id = R.color.white),
                     fontWeight = FontWeight.Bold,
-                    fontSize = dimensionResource(id = com.intuit.ssp.R.dimen._11ssp).value.sp
+                    fontSize = dimensionResource(id = com.intuit.ssp.R.dimen._11ssp).value.sp,
                 )
                 Text(
                     text = subtitle,

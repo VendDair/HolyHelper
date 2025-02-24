@@ -42,8 +42,6 @@ object Strings {
         val RotationShortcutReverseLandscape: String get() = "${data}/RotationShortcutReverseLandscape.lnk"
 
         val edgeremover: String get() = "${data}/RemoveEdge.bat"
-
-        val dataZip: String get() = "${data}/data.zip"
     }
 
     object win {
@@ -67,8 +65,10 @@ object Strings {
         val USBHostMode = "Toolbox/usbhostmode.exe"
 
         val display  = "Toolbox/Rotation/display.exe"
-        val RotationShortcut = "Toolbox/RotationShortcut.lnk"
-        val RotationShortcutReverseLandscape = "Toolbox/RotationShortcutReverseLandscape.lnk"
+        val RotationShortcut = "Toolbox/Rotation/RotationShortcut.lnk"
+        val RotationShortcutReverseLandscape = "Toolbox/Rotation/RotationShortcutReverseLandscape.lnk"
+        val RotationShortcutDesktop = "Users/Public/Desktop/RotationShortcut.lnk"
+        val RotationShortcutReverseLandscapeDesktop = "Users/Public/Desktop/RotationShortcutReverseLandscape.lnk"
 
         val installBat = "Toolbox/Frameworks/install.bat"
 
