@@ -63,7 +63,7 @@ object Files {
             copyAsset("dbkp.cepheus.bin", ignoreIfPresent = true)
             copyAsset("dbkp.nabu.bin", ignoreIfPresent = true)
             copyAsset("usbhostmode.exe", ignoreIfPresent = true)
-            //copyAsset("display.exe", ignoreIfPresent = true)
+            copyAsset("display.exe", ignoreIfPresent = true)
             copyAsset("RotationShortcut.lnk", ignoreIfPresent = true)
             copyAsset("install.bat", ignoreIfPresent = true)
             copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
@@ -210,20 +210,9 @@ object Files {
         copyFileToWin(context, Strings.assets.WorksOnWoaLink, Strings.win.WorksOnWoaLink)
     }
 
-    suspend fun copyRotationFiles(context: ComponentActivity) {
+    fun copyRotationFiles(context: ComponentActivity) {
         createWinFolder(context, Strings.win.folders.rotation)
 
-        if (!checkFile(Strings.assets.display)) {
-            val path = Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/files/display.exe", "display.exe")
-            if (path != null) {
-                context.runOnUiThread {
-                    moveFile(path, Strings.assets.display)
-                    UniversalDialog.increaseProgress(1)
-                }
-            }
-        }
-
-        if (State.getFailed()) return
         copyFileToWin(
             context,
             Strings.assets.display,

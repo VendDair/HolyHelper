@@ -222,13 +222,9 @@ object MainActivityFunctions {
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    if (Files.checkFile(Strings.assets.display))
-                        Info.pleaseWait(context, R.string.done, R.drawable.cd, {
-                            Files.copyRotationFiles(context)
-                        })
-                    else Info.pleaseWaitProgress(context, R.string.done, R.drawable.cd, 2, {
+                    Info.pleaseWait(context, R.string.done, R.drawable.cd) {
                         Files.copyRotationFiles(context)
-                    })
+                    }
                 },
                 Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
             )
