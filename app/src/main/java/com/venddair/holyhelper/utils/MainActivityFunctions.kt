@@ -231,6 +231,23 @@ object MainActivityFunctions {
         )
     }
 
+    fun optimizedTaskbar(context: ComponentActivity) {
+        UniversalDialog.showDialog(context,
+            title = context.getString(R.string.tablet_question),
+            image = R.drawable.cd,
+            dismissible = false,
+            buttons = listOf(
+                Pair(context.getString(R.string.yes)) {
+                    Info.pleaseWait(context, R.string.done, R.drawable.cd) {
+                        createWinFolder(context, Strings.win.folders.toolbox)
+                        Files.copyFileToWin(context, Strings.assets.optimizedTaskbar, Strings.win.optimizedTaskbar)
+                    }
+                },
+                Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+            )
+        )
+    }
+
     fun frameworks(context: Context) {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.setup_question),

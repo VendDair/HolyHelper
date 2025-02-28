@@ -2,11 +2,12 @@ package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
 import com.topjohnwu.superuser.ShellUtils
+import com.venddair.holyhelper.Strings.assets.data
 
 @SuppressLint("SdCardPath")
 object Strings {
 
-    const val version = "1.1.0"
+    const val version = "1.1.1"
 
 
     object assets {
@@ -18,7 +19,9 @@ object Strings {
         val sdd: String get() = "${data}/sdd.exe"
         val sddConfig: String get() = "${data}/sdd.conf"
 
-        val autoFlasher: String get() = "${data}/boot_img_auto-flasher_V1.0.exe"
+        val autoFlasher: String get() = "${data}/boot_img_auto-flasher_V1.1.exe"
+
+        val optimizedTaskbar: String get() = "${data}/Optimized_Taskbar_Control_V3.0.exe"
 
         val mountNtfs: String get() = "${data}/mount.ntfs"
 
@@ -60,7 +63,8 @@ object Strings {
         val sddBin = "sta/sdd.exe"
         val sddConfig = "sta/sdd.conf"
 
-        val autoFlasher = "sta/boot_img_auto-flasher_V1.0.exe"
+        val autoFlasher = "sta/boot_img_auto-flasher_V1.1.exe"
+        val optimizedTaskbar = "Toolbox/Optimized_Taskbar_Control_V3.0.exe"
 
         val USBHostMode = "Toolbox/usbhostmode.exe"
 

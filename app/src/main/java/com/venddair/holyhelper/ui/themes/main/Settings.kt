@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.sp
 import com.venddair.holyhelper.R
 import com.venddair.holyhelper.utils.Preferences
 
-data class ButtonConfig(
+data class SettingsButtonConfig(
     val text: String,
     var isActive: Boolean,
     val onClick: () -> Unit
@@ -152,7 +152,7 @@ fun Settings() {
                     )
                 },
                 buttons = listOf(
-                    ButtonConfig(
+                    SettingsButtonConfig(
                         text = "Android",
                         isActive = backupBootAndroid,
                         onClick = {
@@ -164,7 +164,7 @@ fun Settings() {
                             )
                         }
                     ),
-                    ButtonConfig(
+                    SettingsButtonConfig(
                         text = "Windows",
                         isActive = backupBootWindows,
                         onClick = {
@@ -246,7 +246,7 @@ fun Settings() {
 }
 
 @Composable
-fun SettingsItem(text: String, checked: Boolean = false, buttons: List<ButtonConfig>? = null, onCheckedChange: (Boolean) -> Unit = {}) {
+fun SettingsItem(text: String, checked: Boolean = false, buttons: List<SettingsButtonConfig>? = null, onCheckedChange: (Boolean) -> Unit = {}) {
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))

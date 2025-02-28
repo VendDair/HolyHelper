@@ -49,7 +49,7 @@ object Files {
             copyAsset("mount.ntfs", "+x", true)
             copyAsset("sta.exe", ignoreIfPresent = true)
             copyAsset("sdd.exe", ignoreIfPresent = true)
-            copyAsset("boot_img_auto-flasher_V1.0.exe", ignoreIfPresent = true)
+            copyAsset("boot_img_auto-flasher_V1.1.exe", ignoreIfPresent = true)
             copyAsset("sdd.conf", ignoreIfPresent = true)
             copyAsset("libntfs-3g.so", ignoreIfPresent = true)
             copyAsset("libfuse-lite.so", ignoreIfPresent = true)
@@ -68,6 +68,7 @@ object Files {
             copyAsset("install.bat", ignoreIfPresent = true)
             copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
             copyAsset("RotationShortcutReverseLandscape.lnk", ignoreIfPresent = true)
+            copyAsset("Optimized_Taskbar_Control_V3.0.exe", ignoreIfPresent = true)
         }
     }
 

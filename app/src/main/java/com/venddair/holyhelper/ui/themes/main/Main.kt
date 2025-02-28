@@ -72,6 +72,16 @@ val buttonPadding = PaddingValues(
     bottom = 5.dp
 )
 
+data class ButtonConfig(
+    val modifier: Modifier = Modifier,
+    val image: Int,
+    val title: String = "",
+    val subtitle: String = "",
+    val imageScale: Float = 1f,
+    val disabled: Boolean = false,
+    val onClick: () -> Unit = {},
+)
+
 @Composable
 fun MainTheme() {
     val navController = rememberNavController()
@@ -234,47 +244,53 @@ fun Buttons(navController: NavController) {
         val isUefiPresent by viewModel.isUefiFilePresent.observeAsState(false)
 
         Button(
-            modifier = Modifier
-                .padding(buttonPadding)
-                .weight(1f),
-            image = R.drawable.cd,
-            title = context.getString(R.string.backup_boot_title),
-            subtitle = context.getString(R.string.backup_boot_subtitle),
-            onClick = { MainActivityFunctions.backupBoot(context) }
-        )
-
-        mountText.value?.let {
-            Button(
+            config = ButtonConfig(
                 modifier = Modifier
                     .padding(buttonPadding)
                     .weight(1f),
-                image = R.drawable.folder,
-                imageScale = .8f,
-                //title = State.mountText,
-                title = it,
-                subtitle = context.getString(R.string.mnt_subtitle),
-                onClick = { MainActivityFunctions.mountWindows(context) }
+                image = R.drawable.cd,
+                title = context.getString(R.string.backup_boot_title),
+                subtitle = context.getString(R.string.backup_boot_subtitle),
+                onClick = { MainActivityFunctions.backupBoot(context) }
+            )
+        )
+
+        mountText.value?.let { title ->
+            Button(
+                config = ButtonConfig(
+                    modifier = Modifier
+                        .padding(buttonPadding)
+                        .weight(1f),
+                    image = R.drawable.folder,
+                    imageScale = 0.8f,
+                    title = title,
+                    subtitle = context.getString(R.string.mnt_subtitle),
+                    onClick = { MainActivityFunctions.mountWindows(context) }
+                )
             )
         }
         Button(
-            modifier = Modifier
-                .padding(buttonPadding)
-                .weight(1f),
-            image = R.drawable.toolbox,
-            title = context.getString(R.string.toolbox_title),
-            subtitle = context.getString(R.string.toolbox_subtitle),
-            onClick = { navController.navigate("toolbox") }
+            config = ButtonConfig(
+                modifier = Modifier
+                    .padding(buttonPadding)
+                    .weight(1f),
+                image = R.drawable.toolbox,
+                title = context.getString(R.string.toolbox_title),
+                subtitle = context.getString(R.string.toolbox_subtitle),
+                onClick = { navController.navigate("toolbox") }
+            )
         )
 
         Button(
-            modifier = Modifier
-                .weight(1f),
-            image = R.drawable.ic_launcher_foreground,
-            imageScale = 2f,
-            disabled = !isUefiPresent,
-            title = if (isUefiPresent) context.getString(R.string.quickboot_title) else context.getString(R.string.uefi_not_found),
-            subtitle = if (isUefiPresent) context.getString(R.string.quickboot_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
-            onClick = { MainActivityFunctions.quickboot(context) }
+            config = ButtonConfig(
+                modifier = Modifier.weight(1f),
+                image = R.drawable.ic_launcher_foreground,
+                imageScale = 2f,
+                disabled = !isUefiPresent,
+                title = if (isUefiPresent) context.getString(R.string.quickboot_title) else context.getString(R.string.uefi_not_found),
+                subtitle = if (isUefiPresent) context.getString(R.string.quickboot_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
+                onClick = { MainActivityFunctions.quickboot(context) }
+            )
         )
 
     }
@@ -342,13 +358,14 @@ fun DeviceImageAndPanel() {
 
 @Composable
 fun Button(
-    modifier: Modifier = Modifier,
+/*    modifier: Modifier = Modifier,
    image: Int,
    title: String = "",
    subtitle: String = "",
    imageScale: Float = 1f,
     disabled: Boolean = false,
-   onClick: () -> Unit = {}
+   onClick: () -> Unit = {}*/
+    config: ButtonConfig
 ) {
     val scale = remember { Animatable(1f) }
 
@@ -369,17 +386,17 @@ fun Button(
             }
         }
     }
-    val clickModifier = if (!disabled)
+    val clickModifier = if (!config.disabled)
         Modifier
         .clickable(
             interactionSource = interactionSource,
             indication = null,
-            onClick = onClick
+            onClick = config.onClick
         )
     else
         Modifier
     Box(
-        modifier = modifier
+        modifier = config.modifier
             .fillMaxHeight()
             .graphicsLayer {
                 scaleX = scale.value
@@ -393,10 +410,10 @@ fun Button(
             Image(
                 modifier = Modifier
                     .padding(horizontal = 5.dp)
-                    .scale(imageScale)
+                    .scale(config.imageScale)
                     .width(dimensionResource(id = com.intuit.sdp.R.dimen._40sdp))
                     .fillMaxHeight(),
-                painter = painterResource(id = image),
+                painter = painterResource(id = config.image),
                 contentDescription = "button image"
             )
             Column(
@@ -406,13 +423,13 @@ fun Button(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = title,
+                    text = config.title,
                     color = colorResource(id = R.color.white),
                     fontWeight = FontWeight.Bold,
                     fontSize = dimensionResource(id = com.intuit.ssp.R.dimen._11ssp).value.sp,
                 )
                 Text(
-                    text = subtitle,
+                    text = config.subtitle,
                     color = colorResource(id = R.color.white),
                     fontStyle = FontStyle.Italic,
                     fontSize = dimensionResource(id = com.intuit.ssp.R.dimen._9ssp).value.sp
