@@ -124,4 +124,5 @@
     <string name="select">Pilih</string>
     <string name="select_uefi_image">Pilih fail UEFI</string>
     <string name="loading">Sedang dimuat...</string>
+    <string name="preference12">Dapatkan warna daripada tetapan asal</string>
 </resources>

@@ -124,4 +124,5 @@
     <string name="select">Chọn</string>
     <string name="select_uefi_image">Chọn tệp UEFI</string>
     <string name="loading">Đang tải...</string>
+    <string name="preference12">Phối màu dựa trên thiết lập gốc</string>
 </resources>

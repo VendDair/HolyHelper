@@ -7,7 +7,7 @@ import com.venddair.holyhelper.Strings.assets.data
 @SuppressLint("SdCardPath")
 object Strings {
 
-    const val version = "1.1.1"
+    const val version = "1.1.2"
 
 
     object assets {
@@ -45,6 +45,8 @@ object Strings {
         val RotationShortcutReverseLandscape: String get() = "${data}/RotationShortcutReverseLandscape.lnk"
 
         val edgeremover: String get() = "${data}/RemoveEdge.bat"
+
+        val dataZip: String get() = "${data}/data.zip"
     }
 
     object win {

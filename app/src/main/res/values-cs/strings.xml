@@ -124,4 +124,5 @@
     <string name="select">Vybrat</string>
     <string name="select_uefi_image">Vybrat soubor UEFI</string>
     <string name="loading">Načítání...</string>
+    <string name="preference12">Vycházet z výchozích barevných nastavení</string>
 </resources>

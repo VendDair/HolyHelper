@@ -5,50 +5,51 @@ import android.content.SharedPreferences
 
 object Preferences {
 
-    private lateinit var appContext: Context
+    private lateinit var sharedPrefs: SharedPreferences
 
-    enum class Preference(val key: String) {
-        SETTINGS("settings"),
+    @Suppress("UNCHECKED_CAST")
+    class Preference<T : Any>(private val key: String, private val default: T) {
+        fun get(): T {
+            return when (default) {
+                is Boolean -> sharedPrefs.getBoolean(key, default as Boolean) as T
+                is String -> sharedPrefs.getString(key, default as String) as T
+                else -> throw IllegalArgumentException("Invalid type")
+            }
+        }
+
+        fun set(value: T) {
+            with(sharedPrefs.edit()) {
+                when (value) {
+                    is Boolean -> putBoolean(key, value as Boolean)
+                    is String -> putString(key, value as String)
+                }
+                commit()
+            }
+        }
     }
 
-    enum class Key(val key: String) {
-        MOUNTTOMNT("mountToMnt"),
-        DISABLEUPDATES("disableUpdates"),
-        AUTOMOUNT("autoMount"),
-        UEFIIMG("uefiImg"),
-        LASTBACKUPDATE("lastBackupDate"),
-        BACKUPBOOT("backupBoot"),
-        BACKUPBOOTANDROID("backupBootToAndroid"),
-        BACKUPBOOTWINDOWS("backupBootToWindows"),
-        QSCONFIRMATION("qsConfirmation"),
-        REQUIREUNLOCKED("requireUnlocked"),
-    }
+    val COLOR = Preference("color", State.BaseColors.color)
+    val TEXTCOLOR = Preference("textColor", State.BaseColors.textColor)
+    val GUIDEGROUPCOLOR = Preference("guideGroupColor", State.BaseColors.guideGroupColor)
+    val LASTBACKUPDATE = Preference("lastBackupDate", "")
+    val MOUNTTOMNT = Preference("mountToMnt", false)
+    val DISABLEUPDATES = Preference("disableUpdates", false)
+    val AUTOMOUNT = Preference("autoMount", false)
+    val BACKUPBOOT = Preference("backupBoot", true)
+    val BACKUPBOOTANDROID = Preference("backupBootToAndroid", true)
+    val BACKUPBOOTWINDOWS = Preference("backupBootToWindows", true)
+    val QSCONFIRMATION = Preference("qsConfirmation", true)
+    val REQUIREUNLOCKED = Preference("requireUnlocked", true)
+    val COLORSBASEDONDEFAULT = Preference("colorsBasedOnDefault", false)
+    val MATERIALYOU = Preference("materialyou", true)
+    val EASTEREGG1 = Preference("redfinImage", false)
+
+    val DEFAULTTHEME = Preference("defaultMenu", true)
+    val EASYTHEME = Preference("easyMenu", false)
+
+
 
     fun init(context: Context) {
-        appContext = context
-    }
-
-    fun get(name: Preference): SharedPreferences {
-        return appContext.getSharedPreferences(name.key, Context.MODE_PRIVATE)
-    }
-
-    fun getBoolean(preference: Preference, name: Key, defValue: Boolean): Boolean {
-        return get(preference).getBoolean(name.key, defValue)
-    }
-
-    fun putBoolean(preference: Preference, name: Key, content: Boolean) {
-        val editor = get(preference).edit()
-        editor.putBoolean(name.key, content)
-        editor.apply()
-    }
-
-    fun getString(preference: Preference, name: Key, defValue: String?): String {
-        return get(preference).getString(name.key, defValue)!!
-    }
-
-    fun putString(preference: Preference, name: Key, content: String) {
-        val editor = get(preference).edit()
-        editor.putString(name.key, content)
-        editor.apply()
+        sharedPrefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
     }
 }

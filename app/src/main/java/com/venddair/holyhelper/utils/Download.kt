@@ -120,6 +120,25 @@ object Download {
                 connection?.disconnect()
             }
         }
+    /*fun installAPK(context: ComponentActivity, fileName: String) {
+        // Locate the APK file in the Downloads directory.
+        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val apkFile = File(downloadsDir, fileName)
+        if (!apkFile.exists()) {
+            Toast.makeText(context, "APK file does not exist", Toast.LENGTH_SHORT).show()
+            return
+        }
+        // Get the APK's content URI via FileProvider.
+        val apkUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
+
+        // If permission is already granted (or not needed), install immediately.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O || context.packageManager.canRequestPackageInstalls()) {
+            context.startActivity(Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(apkUri, "application/vnd.android.package-archive")
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+            return
+        }*/
 
     fun installAPK(context: ComponentActivity, fileName: String) {
         //Permissions.requestInstallPermission(context)
@@ -161,13 +180,13 @@ object Download {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         context.startActivity(installIntent)
-        /*val intent = Intent(Intent.ACTION_VIEW).apply {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(apkUri, "application/vnd.android.package-archive")
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
-        context.startActivity(intent)*/
+        context.startActivity(intent)
     }
 
 
@@ -236,7 +255,7 @@ object Download {
 
                 withContext(Dispatchers.Main) {
                     UniversalDialog.increaseProgress(1)
-                    Files.copyFileToWin(context, path, "${Strings.win.folders.frameworks}/$fileName")
+                    Files.moveFileToWin(context, path, "${Strings.win.folders.frameworks}/$fileName")
                 }
                 path
             }

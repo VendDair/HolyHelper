@@ -43,7 +43,8 @@ class Info {
                 context,
                 title = context.getString(R.string.download_file_failed_title, fileName),
                 text = context.getString(R.string.download_failed_subtitle),
-                image = R.drawable.error,
+                image = R.drawable.ic_error,
+                tintColor = State.Colors.text,
                 buttons = listOf(
                     Pair(context.getString(R.string.dismiss)) {},
                 )
@@ -56,7 +57,8 @@ class Info {
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.mountfail),
                 text = context.getString(R.string.internalstorage),
-                image = R.drawable.error,
+                image = R.drawable.ic_error,
+                tintColor = State.Colors.text,
                 buttons = listOf(
                     Pair(context.getString(R.string.chat)) {
                         context.startActivity(
@@ -82,7 +84,8 @@ class Info {
             if (State.getFailed()) UniversalDialog.dialog.dismiss()
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.partition),
-                image = R.drawable.error,
+                image = R.drawable.ic_error,
+                tintColor = State.Colors.text,
                 dismissible = false,
                 buttons = listOf(
                     Pair(context.getString(R.string.guide)) {
@@ -105,7 +108,8 @@ class Info {
                 context,
                 title = context.getString(R.string.download_failed_title),
                 text = context.getString(R.string.download_failed_subtitle),
-                image = R.drawable.error,
+                image = R.drawable.ic_error,
+                tintColor = State.Colors.text,
                 buttons = listOf(
                     Pair(context.getString(R.string.dismiss)) {},
                 )
@@ -134,7 +138,8 @@ class Info {
             UniversalDialog.showDialog(
                 context,
                 title = context.getString(R.string.nonroot),
-                image = R.drawable.error,
+                image = R.drawable.ic_error,
+                tintColor = State.Colors.text,
             )
             UniversalDialog.dialog.setCancelable(false)
         }
@@ -143,7 +148,8 @@ class Info {
             UniversalDialog.showDialog(
                 context,
                 title = context.getString(R.string.unsupported2),
-                image = R.drawable.error,
+                image = R.drawable.ic_error,
+                tintColor = State.Colors.text,
             )
             UniversalDialog.dialog.setCancelable(false)
         }
@@ -212,7 +218,7 @@ class Info {
             UniversalDialog.imageView.get()?.setImageResource(imageId)
             UniversalDialog.dialog.setCancelable(false)
             GlobalScope.launch {
-async()
+                async()
                 context.runOnUiThread {
                     onThread()
                     if (!State.getFailed()) done(context, doneText, imageId)

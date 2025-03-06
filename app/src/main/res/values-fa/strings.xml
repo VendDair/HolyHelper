@@ -133,4 +133,5 @@ C:⧹Toolbox?"</string>
     <string name="select">انتخاب کنید</string>
     <string name="select_uefi_image">انتخاب فایل UEFI</string>
     <string name="loading">در حال بارگذاری...</string>
+    <string name="preference12">رنگ‌ها را از تنظیمات پایه استخراج کنید</string>
 </resources>

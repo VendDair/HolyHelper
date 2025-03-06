@@ -20,9 +20,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.util.zip.ZipInputStream
 
 object Files {
     @SuppressLint("SdCardPath")
@@ -35,14 +37,40 @@ object Files {
     }
 
 
-    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("SdCardPath")
     fun init(context: Context) {
         appContext = context
 
         Strings.assets.data = context.filesDir.toString()
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
+            createFolder(Strings.assets.data)
+            createFolder(Strings.folders.uefi)
+
+            copyAsset("data.zip", ignoreIfPresent = true)
+            copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
+            copyAsset("sdd.conf", ignoreIfPresent = true)
+            copyAsset("RotationShortcutReverseLandscape.lnk", ignoreIfPresent = true)
+            copyAsset("RotationShortcut.lnk", ignoreIfPresent = true)
+            copyAsset("install.bat", ignoreIfPresent = true)
+            copyAsset("dbkp8150.cfg", ignoreIfPresent = true)
+            copyAsset("dbkp.hotdog.bin", ignoreIfPresent = true)
+            copyAsset("dbkp.cepheus.bin", ignoreIfPresent = true)
+            copyAsset("dbkp.nabu.bin", ignoreIfPresent = true)
+            copyAsset("Android.lnk", ignoreIfPresent = true)
+            copyAsset("ARMRepo.url", ignoreIfPresent = true)
+            copyAsset("ARMSoftware.url", ignoreIfPresent = true)
+            copyAsset("TestedSoftware.url", ignoreIfPresent = true)
+            copyAsset("WorksOnWoa.url", ignoreIfPresent = true)
+
+            if (!checkFile(Strings.win.optimizedTaskbar))
+                State.measureTime("UNZIPPING", {
+                    decompressZip(Strings.assets.dataZip, Strings.assets.data)
+                })
+        }
+
+
+        /*CoroutineScope(Dispatchers.IO).launch {
             createFolder(Strings.assets.data)
             createFolder(Strings.folders.uefi)
 
@@ -69,7 +97,7 @@ object Files {
             copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
             copyAsset("RotationShortcutReverseLandscape.lnk", ignoreIfPresent = true)
             copyAsset("Optimized_Taskbar_Control_V3.0.exe", ignoreIfPresent = true)
-        }
+        }*/
     }
 
     fun checkExtension(path: String, extension: Extension): Boolean {
@@ -152,7 +180,6 @@ object Files {
                 }
             }
 
-            // Only set permissions if NOT on NTFS and necessary
             if (perms != null) {
                 Runtime.getRuntime().exec(arrayOf("chmod", perms, outputFilePath.absolutePath))
             }
@@ -162,34 +189,37 @@ object Files {
         }
     }
 
-    /*fun copyAsset(name: String, perms: String? = null, alert: Boolean = false) {
-
-        val outputFilePath = Paths.data + "/$name"
-
-        try {
-            val tempFile = File(appContext.cacheDir, name)
-            val inputStream: InputStream = appContext.assets.open(name)
-            val outputStream = FileOutputStream(tempFile)
-
-            inputStream.use { input ->
-                outputStream.use { output ->
-                    input.copyTo(output)
-                }
-            }
-
-            ShellUtils.fastCmd("su -c cp ${tempFile.absolutePath} $outputFilePath")
-
-            if (perms != null) ShellUtils.fastCmd("su -c chmod $perms $outputFilePath")
-
-            if (alert) ToastUtil.showToast("Asset $name was copied to path ${Paths.data}")
-        } catch (e: IOException) {
-            e.printStackTrace()
-            println("Error copying file: ${e.message}")
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-            println("Process was interrupted: ${e.message}")
+    fun decompressZip(zipFilePath: String, destDirectory: String) {
+        val destDir = File(destDirectory)
+        if (!destDir.exists()) {
+            destDir.mkdirs() // Create the destination directory if it doesn’t exist
         }
-    }*/
+        val zipIn = ZipInputStream(FileInputStream(zipFilePath))
+        var entry = zipIn.nextEntry
+        while (entry != null) {
+            val filePath = destDirectory + File.separator + entry.name
+            if (!entry.isDirectory) {
+                // Extract file
+                extractFile(zipIn, filePath)
+            } else {
+                // Create directory
+                File(filePath).mkdirs()
+            }
+            zipIn.closeEntry()
+            entry = zipIn.nextEntry
+        }
+        zipIn.close()
+    }
+
+    private fun extractFile(zipIn: ZipInputStream, filePath: String) {
+        val bos = FileOutputStream(filePath)
+        val bytesIn = ByteArray(4096) // Buffer for reading
+        var read: Int
+        while (zipIn.read(bytesIn).also { read = it } != -1) {
+            bos.write(bytesIn, 0, read)
+        }
+        bos.close()
+    }
 
     fun copyStaFiles(context: Context) {
         remove("${getMountDir()}/switchtoandroid")
@@ -295,69 +325,19 @@ object Files {
         }
     }
 
-    /*fun getWinPartition(context: Context): String? = runBlocking {
-        val paths = listOf("win", "windows", "mindows", "Win", "Windows", "Mindows")
-
-        coroutineScope {  // All coroutines must complete before returning
-            paths.map { path ->
-                async(Dispatchers.IO) {  // Check all paths in parallel
-                    ShellUtils.fastCmd("find /dev/block | grep $path").takeIf { it.isNotEmpty() }
-                    //Cmd.execute("su -c find /dev/block | grep $path").takeIf { it.isNotEmpty() }
-                }
-            }.firstOrNull { deferred ->  // Get first successful result
-                deferred.await() != null
-            }?.let { result ->
-                ShellUtils.fastCmd("su -c realpath ${result.await()}")
-            } ?: run {  // If all failed
-                if (notifyIfNoWinPartition) {
-                    withContext(Dispatchers.Main) {
-                        Info.noWinPartition(context)
-                    }
-                }
-                null
-            }
-        }
-    }*/
-
-/*    fun getWinPartition(context: Context): String? {
-        val paths = listOf(
-            "win",
-            "windows",
-            "mindows",
-            "Win",
-            "Windows",
-            "Mindows"
-        )
-
-        val partition = paths
-            .map { ShellUtils.fastCmd("find /dev/block | grep $it") }
-            .firstOrNull { it.isNotEmpty() }
-            ?: return run {
-                if (notifyIfNoWinPartition) Info.noWinPartition(context)
-                null
-            }
-
-        return ShellUtils.fastCmd("su -c realpath $partition")
-    }*/
-
     fun getMountDir(): String {
-        return if (Preferences.getBoolean(
-                Preferences.Preference.SETTINGS,
-                Preferences.Key.MOUNTTOMNT,
-                false
-            )
-        ) Strings.folders.win1 else Strings.folders.win
+        return if (Preferences.MOUNTTOMNT.get()) Strings.folders.win1 else Strings.folders.win
     }
 
     fun getResource(id: Int): Drawable {
         return appContext.getDrawable(id)!!
     }
 
-    fun selectUefiImage(callback: () -> Unit = {}) {
+    /*fun selectUefiImage(callback: () -> Unit = {}) {
         FilePicker.pickFile { path ->
             if (!checkExtension(path, Extension.IMG)) return@pickFile
             copy(path, Strings.uefiImg)
             callback()
         }
-    }
+    }*/
 }

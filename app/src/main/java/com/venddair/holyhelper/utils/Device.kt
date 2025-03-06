@@ -19,7 +19,6 @@ data class DeviceConfig(
 
 object DeviceConfigProvider {
 
-    // A default configuration in case the device codename isn’t found.
     private val defaultConfig = DeviceConfig(
         codenames = emptyList(),
         groupLink = "https://t.me/joinchat/MNjTmBqHIokjweeN0SpoyA",

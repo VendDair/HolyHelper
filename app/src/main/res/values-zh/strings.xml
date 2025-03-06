@@ -124,4 +124,5 @@
     <string name="select">选择</string>
     <string name="select_uefi_image">选择UEFI文件</string>
     <string name="loading">加载中...</string>
+    <string name="preference12">從原始設定衍生色彩</string>
 </resources>

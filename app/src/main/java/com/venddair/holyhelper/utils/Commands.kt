@@ -27,10 +27,6 @@ object Commands {
     }
 
     fun isWindowsMounted(): Boolean {
-        //val winPartition = Files.getWinPartition(context) ?: return false
-
-        //return ShellUtils.fastCmd("mount | grep $winPartition").isNotEmpty()
-        //return Cmd.execute("mount | grep $winPartition").isNotEmpty()
         return ShellUtils.fastCmd("grep -B1 -A5 \"${State.winPartition}\" /proc/mounts | tail -10").isNotEmpty()
     }
 
@@ -56,9 +52,9 @@ object Commands {
     fun bootInWindows(context: Context, reboot: Boolean = false) {
         if (!Files.checkFile(Strings.uefiImg)) return
 
-        val backupBoot = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOT, true)
-        val backupToAndroid = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOTANDROID, true)
-        val backupToWindows = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.BACKUPBOOTWINDOWS, true)
+        val backupBoot = Preferences.BACKUPBOOT.get()
+        val backupToAndroid = Preferences.BACKUPBOOTANDROID.get()
+        val backupToWindows = Preferences.BACKUPBOOTWINDOWS.get()
 
         if (!Files.checkFile(Strings.bootImage) && backupBoot && backupToAndroid) backupBootImage(context)
         if (!Files.checkFile(Strings.bootImage1) && backupBoot && backupToWindows) backupBootImage(context, true)
@@ -70,12 +66,8 @@ object Commands {
     }
 
     private fun tryMount(mountPath: String) {
-        //val winPartition = Files.getWinPartition(context) ?: return
 
         val command = "su -mm -c 'cd ${Strings.assets.data} && ./mount.ntfs ${State.winPartition} $mountPath'"
-        //val command = "su -mm -c 'cd ${Paths.data} && ./mount.ntfs -o big_writes,noatime,norecovery $winPartition $mountPath'"
-        //ShellUtils.fastCmd(command)
-        //val result = Cmd.execute(command)
         val result = ShellUtils.fastCmd(command)
         State.isWindowsMounted = result.isEmpty()
     }
@@ -117,22 +109,11 @@ object Commands {
         Files.createFolder(mountDir)
         tryMount(mountDir)
 
-        //var mounted = isWindowsMounted(context)
 
         if (!State.isWindowsMounted && mountDir == Strings.folders.win) {
-            Preferences.putBoolean(
-                Preferences.Preference.SETTINGS,
-                Preferences.Key.MOUNTTOMNT,
-                true
-            )
+            Preferences.MOUNTTOMNT.set(true)
             tryMount(mountDir)
-            if (!State.isWindowsMounted) {
-                Preferences.putBoolean(
-                    Preferences.Preference.SETTINGS,
-                    Preferences.Key.MOUNTTOMNT,
-                    false
-                )
-            }
+            if (!State.isWindowsMounted) Preferences.MOUNTTOMNT.set(false)
         }
 
         if (!State.isWindowsMounted) {
@@ -151,26 +132,6 @@ object Commands {
         Log.d("INFO", "mounting: $elapsedTime")
 
         return true
-    }
-
-    fun checkUpdate(context: ComponentActivity) {
-        if (Preferences.getBoolean(
-                Preferences.Preference.SETTINGS,
-                Preferences.Key.DISABLEUPDATES,
-                false
-            )
-        ) return
-        if (updateChecked) return
-        Download.getRemoteFileContent(
-            context,
-            "https://github.com/VendDair/HolyHelper/releases/download/files/version"
-        ) { content ->
-            val version = content.replace("\n", "")
-            if (version != Strings.version) {
-                Info.notifyAboutUpdate(context, version)
-                updateChecked = true
-            }
-        }
     }
 
     @SuppressLint("SdCardPath", "StringFormatInvalid")

@@ -124,4 +124,5 @@
     <string name="select">Wybierz</string>
     <string name="select_uefi_image">Wybierz plik UEFI</string>
     <string name="loading">Ładowanie...</string>
+    <string name="preference12">Twórz kolory na podstawie domyślnych</string>
 </resources>

@@ -5,8 +5,8 @@ import android.service.quicksettings.TileService
 import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.utils.Commands
 import com.venddair.holyhelper.utils.Files
-import com.venddair.holyhelper.utils.LockStateDetector
 import com.venddair.holyhelper.utils.Preferences
+import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -20,7 +20,7 @@ class QSTileQuickBoot : TileService() {
     }
 
     override fun onClick() {
-        val confirmationRequired = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.QSCONFIRMATION, false)
+        val confirmationRequired = Preferences.QSCONFIRMATION.get()
 
         if (clicks != 2) clicks++
         if (confirmationRequired && clicks != 2) {
@@ -35,7 +35,6 @@ class QSTileQuickBoot : TileService() {
         }
         else if (clicks == 2) {
             Commands.bootInWindows(this, true)
-            //Log.d("INFO", "QUICKBOOT")
             updateLabel("Quickboot")
             clicks = 0
         }
@@ -46,9 +45,9 @@ class QSTileQuickBoot : TileService() {
         val tile = qsTile
         tile.state = if (Files.checkFile(Strings.uefiImg)) Tile.STATE_INACTIVE else Tile.STATE_UNAVAILABLE
 
-        val lockedScreenRequired = Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.REQUIREUNLOCKED, false)
+        val lockedScreenRequired = Preferences.REQUIREUNLOCKED.get()
 
-        if (LockStateDetector.isDeviceLocked(this)) {
+        if (State.isDeviceLocked(this)) {
             if (lockedScreenRequired) {
                 tile.state = Tile.STATE_UNAVAILABLE
                 updateLabel("UNLOCK")

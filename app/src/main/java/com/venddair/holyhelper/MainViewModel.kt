@@ -29,7 +29,8 @@ class MainViewModel : ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
     val lastBackupDate = MutableLiveData<String>()
     val totalRam = MutableLiveData<String>()
-    val slot = MutableLiveData<String?>()
+    val slot = MutableLiveData<String>()
+    val easterEgg1 = MutableLiveData<Boolean>()
 
     val hadLoaded = MutableLiveData<Boolean>()
 
@@ -52,7 +53,7 @@ class MainViewModel : ViewModel() {
                 }
                 val drawableDeferred = async { deviceConfig.imageResId }
                 val isUefiFileDeferred = async { Files.checkFile(Strings.uefiImg) }
-                val lastBackupDateDeferred = async { Preferences.getString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, "") }
+                val lastBackupDateDeferred = async { Preferences.LASTBACKUPDATE.get() }
                 val mountTextDeferred = async {
                     if (State.isWindowsMounted)
                         context.getString(R.string.mnt_title, context.getString(R.string.unmountt))
@@ -62,7 +63,9 @@ class MainViewModel : ViewModel() {
                 val totalRamDeferred = async {
                     context.getString(R.string.ramvalue, Device.getTotalRam(context))
                 }
-                val slotDeferred = async { Device.getSlot() }
+                val slotDeferred = async { context.getString(R.string.slot, Device.getSlot()) }
+
+                val easterEgg1Deferred = async { Preferences.EASTEREGG1.get() }
 
                 val startTime = System.currentTimeMillis()
                 versionText.postValue(versionDeferred.await())
@@ -74,6 +77,7 @@ class MainViewModel : ViewModel() {
                 lastBackupDate.postValue(lastBackupDateDeferred.await())
                 totalRam.postValue(totalRamDeferred.await())
                 slot.postValue(slotDeferred.await())
+                easterEgg1.postValue(easterEgg1Deferred.await())
 
                 val endTime = System.currentTimeMillis()
                 val elapsedTime = endTime - startTime

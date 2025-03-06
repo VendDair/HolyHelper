@@ -124,4 +124,5 @@
     <string name="select">Sélectionner</string>
     <string name="select_uefi_image">Sélectionner le fichier UEFI</string>
     <string name="loading">Chargement...</string>
+    <string name="preference12">Créer une palette depuis les paramètres de base</string>
 </resources>

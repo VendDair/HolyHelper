@@ -5,23 +5,28 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.topjohnwu.superuser.Shell
-import com.venddair.holyhelper.Info
+import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.venddair.holyhelper.R
 import com.venddair.holyhelper.ui.themes.main.MainTheme
-import com.venddair.holyhelper.utils.Commands
-import com.venddair.holyhelper.utils.Commands.isWindowsMounted
-import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.utils.Preferences
 import com.venddair.holyhelper.utils.State
 import com.venddair.holyhelper.utils.ToastUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.intuit.sdp.R.dimen
+import com.venddair.holyhelper.MainViewModel
+import com.venddair.holyhelper.ui.theme.generateAppColors
+import java.lang.ref.WeakReference
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,21 +38,15 @@ class MainActivity : ComponentActivity() {
         Preferences.init(this@MainActivity)
         Files.init(this@MainActivity)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            Commands.checkUpdate(this@MainActivity)
+        State.context = WeakReference(this)
+
+
+        if (savedInstanceState == null) {
+            val viewModel: MainViewModel by viewModels()
+
+            State.viewModel = viewModel
+
         }
-        State.winPartition = Files.getWinPartition(this)
-
-        CoroutineScope(Dispatchers.Main).launch {
-            State.bootPartition = Files.getBootPartition()
-        }
-        State.isWindowsMounted = isWindowsMounted()
-
-        if (Shell.isAppGrantedRoot() != true)
-            Info.noRootDetected(this)
-
-        if (Device.isRestricted())
-            Info.appRestricted(this)
 
         setContent {
             MainTheme()
@@ -75,7 +74,7 @@ class MainActivity : ComponentActivity() {
 
             val formatter = SimpleDateFormat("dd-MM HH:mm", Locale.US)
             val date = context.getString(R.string.last, formatter.format(Date()))
-            Preferences.putString(Preferences.Preference.SETTINGS, Preferences.Key.LASTBACKUPDATE, date)
+            Preferences.LASTBACKUPDATE.set(date)
             State.viewModel.lastBackupDate.postValue(date)
 
             val endTime = System.currentTimeMillis()
@@ -84,5 +83,14 @@ class MainActivity : ComponentActivity() {
             Log.d("INFO", "Changing last backup date: $elapsedTime")
         }
     }
+}
 
+@Composable
+fun sdp(sdp: Int): Dp {
+    return dimensionResource(sdp)
+}
+
+@Composable
+fun ssp(ssp: Int): TextUnit {
+    return dimensionResource(ssp).value.sp
 }

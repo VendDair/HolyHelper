@@ -10,7 +10,8 @@ import com.venddair.holyhelper.utils.Preferences
 class AutoMount : BroadcastReceiver() {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
-        if (!Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.AUTOMOUNT, false)) return
+        //if (!Preferences.getBoolean(Preferences.Preference.SETTINGS, Preferences.Key.AUTOMOUNT, false)) return
+        if (!Preferences.AUTOMOUNT.get()) return
         Commands.mountWindows(context)
 
     }

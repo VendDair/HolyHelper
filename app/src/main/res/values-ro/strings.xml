@@ -124,4 +124,5 @@
     <string name="select">Selectați</string>
     <string name="select_uefi_image">Selectați fișierul UEFI</string>
     <string name="loading">Se încarcă...</string>
+    <string name="preference12">Generează culori pornind de la setările de bază</string>
 </resources>

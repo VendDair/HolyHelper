@@ -8,7 +8,6 @@ import com.venddair.holyhelper.R
 import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.UniversalDialog
 import com.venddair.holyhelper.activities.MainActivity.Companion.updateMountText
-import com.venddair.holyhelper.utils.Files.createFolder
 import com.venddair.holyhelper.utils.Files.createWinFolder
 
 object MainActivityFunctions {
@@ -105,6 +104,7 @@ object MainActivityFunctions {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.software_question),
             image = R.drawable.ic_sensor,
+            tintColor = State.Colors.text,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {

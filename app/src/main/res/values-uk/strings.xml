@@ -124,4 +124,5 @@
     <string name="select">Вибрати</string>
     <string name="select_uefi_image">Вибрати файл UEFI</string>
     <string name="loading">Завантаження...</string>
+    <string name="preference12">Створювати кольори на основі типових</string>
 </resources>

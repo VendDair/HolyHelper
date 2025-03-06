@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -13,6 +15,9 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
@@ -28,53 +33,79 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.intuit.sdp.R.dimen.*
+import com.intuit.ssp.R.dimen.*
+import com.topjohnwu.superuser.Shell
+import com.venddair.holyhelper.Info
 import com.venddair.holyhelper.MainViewModel
 import com.venddair.holyhelper.R
 import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.activities.sdp
+import com.venddair.holyhelper.activities.ssp
+import com.venddair.holyhelper.ui.theme.generateAppColors
+import com.venddair.holyhelper.utils.Commands
+import com.venddair.holyhelper.utils.Commands.isWindowsMounted
 import com.venddair.holyhelper.utils.Device
-import com.venddair.holyhelper.utils.MainActivityFunctions
+import com.venddair.holyhelper.utils.Files
+import com.venddair.holyhelper.utils.Preferences
 import com.venddair.holyhelper.utils.State
+import com.venddair.holyhelper.utils.Update
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-val buttonPadding = PaddingValues(
-    start = 0.dp,
-    top = 0.dp,
-    end = 0.dp,
-    bottom = 5.dp
-)
+val buttonPadding: PaddingValues
+    @Composable
+    get() = PaddingValues(
+        start = 0.dp,
+        top = 0.dp,
+        end = 0.dp,
+        bottom = sdp(_5sdp)
+    )
+
+val menuPadding: PaddingValues
+    @Composable
+    get() = PaddingValues(sdp(_8sdp))
 
 data class ButtonConfig(
     val modifier: Modifier = Modifier,
     val image: Int,
+    val tintImage: Boolean = false,
     val title: String = "",
     val subtitle: String = "",
     val imageScale: Float = 1f,
@@ -84,6 +115,7 @@ data class ButtonConfig(
 
 @Composable
 fun MainTheme() {
+
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -115,7 +147,11 @@ fun MainTheme() {
     ) {
         composable("home") { MainMenu(navController) }
         composable("toolbox") { Toolbox() }
-        composable("settings") { Settings() }
+        composable("settings") { Settings(navController) }
+        composable("color_options") { ColorOptions(navController) }
+        composable("theme_options") { ThemeSelector() }
+        composable("main_color") { MainColorChanger() }
+        composable("text_color") { TextColorChanger() }
     }
 }
 
@@ -123,30 +159,31 @@ fun MainTheme() {
 fun TopBar(text: String) {
     Row(
         modifier = Modifier
-            .background(Color(0xFF404040))
+            .background(State.Colors.surface)
             .fillMaxWidth()
-            .padding(20.dp, 0.dp, 20.dp, 5.dp)
+            .padding(sdp(_16sdp), 0.dp, sdp(_16sdp), sdp(_5sdp))
     ) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),
             contentDescription = "image",
             modifier = Modifier
                 .scale(2f)
-                .size(dimensionResource(com.intuit.sdp.R.dimen._30sdp))
+                .size(sdp(_30sdp))
         )
 
         Box(
             modifier = Modifier
-                .height(dimensionResource(com.intuit.sdp.R.dimen._30sdp)),
+                .height(sdp(_30sdp)),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = text,
-                fontSize = dimensionResource(com.intuit.ssp.R.dimen._16ssp).value.sp,
-                color = colorResource(R.color.white),
+                fontSize = ssp(_16ssp),
+                //color = colorResource(R.color.white),
+                color = State.Colors.text,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(10.dp, 0.dp, 0.dp, 0.dp)
+                    .padding(sdp(_10sdp), 0.dp, 0.dp, 0.dp)
             )
         }
 
@@ -160,18 +197,39 @@ fun MainMenu(navController: NavController) {
 
     State.viewModel = viewModel
 
-    val context = LocalContext.current
+    val context = LocalContext.current as ComponentActivity
 
     val configuration = LocalConfiguration.current
 
+    if (!State.launch) {
+        State.launch = true
+
+        State.Colors = generateAppColors()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            Update.checkUpdate(context)
+        }
+        State.winPartition = Files.getWinPartition(context)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            State.bootPartition = Files.getBootPartition()
+        }
+        State.isWindowsMounted = isWindowsMounted()
+    }
 
     LaunchedEffect(Unit) {
         viewModel.loadData(context)
+
+        if (Shell.isAppGrantedRoot() != true)
+            Info.noRootDetected(context)
+
+        if (Device.isRestricted())
+            Info.appRestricted(context)
     }
 
     Box(
         modifier = Modifier
-            .background(Color(0xFF202020))
+            .background(State.Colors.background)
             .blur(State.blurAmount)
     ) {
 
@@ -197,25 +255,30 @@ fun MainMenu(navController: NavController) {
 
         }
 
+        context.window.statusBarColor = State.Colors.surface.toArgb()
+        context.window.navigationBarColor = State.Colors.background.toArgb()
+
         val isLoading by viewModel.isLoading.observeAsState(true)
         val hadLoaded by viewModel.hadLoaded.observeAsState(false)
 
-        if (isLoading == true && hadLoaded == false)
+        if (isLoading == true && hadLoaded == false) {
+            context.window.navigationBarColor = State.Colors.surface.toArgb()
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF404040)),
+                    .background(State.Colors.surface),
                 contentAlignment = Alignment.Center
 
             ) {
                 Text(
                     text = "Loading...",
                     textAlign = TextAlign.Center,
-                    color = colorResource(R.color.white),
-                    fontSize = dimensionResource(com.intuit.ssp.R.dimen._15ssp).value.sp,
+                    color = State.Colors.text,
+                    fontSize = ssp(_15ssp),
                     fontWeight = FontWeight.Bold
                 )
             }
+        }
     }
 }
 
@@ -224,75 +287,34 @@ fun MainMenu(navController: NavController) {
 fun Buttons(navController: NavController) {
 
     val viewModel: MainViewModel = viewModel()
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .padding(
-                10.dp,
-                dimensionResource(com.intuit.sdp.R.dimen._10sdp),
-                10.dp,
-                10.dp
+            .then(
+                if (Preferences.EASYTHEME.get())
+                    Modifier.verticalScroll(rememberScrollState())
+                else
+                    Modifier
             )
+            .padding(menuPadding)
     ) {
-        val mountText = viewModel.mountText.observeAsState()
-        mountText.value?.let {
-            State.mountText = it
+        val mountText by viewModel.mountText.observeAsState("")
+        State.mountText = mountText
+
+        if (Preferences.DEFAULTTHEME.get()) {
+            Button(backupBootButton(Modifier.weight(1f)))
+            Button(mountButton(Modifier.weight(1f)))
+            Button(toolboxButton(Modifier.weight(1f), navController))
+            Button(quickbootButton(Modifier.weight(1f)))
         }
-
-        val isUefiPresent by viewModel.isUefiFilePresent.observeAsState(false)
-
-        Button(
-            config = ButtonConfig(
-                modifier = Modifier
-                    .padding(buttonPadding)
-                    .weight(1f),
-                image = R.drawable.cd,
-                title = context.getString(R.string.backup_boot_title),
-                subtitle = context.getString(R.string.backup_boot_subtitle),
-                onClick = { MainActivityFunctions.backupBoot(context) }
-            )
-        )
-
-        mountText.value?.let { title ->
-            Button(
-                config = ButtonConfig(
-                    modifier = Modifier
-                        .padding(buttonPadding)
-                        .weight(1f),
-                    image = R.drawable.folder,
-                    imageScale = 0.8f,
-                    title = title,
-                    subtitle = context.getString(R.string.mnt_subtitle),
-                    onClick = { MainActivityFunctions.mountWindows(context) }
-                )
-            )
+        else if (Preferences.EASYTHEME.get()) {
+            Button(backupBootButton(Modifier.height(sdp(_90sdp))))
+            Button(mountButton(Modifier.height(sdp(_90sdp))))
+            Button(staButtonConfig(Modifier.height(sdp(_90sdp)).padding(buttonPadding)))
+            Button(usbHostButtonConfig(Modifier.height(sdp(_90sdp)).padding(buttonPadding)))
+            Button(quickbootButton(Modifier.height(sdp(_90sdp))))
         }
-        Button(
-            config = ButtonConfig(
-                modifier = Modifier
-                    .padding(buttonPadding)
-                    .weight(1f),
-                image = R.drawable.toolbox,
-                title = context.getString(R.string.toolbox_title),
-                subtitle = context.getString(R.string.toolbox_subtitle),
-                onClick = { navController.navigate("toolbox") }
-            )
-        )
-
-        Button(
-            config = ButtonConfig(
-                modifier = Modifier.weight(1f),
-                image = R.drawable.ic_launcher_foreground,
-                imageScale = 2f,
-                disabled = !isUefiPresent,
-                title = if (isUefiPresent) context.getString(R.string.quickboot_title) else context.getString(R.string.uefi_not_found),
-                subtitle = if (isUefiPresent) context.getString(R.string.quickboot_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
-                onClick = { MainActivityFunctions.quickboot(context) }
-            )
-        )
-
     }
 }
 
@@ -300,14 +322,13 @@ fun Buttons(navController: NavController) {
 fun DeviceImageAndPanelLandscape() {
     Column (
         modifier = Modifier
-            .width(dimensionResource(com.intuit.sdp.R.dimen._250sdp))
+            .width(sdp(_250sdp))
             .padding(
-                dimensionResource(com.intuit.sdp.R.dimen._25sdp),
-                dimensionResource(com.intuit.sdp.R.dimen._10sdp),
-                dimensionResource(com.intuit.sdp.R.dimen._25sdp),
+                sdp(_25sdp),
+                sdp(_10sdp),
+                sdp(_25sdp),
                 0.dp
             )
-            //.wrapContentHeight()
             .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -330,14 +351,13 @@ fun DeviceImageAndPanelLandscape() {
 fun DeviceImageAndPanel() {
     Row(
         modifier = Modifier
-            .height(dimensionResource(com.intuit.sdp.R.dimen._160sdp))
+            .height(sdp(_160sdp))
             .padding(
-                dimensionResource(com.intuit.sdp.R.dimen._25sdp),
-                dimensionResource(com.intuit.sdp.R.dimen._10sdp),
-                dimensionResource(com.intuit.sdp.R.dimen._25sdp),
+                sdp(_25sdp),
+                sdp(_10sdp),
+                sdp(_25sdp),
                 0.dp
             )
-            //.wrapContentHeight()
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -356,15 +376,77 @@ fun DeviceImageAndPanel() {
     }
 }
 
+
 @Composable
+fun Button(config: ButtonConfig) {
+    var isHeld by remember { mutableStateOf(false) }
+    val scale by animateFloatAsState(
+        targetValue = if (isHeld) 0.9f else 1f,
+        animationSpec = tween(70)
+    )
+
+
+
+    Box(
+        modifier = config.modifier
+            .fillMaxHeight()
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = { if (!config.disabled) config.onClick() },
+                    onPress = {
+                        if (config.disabled) return@detectTapGestures
+                        isHeld = true
+                        try {
+                            awaitRelease() // Wait until user releases
+                        } finally {
+                            isHeld = false
+                        }
+                    }
+                )
+            }
+            .clip(RoundedCornerShape(sdp(_8sdp)))
+            .background(State.Colors.surface)
+    ) {
+        Row(modifier = Modifier.fillMaxSize()) {
+            Icon(
+                modifier = Modifier
+                    .padding(horizontal = sdp(_5sdp))
+                    .scale(config.imageScale)
+                    .width(sdp(_40sdp))
+                    .fillMaxHeight(),
+                painter = painterResource(id = config.image),
+                tint = if (config.tintImage) State.Colors.text else Color.Unspecified,
+                contentDescription = "button image"
+            )
+            Column(
+                modifier = Modifier
+                    .padding(0.dp, 0.dp, sdp(_10sdp), 0.dp)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = config.title,
+                    color = State.Colors.text,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = ssp(_11ssp),
+                )
+                Text(
+                    text = config.subtitle,
+                    color = State.Colors.text,
+                    fontStyle = FontStyle.Italic,
+                    fontSize = ssp(_9ssp)
+                )
+            }
+        }
+    }
+}
+
+/*@Composable
 fun Button(
-/*    modifier: Modifier = Modifier,
-   image: Int,
-   title: String = "",
-   subtitle: String = "",
-   imageScale: Float = 1f,
-    disabled: Boolean = false,
-   onClick: () -> Unit = {}*/
     config: ButtonConfig
 ) {
     val scale = remember { Animatable(1f) }
@@ -402,42 +484,43 @@ fun Button(
                 scaleX = scale.value
                 scaleY = scale.value
             }
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFF404040))
+            .clip(RoundedCornerShape(sdp(_8sdp)))
+            .background(State.Colors.surface)
             .then(clickModifier)
     ) {
         Row(modifier = Modifier.fillMaxSize()) {
-            Image(
+            Icon(
                 modifier = Modifier
-                    .padding(horizontal = 5.dp)
+                    .padding(horizontal = sdp(_5sdp))
                     .scale(config.imageScale)
-                    .width(dimensionResource(id = com.intuit.sdp.R.dimen._40sdp))
+                    .width(sdp(_40sdp))
                     .fillMaxHeight(),
                 painter = painterResource(id = config.image),
+                tint = if (config.tintImage) State.Colors.text else Color.Unspecified,
                 contentDescription = "button image"
             )
             Column(
                 modifier = Modifier
-                    .padding(0.dp, 0.dp, 10.dp, 0.dp)
+                    .padding(0.dp, 0.dp, sdp(_10sdp), 0.dp)
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = config.title,
-                    color = colorResource(id = R.color.white),
+                    color = State.Colors.text,
                     fontWeight = FontWeight.Bold,
-                    fontSize = dimensionResource(id = com.intuit.ssp.R.dimen._11ssp).value.sp,
+                    fontSize = ssp(_11ssp),
                 )
                 Text(
                     text = config.subtitle,
-                    color = colorResource(id = R.color.white),
+                    color = State.Colors.text,
                     fontStyle = FontStyle.Italic,
-                    fontSize = dimensionResource(id = com.intuit.ssp.R.dimen._9ssp).value.sp
+                    fontSize = ssp(_9ssp)
                 )
             }
         }
     }
-}
+}*/
 
 @Composable
 fun Panel(modifier: Modifier = Modifier) {
@@ -449,7 +532,7 @@ fun Panel(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .background(Color(0xFF404040), shape = RoundedCornerShape(16.dp))
+            .background(State.Colors.surface, shape = RoundedCornerShape(sdp(_10sdp)))
     ) {
         Column {
             Box(
@@ -458,16 +541,16 @@ fun Panel(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = "Windows on ARM",
-                    color = colorResource(R.color.white),
+                    color = State.Colors.text,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(
                             0.dp,
-                            dimensionResource(com.intuit.sdp.R.dimen._15sdp),
+                            sdp(_15sdp),
                             0.dp,
                             0.dp
                         ),
-                    fontSize = dimensionResource(com.intuit.ssp.R.dimen._13ssp).value.sp
+                    fontSize = ssp(_13ssp)
                 )
             }
 
@@ -479,19 +562,17 @@ fun Panel(modifier: Modifier = Modifier) {
                 Column(
                     modifier = Modifier
                         .padding(
-                            dimensionResource(com.intuit.sdp.R.dimen._5sdp), dimensionResource(
-                                com.intuit.sdp.R.dimen._5sdp
-                            ), 0.dp, 0.dp
+                            sdp(_5sdp), sdp(_5sdp), 0.dp, 0.dp
                         )
                 ) {
 
                     val deviceName = viewModel.deviceName.observeAsState()
                     val panel = viewModel.panelType.observeAsState()
                     val ram = viewModel.totalRam.observeAsState()
-                    val lastBackup = viewModel.lastBackupDate.observeAsState()
-                    val slot = viewModel.slot.observeAsState()
+                    val lastBackup by viewModel.lastBackupDate.observeAsState("")
+                    val slot by viewModel.slot.observeAsState("null")
 
-                    State.lastBackup = lastBackup.value
+                    State.lastBackup = lastBackup
 
                     deviceName.value?.let {
                         PanelInfo(it)
@@ -502,19 +583,17 @@ fun Panel(modifier: Modifier = Modifier) {
                     ram.value?.let {
                         PanelInfo(it)
                     }
-                    State.lastBackup?.let {
-                        PanelInfo(it)
-                    }
-                    slot.value?.let {
-                        PanelInfo(it)
-                    }
+                    if (lastBackup != "")
+                        PanelInfo(lastBackup)
+                    if (slot.contains("a") || slot.contains("b"))
+                        PanelInfo(slot)
                 }
 
                 Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
-                        .padding(10.dp, 0.dp, 10.dp, 10.dp)
-                        .fillMaxWidth()
+                        .padding(sdp(_6sdp), 0.dp, sdp(_6sdp), sdp(_8sdp))
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     MiniButton(context.getString(R.string.group)) {
                         context.startActivity(
@@ -539,17 +618,20 @@ fun Panel(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MiniButton(text: String, onClick: () -> Unit = {}) {
+fun MiniButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+    //val bg = if (Preferences.MATERIALYOU.get() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) colorResource(android.R.color.system_accent3_400) else changeHue(adjustBrightness(State.Colors.surface, .7f), -160f)
     Box(
-        modifier = Modifier
-            .background(Color(0xFFFFF0F0), shape = RoundedCornerShape(16.dp))
+        modifier = modifier
+            //.background(changeHue(adjustBrightness(State.Colors.surface, 1.3f), -10f), shape = RoundedCornerShape(sdp(_16sdp)))
+            .background(State.Colors.primary, shape = RoundedCornerShape(sdp(_16sdp)))
     ) {
         Text(
             text = text,
             fontWeight = FontWeight.Bold,
-            fontSize = dimensionResource(com.intuit.ssp.R.dimen._10ssp).value.sp,
+            fontSize = ssp(_10ssp),
+            color = State.Colors.text,
             modifier = Modifier
-                .padding(dimensionResource(com.intuit.sdp.R.dimen._7sdp), dimensionResource(com.intuit.sdp.R.dimen._3sdp))
+                .padding(sdp(_7sdp), sdp(_3sdp))
                 .clickable { onClick() }
         )
     }
@@ -559,8 +641,8 @@ fun MiniButton(text: String, onClick: () -> Unit = {}) {
 fun PanelInfo(text: String) {
     Text(
         text = text,
-        fontSize = dimensionResource(com.intuit.ssp.R.dimen._9ssp).value.sp,
-        color = colorResource(R.color.white)
+        fontSize = ssp(_9ssp),
+        color = State.Colors.text
     )
 }
 
@@ -568,29 +650,37 @@ fun PanelInfo(text: String) {
 fun DeviceImage(modifier: Modifier = Modifier) {
     val viewModel: MainViewModel = viewModel()
 
-    val drawable = viewModel.drawable.observeAsState()
+    val drawable by viewModel.drawable.observeAsState(R.drawable.unknown)
+    val easterEgg1 by viewModel.easterEgg1.observeAsState(false)
 
-    drawable.value?.let {
-        Image(
-            painter = painterResource(it),
-            contentDescription = "Device Image",
-            alignment = Alignment.Center,
-            modifier = modifier
-                .fillMaxSize()
-        )
-    }
+    Image(
+        painter = painterResource(if (!easterEgg1) drawable else R.drawable.redfin),
+        contentDescription = "Device Image",
+        alignment = Alignment.Center,
+        modifier = modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = {
+                        Preferences.EASTEREGG1.set(!easterEgg1)
+                        viewModel.easterEgg1.postValue(!easterEgg1)
+
+                    }
+                )
+            }
+    )
 }
 
 @Composable
 fun Topbar(navController: NavController) {
     Row(
         modifier = Modifier
-            .height(dimensionResource(com.intuit.sdp.R.dimen._40sdp))
-            .background(Color(0xFF404040))
+            .height(sdp(_40sdp))
+            .background(State.Colors.surface)
             .padding(
-                dimensionResource(com.intuit.sdp.R.dimen._20sdp),
+                sdp(_20sdp),
                 0.dp,
-                dimensionResource(com.intuit.sdp.R.dimen._20sdp),
+                sdp(_20sdp),
                 0.dp
             )
             .fillMaxWidth(),
@@ -604,30 +694,53 @@ fun Topbar(navController: NavController) {
                 modifier = Modifier
                     .scale(2f)
                     .fillMaxHeight()
-                    .padding(0.dp, 0.dp, 10.dp, 0.dp)
-                    .size(dimensionResource(com.intuit.sdp.R.dimen._30sdp))
+                    .padding(0.dp, 0.dp, sdp(_10sdp), 0.dp)
+                    .size(sdp(_30sdp))
             )
-            Column {
+            Column(
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     text = "Holy Helper",
-                    color = colorResource(R.color.white),
-                    fontSize = dimensionResource(com.intuit.ssp.R.dimen._15ssp).value.sp,
+                    color = State.Colors.text,
+                    fontSize = ssp(_15ssp),
                     fontWeight = FontWeight.Bold
                 )
                 Text(
+                    modifier = Modifier
+                        .alpha(.5f),
                     text = Strings.version,
-                    color = colorResource(R.color.gray),
-                    fontSize = dimensionResource(com.intuit.ssp.R.dimen._12ssp).value.sp,
+                    color = State.Colors.text,
+                    fontSize = ssp(_12ssp),
                 )
             }
         }
-        Image(
-            painter = painterResource(R.drawable.settings),
+        Icon(
+            //painter = painterResource(R.drawable.settings),
+            painter = painterResource(R.drawable.ic_gear),
+            contentDescription = "settings",
+            tint = State.Colors.text,
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .fillMaxHeight()
+                .scale(1.2f)
+                .clickable(
+                    interactionSource = null,
+                    indication = null,
+                    onClick = { navController.navigate("settings") }
+                )
+                .width(sdp(_30sdp))
+                .height(sdp(_30sdp)),
+
+            )
+        /*Image(
+            //painter = painterResource(R.drawable.settings),
+            painter = painterResource(R.drawable.ic_gear),
             contentDescription = "settings",
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .fillMaxHeight()
-                .scale(2f)
+                .scale(1.2f)
                 .clickable(
                     interactionSource = null,
                     indication = null,
@@ -636,6 +749,6 @@ fun Topbar(navController: NavController) {
                 .width(dimensionResource(com.intuit.sdp.R.dimen._30sdp))
                 .height(dimensionResource(com.intuit.sdp.R.dimen._30sdp)),
 
-            )
+            )*/
     }
 }
