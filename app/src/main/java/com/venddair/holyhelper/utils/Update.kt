@@ -3,13 +3,12 @@ package com.venddair.holyhelper.utils
 import androidx.activity.ComponentActivity
 import com.venddair.holyhelper.Info
 import com.venddair.holyhelper.Strings
-import com.venddair.holyhelper.utils.Commands.updateChecked
+import com.venddair.holyhelper.activities.isInternetAvailable
 
 object Update {
-
     fun checkUpdate(context: ComponentActivity) {
         if (Preferences.DISABLEUPDATES.get()) return
-        if (updateChecked) return
+        if (!context.isInternetAvailable()) return
         Download.getRemoteFileContent(
             context,
             "https://github.com/VendDair/HolyHelper/releases/download/files/version"
@@ -17,9 +16,7 @@ object Update {
             val version = content.replace("\n", "")
             if (isVersionNew(version)) {
                 Info.notifyAboutUpdate(context, version)
-                updateChecked = true
             }
-            updateChecked = true
         }
     }
 

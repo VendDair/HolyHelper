@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -54,12 +55,12 @@ fun Toolbox() {
             val modifier = Modifier
                 .height(sdp(_90sdp))
 
-            val isUefiPresent by State.viewModel.isUefiFilePresent.observeAsState(false)
+            val isUefiPresent by State.viewModel.isUefiFilePresent.collectAsState()
 
             //val buttonConfigs = buildList {
             val buttonConfigs = remember(isUefiPresent) {
                 buildList {
-                    add(staButtonConfig(modifier))
+                    add(Configs.sta(modifier))
                     add(ButtonConfig(
                         image = R.drawable.ic_sensor,
                         tintImage = true,
@@ -106,14 +107,7 @@ fun Toolbox() {
                             onClick = { MainActivityFunctions.dbkp(context) }
                         ))
                     }
-                    add(ButtonConfig(
-                        image = R.drawable.folder,
-                        modifier = modifier,
-                        imageScale = 0.8f,
-                        title = context.getString(R.string.usbhost_title),
-                        subtitle = context.getString(R.string.usbhost_subtitle),
-                        onClick = { MainActivityFunctions.usb_host_mode(context) }
-                    ))
+                    add(Configs.usbHost(modifier))
                     add(ButtonConfig(
                         image = R.drawable.cd,
                         modifier = modifier,

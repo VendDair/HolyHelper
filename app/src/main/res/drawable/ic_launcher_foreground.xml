@@ -2,70 +2,78 @@
 <vector
     xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
     android:height="64dp"
-    android:viewportHeight="64.0"
-    android:viewportWidth="64.0"
-    android:width="64dp">
+    android:viewportWidth="64"
+    android:viewportHeight="64">
 
-    <!-- Added group to create padding through scaling and translation -->
+    <!-- Group to create padding through scaling and translation (DON'T CHANGE) -->
     <group
         android:scaleX="0.55"
         android:scaleY="0.55"
         android:translateX="14.4"
         android:translateY="14.4">
 
-        <path android:pathData="M28.42 31H9.58A2.583 2.583 0 0 1 7 28.419V9.581A2.583 2.583 0 0 1 9.58 7h18.84A2.583 2.583 0 0 1 31 9.581V28.42A2.583 2.583 0 0 1 28.42 31M9.58 9z">
+        <!-- Top-left square: from (7,7) to (31,31) -->
+        <path
+            android:pathData="M7,7 H31 V31 H7 Z">
             <aapt:attr name="android:fillColor">
                 <gradient
-                    android:endX="45.0"
-                    android:endY="53.392"
+                    android:type="linear"
                     android:startX="19.0"
                     android:startY="11.613"
-                    android:type="linear">
-                    <item android:color="#FF1470c9" android:offset="0.0"/>
-                    <item android:color="#FF161d92" android:offset="1.0"/>
+                    android:endX="45.0"
+                    android:endY="53.392">
+                    <item android:offset="0.0" android:color="#FF1470c9" />
+                    <item android:offset="1.0" android:color="#FF161d92" />
                 </gradient>
             </aapt:attr>
         </path>
 
-        <path android:pathData="M54.42 31H35.58A2.583 2.583 0 0 1 33 28.419V9.581A2.583 2.583 0 0 1 35.58 7h18.84A2.583 2.583 0 0 1 57 9.581V28.42A2.583 2.583 0 0 1 54.42 31M35.58 9z">
+        <!-- Top-right square: from (33,7) to (57,31) -->
+        <path
+            android:pathData="M33,7 H57 V31 H33 Z">
             <aapt:attr name="android:fillColor">
                 <gradient
-                    android:endX="45.0"
-                    android:endY="53.392"
+                    android:type="linear"
                     android:startX="19.0"
                     android:startY="11.613"
-                    android:type="linear">
-                    <item android:color="#FF1470c9" android:offset="0.0"/>
-                    <item android:color="#FF161d92" android:offset="1.0"/>
+                    android:endX="45.0"
+                    android:endY="53.392">
+                    <item android:offset="0.0" android:color="#FF1470c9" />
+                    <item android:offset="1.0" android:color="#FF161d92" />
                 </gradient>
             </aapt:attr>
         </path>
 
-        <path android:pathData="M28.42 57H9.58A2.583 2.583 0 0 1 7 54.419V35.581A2.583 2.583 0 0 1 9.58 33h18.84A2.583 2.583 0 0 1 31 35.581V54.42A2.583 2.583 0 0 1 28.42 57M9.58 35z">
+        <!-- Bottom-left square: from (7,33) to (31,57) -->
+        <path
+            android:pathData="M7,33 H31 V57 H7 Z">
             <aapt:attr name="android:fillColor">
                 <gradient
-                    android:endX="45.0"
-                    android:endY="53.392"
+                    android:type="linear"
                     android:startX="19.0"
                     android:startY="11.613"
-                    android:type="linear">
-                    <item android:color="#FF1470c9" android:offset="0.0"/>
-                    <item android:color="#FF161d92" android:offset="1.0"/>
+                    android:endX="45.0"
+                    android:endY="53.392">
+                    <item android:offset="0.0" android:color="#FF1470c9" />
+                    <item android:offset="1.0" android:color="#FF161d92" />
                 </gradient>
             </aapt:attr>
         </path>
 
-        <path android:pathData="M54.42 57H35.58A2.583 2.583 0 0 1 33 54.419V35.581A2.583 2.583 0 0 1 35.58 33h18.84A2.583 2.583 0 0 1 57 35.581V54.42A2.583 2.583 0 0 1 54.42 57M35.58 35z">
+        <!-- Bottom-right square: from (33,33) to (57,57) -->
+        <path
+            android:pathData="M33,33 H57 V57 H33 Z">
             <aapt:attr name="android:fillColor">
                 <gradient
-                    android:endX="45.0"
-                    android:endY="53.392"
+                    android:type="linear"
                     android:startX="19.0"
                     android:startY="11.613"
-                    android:type="linear">
-                    <item android:color="#FF1470c9" android:offset="0.0"/>
-                    <item android:color="#FF161d92" android:offset="1.0"/>
+                    android:endX="45.0"
+                    android:endY="53.392">
+                    <item android:offset="0.0" android:color="#FF1470c9" />
+                    <item android:offset="1.0" android:color="#FF161d92" />
                 </gradient>
             </aapt:attr>
         </path>

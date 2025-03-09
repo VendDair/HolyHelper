@@ -1,6 +1,8 @@
 package com.venddair.holyhelper.activities
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -26,9 +28,13 @@ import java.util.Locale
 import com.intuit.sdp.R.dimen
 import com.venddair.holyhelper.MainViewModel
 import com.venddair.holyhelper.ui.theme.generateAppColors
+import kotlinx.coroutines.flow.update
 import java.lang.ref.WeakReference
 
 class MainActivity : ComponentActivity() {
+
+    private var isFirstResume = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,7 +44,7 @@ class MainActivity : ComponentActivity() {
         Preferences.init(this@MainActivity)
         Files.init(this@MainActivity)
 
-        State.context = WeakReference(this)
+        State.context = this
 
 
         if (savedInstanceState == null) {
@@ -55,34 +61,32 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         fun updateMountText(context: Context) {
-            val startTime = System.currentTimeMillis()
-
-            State.viewModel.mountText.postValue(if (State.isWindowsMounted) context.getString(
+            State.viewModel.mountText.update { if (State.isWindowsMounted) context.getString(
                 R.string.mnt_title,
                 context.getString(R.string.unmountt)
-            ) else context.getString(R.string.mnt_title, context.getString(R.string.mountt)))
-
-
-            val endTime = System.currentTimeMillis()
-            val elapsedTime = endTime - startTime
-
-            Log.d("INFO", "Changing mount text: $elapsedTime")
+            ) else context.getString(R.string.mnt_title, context.getString(R.string.mountt)) }
         }
 
         fun updateLastBackupDate(context: Context) {
-            val startTime = System.currentTimeMillis()
-
             val formatter = SimpleDateFormat("dd-MM HH:mm", Locale.US)
             val date = context.getString(R.string.last, formatter.format(Date()))
             Preferences.LASTBACKUPDATE.set(date)
-            State.viewModel.lastBackupDate.postValue(date)
-
-            val endTime = System.currentTimeMillis()
-            val elapsedTime = endTime - startTime
-
-            Log.d("INFO", "Changing last backup date: $elapsedTime")
+            State.viewModel.lastBackupDate.update { date }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isFirstResume) State.viewModel.onResume()
+        else isFirstResume = false
+    }
+}
+
+
+fun Context.isInternetAvailable(): Boolean {
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+    return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
 }
 
 @Composable

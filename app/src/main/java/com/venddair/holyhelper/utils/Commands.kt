@@ -10,14 +10,11 @@ import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.activities.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
 object Commands {
-
-    var updateChecked = false
-
-    var notifyIfNoWinPartition = true
 
     fun dumpModem(context: Context) {
         if (!State.isWindowsMounted) mountWindows(context, false)
@@ -69,7 +66,7 @@ object Commands {
 
         val command = "su -mm -c 'cd ${Strings.assets.data} && ./mount.ntfs ${State.winPartition} $mountPath'"
         val result = ShellUtils.fastCmd(command)
-        State.isWindowsMounted = result.isEmpty()
+        State.viewModel.isWindowsMounted.update { result.isEmpty() }
     }
 
 
@@ -93,7 +90,7 @@ object Commands {
                 CoroutineScope(Dispatchers.Main).launch {
                     Files.remove(mountDir)
                 }
-                State.isWindowsMounted = false
+                State.viewModel.isWindowsMounted.update { false }
                 MainActivity.updateMountText(context)
 
                 val endTime = System.currentTimeMillis()
@@ -102,7 +99,7 @@ object Commands {
                 Log.d("INFO", "unmounting: $elapsedTime")
                 return true
             }
-            State.isWindowsMounted = true
+            State.viewModel.isWindowsMounted.update { true }
             return true
         }
 
@@ -119,11 +116,11 @@ object Commands {
         if (!State.isWindowsMounted) {
             State.setFailed(true)
             Info.winUnableToMount(context)
-            State.isWindowsMounted = false
+            State.viewModel.isWindowsMounted.update { false }
             return false
         }
 
-        State.isWindowsMounted = true
+        State.viewModel.isWindowsMounted.update { true }
         MainActivity.updateMountText(context)
 
         val endTime = System.currentTimeMillis()

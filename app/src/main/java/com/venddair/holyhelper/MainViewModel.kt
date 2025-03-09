@@ -5,33 +5,46 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.topjohnwu.superuser.Shell
+import com.venddair.holyhelper.utils.Commands
 import com.venddair.holyhelper.utils.Device
+import com.venddair.holyhelper.utils.DeviceConfig
 import com.venddair.holyhelper.utils.DeviceConfigProvider
 import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.utils.Preferences
 import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    val versionText = MutableLiveData<String>()
-    val deviceName = MutableLiveData<String>()
-    val panelType = MutableLiveData<String?>()
+    val versionText = MutableStateFlow<String?>(null)
+    val deviceName = MutableStateFlow<String?>(null)
+    val panelType = MutableStateFlow<String?>(null)
 
-    val drawable = MutableLiveData<Int>()
-    val isUefiFilePresent = MutableLiveData<Boolean>()
-    val mountText = MutableLiveData<String>()
+    val drawable = MutableStateFlow(R.drawable.unknown)
+    val isUefiFilePresent = MutableStateFlow<Boolean>(false)
+    val mountText = MutableStateFlow<String>("")
+    val lastBackupDate = MutableStateFlow<String>("")
+    val totalRam = MutableStateFlow<String?>(null)
+    val slot = MutableStateFlow<String>("null")
+    val easterEgg1 = MutableStateFlow<Boolean>(false)
+
+    val isWindowsMounted = MutableStateFlow(false)
+    val bootPartition = MutableStateFlow<String?>(null)
+    val winPartition = MutableStateFlow<String?>(null)
+
+    val rootPrivilege = MutableStateFlow<Boolean?>(true)
+
     val isLoading = MutableLiveData<Boolean>()
-    val lastBackupDate = MutableLiveData<String>()
-    val totalRam = MutableLiveData<String>()
-    val slot = MutableLiveData<String>()
-    val easterEgg1 = MutableLiveData<Boolean>()
-
     val hadLoaded = MutableLiveData<Boolean>()
 
     fun loadData(context: Context) {
@@ -39,57 +52,113 @@ class MainViewModel : ViewModel() {
 
         isLoading.postValue(true)
 
-        val deviceConfig = DeviceConfigProvider.getConfig(Device.get())
-
-        State.deviceConfig = deviceConfig
-
         viewModelScope.launch(Dispatchers.IO) {
             coroutineScope {
-                val versionDeferred = async { Strings.version }
-                val deviceNameDeferred = async { "${Device.getModel()} (${Device.get()})" }
-                val panelTypeDeferred = async {
-                    if (!deviceConfig.isPanel) return@async null
-                    context.getString(R.string.paneltype, Device.getPanelType())
-                }
-                val drawableDeferred = async { deviceConfig.imageResId }
-                val isUefiFileDeferred = async { Files.checkFile(Strings.uefiImg) }
-                val lastBackupDateDeferred = async { Preferences.LASTBACKUPDATE.get() }
-                val mountTextDeferred = async {
-                    if (State.isWindowsMounted)
-                        context.getString(R.string.mnt_title, context.getString(R.string.unmountt))
-                    else
-                        context.getString(R.string.mnt_title, context.getString(R.string.mountt))
-                }
-                val totalRamDeferred = async {
-                    context.getString(R.string.ramvalue, Device.getTotalRam(context))
-                }
-                val slotDeferred = async { context.getString(R.string.slot, Device.getSlot()) }
-
-                val easterEgg1Deferred = async { Preferences.EASTEREGG1.get() }
-
                 val startTime = System.currentTimeMillis()
-                versionText.postValue(versionDeferred.await())
-                deviceName.postValue(deviceNameDeferred.await())
-                panelType.postValue(panelTypeDeferred.await())
-                drawable.postValue(drawableDeferred.await())
-                isUefiFilePresent.postValue(isUefiFileDeferred.await())
-                mountText.postValue(mountTextDeferred.await())
-                lastBackupDate.postValue(lastBackupDateDeferred.await())
-                totalRam.postValue(totalRamDeferred.await())
-                slot.postValue(slotDeferred.await())
-                easterEgg1.postValue(easterEgg1Deferred.await())
+
+                val deviceConfig = DeviceConfigProvider.getConfig(Device.get())
+
+                State.deviceConfig = deviceConfig
+
+                bootPartition.update { Files.getBootPartition() }
+                winPartition.update { Files.getWinPartition() }
+
+                isWindowsMounted.update { Commands.isWindowsMounted() }
+
+                val rootPrivilegeDeferred = async { Shell.isAppGrantedRoot() }
+
+
+                rootPrivilege.update { rootPrivilegeDeferred.await() }
+
+
+
+                versionText.update { Strings.version }
+                CoroutineScope(Dispatchers.Main).launch { deviceName.update { getDeviceName() } }
+                CoroutineScope(Dispatchers.Main).launch { panelType.update { getPanelType() } }
+                CoroutineScope(Dispatchers.Main).launch { drawable.update { getDrawable() } }
+                CoroutineScope(Dispatchers.Main).launch { isUefiFilePresent.update { isUefiFilePresent() } }
+                CoroutineScope(Dispatchers.Main).launch { mountText.update { getMountText() } }
+                CoroutineScope(Dispatchers.Main).launch { slot.update { getSlot() } }
+                CoroutineScope(Dispatchers.Main).launch { totalRam.update { getTotalRam() } }
+                lastBackupDate.update { Preferences.LASTBACKUPDATE.get() }
+                easterEgg1.update { Preferences.EASTEREGG1.get() }
+
+
 
                 val endTime = System.currentTimeMillis()
                 val elapsedTime = endTime - startTime
                 Log.d("INFO", "Creating data: $elapsedTime")
 
 
-            }
-            CoroutineScope(Dispatchers.Main).launch {
-                delay(75)
-                isLoading.postValue(false)
-                hadLoaded.postValue(true)
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(75)
+                    isLoading.postValue(false)
+                    hadLoaded.postValue(true)
+                }
             }
         }
+    }
+
+    private fun getDeviceName(): String {
+        return "${Device.getModel()} (${Device.get()})"
+    }
+    private fun getDrawable(): Int {
+        return State.deviceConfig.imageResId
+    }
+    private fun isUefiFilePresent(): Boolean {
+        return Files.checkFile(Strings.uefiImg)
+    }
+    private fun getMountText(): String {
+        return if (State.isWindowsMounted)
+            State.context.getString(
+                R.string.mnt_title,
+                State.context.getString(R.string.unmountt)
+            )
+        else
+            State.context.getString(
+                R.string.mnt_title,
+                State.context.getString(R.string.mountt)
+            )
+    }
+    private fun getPanelType(): String? {
+        if (!State.deviceConfig.isPanel) return null
+        return State.context.getString(R.string.paneltype, Device.getPanelType())
+    }
+    private fun getSlot(): String {
+        return State.context.getString(R.string.slot, Device.getSlot())
+    }
+    private fun getTotalRam(): String {
+        return State.context.getString(R.string.ramvalue, Device.getTotalRam(State.context))
+    }
+
+
+    fun onResume() {
+        val startTime = System.currentTimeMillis()
+        CoroutineScope(Dispatchers.Main).launch {
+            val deviceConfig = DeviceConfigProvider.getConfig(Device.get())
+            State.deviceConfig = deviceConfig
+
+            isWindowsMounted.update { Commands.isWindowsMounted() }
+            deviceName.update { getDeviceName() }
+            drawable.update { getDrawable() }
+            isUefiFilePresent.update { isUefiFilePresent() }
+            mountText.update { getMountText() }
+        }
+
+
+        /*CoroutineScope(Dispatchers.Main).launch {
+            val deviceConfig = DeviceConfigProvider.getConfig(Device.get())
+            State.deviceConfig = deviceConfig
+        }
+        CoroutineScope(Dispatchers.Main).launch { isWindowsMounted.update { Commands.isWindowsMounted() } }
+        CoroutineScope(Dispatchers.Main).launch { deviceName.update { getDeviceName() } }
+        CoroutineScope(Dispatchers.Main).launch { drawable.update { getDrawable() } }
+        CoroutineScope(Dispatchers.Main).launch { isUefiFilePresent.update { isUefiFilePresent() } }
+        CoroutineScope(Dispatchers.Main).launch { mountText.update { getMountText() } }*/
+
+
+        val endTime = System.currentTimeMillis()
+        val elapsedTime = endTime - startTime
+        Log.d("INFO", "Reactive: $elapsedTime")
     }
 }

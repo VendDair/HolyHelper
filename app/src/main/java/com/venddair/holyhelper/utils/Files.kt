@@ -6,18 +6,12 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
-import com.venddair.holyhelper.Info
-import com.venddair.holyhelper.R
 import com.venddair.holyhelper.Strings
-import com.venddair.holyhelper.UniversalDialog
 import com.venddair.holyhelper.utils.Commands.backupBootImage
-import com.venddair.holyhelper.utils.Commands.notifyIfNoWinPartition
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileInputStream
@@ -63,10 +57,13 @@ object Files {
             copyAsset("TestedSoftware.url", ignoreIfPresent = true)
             copyAsset("WorksOnWoa.url", ignoreIfPresent = true)
 
-            if (!checkFile(Strings.win.optimizedTaskbar))
-                State.measureTime("UNZIPPING", {
+            if (!checkFile(Strings.assets.dataZip)) {
+                Log.d("INFO", "WRONG")
+                State.measureTime("UNZIPPING") {
                     decompressZip(Strings.assets.dataZip, Strings.assets.data)
-                })
+                    setPerms(Strings.assets.mountNtfs, "777")
+                }
+            }
         }
 
 
@@ -293,6 +290,20 @@ object Files {
     }
 
     fun getBootPartition(): String? {
+        val slotSuffix = ShellUtils.fastCmd("getprop ro.boot.slot_suffix").trim()
+
+        val partitions = ShellUtils.fastCmd("find /dev/block | grep -i 'boot' | tr '\\n' ' '").trim().split(" ")
+
+        for (partition in partitions)
+            if (partition.lowercase().endsWith("/boot$slotSuffix") || partition.lowercase().endsWith("/init_boot$slotSuffix")) {
+                Log.d("INFO", "boot partition: $partition")
+                return partition
+            }
+
+        return null
+    }
+
+    /*fun getBootPartition(): String? {
         val paths = listOf("boot", "BOOT")
 
         val partition = paths
@@ -303,9 +314,23 @@ object Files {
             }
 
         return ShellUtils.fastCmd("su -c realpath $partition")
+    }*/
+
+    fun getWinPartition(): String? {
+        val partitions = ShellUtils.fastCmd("find /dev/block | grep -Ei 'win|windows|mindows' | tr '\\n' ' '").trim().split(" ")
+
+        for (partition in partitions) {
+            val lowerPartition = partition.lowercase()
+            if (lowerPartition.endsWith("win") || lowerPartition.endsWith("windows") || lowerPartition.endsWith("mindows")) {
+                Log.d("INFO", "win partition: $partition")
+                return ShellUtils.fastCmd("su -c realpath $partition").trim()
+            }
+        }
+
+        return null
     }
 
-    fun getWinPartition(context: Context): String? = runBlocking {
+    /*fun getWinPartition(context: Context): String? = runBlocking {
         val regex = "win|windows|mindows|Win|Windows|Mindows"
 
         val findCmd = "su -c find /dev/block | grep -E '$regex'"
@@ -323,7 +348,7 @@ object Files {
             }
             null
         }
-    }
+    }*/
 
     fun getMountDir(): String {
         return if (Preferences.MOUNTTOMNT.get()) Strings.folders.win1 else Strings.folders.win

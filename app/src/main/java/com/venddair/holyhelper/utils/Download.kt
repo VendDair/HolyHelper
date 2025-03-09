@@ -220,7 +220,9 @@ object Download {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Info.unableToDownload(context)
+                context.runOnUiThread {
+                    Info.unableToDownload(context)
+                }
             }
         }.start()
 

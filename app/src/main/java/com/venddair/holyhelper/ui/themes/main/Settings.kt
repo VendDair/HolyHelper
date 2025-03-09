@@ -151,14 +151,17 @@ fun Settings(navController: NavController) {
                     Preferences.MOUNTTOMNT.set(it)
                 }
             )
-            SettingsItem(
-                text = context.getString(R.string.preference11),
-                checked = disableUpdatedChecked,
-                onCheckedChange = {
-                    disableUpdatedChecked = it
-                    Preferences.DISABLEUPDATES.set(it)
-                }
-            )
+
+            if (!Preferences.EASYTHEME.get())
+                SettingsItem(
+                    text = context.getString(R.string.preference11),
+                    checked = disableUpdatedChecked,
+                    onCheckedChange = {
+                        disableUpdatedChecked = it
+                        Preferences.DISABLEUPDATES.set(it)
+                    }
+                )
+
             SettingsItem(
                 text = context.getString(R.string.preference7),
                 checked = autoMountChecked,

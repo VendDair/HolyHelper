@@ -70,7 +70,7 @@ fun generateAppColors(): AppColors {
 
     val baseColor =
         if (isMaterialYou)
-            Color(State.context.get()!!.getColor(R.color.system_accent1_200))
+            Color(State.context.getColor(R.color.system_accent1_200))
         else if (isColorBasedOnDefault)
             Color(Preferences.COLOR.get().toColorInt())
         else
@@ -78,7 +78,7 @@ fun generateAppColors(): AppColors {
 
     val textColor =
         if (isMaterialYou)
-            Color(State.context.get()!!.getColor(R.color.system_accent3_10))
+            Color(State.context.getColor(R.color.system_accent3_10))
         else if (isColorBasedOnDefault)
             Color(Preferences.TEXTCOLOR.get().toColorInt())
         else
@@ -87,7 +87,7 @@ fun generateAppColors(): AppColors {
 
     val guideGroupColor =
         if (isMaterialYou)
-            Color(State.context.get()!!.getColor(R.color.system_accent1_800))
+            Color(State.context.getColor(R.color.system_accent1_800))
         else if (isColorBasedOnDefault)
             Color(Preferences.GUIDEGROUPCOLOR.get().toColorInt())
         else
@@ -99,7 +99,7 @@ fun generateAppColors(): AppColors {
             secondary = lerp(defaultColor, baseColor, factor),
             background = lerp(defaultColor, baseColor.adjustBrightness(.2f), .5f),
             surface = lerp(defaultColor, baseColor, .1f),
-            accent = Color(State.context.get()!!.getColor(R.color.system_accent2_500)),
+            accent = Color(State.context.getColor(R.color.system_accent2_500)),
             text = textColor,
             textSecondary = textColor.adjustBrightness(.5f)
         )

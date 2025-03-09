@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.venddair.holyhelper.MainViewModel
 import com.venddair.holyhelper.ui.theme.AppColors
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +23,15 @@ object State {
     var launch: Boolean = false
 
     lateinit var Colors: AppColors
+
+    private lateinit var navControllerRef: WeakReference<NavController>
+    var navController: NavController
+        get() {
+            return navControllerRef.get()!!
+        }
+        set(value) {
+            navControllerRef = WeakReference(value)
+        }
 
     object BaseColors {
         val color = "#FF404040"
@@ -40,11 +50,18 @@ object State {
 
     lateinit var viewModel: MainViewModel
 
-    lateinit var context: WeakReference<Context>
+    private lateinit var contextRef: WeakReference<ComponentActivity>
+    var context: ComponentActivity
+        get() {
+            return contextRef.get()!!
+        }
+        set(value) {
+            contextRef = WeakReference(value)
+        }
 
     lateinit var coroutine: CoroutineScope
 
-    var isWindowsMounted = false
+    val isWindowsMounted: Boolean get() = viewModel.isWindowsMounted.value
 
     lateinit var deviceConfig: DeviceConfig
 
@@ -53,8 +70,8 @@ object State {
     var mountText: String by mutableStateOf("")
     var lastBackup: String? by mutableStateOf(null)
 
-    var winPartition: String? = null
-    var bootPartition: String? = null
+    val winPartition: String? get() = viewModel.winPartition.value
+    val bootPartition: String? get() = viewModel.bootPartition.value
 
     fun isDeviceLocked(context: Context): Boolean {
         val keyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager

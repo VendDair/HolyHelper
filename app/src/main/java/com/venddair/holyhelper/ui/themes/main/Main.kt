@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.ComponentActivity
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -15,11 +14,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.waitForUpOrCancellation
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,14 +31,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,16 +78,13 @@ import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.activities.sdp
 import com.venddair.holyhelper.activities.ssp
 import com.venddair.holyhelper.ui.theme.generateAppColors
-import com.venddair.holyhelper.utils.Commands
-import com.venddair.holyhelper.utils.Commands.isWindowsMounted
 import com.venddair.holyhelper.utils.Device
-import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.utils.Preferences
 import com.venddair.holyhelper.utils.State
 import com.venddair.holyhelper.utils.Update
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 val buttonPadding: PaddingValues
@@ -103,7 +101,7 @@ val menuPadding: PaddingValues
     get() = PaddingValues(sdp(_8sdp))
 
 data class ButtonConfig(
-    val modifier: Modifier = Modifier,
+    var modifier: Modifier = Modifier,
     val image: Int,
     val tintImage: Boolean = false,
     val title: String = "",
@@ -117,6 +115,7 @@ data class ButtonConfig(
 fun MainTheme() {
 
     val navController = rememberNavController()
+    State.navController = navController
     NavHost(
         navController = navController,
         startDestination = "home",
@@ -190,6 +189,7 @@ fun TopBar(text: String) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("SwitchIntDef")
 @Composable
 fun MainMenu(navController: NavController) {
@@ -201,20 +201,23 @@ fun MainMenu(navController: NavController) {
 
     val configuration = LocalConfiguration.current
 
+    val root by viewModel.rootPrivilege.collectAsState()
+
     if (!State.launch) {
         State.launch = true
 
         State.Colors = generateAppColors()
 
-        CoroutineScope(Dispatchers.Main).launch {
-            Update.checkUpdate(context)
-        }
-        State.winPartition = Files.getWinPartition(context)
+        if (!Preferences.EASYTHEME.get())
+            CoroutineScope(Dispatchers.Main).launch {
+                Update.checkUpdate(context)
+            }
+        //State.winPartition = Files.getWinPartition(context)
 
-        CoroutineScope(Dispatchers.Main).launch {
+        /*CoroutineScope(Dispatchers.Main).launch {
             State.bootPartition = Files.getBootPartition()
-        }
-        State.isWindowsMounted = isWindowsMounted()
+        }*/
+        //State.isWindowsMounted = isWindowsMounted()
     }
 
     LaunchedEffect(Unit) {
@@ -232,7 +235,6 @@ fun MainMenu(navController: NavController) {
             .background(State.Colors.background)
             .blur(State.blurAmount)
     ) {
-
         Column {
             when (configuration.orientation) {
                 Configuration.ORIENTATION_PORTRAIT -> {
@@ -299,21 +301,25 @@ fun Buttons(navController: NavController) {
             )
             .padding(menuPadding)
     ) {
-        val mountText by viewModel.mountText.observeAsState("")
+        val mountText by viewModel.mountText.collectAsState("")
         State.mountText = mountText
 
         if (Preferences.DEFAULTTHEME.get()) {
-            Button(backupBootButton(Modifier.weight(1f)))
-            Button(mountButton(Modifier.weight(1f)))
-            Button(toolboxButton(Modifier.weight(1f), navController))
-            Button(quickbootButton(Modifier.weight(1f)))
+            Button(Configs.backupBoot(Modifier.weight(1f)))
+            Button(Configs.mount(Modifier.weight(1f)))
+            Button(Configs.toolbox(Modifier.weight(1f)))
+            Button(Configs.quickboot(Modifier.weight(1f)))
         }
         else if (Preferences.EASYTHEME.get()) {
-            Button(backupBootButton(Modifier.height(sdp(_90sdp))))
-            Button(mountButton(Modifier.height(sdp(_90sdp))))
-            Button(staButtonConfig(Modifier.height(sdp(_90sdp)).padding(buttonPadding)))
-            Button(usbHostButtonConfig(Modifier.height(sdp(_90sdp)).padding(buttonPadding)))
-            Button(quickbootButton(Modifier.height(sdp(_90sdp))))
+            Button(Configs.backupBoot(Modifier.height(sdp(_90sdp))))
+            Button(Configs.mount(Modifier.height(sdp(_90sdp))))
+            Button(Configs.sta(Modifier
+                .height(sdp(_90sdp))
+                .padding(buttonPadding)))
+            Button(Configs.usbHost(Modifier
+                .height(sdp(_90sdp))
+                .padding(buttonPadding)))
+            Button(Configs.quickboot(Modifier.height(sdp(_90sdp))))
         }
     }
 }
@@ -385,8 +391,6 @@ fun Button(config: ButtonConfig) {
         animationSpec = tween(70)
     )
 
-
-
     Box(
         modifier = config.modifier
             .fillMaxHeight()
@@ -394,14 +398,14 @@ fun Button(config: ButtonConfig) {
                 scaleX = scale
                 scaleY = scale
             }
-            .pointerInput(Unit) {
+            .pointerInput(config.disabled) {
                 detectTapGestures(
                     onTap = { if (!config.disabled) config.onClick() },
                     onPress = {
                         if (config.disabled) return@detectTapGestures
                         isHeld = true
                         try {
-                            awaitRelease() // Wait until user releases
+                            awaitRelease()
                         } finally {
                             isHeld = false
                         }
@@ -566,26 +570,26 @@ fun Panel(modifier: Modifier = Modifier) {
                         )
                 ) {
 
-                    val deviceName = viewModel.deviceName.observeAsState()
-                    val panel = viewModel.panelType.observeAsState()
-                    val ram = viewModel.totalRam.observeAsState()
-                    val lastBackup by viewModel.lastBackupDate.observeAsState("")
-                    val slot by viewModel.slot.observeAsState("null")
+                    val deviceName by viewModel.deviceName.collectAsState()
+                    val panel by viewModel.panelType.collectAsState()
+                    val ram by viewModel.totalRam.collectAsState()
+                    val lastBackup by viewModel.lastBackupDate.collectAsState()
+                    val slot by viewModel.slot.collectAsState()
 
                     State.lastBackup = lastBackup
 
-                    deviceName.value?.let {
+                    deviceName?.let {
                         PanelInfo(it)
                     }
-                    panel.value?.let {
+                    panel?.let {
                         PanelInfo(it)
                     }
-                    ram.value?.let {
+                    ram?.let {
                         PanelInfo(it)
                     }
-                    if (lastBackup != "")
+                    if (lastBackup == "")
                         PanelInfo(lastBackup)
-                    if (slot.contains("a") || slot.contains("b"))
+                    if (!slot.contains("null"))
                         PanelInfo(slot)
                 }
 
@@ -650,8 +654,8 @@ fun PanelInfo(text: String) {
 fun DeviceImage(modifier: Modifier = Modifier) {
     val viewModel: MainViewModel = viewModel()
 
-    val drawable by viewModel.drawable.observeAsState(R.drawable.unknown)
-    val easterEgg1 by viewModel.easterEgg1.observeAsState(false)
+    val drawable by viewModel.drawable.collectAsState()
+    val easterEgg1 by viewModel.easterEgg1.collectAsState()
 
     Image(
         painter = painterResource(if (!easterEgg1) drawable else R.drawable.redfin),
@@ -663,7 +667,7 @@ fun DeviceImage(modifier: Modifier = Modifier) {
                 detectTapGestures(
                     onLongPress = {
                         Preferences.EASTEREGG1.set(!easterEgg1)
-                        viewModel.easterEgg1.postValue(!easterEgg1)
+                        viewModel.easterEgg1.update { !easterEgg1 }
 
                     }
                 )
@@ -709,30 +713,51 @@ fun Topbar(navController: NavController) {
                 Text(
                     modifier = Modifier
                         .alpha(.5f),
-                    text = Strings.version,
+                    text = Strings.version + if (Strings.test) " (DEV)" else "",
                     color = State.Colors.text,
                     fontSize = ssp(_12ssp),
                 )
             }
         }
-        Icon(
-            //painter = painterResource(R.drawable.settings),
-            painter = painterResource(R.drawable.ic_gear),
-            contentDescription = "settings",
-            tint = State.Colors.text,
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .fillMaxHeight()
-                .scale(1.2f)
-                .clickable(
-                    interactionSource = null,
-                    indication = null,
-                    onClick = { navController.navigate("settings") }
-                )
-                .width(sdp(_30sdp))
-                .height(sdp(_30sdp)),
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(sdp(_10sdp))
+        ) {
+            if (Strings.test)
+                Icon(
+                    painter = painterResource(R.drawable.ic_refresh),
+                    contentDescription = "refresh",
+                    tint = State.Colors.text,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .fillMaxHeight()
+                        .scale(1.2f)
+                        .clickable(
+                            interactionSource = null,
+                            indication = null,
+                            onClick = { State.viewModel.onResume() }
+                        )
+                        .width(sdp(_30sdp))
+                        .height(sdp(_30sdp)),
 
-            )
+                    )
+            Icon(
+                painter = painterResource(R.drawable.ic_gear),
+                contentDescription = "settings",
+                tint = State.Colors.text,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .fillMaxHeight()
+                    .scale(1.2f)
+                    .clickable(
+                        interactionSource = null,
+                        indication = null,
+                        onClick = { navController.navigate("settings") }
+                    )
+                    .width(sdp(_30sdp))
+                    .height(sdp(_30sdp)),
+
+                )
+        }
         /*Image(
             //painter = painterResource(R.drawable.settings),
             painter = painterResource(R.drawable.ic_gear),

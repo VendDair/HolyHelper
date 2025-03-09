@@ -8,6 +8,7 @@ import com.venddair.holyhelper.Strings.assets.data
 object Strings {
 
     const val version = "1.1.2"
+    const val test = true
 
 
     object assets {

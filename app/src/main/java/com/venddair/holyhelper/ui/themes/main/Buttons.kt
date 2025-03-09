@@ -1,82 +1,67 @@
 package com.venddair.holyhelper.ui.themes.main
 
 import android.annotation.SuppressLint
-import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import com.venddair.holyhelper.MainViewModel
 import com.venddair.holyhelper.R
 import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.MainActivityFunctions
 import com.venddair.holyhelper.utils.State
 
+object Configs {
 
-@Composable
-fun backupBootButton(modifier: Modifier = Modifier): ButtonConfig {
-
-    val context = LocalContext.current as ComponentActivity
-
-    return ButtonConfig(
+    @Composable
+    fun backupBoot(modifier: Modifier = Modifier): ButtonConfig {
+        return ButtonConfig(
             modifier = modifier
                 .padding(buttonPadding),
             image = R.drawable.cd,
-            title = context.getString(R.string.backup_boot_title),
-            subtitle = context.getString(R.string.backup_boot_subtitle),
-            onClick = { MainActivityFunctions.backupBoot(context) }
+            title = State.context.getString(R.string.backup_boot_title),
+            subtitle = State.context.getString(R.string.backup_boot_subtitle),
+            onClick = { MainActivityFunctions.backupBoot(State.context) }
         )
-}
+    }
 
-@Composable
-fun mountButton(modifier: Modifier = Modifier): ButtonConfig {
+    @Composable
+    fun mount(modifier: Modifier = Modifier): ButtonConfig {
+        val mountText by State.viewModel.mountText.collectAsState()
 
-    val viewModel: MainViewModel = viewModel()
-
-    val mountText by viewModel.mountText.observeAsState("")
-
-    val context = LocalContext.current as ComponentActivity
-
-    return ButtonConfig(
+        return ButtonConfig(
             modifier = modifier
                 .padding(buttonPadding),
             image = R.drawable.folder,
             imageScale = 0.8f,
             title = mountText,
-            subtitle = context.getString(R.string.mnt_subtitle),
-            onClick = { MainActivityFunctions.mountWindows(context) }
+            subtitle = State.context.getString(R.string.mnt_subtitle),
+            onClick = { MainActivityFunctions.mountWindows(State.context) }
         )
-}
+    }
 
-@Composable
-fun toolboxButton(modifier: Modifier = Modifier, navController: NavController): ButtonConfig {
-
-    val context = LocalContext.current as ComponentActivity
-
-    return ButtonConfig(
+    @Composable
+    fun toolbox(modifier: Modifier = Modifier): ButtonConfig {
+        return ButtonConfig(
             modifier = modifier
                 .padding(buttonPadding),
             image = R.drawable.toolbox,
-            title = context.getString(R.string.toolbox_title),
-            subtitle = context.getString(R.string.toolbox_subtitle),
-            onClick = { navController.navigate("toolbox") }
+            title = State.context.getString(R.string.toolbox_title),
+            subtitle = State.context.getString(R.string.toolbox_subtitle),
+            onClick = { State.navController.navigate("toolbox") }
         )
-}
+    }
 
-@SuppressLint("StringFormatInvalid")
-@Composable
-fun quickbootButton(modifier: Modifier = Modifier): ButtonConfig {
+    @SuppressLint("StringFormatInvalid")
+    @Composable
+    fun quickboot(modifier: Modifier = Modifier): ButtonConfig {
+        val isUefiPresent by State.viewModel.isUefiFilePresent.collectAsState()
 
-    val isUefiPresent by State.viewModel.isUefiFilePresent.observeAsState(false)
+        val context = LocalContext.current as ComponentActivity
 
-    val context = LocalContext.current as ComponentActivity
-
-    return ButtonConfig(
+        return ButtonConfig(
             modifier = modifier,
             image = R.drawable.ic_launcher_foreground,
             imageScale = 2f,
@@ -85,27 +70,28 @@ fun quickbootButton(modifier: Modifier = Modifier): ButtonConfig {
             subtitle = if (isUefiPresent) context.getString(R.string.quickboot_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
             onClick = { MainActivityFunctions.quickboot(context) }
         )
-}
+    }
 
-fun staButtonConfig(modifier: Modifier = Modifier): ButtonConfig {
+    fun sta(modifier: Modifier = Modifier): ButtonConfig {
 
-    return ButtonConfig(
+        return ButtonConfig(
             image = R.drawable.adrod,
             modifier = modifier,
-            title = State.context.get()!!.getString(R.string.sta_title),
-            subtitle = State.context.get()!!.getString(R.string.sta_subtitle),
-            onClick = { MainActivityFunctions.sta_creator(State.context.get()!!) }
+            title = State.context.getString(R.string.sta_title),
+            subtitle = State.context.getString(R.string.sta_subtitle),
+            onClick = { MainActivityFunctions.sta_creator(State.context) }
         )
-}
+    }
 
-fun usbHostButtonConfig(modifier: Modifier = Modifier): ButtonConfig {
+    fun usbHost(modifier: Modifier = Modifier): ButtonConfig {
 
-    return ButtonConfig(
+        return ButtonConfig(
             image = R.drawable.folder,
             modifier = modifier,
             imageScale = 0.8f,
-            title = State.context.get()!!.getString(R.string.usbhost_title),
-            subtitle = State.context.get()!!.getString(R.string.usbhost_subtitle),
-            onClick = { MainActivityFunctions.usb_host_mode(State.context.get()!!) }
+            title = State.context.getString(R.string.usbhost_title),
+            subtitle = State.context.getString(R.string.usbhost_subtitle),
+            onClick = { MainActivityFunctions.usb_host_mode(State.context) }
         )
+    }
 }
