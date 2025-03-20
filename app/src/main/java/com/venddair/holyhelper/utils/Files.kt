@@ -38,63 +38,32 @@ object Files {
         Strings.assets.data = context.filesDir.toString()
 
         CoroutineScope(Dispatchers.Main).launch {
-            createFolder(Strings.assets.data)
-            createFolder(Strings.folders.uefi)
+            State.measureTime("PREPARING FILES") {
+                createFolder(Strings.assets.data)
+                createFolder(Strings.folders.uefi)
 
-            copyAsset("data.zip", ignoreIfPresent = true)
-            copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
-            copyAsset("sdd.conf", ignoreIfPresent = true)
-            copyAsset("RotationShortcutReverseLandscape.lnk", ignoreIfPresent = true)
-            copyAsset("RotationShortcut.lnk", ignoreIfPresent = true)
-            copyAsset("install.bat", ignoreIfPresent = true)
-            copyAsset("dbkp8150.cfg", ignoreIfPresent = true)
-            copyAsset("dbkp.hotdog.bin", ignoreIfPresent = true)
-            copyAsset("dbkp.cepheus.bin", ignoreIfPresent = true)
-            copyAsset("dbkp.nabu.bin", ignoreIfPresent = true)
-            copyAsset("Android.lnk", ignoreIfPresent = true)
-            copyAsset("ARMRepo.url", ignoreIfPresent = true)
-            copyAsset("ARMSoftware.url", ignoreIfPresent = true)
-            copyAsset("TestedSoftware.url", ignoreIfPresent = true)
-            copyAsset("WorksOnWoa.url", ignoreIfPresent = true)
+                copyAsset("data.zip")
+                copyAsset("RemoveEdge.bat")
+                copyAsset("sdd.conf")
+                copyAsset("RotationShortcutReverseLandscape.lnk")
+                copyAsset("RotationShortcut.lnk")
+                copyAsset("install.bat")
+                copyAsset("dbkp8150.cfg")
+                copyAsset("dbkp.hotdog.bin")
+                copyAsset("dbkp.cepheus.bin")
+                copyAsset("dbkp.nabu.bin")
+                copyAsset("Android.lnk")
+                copyAsset("ARMRepo.url")
+                copyAsset("ARMSoftware.url")
+                copyAsset("TestedSoftware.url")
+                copyAsset("WorksOnWoa.url")
 
-            if (!checkFile(Strings.assets.dataZip)) {
-                Log.d("INFO", "WRONG")
                 State.measureTime("UNZIPPING") {
                     decompressZip(Strings.assets.dataZip, Strings.assets.data)
                     setPerms(Strings.assets.mountNtfs, "777")
                 }
             }
         }
-
-
-        /*CoroutineScope(Dispatchers.IO).launch {
-            createFolder(Strings.assets.data)
-            createFolder(Strings.folders.uefi)
-
-            copyAsset("mount.ntfs", "+x", true)
-            copyAsset("sta.exe", ignoreIfPresent = true)
-            copyAsset("sdd.exe", ignoreIfPresent = true)
-            copyAsset("boot_img_auto-flasher_V1.1.exe", ignoreIfPresent = true)
-            copyAsset("sdd.conf", ignoreIfPresent = true)
-            copyAsset("libntfs-3g.so", ignoreIfPresent = true)
-            copyAsset("libfuse-lite.so", ignoreIfPresent = true)
-            copyAsset("Android.lnk", ignoreIfPresent = true)
-            copyAsset("ARMRepo.url", ignoreIfPresent = true)
-            copyAsset("ARMSoftware.url", ignoreIfPresent = true)
-            copyAsset("TestedSoftware.url", ignoreIfPresent = true)
-            copyAsset("WorksOnWoa.url", ignoreIfPresent = true)
-            copyAsset("dbkp8150.cfg", ignoreIfPresent = true)
-            copyAsset("dbkp.hotdog.bin", ignoreIfPresent = true)
-            copyAsset("dbkp.cepheus.bin", ignoreIfPresent = true)
-            copyAsset("dbkp.nabu.bin", ignoreIfPresent = true)
-            copyAsset("usbhostmode.exe", ignoreIfPresent = true)
-            copyAsset("display.exe", ignoreIfPresent = true)
-            copyAsset("RotationShortcut.lnk", ignoreIfPresent = true)
-            copyAsset("install.bat", ignoreIfPresent = true)
-            copyAsset("RemoveEdge.bat", ignoreIfPresent = true)
-            copyAsset("RotationShortcutReverseLandscape.lnk", ignoreIfPresent = true)
-            copyAsset("Optimized_Taskbar_Control_V3.0.exe", ignoreIfPresent = true)
-        }*/
     }
 
     fun checkExtension(path: String, extension: Extension): Boolean {

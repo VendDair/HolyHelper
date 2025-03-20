@@ -2,6 +2,8 @@ package com.venddair.holyhelper.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.venddair.holyhelper.ui.themes.ThemeType
+import com.venddair.holyhelper.ui.themes.ogwoaheler2_0.OGWoaHelper2_0Theme
 
 object Preferences {
 
@@ -44,8 +46,10 @@ object Preferences {
     val MATERIALYOU = Preference("materialyou", true)
     val EASTEREGG1 = Preference("redfinImage", false)
 
-    val DEFAULTTHEME = Preference("defaultMenu", true)
+    val THEME = Preference("theme", ThemeType.MAIN.type)
+    /*val DEFAULTTHEME = Preference("defaultMenu", true)
     val EASYTHEME = Preference("easyMenu", false)
+    val OGWoaHelper2_0 = Preference("OGWoaHelper2.0", false)*/
 
 
 

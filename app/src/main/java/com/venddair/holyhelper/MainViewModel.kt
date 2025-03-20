@@ -44,13 +44,16 @@ class MainViewModel : ViewModel() {
 
     val rootPrivilege = MutableStateFlow<Boolean?>(true)
 
-    val isLoading = MutableLiveData<Boolean>()
-    val hadLoaded = MutableLiveData<Boolean>()
+    val isLoading = MutableStateFlow(true)
+    val hadLoaded = MutableStateFlow(false)
+
+    var useMaterialYou = MutableStateFlow(true)
+    var colorsBasedOnDefault = MutableStateFlow(false)
 
     fun loadData(context: Context) {
-        if (hadLoaded.value == true) return
+        if (hadLoaded.value) return
 
-        isLoading.postValue(true)
+        isLoading.update { true }
 
         viewModelScope.launch(Dispatchers.IO) {
             coroutineScope {
@@ -80,6 +83,8 @@ class MainViewModel : ViewModel() {
                 CoroutineScope(Dispatchers.Main).launch { mountText.update { getMountText() } }
                 CoroutineScope(Dispatchers.Main).launch { slot.update { getSlot() } }
                 CoroutineScope(Dispatchers.Main).launch { totalRam.update { getTotalRam() } }
+                useMaterialYou.update { Preferences.MATERIALYOU.get() }
+                colorsBasedOnDefault.update { Preferences.COLORSBASEDONDEFAULT.get() }
                 lastBackupDate.update { Preferences.LASTBACKUPDATE.get() }
                 easterEgg1.update { Preferences.EASTEREGG1.get() }
 
@@ -92,8 +97,8 @@ class MainViewModel : ViewModel() {
 
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(75)
-                    isLoading.postValue(false)
-                    hadLoaded.postValue(true)
+                    isLoading.update {false }
+                    hadLoaded.update { true }
                 }
             }
         }

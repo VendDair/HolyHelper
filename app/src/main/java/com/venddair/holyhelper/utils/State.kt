@@ -5,14 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.venddair.holyhelper.MainViewModel
 import com.venddair.holyhelper.ui.theme.AppColors
+import com.venddair.holyhelper.ui.themes.Theme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -23,6 +26,8 @@ object State {
     var launch: Boolean = false
 
     lateinit var Colors: AppColors
+
+    lateinit var Theme: Theme
 
     private lateinit var navControllerRef: WeakReference<NavController>
     var navController: NavController
@@ -39,7 +44,7 @@ object State {
         val guideGroupColor = "#FF382076"
     }
 
-    fun restartApp(context: Context) {
+    fun restartApp() {
         val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)?.apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
@@ -72,6 +77,10 @@ object State {
 
     val winPartition: String? get() = viewModel.winPartition.value
     val bootPartition: String? get() = viewModel.bootPartition.value
+
+    val isPortrait: Boolean
+        @Composable
+        get() = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
 
     fun isDeviceLocked(context: Context): Boolean {
         val keyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
