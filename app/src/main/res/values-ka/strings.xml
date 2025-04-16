@@ -18,8 +18,9 @@
 	<string name="setup_title">ფრეიმვორკის ინსტალატორები</string>
 	<string name="dbkp_title">DUALBOOT კერნელის პატჩერი</string>
 	<string name="tablet_title">ტაბლეტის რეჟიმის სკრიპტი</string>
+	<string name="devcfg_title">DEVCFG ის დამფლეშველი</string>
 
-	<string name="backup_boot_subtitle">Boot img-ს სარეზერვო ასლის შექმნა Android-ზე და/ან Windows-ზე</string>
+    <string name="backup_boot_subtitle">Boot img-ს სარეზერვო ასლის შექმნა Android-ზე და/ან Windows-ზე</string>
 	<string name="mnt_subtitle">გადართეთ Windows ბლოკის მიბმა, რათა ნახოთ ან შეცვალოთ შინაარსი შიგნით</string>
 	<string name="toolbox_subtitle">ინსტრუმენტები და სკრიპტები Windows-ის უფრო სასიამოვნო გამოცდილებისთვის</string>
 	<string name="dump_modem_subtitle">დაადუმპეთ მოდემი Windows-ში, რათა გამოსწორდეს LTE SIM1-ზე Windows-ში.\nაუცილებელია Windows-ის ყოველი ჩატვირთვამდე</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">ამატებს ინსტალერებს რამდენიმე ფრეიმიკისთვის C:⧹Toolbox -ში</string>
 	<string name="dbkp_subtitle">პატჩავს კერნელს უწყვეტი ორმაგი ჩატვირთვისთვის</string>
 	<string name="tablet_subtitle">ამატებს სკრიპტს C:⧹Toolbox -ში, რომელიც საშუალებას იძლევა გადართოთ ტაბლეტის რეჟიმში</string>
+	<string name="devcfg_subtitle">OOS11-ის devcfg-ის გაფლეშვა, რათა Windows OOS12 მოწყობილობებზე ჩაიტვირთოს</string>
 
 	<string name="backup_boot_question">გსურთ Android-ის ჩატვირთვის ამჟამინდელი სურათის სარეზერვო ასლის შექმნა?</string>
 	<string name="mount_question">მიებას ვინდოუსი %s -ზე?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">ჩამოიტვირთოს C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX და XNA Framework ინსტალერები C:⧹Toolbox-ში?\n(ამას შეიძლება გარკვეული დრო დასჭირდეს)</string>
 	<string name="dbkp_question">დააყენეთ და გაანათეთ თქვენი ამჟამინდელი ბირთვი?\n!!!არ დააჭიროთ დიახს, თუ თქვენი მოწყობილობა არ არის %s!!!</string>
 	<string name="tablet_question">დააკოპირეს ტაბლეტის რეჟიმის სკრიპტი C:⧹Toolbox -ში?</string>
+	<string name="devcfg_question">გაუშვით OOS11 devcfg?\n!!!არ დააჭიროთ YES, თუ თქვენი მოწყობა არ არის %s!!!</string>
 
-	<string name="wrong">რაღაც შეფერხდა</string>
+    <string name="wrong">რაღაც შეფერხდა</string>
 	<string name="mountfail">შეფერხება მოხდა, \nWindows-ის მიბმა ვერ მოხერხდა.\nითხოვეთ დახმარება Telegram-ის ჩატში.</string>
 	<string name="ntfs">NTFS მხარდაჭერა არ არის. \nდავანსტალიროთ NTFS3G მოდული?</string>
 	<string name="internet">ინტერნეტი არ არის.\nდაკავშირდით ინტერნეტთან და სცადეთ ხელახლა.</string>
 	<string name="partition">Windows-ის ბლოკები ვერ მოიძებნა</string>
 	<string name="internalstorage">ფაილები ჩამოტვირთულია შიდა მეხსიერებაში</string>
 	<string name="dbkp">Boot image დაპატჩულია და გაფლაშდა.\nBoot image-ის ასლი ასევე შეგიძლიათ იხილოთ /sdcard/patched-boot.img.\nგამოიყენეთ %s Windows-სა და Android-ს შორის გადასართავად.</string>
-	<string name="op7">გაფრთხილების სლაიდერი</string>
+    <string name="devcfg">OOS11 devcfg ჩატვირთულია.\nორიგინალური devcfg ნაპოვნია /sdcard/devcfg.img -ზე.\nAndroid-ზე დაბრუნებისას STA Creator-ში გამოიყენეთ sdd.exe OOS12 devcfg-ის ჩატვირთვისთვის.</string>
+    <string name="op7">გაფრთხილების სლაიდერი</string>
 	<string name="cepheus">დახმარების ღილაკი</string>
 	<string name="nabu">მაგნიტური საფარი</string>
 	<string name="reboot">გადატვირთვა</string>

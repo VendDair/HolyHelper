@@ -3,7 +3,8 @@ package com.venddair.holyhelper.qstiles
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import com.venddair.holyhelper.utils.Commands
-import com.venddair.holyhelper.utils.State
+import com.venddair.holyhelper.utils.ViewModel
+import com.venddair.holyhelper.utils.failed
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -23,10 +24,10 @@ class QSTileMountWin : TileService() {
         Commands.mountWindows(this)
         updateTileState()
 
-        if (State.getFailed()) {
+        if (failed) {
             val tile = qsTile
 
-            State.setFailed(false)
+            failed = false
             tile.label = "FAILED"
             tile.updateTile()
 
@@ -42,7 +43,7 @@ class QSTileMountWin : TileService() {
 
     private fun updateTileState() {
         val tile = qsTile
-        tile.state = if (State.isWindowsMounted) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
+        tile.state = if (ViewModel.isWindowsMounted.value) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
 
         tile.updateTile()
     }

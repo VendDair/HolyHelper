@@ -3,10 +3,12 @@ package com.venddair.holyhelper.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.Info
 import com.venddair.holyhelper.Strings
+import com.venddair.holyhelper.UniversalDialog
 import com.venddair.holyhelper.activities.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,28 +19,28 @@ import kotlinx.coroutines.launch
 object Commands {
 
     fun dumpModem(context: Context) {
-        if (!State.isWindowsMounted) mountWindows(context, false)
-        if (State.getFailed()) return
+        if (!ViewModel.isWindowsMounted.value) mountWindows(context, false)
+        if (failed) return
         ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst1 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs1 bs=4M")
         ShellUtils.fastCmd("su -c dd bs=8M if=/dev/block/by-name/modemst2 of=$(find ${Files.getMountDir()}/Windows/System32/DriverStore/FileRepository -name qcremotefs8150.inf_arm64_*)/bootmodem_fs2 bs=4M")
     }
 
     fun isWindowsMounted(): Boolean {
-        return ShellUtils.fastCmd("grep -B1 -A5 \"${State.winPartition}\" /proc/mounts | tail -10").isNotEmpty()
+        return ShellUtils.fastCmd("grep -B1 -A5 \"${ViewModel.winPartition.value}\" /proc/mounts | tail -10").isNotEmpty()
     }
 
 
     fun backupBootImage(context: Context, windows: Boolean = false) {
         val startTime = System.currentTimeMillis()
 
-        if (windows && !State.isWindowsMounted) mountWindows(context, false)
+        if (windows && !ViewModel.isWindowsMounted.value) mountWindows(context, false)
+        if (ViewModel.bootPartition.value == null || failed) return
+
         val bootImage = if (windows) Strings.bootImage1 else Strings.bootImage
 
-        if (State.bootPartition == null) return
-
-        ShellUtils.fastCmd("su -c dd bs=8m if=${State.bootPartition} of=${bootImage}")
-        MainActivity.updateMountText(context)
-        MainActivity.updateLastBackupDate(context)
+        ShellUtils.fastCmd("su -c dd bs=8m if=${ViewModel.bootPartition.value} of=${bootImage}")
+        ViewModel.updateMountText()
+        ViewModel.updateLastBackupDate()
 
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime
@@ -56,17 +58,17 @@ object Commands {
         if (!Files.checkFile(Strings.bootImage) && backupBoot && backupToAndroid) backupBootImage(context)
         if (!Files.checkFile(Strings.bootImage1) && backupBoot && backupToWindows) backupBootImage(context, true)
 
-        if (State.bootPartition == null) return
+        if (ViewModel.bootPartition.value == null || failed) return
 
-        ShellUtils.fastCmd("su -c dd if=\"${Strings.uefiImg}\" of=${State.bootPartition} bs=8M")
+        ShellUtils.fastCmd("su -c dd if=\"${Strings.uefiImg}\" of=${ViewModel.bootPartition.value} bs=8M")
         if (reboot) ShellUtils.fastCmd("su -c reboot")
     }
 
     private fun tryMount(mountPath: String) {
 
-        val command = "su -mm -c 'cd ${Strings.assets.data} && ./mount.ntfs ${State.winPartition} $mountPath'"
+        val command = "su -mm -c 'cd ${Strings.assets.data} && ./mount.ntfs ${ViewModel.winPartition.value} $mountPath'"
         val result = ShellUtils.fastCmd(command)
-        State.viewModel.isWindowsMounted.update { result.isEmpty() }
+        ViewModel.isWindowsMounted.update { result.isEmpty() }
     }
 
 
@@ -83,15 +85,15 @@ object Commands {
 
         val mountDir = Files.getMountDir()
 
-        if (State.isWindowsMounted) {
+        if (ViewModel.isWindowsMounted.value) {
             if (unmountIfMounted) {
                 ShellUtils.fastCmd("su -mm -c umount $mountDir")
 
                 CoroutineScope(Dispatchers.Main).launch {
                     Files.remove(mountDir)
                 }
-                State.viewModel.isWindowsMounted.update { false }
-                MainActivity.updateMountText(context)
+                ViewModel.isWindowsMounted.update { false }
+                ViewModel.updateMountText()
 
                 val endTime = System.currentTimeMillis()
                 val elapsedTime = endTime - startTime
@@ -99,7 +101,7 @@ object Commands {
                 Log.d("INFO", "unmounting: $elapsedTime")
                 return true
             }
-            State.viewModel.isWindowsMounted.update { true }
+            ViewModel.isWindowsMounted.update { true }
             return true
         }
 
@@ -107,21 +109,21 @@ object Commands {
         tryMount(mountDir)
 
 
-        if (!State.isWindowsMounted && mountDir == Strings.folders.win) {
+        if (!ViewModel.isWindowsMounted.value && mountDir == Strings.folders.win) {
             Preferences.MOUNTTOMNT.set(true)
             tryMount(mountDir)
-            if (!State.isWindowsMounted) Preferences.MOUNTTOMNT.set(false)
+            if (!ViewModel.isWindowsMounted.value) Preferences.MOUNTTOMNT.set(false)
         }
 
-        if (!State.isWindowsMounted) {
-            State.setFailed(true)
+        if (!ViewModel.isWindowsMounted.value) {
+            failed = true
             Info.winUnableToMount(context)
-            State.viewModel.isWindowsMounted.update { false }
+            ViewModel.isWindowsMounted.update { false }
             return false
         }
 
-        State.viewModel.isWindowsMounted.update { true }
-        MainActivity.updateMountText(context)
+        ViewModel.isWindowsMounted.update { true }
+        ViewModel.updateMountText()
 
         val endTime = System.currentTimeMillis()
         val elapsedTime = endTime - startTime
@@ -141,7 +143,7 @@ object Commands {
             "dbkp"
         )
         if (dbkp == null) {
-            State.setFailed(true)
+            failed = true
             return
         }
 
@@ -156,7 +158,7 @@ object Commands {
         // Execute commands
         val path = Download.download(context, url, fileName[0])
         if (path == null) {
-            State.setFailed(true)
+            failed = true
             return
         }
         Files.moveFile(path, dbkpDir)
@@ -175,5 +177,38 @@ object Commands {
             ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_a bs=16M")
             ShellUtils.fastCmd("dd if=/sdcard/patched-boot.img of=/dev/block/by-name/boot_b bs=16M")
         }
+    }
+
+    @SuppressLint("SdCardPath")
+    suspend fun devcfg() {
+        if (checkInternet()) return
+        if (!Files.checkFile(Strings.bootImage)) backupBootImage(context, false)
+
+        ShellUtils.fastCmd("dd bs=8M if=/dev/block/by-name/devcfg$(getprop ro.boot.slot_suffix) of=/sdcard/original-devcfg.img")
+        ShellUtils.fastCmd("cp /sdcard/boot.img /sdcard/dbkp/boot.img")
+
+        val oos11 = when (Device.get()) {
+            "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" -> listOf("https://github.com/n00b69/woa-op7/releases/download/Files/OOS11_devcfg_guacamole.img", "OOS11_devcfg_guacamole.img")
+            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" -> listOf("https://github.com/n00b69/woa-op7/releases/download/Files/OOS11_devcfg_hotdog.img", "OOS11_devcfg_hotdog.img")
+            else -> listOf("", "")
+        }
+
+        val oos12 = when (Device.get()) {
+            "guacamole", "OnePlus7Pro", "OnePlus7Pro4G" -> listOf("https://github.com/n00b69/woa-op7/releases/download/Files/OOS12_devcfg_guacamole.img", "OOS12_devcfg_guacamole.img")
+            "hotdog", "OnePlus7TPro", "OnePlus7TPro4G" -> listOf("https://github.com/n00b69/woa-op7/releases/download/Files/OOS12_devcfg_hotdog.img", "OOS12_devcfg_hotdog.img")
+            else -> listOf("", "")
+        }
+
+        val oos11Devcfg = Download.download(context, oos11[0], oos11[1])
+        if (failed) return
+        UniversalDialog.increaseProgress(1)
+
+        val oos12Devcfg = Download.download(context, oos12[0], oos12[1])
+        if (failed) return
+        UniversalDialog.increaseProgress(1)
+
+        Files.moveFile(oos11Devcfg!!, "/sdcard")
+        Files.moveFile(oos12Devcfg!!, Strings.download)
+        //ShellUtils.fastCmd("dd bs=8M if=/sdcard/${oos11[1]} of=/dev/block/by-name/devcfg$(getprop ro.boot.slot_suffix)");
     }
 }

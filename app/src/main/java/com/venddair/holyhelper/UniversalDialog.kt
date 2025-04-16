@@ -25,8 +25,12 @@
     import androidx.compose.ui.unit.dp
     import com.venddair.holyhelper.ui.theme.adjustBrightness
     import com.venddair.holyhelper.ui.theme.changeHue
-    import com.venddair.holyhelper.utils.State
+    import com.venddair.holyhelper.utils.ViewModel
     import java.lang.ref.WeakReference
+    import com.venddair.holyhelper.utils.appColors
+    import kotlinx.coroutines.flow.update
+    import androidx.core.graphics.drawable.toDrawable
+    import com.venddair.holyhelper.utils.context
 
     object UniversalDialog {
         lateinit var dialog: Dialog
@@ -70,7 +74,7 @@
 
 
             dialogText.get()?.text = title
-            dialogText.get()?.setTextColor(State.Colors.text.toArgb())
+            dialogText.get()?.setTextColor(appColors.text.toArgb())
             textText.get()?.text = text
             textText.get()?.gravity = textGravity
             imageView.get()?.setImageResource(image)
@@ -83,7 +87,7 @@
 
             val drawable = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
-                setColor(State.Colors.surface.toArgb()) // Set background color
+                setColor(appColors.surface.toArgb()) // Set background color
                 cornerRadius = 40f // Set corner radius
             }
             root.background = drawable
@@ -97,7 +101,7 @@
             setButtons(context, dismissible, buttons)
 
             dialog = dialogBuilder.create()
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
             if (animations) dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
 
             /*val rootView = (context as ComponentActivity).findViewById<ConstraintLayout>(R.id.root)
@@ -107,7 +111,8 @@
 
             dialog.setOnDismissListener {
                 //imageView.setImageDrawable(null)
-                State.blurAmount = 0.dp
+                //State.blurAmount = 0.dp
+                ViewModel.blurAmount.update { 0.dp }
 
                 after(dialog)
 
@@ -123,19 +128,22 @@
             dialog.show()
 
             //Blurry.with(context).radius(10).sampling(1).capture(rootView).into(imageView)
-            State.blurAmount = 10.dp
+            //State.blurAmount = 10.dp
+            ViewModel.blurAmount.update { 10.dp }
         }
 
         fun increaseProgress(progress: Int) {
-            val newProgress = progressBar.get()!!.progress + (progress * 10)
-            val animation = ObjectAnimator.ofInt(
-                progressBar.get(),
-                "progress",
-                progressBar.get()!!.progress,
-                newProgress
-            )
-            animation.duration = 250 // Set duration for smooth animation (500ms)
-            animation.start()
+            context.runOnUiThread {
+                val newProgress = progressBar.get()!!.progress + (progress * 10)
+                val animation = ObjectAnimator.ofInt(
+                    progressBar.get(),
+                    "progress",
+                    progressBar.get()!!.progress,
+                    newProgress
+                )
+                animation.duration = 250 // Set duration for smooth animation (500ms)
+                animation.start()
+            }
         }
 
         fun clear() {
@@ -152,7 +160,7 @@
                 val root = buttonView.findViewById<LinearLayout>(R.id.root)
                 val textView = buttonView.findViewById<TextView>(R.id.text)
                 textView.text = button.first.uppercase()
-                textView.setTextColor(State.Colors.text.toArgb())
+                textView.setTextColor(appColors.text.toArgb())
                 buttonView.setOnClickListener {
                     button.second()
                     if (dismissible) dialog.dismiss()
@@ -162,9 +170,9 @@
 
                 val drawable = GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
-                    //setColor(State.Colors.accent.toArgb()) // Set background color
-                    //setColor(changeHue(adjustBrightness(State.Colors.surface, 1.3f), 20f).toArgb())
-                    setColor(State.Colors.surface.changeHue(20f).adjustBrightness(1.3f).toArgb())
+                    //setColor(appColors.accent.toArgb()) // Set background color
+                    //setColor(changeHue(adjustBrightness(appColors.surface, 1.3f), 20f).toArgb())
+                    setColor(appColors.surface.changeHue(20f).adjustBrightness(1.3f).toArgb())
                     cornerRadius = 40f // Set corner radius
                 }
                 root.background = drawable
@@ -189,13 +197,13 @@
             else {
                 val backgroundDrawable = GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
-                    setColor(State.Colors.background.toArgb())
+                    setColor(appColors.background.toArgb())
                     cornerRadius = 40f
                 }
 
                 val progressGradientDrawable = GradientDrawable().apply {
                     shape = GradientDrawable.RECTANGLE
-                    setColor(State.Colors.accent.toArgb())
+                    setColor(appColors.accent.toArgb())
                     cornerRadius = 40f
                 }
                 val progressClipDrawable = ClipDrawable(progressGradientDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL)

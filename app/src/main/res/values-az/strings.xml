@@ -18,8 +18,9 @@
 	<string name="setup_title">FRAMEWORK QURAŞDIRICILARI</string>
 	<string name="dbkp_title">DUALBOOT NÜVƏ YAMAÇISI</string>
 	<string name="tablet_title">PLANSET REJİMİ SKRİPTİ</string>
+	<string name="devcfg_title">DEVCFG FLAŞLAYICI</string>
 
-	<string name="backup_boot_subtitle">Android və/və ya Windows-da yükləmə şəklinin ehtiyat nüsxəsi</string>
+    <string name="backup_boot_subtitle">Android və/və ya Windows-da yükləmə şəklinin ehtiyat nüsxəsi</string>
 	<string name="mnt_subtitle">İçindəki məzmuna baxmaq və redaktə etmək üçün Windows bölməsinin “mount” yerini dəyişdirin.</string>
 	<string name="toolbox_subtitle">Daha rahat Windows təcrübəsi üçün alətlər və skriptlər</string>
 	<string name="dump_modem_subtitle">Windows-da SIM1-də LTE-ni düzəltmək üçün Windows-da Modem 1 və Modem 2-ni sıfırlayın (hər Windows açılışından əvvəl tələb olunur)</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">Adds installers for several frameworks into C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Patches the kernel for seamless dualbooting</string>
 	<string name="tablet_subtitle">Adds a script to C:⧹Toolbox which allows you to toggle tablet mode</string>
+	<string name="devcfg_subtitle">OOS12 cihazlarda Windows-un açılması üçün OOS11 devcfg faylını flaşlayır</string>
 
 	<string name="backup_boot_question">Cari Android sistemi “image” ehtiyat nüsxəsini yaradılsın?</string>
 	<string name="mount_question">Windows-u %s qoşum?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Download and move C++ Redistributables and DirectX, OpenGL, OpenAL, PhysX, XNA framework installers to C:⧹Toolbox?\n(this may take some time)</string>
 	<string name="dbkp_question">Patch and flash your current kernel?\n!!!DO NOT PRESS YES UNLESS YOUR DEVICE IS %s!!!</string>
 	<string name="tablet_question">Copy tablet mode script to C:⧹Toolbox?</string>
+	<string name="devcfg_question">OOS11 devcfg yandırılsın?\n!!!CİHHAZINIZ %s deyilsə, YES düyməsinə basmayın!!!</string>
 
-	<string name="wrong">Xəta baş verdi</string>
+    <string name="wrong">Xəta baş verdi</string>
 	<string name="mountfail">Xəta baş verdi, \nWindows-u qöşa bilmirəm.\nTelegram çatda kömək almaq</string>
 	<string name="ntfs">NTFS support not detected. \nInstall NTFS3G module?</string>
 	<string name="internet">No internet connection found.\nConnect to the internet and try again.</string>
 	<string name="partition">No Windows partition detected.</string>
 	<string name="internalstorage">Files downloaded in internal storage</string>
 	<string name="dbkp">Boot image has been patched and flashed.\nPatched image can also be found at /sdcard/patched-boot.img.\nUse your %s to switch between Windows and Android.</string>
-	<string name="op7">alert slider</string>
+    <string name="devcfg">OOS11 devcfg yandırıldı.\nOrijinal devcfg /sdcard/devcfg.img ünvanında tapıla bilər.\nAndroid-a qayıdarkən OOS12 devcfg-ni yandırmaq üçün STA Creator-da sdd.exe istifadə edin.</string>
+    <string name="op7">alert slider</string>
 	<string name="cepheus">assistant button</string>
 	<string name="nabu">magnetic case</string>
 	<string name="reboot">Rebut</string>

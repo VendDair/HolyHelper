@@ -94,6 +94,7 @@ object Download {
 
                 if (connection.responseCode != HttpURLConnection.HTTP_OK) {
                     withContext(Dispatchers.Main) {
+                        failed = true
                         Info.downloadFailed(context)
                     }
                     throw IOException("HTTP error code: ${connection.responseCode}")
@@ -113,6 +114,7 @@ object Download {
             } catch (e: Exception) {
                 destinationPath.delete() // Delete partially downloaded file on error
                 withContext(Dispatchers.Main) {
+                    failed = true
                     Info.downloadFailed(context)
                 }
                 null
@@ -257,7 +259,7 @@ object Download {
 
                 withContext(Dispatchers.Main) {
                     UniversalDialog.increaseProgress(1)
-                    Files.moveFileToWin(context, path, "${Strings.win.folders.frameworks}/$fileName")
+                    Files.moveFileToWin(path, "${Strings.win.folders.frameworks}/$fileName")
                 }
                 path
             }
@@ -277,13 +279,13 @@ object Download {
             ?: return
         (context as ComponentActivity).runOnUiThread {
             UniversalDialog.progressBar.get()?.progress = 1
-            Files.moveFileToWin(context, path, Strings.win.defenderRemover)
+            Files.moveFileToWin(path, Strings.win.defenderRemover)
         }
     }
 
     suspend fun downloadAtlasOS(context: ComponentActivity) = coroutineScope {
         context.runOnUiThread {
-            createWinFolder(context, Strings.win.folders.toolbox)
+            createWinFolder(Strings.win.folders.toolbox)
         }
         val download1 = async(Dispatchers.IO) {
             val path = download(
@@ -294,7 +296,7 @@ object Download {
                 ?: return@async
             context.runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(context, path, Strings.win.atlasPlaybook)
+                Files.moveFileToWin(path, Strings.win.atlasPlaybook)
             }
         }
 
@@ -307,7 +309,7 @@ object Download {
                 ?: return@async
             context.runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(context, path, Strings.win.ameWizard)
+                Files.moveFileToWin(path, Strings.win.ameWizard)
             }
         }
 
@@ -316,7 +318,7 @@ object Download {
 
     suspend fun downloadReviOS(context: ComponentActivity) = coroutineScope {
         context.runOnUiThread {
-            createWinFolder(context, Strings.win.folders.toolbox)
+            createWinFolder(Strings.win.folders.toolbox)
         }
 
         val download1 = async(Dispatchers.IO) {
@@ -328,7 +330,7 @@ object Download {
                 ?: return@async
             context.runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(context, path, Strings.win.reviPlaybook)
+                Files.moveFileToWin(path, Strings.win.reviPlaybook)
             }
         }
 
@@ -341,7 +343,7 @@ object Download {
                 ?: return@async
             context.runOnUiThread {
                 UniversalDialog.increaseProgress(1)
-                Files.moveFileToWin(context, path, Strings.win.ameWizard)
+                Files.moveFileToWin(path, Strings.win.ameWizard)
             }
         }
 

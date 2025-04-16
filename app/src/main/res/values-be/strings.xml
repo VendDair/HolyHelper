@@ -18,8 +18,9 @@
 	<string name="setup_title">ЎСТАНОЎНІКІ ФРЭЙМВОРКАЎ</string>
 	<string name="dbkp_title">DUALBOOT ПАТЧАР ДЛЯ ЯДРА</string>
 	<string name="tablet_title">СЦЭНАРЫЙ РЭЖЫМУ ПЛАНШЭТА</string>
+	<string name="devcfg_title">Інструмент для флэша DEVCFG</string>
 
-	<string name="backup_boot_subtitle">Захаваць бэкап boot у Android і/ці Windows</string>
+    <string name="backup_boot_subtitle">Захаваць бэкап boot у Android і/ці Windows</string>
 	<string name="mnt_subtitle">Вы можаце змантаваць раздзел Windows для прагляду і змены змесціва</string>
 	<string name="toolbox_subtitle">Утыліты і скрыпты для зручнага выкарыстання Windows</string>
 	<string name="dump_modem_subtitle">Дампаваць modem, каб адрамантаваць LTE на SIM1 у Windows. Неабходна перад першым запуском Windows</string>
@@ -37,8 +38,9 @@
 	<string name="setup_subtitle">Дадае ўстаноўнікі для некалькіх фрэймворкаў у C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Патчыць ядро для бесперашкоднага dualboot загрузчыка.</string>
 	<string name="tablet_subtitle">Дадае сцэнарый у C:⧹Toolbox, які дазваляе пераключаць рэжым планшэта.</string>
+	<string name="devcfg_subtitle">Прошывае devcfg з OOS11, каб Windows мог запускацца на прыладах з OOS12</string>
 
-	<string name="backup_boot_question">Вы хочаце захаваць бягучы вобраз boot?</string>
+    <string name="backup_boot_question">Вы хочаце захаваць бягучы вобраз boot?</string>
 	<string name="mount_question">Змантаваць Windows у %s?</string>
 	<string name="unmount_question">Размантаваць раздзел Windows?</string>
 	<string name="dump_modem_question">Захаваць дамп modem1st і modem2st у Windows?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Спампаваць і змясціць C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX і XNA усталёўнікі ў C:⧹Toolbox?\n(гэта можа заняць некаторы час)</string>
 	<string name="dbkp_question">Патчыць і запісваць ваша цяперашняе ядро?\n!!!НЕ НАЦІСКАЙЦЕ ТАК, КАЛІ ВАШ ПРЫЛАД НЕ ЯВЛЯЕЦЦА %s!!!</string>
 	<string name="tablet_question">Скапіраваць сцэнарый рэжыму планшэта ў C:\Toolbox?</string>
+	<string name="devcfg_question">Прайшыць OOS11 devcfg?\n!!!НЕ НАЖЫМАЙЦЕ «Так», калі ваш прылада не %s!!!</string>
 
-	<string name="wrong">Нешта пайшло не так</string>
+    <string name="wrong">Нешта пайшло не так</string>
 	<string name="mountfail">Нешта пайшло не так, \nРаздзел Windows не можа быць змантаваны.\nЗвярніцеся па дапамогу ў чат Telegram.</string>
 	<string name="ntfs">Падтрымка NTFS не выяўлена. \nУсталяваць модуль NTFS3G?</string>
 	<string name="internet">Злучэнне з інтэрнэтам не знойдзена.\nПадключыцеся да інтэрнэту і паспрабуйце яшчэ раз.</string>
 	<string name="partition">Партыцыя Windows не выяўлена.</string>
 	<string name="internalstorage">Файлы загружаны ў ўнутранае сховішча.</string>
 	<string name="dbkp">Выява загрузкі была патчана і запісана.\nПатчаную выяву таксама можна знайсці па адрасе /sdcard/patched-boot.img.\nВыкарыстоўвайце %s, каб пераключацца паміж Windows і Android.</string>
-	<string name="op7">слайдэр апавяшчэнняў</string>
+    <string name="devcfg">OOS11 devcfg быў запраграмаваны.\nАрыгінальны devcfg можна знайсці па шляху /sdcard/devcfg.img.\nВыкарыстоўвайце sdd.exe у STA Creator для запраграмавання OOS12 devcfg пры вяртанні да Android.</string>
+    <string name="op7">слайдэр апавяшчэнняў</string>
 	<string name="cepheus">кнопку памочніка</string>
 	<string name="nabu">magnetic case</string>
 	<string name="reboot">Перазагрузка</string>

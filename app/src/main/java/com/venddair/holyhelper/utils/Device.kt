@@ -1,9 +1,14 @@
 package com.venddair.holyhelper.utils
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.app.KeyguardManager
 import android.content.Context
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import com.topjohnwu.superuser.ShellUtils
 import com.venddair.holyhelper.R
 
@@ -15,6 +20,7 @@ data class DeviceConfig(
     val isPanel: Boolean = false,
     val isDbkp: Boolean = false,
     val isDumpModem: Boolean = false,
+    val isDevCfg: Boolean = false,
 )
 
 object DeviceConfigProvider {
@@ -220,6 +226,7 @@ object DeviceConfigProvider {
             imageResId = R.drawable.hotdog,
             isDumpModem = true,
             isDbkp = true,
+            isDevCfg = true,
         ),
         DeviceConfig(
             codenames = listOf("guacamole", "guacamolet", "OnePlus7Pro", "OnePlus7Pro4G", "OnePlus7ProTMO"),
@@ -227,7 +234,8 @@ object DeviceConfigProvider {
             guideLink = "https://github.com/n00b69/woa-op7",
             imageResId = R.drawable.guacamole,
             isDumpModem = true,
-            isDbkp = true
+            isDbkp = true,
+            isDevCfg = true,
         ),
         DeviceConfig(
             codenames = listOf("guacamoleb", "hotdogb", "OnePlus7T", "OnePlus7"),
@@ -373,7 +381,19 @@ object DeviceConfigProvider {
             groupLink = "https://t.me/dumanthecat",
             guideLink = "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md",
             imageResId = R.drawable.redfin
-        )
+        ),
+        DeviceConfig(
+            codenames = listOf("haotian"),
+            groupLink = "https://t.me/dumanthecat",
+            guideLink = "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md",
+            imageResId = R.drawable.haotian
+        ),
+        DeviceConfig(
+            codenames = listOf("Nord", "nord"),
+            groupLink = "https://t.me/dikeckaan",
+            guideLink = "https://github.com/Robotix22/WoA-Guides/blob/main/Mu-Qcom/README.md",
+            imageResId = R.drawable.nord
+        ),
     )
 
     /**
@@ -506,15 +526,20 @@ object Device {
         }
     }
 
-    fun isLandscape(context: Context): Boolean {
-        return context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    }
+    val isLandscape: Boolean
+        @Composable
+        get() = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-    fun isRestricted(): Boolean {
-        return when (get()) {
+    val isPortrait: Boolean
+        @Composable
+        get() = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
+
+    val isLocked: Boolean
+        get() = (context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isDeviceLocked
+
+    val isRestricted: Boolean
+        get() = when (get()) {
             "duo", "duo2", "duoeu", "duoatt", "a0", "b1", "c1", "c2" -> true
             else -> false
         }
-    }
-
 }

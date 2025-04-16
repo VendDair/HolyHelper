@@ -18,8 +18,9 @@
 	<string name="setup_title">FRAMEWORK INSTALÁTORY</string>
 	<string name="dbkp_title">DUALBOOT KERNEL PATCHER</string>
 	<string name="tablet_title">TABLET MODE SCRIPT</string>
+	<string name="devcfg_title">Nástroj pro flashování DEVCFG</string>
 
-	<string name="backup_boot_subtitle">Zálohujte boot image na Android a/nebo Windows</string>
+    <string name="backup_boot_subtitle">Zálohujte boot image na Android a/nebo Windows</string>
 	<string name="mnt_subtitle">Chcete-li zobrazit nebo upravit obsah uvnitř, přepněte připojovací oddíl Windows</string>
 	<string name="toolbox_subtitle">Nástroje a skripty pro příjemnější práci se systémem Windows</string>
 	<string name="dump_modem_subtitle">Uložte modem do systému Windows a opravte LTE na SIM1 ve Windows. Vyžadováno před každým spuštěním systému Windows</string>
@@ -37,8 +38,9 @@
 	<string name="setup_subtitle">Přidá instalátory pro několik frameworku do C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Provádí úpravu kernelu pro bezproblémové dualbootování</string>
 	<string name="tablet_subtitle">Přidává skript do C:⧹Toolbox, který umožňuje přepínat tabletový režim</string>
+	<string name="devcfg_subtitle">Nahraje devcfg z OOS11, aby se Windows mohl spustit na zařízeních s OOS12</string>
 
-	<string name="backup_boot_question">Zálohovat aktuální spouštěcí obraz Androidu?</string>
+    <string name="backup_boot_question">Zálohovat aktuální spouštěcí obraz Androidu?</string>
 	<string name="mount_question">Připojit Windows na %s?</string>
 	<string name="unmount_question">Odpojit Windows?</string>
 	<string name="dump_modem_question">Zkopírovat modem1st a modem2st do oddílu Windows?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Stáhnout a přesunout C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX, a XNA framework do C:⧹Toolbox?\n(může to chvíli trvat)</string>
 	<string name="dbkp_question">Přidat kód pro dualboot do boot.img? \n!!!NEKLIKEJTE NA ANO, POKUD VAŠE ZAŘÍZENÍ NENÍ %s!!!</string>
 	<string name="tablet_question">Zkopírovat skript pro tabletový režim do C:\Toolbox?</string>
+	<string name="devcfg_question">Flashnout OOS11 devcfg?\n!!!NESTISKÁVEJTE ANO, POKUD VÁŠ ZAŘÍZENÍ NENÍ %s!!!</string>
 
-	<string name="wrong">Něco se pokazilo</string>
+    <string name="wrong">Něco se pokazilo</string>
 	<string name="mountfail">Něco se pokazilo, \nWindows se nepodařilo připojit.\nPožádejte o pomoc v Telegram chatu.</string>
 	<string name="ntfs">Podpora NTFS nebyla detekována. \nNainstalovat modul NTFS3G?</string>
 	<string name="internet">Nebylo nalezeno internetové připojení. \nPřipojte se k internetu a zkuste to znovu.</string>
 	<string name="partition">Nebyl detekován oddíl Windows.</string>
 	<string name="internalstorage">Soubory staženy do interního úložiště.</string>
 	<string name="dbkp">Obraz spousteni byl upraven a nahrán. \nUpravený obraz lze také najít na /sdcard/patched-boot.img. \nPoužijte %s pro přepínání mezi Windows a Androidem.</string>
-	<string name="op7">alert slider</string>
+    <string name="devcfg">OOS11 devcfg byl flashnut.\nPůvodní devcfg naleznete na /sdcard/devcfg.img.\nPoužijte sdd.exe v STA Creator k flashnutí OOS12 devcfg při návratu do Androidu.</string>
+    <string name="op7">alert slider</string>
 	<string name="cepheus">tlačítko asistenta</string>
 	<string name="nabu">magnetické pouzdro</string>
 	<string name="reboot">Restartovat</string>

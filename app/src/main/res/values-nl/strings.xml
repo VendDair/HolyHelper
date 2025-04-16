@@ -18,6 +18,7 @@
 	<string name="setup_title">FRAMEWORK INSTALLERS</string>
 	<string name="dbkp_title">DUALBOOT KERNEL PATCHER</string>
 	<string name="tablet_title">TABLET MODE SCRIPT</string>
+	<string name="devcfg_title">DEVCFG Flasher</string>
 
 	<string name="backup_boot_subtitle">Back up boot image naar Android en/of Windows</string>
 	<string name="mnt_subtitle">Mount/unmount de Windows partitie om de bestanden te kunnen bekijken of wijzigen</string>
@@ -37,7 +38,8 @@
 	<string name="setup_subtitle">Plaatst installers voor verschillende frameworks in C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Patcht de kernel om naadloos dualbooten te kunnen</string>
 	<string name="tablet_subtitle">Plaatst een script in C:⧹Toolbox waarmee je de tablet modus aan/uit kan zetten</string>
-	
+	<string name="devcfg_subtitle">Flasht devcfg van OOS11 zodat Windows kan opstarten op OOS12-apparaten</string>
+
 	<string name="backup_boot_question">Back up huidige Android boot image?</string>
 	<string name="mount_question">Mount Windows naar %s?</string>
 	<string name="unmount_question">Unmount Windows?</string>
@@ -54,6 +56,7 @@
 	<string name="setup_question">Download en kopieer C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX, en XNA framework installers naar C:⧹Toolbox?\n(dit kan enkele momenten duren)</string>
 	<string name="dbkp_question">Patch uw huidige kernel en flash de nieuwe boot image?\n!!!DRUK NIET OP JA ALS UW TOESTEL NIET DE %s IS!!!</string>
 	<string name="tablet_question">Kopieer tablet modus script naar C:⧹Toolbox?</string>
+    <string name="devcfg_question">OOS11 devcfg flashen?\n!!!DRUK GEEN JA, TENZIJ UW APPARAAT %s IS!!!</string>
 
 	<string name="wrong">Een fout is opgetreden</string>
 	<string name="mountfail">Een fout is opgetreden, \nWindows kon niet gemount worden.\nVraag om hulp in de Telegram chat.</string>
@@ -62,7 +65,8 @@
 	<string name="partition">Geen Windows partitie gevonden.</string>
 	<string name="internalstorage">Bestanden zijn in uw interne geheugen opgeslagen</string>
 	<string name="dbkp">Boot image is gepatcht en geinstalleerd.\nDe gepatchte boot.img is ook te vinden in /sdcard/patched-boot.img.\nGebruik uw %s om te schakelen tussen Windows en Android.</string>
-	<string name="op7">alert slider</string>
+    <string name="devcfg">OOS11 devcfg is geflasht.\nHet originele devcfg is te vinden op /sdcard/devcfg.img.\nGebruik sdd.exe in STA Creator om OOS12 devcfg te flashen bij terugkeer naar Android.</string>
+    <string name="op7">alert slider</string>
 	<string name="cepheus">assistant knop</string>
 	<string name="nabu">magnetic case</string>
 	<string name="reboot">Herstart</string>

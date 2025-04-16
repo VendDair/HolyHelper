@@ -18,8 +18,9 @@
 	<string name="setup_title">安裝運行庫</string>
 	<string name="dbkp_title">雙系統內核修補工具</string>
 	<string name="tablet_title">平板模式切換</string>
+	<string name="devcfg_title">DEVCFG刷寫工具</string>
 
-	<string name="backup_boot_subtitle">備份 boot 分區到 Windows 和 Android</string>
+    <string name="backup_boot_subtitle">備份 boot 分區到 Windows 和 Android</string>
 	<string name="mnt_subtitle">掛載安裝 Windows 的分區以查看或編輯其中的內容</string>
 	<string name="toolbox_subtitle">提供更愉快的 Windows 體驗的工具和腳本</string>
 	<string name="dump_modem_subtitle">為 Windows 提取基帶以修復 SIM 卡 1 上的 LTE 通話。\n需要在每次啓動前運行。</string>
@@ -37,8 +38,9 @@
 	<string name="setup_subtitle">將一些運行庫的安裝包添加到 C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">修補內核以更快捷地切換雙系統</string>
 	<string name="tablet_subtitle">將快捷切換平板模式的腳本添加到 C:⧹Toolbox</string>
+	<string name="devcfg_subtitle">刷寫OOS11的devcfg以令Windows可在OOS12裝置上啟動</string>
 
-	<string name="backup_boot_question">確認備份當前 Android 的 boot 鏡像?</string>
+    <string name="backup_boot_question">確認備份當前 Android 的 boot 鏡像?</string>
 	<string name="mount_question">確認掛載 Windows 到 %s?</string>
 	<string name="unmount_question">確認解除掛載 Windows?</string>
 	<string name="dump_modem_question">確認提取 modem1st 和 modem2st 到 Windows 分區?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">是否下載 MSVC 運行庫, DirectX, OpenGL, OpenAL, PhysX, 和 XNA 運行庫的安裝程序，並置於 C:⧹Toolbox?\n(可能會花費很長時間)</string>
 	<string name="dbkp_question">是否修補並重新刷入當前內核?\n!!!請不要點擊「是」，除非你的設備是 %s!!!</string>
 	<string name="tablet_question">是否在 C:⧹Toolbox 中添加平板模式切換腳本?</string>
+	<string name="devcfg_question">刷入 OOS11 devcfg?\n!!!除非您的裝置為 %s，否則請勿按YES!!!</string>
 
-	<string name="wrong">錯誤</string>
+    <string name="wrong">錯誤</string>
 	<string name="mountfail">出錯, \nWindows 不能被掛載。\n請在 Telegram 羣聊中尋求幫助。</string>
 	<string name="ntfs">未檢測到 NTFS 支持。\n是否安裝 ntfs-3g 內核模塊?</string>
 	<string name="internet">未連接到互聯網。\n請聯網後重試。</string>
 	<string name="partition">未檢測到 Windows 分區。</string>
 	<string name="internalstorage">文件已下載到內部存儲。</string>
 	<string name="dbkp">已修補並刷入 Boot 分區鏡像。\n你也可以在 /sdcard/patched-boot.img 找到修補後的鏡像。\n使用您的 %s 在 Windows 和 Android 之間切換。</string>
-	<string name="op7">警報滑桿</string>
+    <string name="devcfg">OS11 devcfg 已經刷入。\n原始 devcfg 可在 /sdcard/devcfg.img 找到。\n返回 Android 時，請於 STA Creator 使用 sdd.exe 刷入 OOS12 devcfg.</string>
+    <string name="op7">警報滑桿</string>
 	<string name="cepheus">人工智慧按鈕</string>
 	<string name="nabu">磁性盒</string>
 	<string name="reboot">重啓</string>

@@ -18,8 +18,9 @@
 	<string name="setup_title">INSTALADORES DE FRAMEWORK</string>
 	<string name="dbkp_title">DUALBOOT KERNEL PATCHER</string>
 	<string name="tablet_title">TABLET MODE SCRIPT</string>
+	<string name="devcfg_title">Ferramenta de flash DEVCFG</string>
 
-	<string name="backup_boot_subtitle">Criar backup da imagem de boot pro Android e/ou Windows</string>
+    <string name="backup_boot_subtitle">Criar backup da imagem de boot pro Android e/ou Windows</string>
 	<string name="mnt_subtitle">Alternar a montagem da partição do Windows para vizualizar ou editar o seu conteúdo</string>
 	<string name="toolbox_subtitle">Ferramentas e scripts para uma melhor experiência com Windows</string>
 	<string name="dump_modem_subtitle">Despejar modem para o Windows para consertar o 4G no SIM1 no Windows. É requisitar antes de toda inicialização do Windows</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">Adiciona instaladores de vários frameworks para C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Corrige o kernel para um dualboot fluído</string>
 	<string name="tablet_subtitle">Adiciona um script para C:⧹Toolbox que permite alterar o Modo Tablet</string>
+	<string name="devcfg_subtitle">Faz flash do devcfg do OOS11 para o Windows inicializar em dispositivos OOS12</string>
 
 	<string name="backup_boot_question">Criar backup da imagem de boot atual do Android?</string>
 	<string name="mount_question">Montar Windows em %s?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Baixar e mover os instaladores do C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX, e XNA para C:⧹Toolbox?\n(isso pode demorar um pouco)</string>
 	<string name="dbkp_question">Corrigir e instalar o kernel atual?\n!!!NÃO PRESSIONE SIM A MENOS QUE SEU DISPOSITIVO SEJA %s!!!</string>
 	<string name="tablet_question">Copiar o script do Modo Tablet para C:⧹Toolbox?</string>
+	<string name="devcfg_question">Flashear o devcfg do OOS11?\n!!!NÃO PRESSIONE SIM A MENOS QUE SEU DISPOSITIVO SEJA %s!!!</string>
 
-	<string name="wrong">Algo deu errado</string>
+    <string name="wrong">Algo deu errado</string>
 	<string name="mountfail">Algo deu errado, \nWindows não pôde ser montado.\nObtenha ajuda no grupo do Telegram.</string>
 	<string name="ntfs">Suporte a NTFS não detectado. \nInstalar o módulo NTFS3G?</string>
 	<string name="internet">Nenhuna conexão com a internet encontrada.\nVerifique a conexão e tente novamente.</string>
 	<string name="partition">Nenhuma partição Windows detectada.</string>
 	<string name="internalstorage">Arquivos baixados no armazenamento interno</string>
 	<string name="dbkp">Imagem de boot foi corrigida e instalada.\nA imagem corrigida também pode ser encontrada em /sdcard/patched-boot.img.\nUse o %s para alterar entre Windows e Android.</string>
-	<string name="op7">slider de alerta</string>
+    <string name="devcfg">O devcfg do OOS11 foi flashado.\nO devcfg original pode ser encontrado em /sdcard/devcfg.img.\nUtilize o sdd.exe no STA Creator para flashar o devcfg do OOS12 ao retornar para o Android.</string>
+    <string name="op7">slider de alerta</string>
 	<string name="cepheus">botão de assistente</string>
 	<string name="nabu">caixa magnética</string>
 	<string name="reboot">Reiniciar</string>
