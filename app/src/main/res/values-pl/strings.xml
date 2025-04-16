@@ -18,8 +18,9 @@
 	<string name="setup_title">INSTALATORY FRAMEWORKÓW</string>
 	<string name="dbkp_title">ŁATKA JĄDRA DLA DUALBOOTU</string>
 	<string name="tablet_title">SKRYPT TRYBU TABLETU</string>
+	<string name="devcfg_title">Narzędzie do flashowania DEVCFG</string>
 
-	<string name="backup_boot_subtitle">Zapisuje obraz rozruchu systemu na Androidzie i/lub w systemie Windows</string>
+    <string name="backup_boot_subtitle">Zapisuje obraz rozruchu systemu na Androidzie i/lub w systemie Windows</string>
 	<string name="mnt_subtitle">Montowanie partycji Windows w celu wyświetlenia lub edycji zawartości wewnątrz</string>
 	<string name="toolbox_subtitle">Narzędzia i skrypty dla przyjemniejszego doświadczenia z Windowsem</string>
 	<string name="dump_modem_subtitle">Zrzuć modem do Windows, aby naprawić LTE na karcie SIM1 w systemie Windows. Wymagane przed każdym uruchomieniem systemu Windows</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">Dodaje instalatory dla kilku frameworków do C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Modyfikuje jądro (kernel) w celu bezproblemowego dualbootingu</string>
 	<string name="tablet_subtitle">Dodaje skrypt do C:⧹Toolbox, który pozwala włączyć tryb tabletu</string>
+	<string name="devcfg_subtitle">Flashuje devcfg z OOS11, aby Windows mógł się uruchomić na urządzeniach OOS12</string>
 
 	<string name="backup_boot_question">Zapisać aktualny obraz rozruchu systemu Android?</string>
 	<string name="mount_question">Zamontować Windows na %s?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Pobierz i przenieś pakiety redystrybucyjne C++ oraz instalatory DirectX, OpenGL, OpenAL, PhysX, XNA framework do C:⧹Toolbox?\n(może to zająć trochę czasu)</string>
 	<string name="dbkp_question">Zmodyfikować i wgrać Twoje obecne jądro (kernel)?\n!!!NIE KLIKAJ TAK, CHYBA ŻE KORZYSTASZ Z %s!!!</string>
 	<string name="tablet_question">Skopiować skrypt trybu tebletu do C:⧹Toolbox?</string>
+	<string name="devcfg_question">Flash OOS11 devcfg?\n!!!NIE NACISKAJ TAK, JEŚLI TWOJE URZĄDZENIE NIE JEST %s!!!</string>
 
-	<string name="wrong">Coś poszło nie tak</string>
+    <string name="wrong">Coś poszło nie tak</string>
 	<string name="mountfail">Coś poszło nie tak, \nWindows nie mogł zostać zamontowany.\nPoproś o pomoc na czacie Telegram.</string>
 	<string name="ntfs">Nie wykryto wsparcia dla NTFS. \nZainstalować moduł NTFS3G?</string>
 	<string name="internet">Nie znaleziono połączenia z Internetem.\nPołącz się z siecią i spróbuj ponownie.</string>
 	<string name="partition">Nie wykryto partycji Windows.</string>
 	<string name="internalstorage">Pliki zostały pobrane do pamięci wewnętrznej</string>
 	<string name="dbkp">Obraz rozruchu został zmodyfikowany i wgrany.\nZmodyfikowany obraz można również znaleźć w /sdcard/patched-boot.img.\nUżyj %s, aby przełączać się miedzy systemami Windows i Android.</string>
-	<string name="op7">przełącznika trybu dźwięku</string>
+    <string name="devcfg">OOS11 devcfg został wgrany.\nOryginalny devcfg znajdziesz w /sdcard/devcfg.img.\nUżyj sdd.exe w STA Creator, aby wgrać OOS12 devcfg przy powrocie do Androida.</string>
+    <string name="op7">przełącznika trybu dźwięku</string>
 	<string name="cepheus">przycisku asystenta</string>
 	<string name="nabu">klawiatura magnetyczna</string>
 	<string name="reboot">Uruchom ponownie</string>

@@ -16,9 +16,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.venddair.holyhelper.R
 import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.MainActivityFunctions
+import com.venddair.holyhelper.utils.NavController
 import com.venddair.holyhelper.utils.Preferences
-import com.venddair.holyhelper.utils.State
-import com.venddair.holyhelper.utils.State.context
+import com.venddair.holyhelper.utils.ViewModel
+import com.venddair.holyhelper.utils.context
+import com.venddair.holyhelper.ui.theme.BaseColors
+import com.venddair.holyhelper.utils.restartApp
 import kotlinx.coroutines.flow.update
 
 data class ButtonConfig(
@@ -51,28 +54,28 @@ object Configs {
     fun colorOptions(): SettingsMiniButtonConfig {
         return SettingsMiniButtonConfig(
             text = "Color Options",
-            onClick = { State.navController.navigate("color_options") }
+            onClick = { NavController.navigate("color_options") }
         )
     }
     @Composable
     fun themeOptions(): SettingsMiniButtonConfig {
         return SettingsMiniButtonConfig(
             text = "Theme Options",
-            onClick = { State.navController.navigate("theme_options") }
+            onClick = { NavController.navigate("theme_options") }
         )
     }
     @Composable
     fun mainColor(): SettingsMiniButtonConfig {
         return SettingsMiniButtonConfig(
             text = "Main color",
-            onClick = { State.navController.navigate("main_color") }
+            onClick = { NavController.navigate("main_color") }
         )
     }
     @Composable
     fun textColor(): SettingsMiniButtonConfig {
         return SettingsMiniButtonConfig(
             text = "Text color",
-            onClick = { State.navController.navigate("text_color") }
+            onClick = { NavController.navigate("text_color") }
         )
     }
     @Composable
@@ -80,12 +83,12 @@ object Configs {
         return SettingsMiniButtonConfig(
             text = "Reset",
             onClick = {
-                Preferences.COLOR.set(State.BaseColors.color)
-                Preferences.TEXTCOLOR.set(State.BaseColors.textColor)
-                Preferences.GUIDEGROUPCOLOR.set(State.BaseColors.guideGroupColor)
+                Preferences.COLOR.set(BaseColors.color)
+                Preferences.TEXTCOLOR.set(BaseColors.textColor)
+                Preferences.GUIDEGROUPCOLOR.set(BaseColors.guideGroupColor)
                 Preferences.MATERIALYOU.set(true)
                 Preferences.COLORSBASEDONDEFAULT.set(false)
-                State.restartApp()
+                restartApp()
             }
         )
     }
@@ -93,7 +96,7 @@ object Configs {
     fun apply(): SettingsMiniButtonConfig {
         return SettingsMiniButtonConfig(
             text = "Apply",
-            onClick = { State.restartApp() }
+            onClick = { restartApp() }
         )
     }
 
@@ -274,13 +277,13 @@ object Configs {
             imageScale = imageScale ?: 1f,
             title = context.getString(R.string.backup_boot_title),
             subtitle = context.getString(R.string.backup_boot_subtitle),
-            onClick = { MainActivityFunctions.backupBoot(context) }
+            onClick = { MainActivityFunctions.backupBoot() }
         )
     }
 
     @Composable
     fun mount(modifier: Modifier = Modifier, imageScale: Float? = null): ButtonConfig {
-        val mountText by State.viewModel.mountText.collectAsState()
+        val mountText by ViewModel.mountText.collectAsState()
 
         return ButtonConfig(
             modifier = modifier,
@@ -288,7 +291,7 @@ object Configs {
             imageScale = imageScale ?: 0.8f,
             title = mountText,
             subtitle = context.getString(R.string.mnt_subtitle),
-            onClick = { MainActivityFunctions.mountWindows(context) }
+            onClick = { MainActivityFunctions.mountWindows() }
         )
     }
 
@@ -300,14 +303,14 @@ object Configs {
             imageScale = imageScale ?: 1f,
             title = context.getString(R.string.toolbox_title),
             subtitle = context.getString(R.string.toolbox_subtitle),
-            onClick = { State.navController.navigate("toolbox") }
+            onClick = { NavController.navigate("toolbox") }
         )
     }
 
     @SuppressLint("StringFormatInvalid")
     @Composable
     fun quickboot(modifier: Modifier = Modifier, imageScale: Float? = null): ButtonConfig {
-        val isUefiPresent by State.viewModel.isUefiFilePresent.collectAsState()
+        val isUefiPresent by ViewModel.isUefiFilePresent.collectAsState()
 
         val context = LocalContext.current as ComponentActivity
 
@@ -318,7 +321,7 @@ object Configs {
             disabled = !isUefiPresent,
             title = if (isUefiPresent) context.getString(R.string.quickboot_title) else context.getString(R.string.uefi_not_found),
             subtitle = if (isUefiPresent) context.getString(R.string.quickboot_subtitle) else context.getString(R.string.uefi_not_found_subtitle, Device.get()),
-            onClick = { MainActivityFunctions.quickboot(context) }
+            onClick = { MainActivityFunctions.quickboot() }
         )
     }
 
@@ -330,7 +333,7 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.sta_title),
             subtitle = context.getString(R.string.sta_subtitle),
-            onClick = { MainActivityFunctions.sta_creator(context) }
+            onClick = { MainActivityFunctions.sta_creator() }
         )
     }
 
@@ -342,7 +345,7 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.usbhost_title),
             subtitle = context.getString(R.string.usbhost_subtitle),
-            onClick = { MainActivityFunctions.usb_host_mode(context) }
+            onClick = { MainActivityFunctions.usb_host_mode() }
         )
     }
 
@@ -354,14 +357,14 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.software_title),
             subtitle = context.getString(R.string.software_subtitle),
-            onClick = { MainActivityFunctions.arm_software(context) }
+            onClick = { MainActivityFunctions.arm_software() }
         )
     }
 
     @Composable
     @SuppressLint("StringFormatInvalid")
     fun flashUefi(modifier: Modifier = Modifier, imageScale: Float? = null): ButtonConfig {
-        val isUefiPresent by State.viewModel.isUefiFilePresent.collectAsState()
+        val isUefiPresent by ViewModel.isUefiFilePresent.collectAsState()
         return ButtonConfig(
             image = R.drawable.ic_uefi,
             imageScale = imageScale ?: 1f,
@@ -374,29 +377,40 @@ object Configs {
                 R.string.uefi_not_found_subtitle,
                 Device.get()
             ),
-            onClick = { if (isUefiPresent) MainActivityFunctions.flash_uefi(context) }
+            onClick = { if (isUefiPresent) MainActivityFunctions.flash_uefi() }
         )
     }
 
     fun dumpModem(modifier: Modifier = Modifier, imageScale: Float? = null): ButtonConfig {
         return ButtonConfig(
             image = R.drawable.ic_modem,
-            imageScale = imageScale ?: 1f,
+            imageScale = imageScale ?: 1.1f,
             modifier = modifier,
             title = context.getString(R.string.dump_modem_title),
             subtitle = context.getString(R.string.dump_modem_subtitle),
-            onClick = { MainActivityFunctions.dump_modem(context) }
+            onClick = { MainActivityFunctions.dump_modem() }
+        )
+    }
+
+    fun devcfg(modifier: Modifier = Modifier, imageScale: Float? = null): ButtonConfig {
+        return ButtonConfig(
+            image = R.drawable.ic_uefi,
+            imageScale = imageScale ?: 1f,
+            modifier = modifier,
+            title = context.getString(R.string.devcfg_title),
+            subtitle = context.getString(R.string.devcfg_subtitle),
+            onClick = { MainActivityFunctions.devcfg() }
         )
     }
 
     fun atlasos(modifier: Modifier = Modifier, imageScale: Float? = null): ButtonConfig {
         return ButtonConfig(
             image = R.drawable.atlasos,
-            imageScale = imageScale ?: 1f,
+            imageScale = imageScale ?: .8f,
             modifier = modifier,
             title = context.getString(R.string.atlasos_title),
             subtitle = context.getString(R.string.atlasos_subtitle),
-            onClick = { MainActivityFunctions.atlasos(context) }
+            onClick = { MainActivityFunctions.atlasos() }
         )
     }
 
@@ -407,7 +421,7 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.dbkp_title),
             subtitle = context.getString(R.string.dbkp_subtitle),
-            onClick = { MainActivityFunctions.dbkp(context) }
+            onClick = { MainActivityFunctions.dbkp() }
         )
     }
 
@@ -418,7 +432,7 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.rotation_title),
             subtitle = context.getString(R.string.rotation_subtitle),
-            onClick = { MainActivityFunctions.rotation(context) }
+            onClick = { MainActivityFunctions.rotation() }
         )
     }
 
@@ -429,7 +443,7 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.tablet_title),
             subtitle = context.getString(R.string.tablet_subtitle),
-            onClick = { MainActivityFunctions.optimizedTaskbar(context) }
+            onClick = { MainActivityFunctions.optimizedTaskbar() }
         )
     }
 
@@ -440,7 +454,7 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.setup_title),
             subtitle = context.getString(R.string.setup_subtitle),
-            onClick = { MainActivityFunctions.frameworks(context) }
+            onClick = { MainActivityFunctions.frameworks() }
         )
     }
 
@@ -451,7 +465,7 @@ object Configs {
             modifier = modifier,
             title = context.getString(R.string.defender_title),
             subtitle = context.getString(R.string.defender_subtitle),
-            onClick = { MainActivityFunctions.edge(context) }
+            onClick = { MainActivityFunctions.edge() }
         )
     }
 }

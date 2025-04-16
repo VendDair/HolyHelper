@@ -18,8 +18,9 @@
 	<string name="setup_title">УСТАНОВЩИК ФРЕЙМВОРКОВ</string>
 	<string name="dbkp_title">ПАТЧИНГ ЯДРА ДЛЯ ДВОЙНОЙ ЗАГРУЗКИ</string>
 	<string name="tablet_title">СКРИПТ ДЛЯ РЕЖИМА "ПЛАНШЕТ"</string>
+	<string name="devcfg_title">Инструмент для прошивки DEVCFG</string>
 
-	<string name="backup_boot_subtitle">Сохранить бекап образа boot в Android и/или в Windows</string>
+    <string name="backup_boot_subtitle">Сохранить бекап образа boot в Android и/или в Windows</string>
 	<string name="mnt_subtitle">Вы можете подключить раздел Windows, чтобы просматривать и изменять его содержимое</string>
 	<string name="toolbox_subtitle">Утилиты и скрипты для более удобного использования Windows</string>
 	<string name="dump_modem_subtitle">Сдампить modem чтобы починить LTE на SIM1 в Windows. Необходимо перед первым запуском Windows</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">Добавляет установщики для нескольких фреймворков в C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Патчинг ядра для бесперебойной двойной загрузки</string>
 	<string name="tablet_subtitle">Добавляет скрипт в C:⧹Toolbox который позволяет вам переключать режим "планшета"</string>
+	<string name="devcfg_subtitle">Прошивает devcfg из OOS11, чтобы Windows мог загружаться на устройствах с OOS12</string>
 
 	<string name="backup_boot_question">Вы хотите сохранить текущий образ boot?</string>
 	<string name="mount_question">Смонтировать Windows в %s?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Скачать и переместить установщики C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX, и XNA в C:⧹Toolbox?\n(это может занять немного времени)</string>
 	<string name="dbkp_question">Пропатчить и перепрошить ваше текущее ядро?\n!!!НЕ НАЖИМАЙТЕ КНОПКУ "ДА", ЕСЛИ ВАШЕ УСТРОЙСТВО НЕ %s!!!</string>
 	<string name="tablet_question">Копировать скрипт для режима "планшета" в C:⧹Toolbox?</string>
+	<string name="devcfg_question">Прошить OOS11 devcfg?\n!!!НЕ НАЖИМАЙТЕ ДА, ЕСЛИ ВАШЕ УСТРОЙСТВО НЕ %s!!!</string>
 
-	<string name="wrong">Что-то пошло не так</string>
+    <string name="wrong">Что-то пошло не так</string>
 	<string name="mountfail">Что-то пошло не так, \nРаздел Windows не может быть смонтирован.\nОбратитесь за помощью в чат Telegram.</string>
 	<string name="ntfs">Поддержка NTFS не найдена. \nУстановить NTFS3G модуль?</string>
 	<string name="internet">Нет интернет соединения.\nПодключитесь к интернету и повторите процесс.</string>
 	<string name="partition">Рздел Windows не найден.</string>
 	<string name="internalstorage">Файлы загруженны во внутреннее хранилище</string>
 	<string name="dbkp">Образ загрузки был пропатчен и прошит.\nПропатченый образ также можно найти по адресу /sdcard/patched-boot.img.\nИспользуйте %s для переключения между Windows и Android.</string>
-	<string name="op7">ползунок оповещения</string>
+    <string name="devcfg">OOS11 devcfg был прошит.\nОригинальный devcfg можно найти по адресу /sdcard/devcfg.img.\nИспользуйте sdd.exe в STA Creator для прошивки OOS12 devcfg при возвращении на Android.</string>
+    <string name="op7">ползунок оповещения</string>
 	<string name="cepheus">вспомогательную кнопку</string>
 	<string name="nabu">магнитный чехол</string>
 	<string name="reboot">Перезагрузка</string>

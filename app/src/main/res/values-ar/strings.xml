@@ -18,6 +18,7 @@
 	<string name="setup_title">مثبتات الإطارات (FRAMEWORKS)</string>
 	<string name="dbkp_title">باتشر نواة التشغيل المزدوج</string>
 	<string name="tablet_title">برنامج وضع التابلت</string>
+	<string name="devcfg_title">أداة فلاش DEVCFG</string>
 
 	<string name="backup_boot_subtitle">خذ نسخة احتياطية للـ Boot لنظام أندرويد أو/و ويندوز</string>
 	<string name="mnt_subtitle">تبديل حالة الربط أو الماونت لويندوز لتعديل محتوياته</string>
@@ -37,8 +38,9 @@
 	<string name="setup_subtitle">يضيف مثبتات لإطارات متعددة إلى C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">يعدل النواة لتسهيل الإقلاع المزدوج</string>
 	<string name="tablet_subtitle">يضيف برنامج إلى C:⧹Toolbox يسمح بتفعيل وضع التابلت</string>
+	<string name="devcfg_subtitle">يُثبِّت devcfg من OOS11 لتمكين إقلاع Windows على أجهزة OOS12</string>
 
-	<string name="backup_boot_question">هل ترغب بأخذ نسخة احتياطية للـ Boot الحالي؟</string>
+    <string name="backup_boot_question">هل ترغب بأخذ نسخة احتياطية للـ Boot الحالي؟</string>
 	<string name="mount_question">هل تريد ماونت ويندوز في المسار %s؟</string>
 	<string name="unmount_question">إلغاء ماونت لويندوز؟</string>
 	<string name="dump_modem_question">هل تريد نسخ ملفات المودم إلى ويندوز؟</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">تنزيل وتثبيت C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX, مثبت XNA إلى C:⧹Toolbox؟\n(قد يستغرق هذا وقتاً)</string>
 	<string name="dbkp_question">هل ترغب في تعديل وتفليش النواة الحالية؟\n!!!لا تضغط نعم إلا إذا كان جهازك %s!!!</string>
 	<string name="tablet_question">نسخ برنامج وضع التابلت إلى C:⧹Toolbox؟</string>
+	<string name="devcfg_question">فلاش devcfg لـ OOS11?\n!!!لا تضغط نعم إلا إذا كان جهازك %s!!!</string>
 
-	<string name="wrong">حدث خطأ ما</string>
+    <string name="wrong">حدث خطأ ما</string>
 	<string name="mountfail">حدث خطأ ما\nفشل في عمل Mount لويندوز، \nيرجى طلب المساعدة من خلال دردشة التيليجرام</string>
 	<string name="ntfs">لم يتم اكتشاف دعم NTFS. \nهل ترغب بتثبيت وحدة NTFS3G؟</string>
 	<string name="internet">لم يتم العثور على اتصال إنترنت.\nاتصل بالإنترنت وحاول مرة أخرى.</string>
 	<string name="partition">لم يتم اكتشاف قسم لنظام ويندوز.</string>
 	<string name="internalstorage">تم تنزيل الملفات إلى الذاكرة الداخلية</string>
 	<string name="dbkp">صورة البوت تستشعر بين السحب عند الوميض.\nيمكن أيضًا العثور على الصورة المصححة في /sdcard/patched-boot.img.\nاستخدم %s للتبديل بين Windows وAndroid.</string>
-	<string name="op7">شريط التنبيهات</string>
+    <string name="devcfg">تم وميض devcfg لـ OOS11.\nيمكن العثور على devcfg الأصلي في /sdcard/devcfg.img.\nاستخدم sdd.exe في STA Creator لتفليش devcfg لـ OOS12 عند العودة إلى Android.</string>
+    <string name="op7">شريط التنبيهات</string>
 	<string name="cepheus">مساعد بوتوn</string>
 	<string name="nabu">حالة مغناطيسية</string>
 	<string name="reboot">إعادة تشغيل</string>

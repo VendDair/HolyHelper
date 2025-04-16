@@ -54,73 +54,83 @@ import com.venddair.holyhelper.ui.themes.SettingsButtonConfig
 import com.venddair.holyhelper.ui.themes.SettingsMiniButtonConfig
 import com.venddair.holyhelper.ui.themes.Theme
 import com.venddair.holyhelper.ui.themes.main.MainTheme
+import com.venddair.holyhelper.utils.AppTheme
+import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.Preferences
-import com.venddair.holyhelper.utils.State
+import com.venddair.holyhelper.utils.ViewModel
+import com.venddair.holyhelper.utils.appColors
+import com.venddair.holyhelper.utils.context
+import com.venddair.holyhelper.utils.deviceConfig
 
 object OGWoaHelper2_0Theme : Theme {
+    override val statusBarColor: Int
+        get() = appColors.surface.toArgb()
+    override val navigationBarColor: Int
+        get() = appColors.background.toArgb()
+
     @Composable
     override fun MainMenu() {
         val modifier = Modifier.height(sdp(_140sdp))
-        State.Theme.OuterColumn(Modifier) {
-            State.Theme.TopBar(null)
+        AppTheme.OuterColumn(Modifier) {
+            AppTheme.TopBar(null)
 
-            State.Theme.ScreenContainer(Modifier) {
-                State.Theme.Panel()
-                State.Theme.ElementsContainer(false) {
+            AppTheme.ScreenContainer(Modifier) {
+                AppTheme.Panel()
+                AppTheme.ElementsContainer(false) {
                     RowInnerElementContainer(modifier) {
-                        State.Theme.Button(Configs.backupBoot(Modifier.weight(1f), 1.2f))
-                        State.Theme.Button(Configs.mount(Modifier.weight(1f), 1.1f))
+                        AppTheme.Button(Configs.backupBoot(Modifier.weight(1f), 1.2f))
+                        AppTheme.Button(Configs.mount(Modifier.weight(1f), 1.1f))
                     }
                     RowInnerElementContainer(modifier) {
-                        State.Theme.Button(Configs.toolbox(Modifier.weight(1f), 1.5f))
-                        State.Theme.Button(Configs.quickboot(Modifier.weight(1f), 2.5f))
+                        AppTheme.Button(Configs.toolbox(Modifier.weight(1f), 1.5f))
+                        AppTheme.Button(Configs.quickboot(Modifier.weight(1f), 2.5f))
                     }
                 }
             }
         }
 
-        State.Theme.Loading()
+        
     }
 
     @Composable
     override fun ToolboxMenu() {
         //val modifier = Modifier.height(sdp(_90sdp))
         val heightModifier = Modifier.height(sdp(_140sdp))
-        State.Theme.OuterColumn(Modifier) {
-            State.Theme.TopBar(State.context.getString(R.string.toolbox_title))
+        AppTheme.OuterColumn(Modifier) {
+            AppTheme.TopBar(context.getString(R.string.toolbox_title))
 
-            State.Theme.ScreenContainer(Modifier.padding(vertical = 10.dp)) {
-                State.Theme.ElementsContainer(true) {
+            AppTheme.ScreenContainer(Modifier.padding(vertical = 10.dp)) {
+                AppTheme.ElementsContainer(true) {
                     val modifier = Modifier.weight(1f)
 
                     RowInnerElementContainer(heightModifier) {
-                        State.Theme.Button(Configs.sta(modifier, 2f))
-                        State.Theme.Button(Configs.armSoftware(modifier, 1.5f))
+                        AppTheme.Button(Configs.sta(modifier, 2f))
+                        AppTheme.Button(Configs.armSoftware(modifier, 1.5f))
                     }
                     RowInnerElementContainer(heightModifier) {
-                        State.Theme.Button(Configs.flashUefi(modifier, 1.5f))
-                        State.Theme.Button(Configs.atlasos(modifier, 1.5f))
+                        AppTheme.Button(Configs.flashUefi(modifier, 1.5f))
+                        AppTheme.Button(Configs.atlasos(modifier, 1.5f))
                     }
                     RowInnerElementContainer(heightModifier) {
-                        State.Theme.Button(Configs.usbHost(modifier, 1.2f))
-                        State.Theme.Button(Configs.rotation(modifier, 1.2f))
+                        AppTheme.Button(Configs.usbHost(modifier, 1.2f))
+                        AppTheme.Button(Configs.rotation(modifier, 1.2f))
                     }
                     RowInnerElementContainer(heightModifier) {
-                        State.Theme.Button(Configs.tabletMode(modifier, 1.5f))
-                        State.Theme.Button(Configs.frameworks(modifier, 1.2f))
+                        AppTheme.Button(Configs.tabletMode(modifier, 1.5f))
+                        AppTheme.Button(Configs.frameworks(modifier, 1.2f))
                     }
                     RowInnerElementContainer(heightModifier) {
-                        State.Theme.Button(Configs.edgeRemover(modifier, 1.5f))
-                        if (State.deviceConfig.isDumpModem)
-                            State.Theme.Button(Configs.dumpModem(modifier, 2f))
+                        AppTheme.Button(Configs.edgeRemover(modifier, 1.5f))
+                        if (deviceConfig.isDumpModem)
+                            AppTheme.Button(Configs.dumpModem(modifier, 2f))
                     }
-                    if (State.deviceConfig.isDbkp)
-                        State.Theme.Button(Configs.dbkp(modifier))
+                    if (deviceConfig.isDbkp)
+                        AppTheme.Button(Configs.dbkp(modifier))
                 }
             }
         }
 
-        State.Theme.Loading()
+        
     }
 
     @Composable
@@ -160,7 +170,7 @@ object OGWoaHelper2_0Theme : Theme {
     override fun TopBar(text: String?) {
         Row(
             modifier = Modifier
-                .background(State.Colors.background)
+                .background(appColors.background)
                 .fillMaxWidth()
                 .padding(
                     horizontal = sdp(_18sdp),
@@ -184,14 +194,14 @@ object OGWoaHelper2_0Theme : Theme {
                     ) {
                         Text(
                             text = "Holy Helper",
-                            color = State.Colors.text,
+                            color = appColors.text,
                             fontSize = ssp(_15ssp),
                             fontWeight = FontWeight.Bold
                         )
                         Text(
                             modifier = Modifier.alpha(0.5f),
-                            text = Strings.version + if (Strings.test) " (DEV)" else "",
-                            color = State.Colors.text,
+                            text = Strings.version + if (Strings.dev) " (DEV)" else "",
+                            color = appColors.text,
                             fontSize = ssp(_12ssp)
                         )
                     }
@@ -199,7 +209,7 @@ object OGWoaHelper2_0Theme : Theme {
                     Text(
                         text = text,
                         fontSize = ssp(_16ssp),
-                        color = State.Colors.text,
+                        color = appColors.text,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start = sdp(_2sdp))
                     )
@@ -210,7 +220,7 @@ object OGWoaHelper2_0Theme : Theme {
                     horizontalArrangement = Arrangement.spacedBy(sdp(_10sdp)),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (Strings.test)
+                    if (Strings.dev)
                         MainTheme.RefreshIcon(Modifier)
                     MainTheme.SettingsIcon(Modifier)
                 }
@@ -219,7 +229,7 @@ object OGWoaHelper2_0Theme : Theme {
 
     @Composable
     override fun Panel() {
-        val isPortrait = State.isPortrait
+        val isPortrait = Device.isPortrait
 
         val modifier = if (isPortrait) {
             Modifier.height(sdp(_160sdp)).fillMaxWidth()
@@ -233,29 +243,27 @@ object OGWoaHelper2_0Theme : Theme {
                 horizontalArrangement = Arrangement.spacedBy(sdp(_5sdp))
                 //horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                DeviceImage(modifier = Modifier.weight(1f))
-                State.Theme.InfoBox(modifier = Modifier.weight(1.4f))
+                AppTheme.DeviceImage(modifier = Modifier.weight(1f))
+                AppTheme.InfoBox(modifier = Modifier.weight(1.4f))
             }
         } else {
             Column(
                 modifier = modifier,
                 verticalArrangement = Arrangement.spacedBy(sdp(_5sdp))
             ) {
-                DeviceImage(modifier = Modifier.weight(1f))
-                State.Theme.InfoBox(modifier = Modifier.weight(1f))
+                AppTheme.DeviceImage(modifier = Modifier.weight(1f))
+                AppTheme.InfoBox(modifier = Modifier.weight(1f))
             }
         }
     }
 
     @Composable
     override fun InfoBox(modifier: Modifier) {
-        val deviceName by State.viewModel.deviceName.collectAsState()
-        val panel by State.viewModel.panelType.collectAsState()
-        val ram by State.viewModel.totalRam.collectAsState()
-        val lastBackup by State.viewModel.lastBackupDate.collectAsState()
-        val slot by State.viewModel.slot.collectAsState()
-
-        State.lastBackup = lastBackup
+        val deviceName by ViewModel.deviceName.collectAsState()
+        val panel by ViewModel.panelType.collectAsState()
+        val ram by ViewModel.totalRam.collectAsState()
+        val lastBackup by ViewModel.lastBackupDate.collectAsState()
+        val slot by ViewModel.slot.collectAsState()
 
         val horizontalPadding = sdp(_5sdp)
         val buttonPadding = PaddingValues(
@@ -268,7 +276,7 @@ object OGWoaHelper2_0Theme : Theme {
         Box(
             modifier = modifier
                 .fillMaxHeight()
-                .background(State.Colors.surface, shape = RoundedCornerShape(sdp(_10sdp)))
+                .background(appColors.surface, shape = RoundedCornerShape(sdp(_10sdp)))
         ) {
             Column {
                 Box(
@@ -281,7 +289,7 @@ object OGWoaHelper2_0Theme : Theme {
                 ) {
                     Text(
                         text = "Windows on ARM",
-                        color = State.Colors.text,
+                        color = appColors.text,
                         fontWeight = FontWeight.Bold,
                         fontSize = ssp(_12ssp)
                     )
@@ -297,7 +305,7 @@ object OGWoaHelper2_0Theme : Theme {
                         ) {
                             listOf(deviceName, panel, ram, lastBackup, slot).forEach { info ->
                                 info?.takeIf { it.isNotEmpty() && !it.contains("null") }?.let {
-                                    State.Theme.PanelItem(it)
+                                    AppTheme.PanelItem(it)
                                 }
                             }
                         }
@@ -352,7 +360,7 @@ object OGWoaHelper2_0Theme : Theme {
                     )
                 }
                 .clip(RoundedCornerShape(sdp(_8sdp)))
-                .background(State.Colors.surface),
+                .background(appColors.surface),
         ) {
             Column(
                 modifier = Modifier
@@ -367,7 +375,7 @@ object OGWoaHelper2_0Theme : Theme {
                         modifier = Modifier
                             .fillMaxWidth(),
                         text = config.title,
-                        color = State.Colors.text,
+                        color = appColors.text,
                         fontWeight = FontWeight.Bold,
                         fontSize = ssp(_10ssp),
                         textAlign = TextAlign.Center
@@ -380,7 +388,7 @@ object OGWoaHelper2_0Theme : Theme {
                             .scale(config.imageScale)
                             .width(sdp(_20sdp)),
                         painter = painterResource(id = config.image),
-                        tint = if (config.tintImage) State.Colors.text else Color.Unspecified,
+                        tint = if (config.tintImage) appColors.text else Color.Unspecified,
                         contentDescription = "button image"
                     )
                 }
@@ -390,7 +398,7 @@ object OGWoaHelper2_0Theme : Theme {
                     modifier = Modifier
                         .padding(start = sdp(_10sdp), top = sdp(_5sdp)),
                     text = config.subtitle,
-                    color = State.Colors.text,
+                    color = appColors.text,
                     fontStyle = FontStyle.Italic,
                     fontSize = ssp(_8ssp)
                 )
@@ -403,7 +411,7 @@ object OGWoaHelper2_0Theme : Theme {
                         .width(sdp(_40sdp))
                         .fillMaxHeight(),
                     painter = painterResource(id = config.image),
-                    tint = if (config.tintImage) State.Colors.text else Color.Unspecified,
+                    tint = if (config.tintImage) appColors.text else Color.Unspecified,
                     contentDescription = "button image"
                 )
                 Column(
@@ -414,13 +422,13 @@ object OGWoaHelper2_0Theme : Theme {
                 ) {
                     Text(
                         text = config.title,
-                        color = State.Colors.text,
+                        color = appColors.text,
                         fontWeight = FontWeight.Bold,
                         fontSize = ssp(_11ssp),
                     )
                     Text(
                         text = config.subtitle,
-                        color = State.Colors.text,
+                        color = appColors.text,
                         fontStyle = FontStyle.Italic,
                         fontSize = ssp(_9ssp)
                     )
@@ -454,29 +462,30 @@ object OGWoaHelper2_0Theme : Theme {
         topBarText: String,
         initialColor: Color,
         colorKey: Preferences.Preference<String>,
+        previewColorFactor: Float
     ) {
-        MainTheme.ColorChanger(topBarText, initialColor, colorKey)
+        MainTheme.ColorChanger(topBarText, initialColor, colorKey, previewColorFactor)
     }
 
     @Composable
     override fun Loading() {
-        val isLoading by State.viewModel.isLoading.collectAsState()
-        val hadLoaded by State.viewModel.hadLoaded.collectAsState()
-        State.context.window.statusBarColor = State.Colors.background.toArgb()
-        State.context.window.navigationBarColor = State.Colors.background.toArgb()
+        val isLoading by ViewModel.isLoading.collectAsState()
+        val hadLoaded by ViewModel.hadLoaded.collectAsState()
+        context.window.statusBarColor = appColors.background.toArgb()
+        context.window.navigationBarColor = appColors.background.toArgb()
 
         if (isLoading && !hadLoaded) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(State.Colors.background),
+                    .background(appColors.background),
                 contentAlignment = Alignment.Center
 
             ) {
                 Text(
                     text = "Loading...",
                     textAlign = TextAlign.Center,
-                    color = State.Colors.text,
+                    color = appColors.text,
                     fontSize = ssp(_15ssp),
                     fontWeight = FontWeight.Bold
                 )

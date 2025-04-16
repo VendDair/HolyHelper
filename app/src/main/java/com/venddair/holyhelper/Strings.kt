@@ -1,14 +1,14 @@
 package com.venddair.holyhelper
 
 import android.annotation.SuppressLint
+import android.os.Environment
 import com.topjohnwu.superuser.ShellUtils
-import com.venddair.holyhelper.Strings.assets.data
 
 @SuppressLint("SdCardPath")
 object Strings {
 
     const val version = "1.1.2"
-    const val test = true
+    const val dev = false
 
 
     object assets {
@@ -105,5 +105,7 @@ object Strings {
 
     const val bootImage = "/sdcard/boot.img"
     const val bootImage1 = "/sdcard/Windows/boot.img"
+
+    val download: String get() = "/sdcard/${Environment.DIRECTORY_DOWNLOADS}"
 
 }

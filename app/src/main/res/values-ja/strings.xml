@@ -18,8 +18,9 @@
 	<string name="setup_title">フレームワークインストーラー</string>
 	<string name="dbkp_title">デュアルブートカーネルパッチャー</string>
 	<string name="tablet_title">タブレットモードスクリプト</string>
+	<string name="devcfg_title">DEVCFGフラッシャー</string>
 
-	<string name="backup_boot_subtitle">ブートイメージをAndroidおよび/またはWindowsにバックアップ</string>
+    <string name="backup_boot_subtitle">ブートイメージをAndroidおよび/またはWindowsにバックアップ</string>
 	<string name="mnt_subtitle">Windowsパーティションのマウントを切り替えて、内部のコンテンツを表示または編集</string>
 	<string name="toolbox_subtitle">より快適なWindows体験のためのツールとスクリプト</string>
 	<string name="dump_modem_subtitle">モデムをWindowsにダンプして、WindowsのSIM1でLTEを修正します。\nWindows を起動する前に毎回必要です</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">いくつかのフレームワークのインストーラーをC:⧹Toolboxに追加</string>
 	<string name="dbkp_subtitle">シームレスなデュアルブートのためにカーネルをパッチ</string>
 	<string name="tablet_subtitle">タブレットモードを切り替えるスクリプトをC:⧹Toolboxに追加</string>
+	<string name="devcfg_subtitle">OOS12デバイスでWindowsを起動させるため、OOS11のdevcfgをフラッシュします</string>
 
 	<string name="backup_boot_question">現在のAndroidブートイメージをバックアップしますか？</string>
 	<string name="mount_question">Windowsを %s にマウントしますか？</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">C++ 再頒布可能パッケージ、DirectX、OpenGL、OpenAL、PhysX、およびXNAフレームワークインストーラーをC:⧹Toolboxにダウンロードして移動しますか？\n(これには時間がかかる場合があります)</string>
 	<string name="dbkp_question">現在のカーネルをパッチしてフラッシュしますか？\n!!!デバイスが %s でない限り、はいを押さないでください!!!</string>
 	<string name="tablet_question">タブレットモードスクリプトをC:⧹Toolboxにコピーしますか？</string>
+	<string name="devcfg_question">OOS11のdevcfgをフラッシュしますか？\n!!!デバイスが%sでない限り、YESを押さないでください!!!</string>
 
-	<string name="wrong">問題が発生しました</string>
+    <string name="wrong">問題が発生しました</string>
 	<string name="mountfail">問題が発生しました。\nWindowsをマウントできませんでした。\nTelegramチャットで助けを求めてください。</string>
 	<string name="ntfs">NTFS サポートが検出されませんでした。\nNTFS3G モジュールをインストールしますか？</string>
 	<string name="internet">インターネット接続が見つかりません。\nインターネットに接続して再試行してください。</string>
 	<string name="partition">Windows パーティションが検出されません。</string>
 	<string name="internalstorage">ファイルが内部ストレージにダウンロードされました</string>
 	<string name="dbkp">ブートイメージがパッチされ、フラッシュされました。\nパッチされたイメージは /sdcard/patched-boot.img にもあります。\n%s を使用して Windows と Android を切り替えます。</string>
-	<string name="op7">アラートスライダー</string>
+    <string name="devcfg">OOS11のdevcfgがフラッシュされました。\n元のdevcfgは /sdcard/devcfg.img にあります。\nAndroidに戻る際は、STA Creatorのsdd.exeを使用してOOS12のdevcfgをフラッシュしてください。</string>
+    <string name="op7">アラートスライダー</string>
 	<string name="cepheus">アシスタントボタン</string>
 	<string name="nabu">マグネティックケース</string>
 	<string name="reboot">再起動</string>

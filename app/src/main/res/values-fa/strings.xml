@@ -18,8 +18,9 @@
 	<string name="setup_title">FRAMEWORK نصب کننده</string>
 	<string name="dbkp_title">پچ کردن کرنل دوگانه</string>
 	<string name="tablet_title">فعال سازی حالت تبلت</string>
+	<string name="devcfg_title">ابزار فلش DEVCFG</string>
 
-	<string name="backup_boot_subtitle">پشتیبان گیری از فایل بوت در اندروید یا ویندوز</string>
+    <string name="backup_boot_subtitle">پشتیبان گیری از فایل بوت در اندروید یا ویندوز</string>
 	<string name="mnt_subtitle">دسترسی به فایل های ویندوز در اندروید</string>
 	<string name="toolbox_subtitle">جعبه ابزار</string>
 	<string name="dump_modem_subtitle">دامپ مودم برای فعال سازی اینترنت سیم کارت ۱ در ویندوز</string>
@@ -37,8 +38,9 @@
 	<string name="setup_subtitle">افزودن نصب کننده framework</string>
 	<string name="dbkp_subtitle">پچ کردن کرنل برای بوت دوگانه همزمان</string>
 	<string name="tablet_subtitle">اضافه کردن کد اجرایی برای فعال سازی حالت تبلت</string>
+	<string name="devcfg_subtitle">devcfg از OOS11 را فلش میکند تا ویندوز روی دستگاههای OOS12 بوت شود</string>
 
-	<string name="backup_boot_question">پشتیبان گیری از فایل بوت اندروید؟</string>
+    <string name="backup_boot_question">پشتیبان گیری از فایل بوت اندروید؟</string>
 	<string name="mount_question">"دسترسی به فایل های ویندوز در مسیر
 %s ?"</string>
 	<string name="unmount_question">قطع دسترسی به ویندوز؟</string>
@@ -60,8 +62,9 @@ C:⧹Toolbox?"</string>
 	<string name="dbkp_question">"آیا کرنل پچ و فلش زده شود؟ 
 به هیچ‌وجه روی بله کلیک نکنید اگر گوشی شما %s نیست!!!"</string>
 	<string name="tablet_question">کپی کردن کد اجرایی حالت تبلت به C:⧹Toolbox؟</string>
+	<string name="devcfg_question">فلش devcfg OOS11?\n!!!تا وقتی دستگاه شما %s نیست، دکمه YES را فشار ندهید!!!</string>
 
-	<string name="wrong">خطایی رخ داد</string>
+    <string name="wrong">خطایی رخ داد</string>
 	<string name="mountfail">خطایی رخ داد، سوار سازی ویندوز با مشکل روبرو شد، در گروه تلگرام درخواست کمک کنید</string>
 	<string name="ntfs">"پشتیبانی NTFS یافت نشد!
 مایلید ماژول NTFS3G نصب شود؟"</string>
@@ -69,7 +72,8 @@ C:⧹Toolbox?"</string>
 	<string name="partition">درایو ویندوز پیدا نشد</string>
 	<string name="internalstorage">فایل ها در حافظه‌ی داخلی دانلود شدند</string>
 	<string name="dbkp">فایل بوت پچ و فلش زده شده.\n می‌تونید فایل پچ شده را در حافظه داخلی پیدا کنید .\n از  %s استفاده کنید تا از بین ویندوز و اندروید انتخاب کنید.</string>
-	<string name="op7">کشاننده هشدار </string>
+    <string name="devcfg">پیکربندی devcfg OOS11 فلش شده است.\nپیکربندی اصلی در /sdcard/devcfg.img موجود است.\nاز sdd.exe در STA Creator برای فلش کردن devcfg OOS12 هنگام بازگشت به اندروید استفاده کنید.</string>
+    <string name="op7">کشاننده هشدار </string>
 	<string name="cepheus">دکمه دستیار کمک</string>
 	<string name="nabu">قاب آهنربایی</string>
 	<string name="reboot">راه‌اندازی مجدد</string>

@@ -72,7 +72,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7")
     implementation("androidx.compose.runtime:runtime-livedata:1.7.7")
     implementation("com.github.skydoves:colorpicker-compose:1.1.2")
-    implementation("androidx.glance:glance-appwidget:1.1.0")
 
     implementation(libs.com.github.topjohnwu.libsu.core)
     implementation(libs.com.github.topjohnwu.libsu.service)

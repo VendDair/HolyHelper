@@ -19,6 +19,9 @@ enum class ThemeType(val type: String) {
 
 interface Theme {
 
+    val statusBarColor: Int
+    val navigationBarColor: Int
+
     @Composable
     fun MainMenu()
 
@@ -77,7 +80,7 @@ interface Theme {
     fun PanelItem(text: String)
 
     @Composable
-    fun ColorChanger(topBarText: String, initialColor: Color, colorKey: Preferences.Preference<String>)
+    fun ColorChanger(topBarText: String, initialColor: Color, colorKey: Preferences.Preference<String>, previewColorFactor: Float)
 
     @Composable
     fun Loading()

@@ -18,8 +18,9 @@
 	<string name="setup_title">ติดตั้งเฟรมเวิร์ก</string>
 	<string name="dbkp_title">โปรแกรมแก้ไขเคอร์เนล DUALBOOT</string>
 	<string name="tablet_title">สคริปต์โหมดแท็บเล็ต</string>
+	<string name="devcfg_title">เครื่องมือแฟลช DEVCFG</string>
 
-	<string name="backup_boot_subtitle">สำรองข้อมูลพาร์ติชั่นสำหรับบูตเข้าสู่ Windows และ Android</string>
+    <string name="backup_boot_subtitle">สำรองข้อมูลพาร์ติชั่นสำหรับบูตเข้าสู่ Windows และ Android</string>
 	<string name="mnt_subtitle">สลับพาร์ติชันที่ติดตั้ง Windows เพื่อให้คุณสามารถแก้ไขเนื้อหาได้</string>
 	<string name="toolbox_subtitle">เครื่องมือและสคริปต์เพื่อประสบการณ์ Windows ที่สนุกสนานยิ่งขึ้น</string>
 	<string name="dump_modem_subtitle">แยก modem ไปยังพาร์ติชัน Windows ทุกครั้งที่คุณบูตเข้าสู่ Windows เพื่อแก้ไข Sim1 และ LTE</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">เพิ่มตัวติดตั้งสำหรับเฟรมเวิร์กต่างๆ ลงใน C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">แก้ไขเคอร์เนลเพื่อการบูตคู่แบบราบรื่น</string>
 	<string name="tablet_subtitle">เพิ่มสคริปต์ไปที่ C:⧹Toolbox ซึ่งช่วยให้คุณสามารถสลับโหมดแท็บเล็ตได้</string>
+	<string name="devcfg_subtitle">แฟลช devcfg จาก OOS11 เพื่อให้ Windows บนอุปกรณ์ OOS12 เริ่มต้นระบบได้</string>
 
 	<string name="backup_boot_question">สำรองข้อมูลการบูตเข้าสู่ Android ปัจจุบัน?</string>
 	<string name="mount_question">ทำการเชื่อมต่อ Windows ไปที่ %s?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">ดาวน์โหลดและย้ายตัวติดตั้ง C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX และ XNA ไปที่ C:⧹Toolbox?\n(อาจใช้เวลาสักครู่)</string>
 	<string name="dbkp_question">แก้ไขและแฟลชเคอร์เนลปัจจุบันของคุณใช่ไหม\n!!!อย่ากด "ใช่" ยกเว้นว่าอุปกรณ์ของคุณคือ %s!!!</string>
 	<string name="tablet_question">คัดลอกสคริปต์โหมดแท็บเล็ตไปที่ C:⧹Toolbox?</string>
+	<string name="devcfg_question">แฟลช devcfg OOS11?\n!!!อย่ากด YES นอกจากว่าอุปกรณ์ของคุณจะเป็น %s!!!</string>
 
-	<string name="wrong">ข้อผิดพลาด</string>
+    <string name="wrong">ข้อผิดพลาด</string>
 	<string name="mountfail">เกิดข้อผิดพลาด \nไม่สามาทำการเชื่อมต่อ Windows ได้\nขอความช่วยเหลือในการแชททาง Telegram.</string>
 	<string name="ntfs">ไม่พบการรองรับ NTFS \ติดตั้งโมดูล NTFS3G หรือไม่?</string>
 	<string name="internet">ไม่พบการเชื่อมต่ออินเทอร์เน็ต\nโปรดเชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง</string>
 	<string name="partition">ไม่พบพาร์ติชัน Windows</string>
 	<string name="internalstorage">ไฟล์ที่ดาวน์โหลดลงในที่เก็บข้อมูลภายใน</string>
 	<string name="dbkp">image การบูตได้รับการแก้ไขและแฟลชแล้ว\nยังสามารถพบ image ที่แก้ไขแล้วได้ที่ /sdcard/patched-boot.img\nใช้ %s ของคุณเพื่อสลับระหว่าง Windows และ Android</string>
-	<string name="op7">แถบเลื่อนการแจ้งเตือน</string>
+    <string name="devcfg">ได้ทำการแฟลช devcfg OOS11 แล้ว.\ndevcfg ต้นฉบับสามารถพบได้ที่ /sdcard/devcfg.img.\nใช้ sdd.exe ใน STA Creator เพื่อแฟลช devcfg OOS12 เมื่อกลับไปยัง Android.</string>
+    <string name="op7">แถบเลื่อนการแจ้งเตือน</string>
 	<string name="cepheus">ปุ่มผู้ช่วย</string>
 	<string name="nabu">เคสแม่เหล็ก</string>
 	<string name="reboot">เริ่มใหม่</string>

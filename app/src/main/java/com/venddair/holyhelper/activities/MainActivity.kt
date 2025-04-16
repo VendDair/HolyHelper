@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,9 +14,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -26,21 +23,20 @@ import androidx.core.graphics.toColorInt
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.venddair.holyhelper.R
 import com.venddair.holyhelper.utils.Preferences
-import com.venddair.holyhelper.utils.State
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import com.topjohnwu.superuser.Shell
-import com.venddair.holyhelper.Info
 import com.venddair.holyhelper.MainViewModel
 import com.venddair.holyhelper.ui.theme.generateAppColors
-import com.venddair.holyhelper.ui.themes.ThemeType
 import com.venddair.holyhelper.ui.themes.getAppTheme
 import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.utils.ToastUtil
-import kotlinx.coroutines.flow.update
+import androidx.core.net.toUri
+import com.venddair.holyhelper.utils.AppTheme
+import com.venddair.holyhelper.utils.NavController
+import com.venddair.holyhelper.utils.ViewModel
+import com.venddair.holyhelper.utils.context
+import com.venddair.holyhelper.utils.appColors
+import com.venddair.holyhelper.utils.checkAppRestriction
+import com.venddair.holyhelper.utils.checkRoot
 
 class MainActivity : ComponentActivity() {
 
@@ -49,41 +45,38 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        State.coroutineInit()
         ToastUtil.init(this@MainActivity)
         Preferences.init(this@MainActivity)
         Files.init(this@MainActivity)
 
-        State.context = this
+        context = this
 
         if (savedInstanceState == null) {
+            appColors = generateAppColors()
+
             val viewModel: MainViewModel by viewModels()
 
-            State.viewModel = viewModel
+            ViewModel = viewModel
 
-            State.Theme = getAppTheme()
+            AppTheme = getAppTheme()
+
+            ViewModel.loadData()
         }
 
+        context.window.statusBarColor = AppTheme.statusBarColor
+        context.window.navigationBarColor = AppTheme.navigationBarColor
+
         setContent {
+            checkRoot()
+            checkAppRestriction()
+            /*if (Shell.isAppGrantedRoot() != true)
+                Info.noRootDetected(context)
 
-            LaunchedEffect(Unit) {
-                State.viewModel.loadData(State.context)
-            }
-
-            if (!State.launch) {
-                State.launch = true
-
-                State.Colors = generateAppColors()
-
-                /*if (Shell.isAppGrantedRoot() != true)
-                    Info.noRootDetected(State.context)
-
-                if (Device.isRestricted())
-                    Info.appRestricted(State.context)*/
-            }
+            if (Device.isRestricted())
+                Info.appRestricted(context)*/
 
             val navController = rememberNavController()
-            State.navController = navController
+            NavController = navController
             NavHost(
                 navController = navController,
                 startDestination = "home",
@@ -112,45 +105,30 @@ class MainActivity : ComponentActivity() {
                     ) + fadeOut()
                 }
             ) {
-                composable("home") { State.Theme.MainMenu() }
-                composable("toolbox") { State.Theme.ToolboxMenu() }
-                composable("settings") { State.Theme.SettingsMenu() }
-                composable("color_options") { State.Theme.ColorsMenu() }
-                composable("theme_options") { State.Theme.ThemesMenu()}
-                composable("main_color") { State.Theme.ColorChanger(
+                composable("home") { AppTheme.MainMenu() }
+                composable("toolbox") { AppTheme.ToolboxMenu() }
+                composable("settings") { AppTheme.SettingsMenu() }
+                composable("color_options") { AppTheme.ColorsMenu() }
+                composable("theme_options") { AppTheme.ThemesMenu()}
+                composable("main_color") { AppTheme.ColorChanger(
                     topBarText = "Main color preference",
                     initialColor = Color(Preferences.COLOR.get().toColorInt()),
-                    colorKey = Preferences.COLOR
+                    colorKey = Preferences.COLOR,
+                    .1f,
                 ) }
-                composable("text_color") { State.Theme.ColorChanger(
+                composable("text_color") { AppTheme.ColorChanger(
                     topBarText = "Text color preference",
                     initialColor = Color(Preferences.TEXTCOLOR.get().toColorInt()),
-                    colorKey = Preferences.TEXTCOLOR
+                    colorKey = Preferences.TEXTCOLOR,
+                    .35f,
                 ) }
             }
 
         }
     }
-
-    companion object {
-        fun updateMountText(context: Context) {
-            State.viewModel.mountText.update { if (State.isWindowsMounted) context.getString(
-                R.string.mnt_title,
-                context.getString(R.string.unmountt)
-            ) else context.getString(R.string.mnt_title, context.getString(R.string.mountt)) }
-        }
-
-        fun updateLastBackupDate(context: Context) {
-            val formatter = SimpleDateFormat("dd-MM HH:mm", Locale.US)
-            val date = context.getString(R.string.last, formatter.format(Date()))
-            Preferences.LASTBACKUPDATE.set(date)
-            State.viewModel.lastBackupDate.update { date }
-        }
-    }
-
     override fun onResume() {
         super.onResume()
-        if (!isFirstResume) State.viewModel.onResume()
+        if (!isFirstResume) ViewModel.reloadEssentials()
         else isFirstResume = false
     }
 }
@@ -163,7 +141,7 @@ fun Context.isInternetAvailable(): Boolean {
 }
 
 fun Context.openUrl(url: String) {
-    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
 }
 
 @Composable

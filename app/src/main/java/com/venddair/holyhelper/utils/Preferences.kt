@@ -2,6 +2,7 @@ package com.venddair.holyhelper.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.venddair.holyhelper.ui.theme.BaseColors
 import com.venddair.holyhelper.ui.themes.ThemeType
 import com.venddair.holyhelper.ui.themes.ogwoaheler2_0.OGWoaHelper2_0Theme
 
@@ -30,9 +31,9 @@ object Preferences {
         }
     }
 
-    val COLOR = Preference("color", State.BaseColors.color)
-    val TEXTCOLOR = Preference("textColor", State.BaseColors.textColor)
-    val GUIDEGROUPCOLOR = Preference("guideGroupColor", State.BaseColors.guideGroupColor)
+    val COLOR = Preference("color", BaseColors.color)
+    val TEXTCOLOR = Preference("textColor", BaseColors.textColor)
+    val GUIDEGROUPCOLOR = Preference("guideGroupColor", BaseColors.guideGroupColor)
     val LASTBACKUPDATE = Preference("lastBackupDate", "")
     val MOUNTTOMNT = Preference("mountToMnt", false)
     val DISABLEUPDATES = Preference("disableUpdates", false)

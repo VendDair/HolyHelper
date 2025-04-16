@@ -11,6 +11,7 @@ import com.venddair.holyhelper.utils.Commands.backupBootImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -37,33 +38,28 @@ object Files {
 
         Strings.assets.data = context.filesDir.toString()
 
-        CoroutineScope(Dispatchers.Main).launch {
-            State.measureTime("PREPARING FILES") {
-                createFolder(Strings.assets.data)
-                createFolder(Strings.folders.uefi)
+        createFolder(Strings.folders.uefi)
 
-                copyAsset("data.zip")
-                copyAsset("RemoveEdge.bat")
-                copyAsset("sdd.conf")
-                copyAsset("RotationShortcutReverseLandscape.lnk")
-                copyAsset("RotationShortcut.lnk")
-                copyAsset("install.bat")
-                copyAsset("dbkp8150.cfg")
-                copyAsset("dbkp.hotdog.bin")
-                copyAsset("dbkp.cepheus.bin")
-                copyAsset("dbkp.nabu.bin")
-                copyAsset("Android.lnk")
-                copyAsset("ARMRepo.url")
-                copyAsset("ARMSoftware.url")
-                copyAsset("TestedSoftware.url")
-                copyAsset("WorksOnWoa.url")
+        remove(Strings.assets.data+"/*")
 
-                State.measureTime("UNZIPPING") {
-                    decompressZip(Strings.assets.dataZip, Strings.assets.data)
-                    setPerms(Strings.assets.mountNtfs, "777")
-                }
-            }
-        }
+        copyAsset("data.zip")
+        copyAsset("RemoveEdge.bat")
+        copyAsset("sdd.conf")
+        copyAsset("RotationShortcutReverseLandscape.lnk")
+        copyAsset("RotationShortcut.lnk")
+        copyAsset("install.bat")
+        copyAsset("dbkp8150.cfg")
+        copyAsset("dbkp.hotdog.bin")
+        copyAsset("dbkp.cepheus.bin")
+        copyAsset("dbkp.nabu.bin")
+        copyAsset("Android.lnk")
+        copyAsset("ARMRepo.url")
+        copyAsset("ARMSoftware.url")
+        copyAsset("TestedSoftware.url")
+        copyAsset("WorksOnWoa.url")
+
+        decompressZip(Strings.assets.dataZip, Strings.assets.data)
+        setPerms(Strings.assets.mountNtfs, "777")
     }
 
     fun checkExtension(path: String, extension: Extension): Boolean {
@@ -97,26 +93,26 @@ object Files {
         ShellUtils.fastCmd("su -c chmod $perms $path")
     }
 
-    fun createWinFolder(context: Context, path: String) {
-        if (!State.isWindowsMounted) Commands.mountWindows(context, false)
-        if (State.getFailed()) return
+    fun createWinFolder(path: String) {
+        if (mountWindowsIfNot()) {
+            ShellUtils.fastCmd("su -c mkdir -p /sdcard/$path")
+            return
+        }
 
         ShellUtils.fastCmd("su -c mkdir -p ${getMountDir()}/$path")
 
     }
 
-    fun copyFileToWin(context: Context, path: String, newPath: String) {
-        if (!State.isWindowsMounted) Commands.mountWindows(context, false)
-        if (State.getFailed()) {
+    fun copyFileToWin(path: String, newPath: String) {
+        if (mountWindowsIfNot()) {
             ShellUtils.fastCmd("su -c cp $path /sdcard/${newPath.split("/").last()}")
             return
         }
         ShellUtils.fastCmd("su -c cp $path ${getMountDir()}/$newPath")
     }
 
-    fun moveFileToWin(context: Context, path: String, newPath: String) {
-        if (!State.isWindowsMounted) Commands.mountWindows(context, false)
-        if (State.getFailed()) {
+    fun moveFileToWin(path: String, newPath: String) {
+        if (mountWindowsIfNot()) {
             ShellUtils.fastCmd("su -c mv $path /sdcard/${newPath.split("/").last()}")
             return
         }
@@ -187,62 +183,55 @@ object Files {
         bos.close()
     }
 
-    fun copyStaFiles(context: Context) {
+    fun copyStaFiles() {
         remove("${getMountDir()}/switchtoandroid")
-        createWinFolder(context, Strings.win.folders.sta)
-        copyFileToWin(context, Strings.assets.sta, Strings.win.staBin)
-        copyFileToWin(context, Strings.assets.staLink, Strings.win.staLink)
+        createWinFolder(Strings.win.folders.sta)
+        copyFileToWin(Strings.assets.sta, Strings.win.staBin)
+        copyFileToWin(Strings.assets.staLink, Strings.win.staLink)
 
-        copyFileToWin(context, Strings.assets.sdd, Strings.win.sddBin)
-        copyFileToWin(context, Strings.assets.sddConfig, Strings.win.sddConfig)
+        copyFileToWin(Strings.assets.sdd, Strings.win.sddBin)
+        copyFileToWin(Strings.assets.sddConfig, Strings.win.sddConfig)
 
-        copyFileToWin(context, Strings.assets.autoFlasher, Strings.win.autoFlasher)
+        copyFileToWin(Strings.assets.autoFlasher, Strings.win.autoFlasher)
     }
 
-    fun copyArmSoftwareLinks(context: Context) {
-        createWinFolder(context, Strings.win.folders.toolbox)
-        copyFileToWin(context, Strings.assets.ARMRepoLink, Strings.win.ARMRepoLink)
-        copyFileToWin(context, Strings.assets.ARMSoftwareLink, Strings.win.ARMSoftwareLink)
-        copyFileToWin(context, Strings.assets.TestedSoftwareLink, Strings.win.TestedSoftwareLink)
-        copyFileToWin(context, Strings.assets.WorksOnWoaLink, Strings.win.WorksOnWoaLink)
+    fun copyArmSoftwareLinks() {
+        createWinFolder(Strings.win.folders.toolbox)
+        copyFileToWin(Strings.assets.ARMRepoLink, Strings.win.ARMRepoLink)
+        copyFileToWin(Strings.assets.ARMSoftwareLink, Strings.win.ARMSoftwareLink)
+        copyFileToWin(Strings.assets.TestedSoftwareLink, Strings.win.TestedSoftwareLink)
+        copyFileToWin(Strings.assets.WorksOnWoaLink, Strings.win.WorksOnWoaLink)
     }
 
-    fun copyRotationFiles(context: ComponentActivity) {
-        createWinFolder(context, Strings.win.folders.rotation)
+    fun copyRotationFiles() {
+        createWinFolder(Strings.win.folders.rotation)
 
         copyFileToWin(
-            context,
             Strings.assets.display,
             Strings.win.display
         )
         copyFileToWin(
-            context,
             Strings.assets.RotationShortcut,
             Strings.win.RotationShortcut
         )
         copyFileToWin(
-            context,
             Strings.assets.RotationShortcutReverseLandscape,
             Strings.win.RotationShortcutReverseLandscape
         )
 
         copyFileToWin(
-            context,
             Strings.assets.RotationShortcutReverseLandscape,
             Strings.win.RotationShortcutReverseLandscape
         )
         copyFileToWin(
-            context,
             Strings.assets.RotationShortcut,
             Strings.win.RotationShortcut
         )
         copyFileToWin(
-            context,
             Strings.assets.RotationShortcut,
             Strings.win.RotationShortcutDesktop
         )
         copyFileToWin(
-            context,
             Strings.assets.RotationShortcutReverseLandscape,
             Strings.win.RotationShortcutReverseLandscapeDesktop
         )

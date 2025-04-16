@@ -7,10 +7,14 @@ import android.net.Uri
 import android.view.View
 import androidx.activity.ComponentActivity
 import com.venddair.holyhelper.utils.Download
-import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import com.venddair.holyhelper.utils.appColors
+import com.venddair.holyhelper.utils.context
+import androidx.core.net.toUri
+import com.venddair.holyhelper.utils.deviceConfig
+import com.venddair.holyhelper.utils.failed
 
 class Info {
     companion object {
@@ -44,7 +48,7 @@ class Info {
                 title = context.getString(R.string.download_file_failed_title, fileName),
                 text = context.getString(R.string.download_failed_subtitle),
                 image = R.drawable.ic_error,
-                tintColor = State.Colors.text,
+                tintColor = appColors.text,
                 buttons = listOf(
                     Pair(context.getString(R.string.dismiss)) {},
                 )
@@ -53,18 +57,18 @@ class Info {
 
         fun winUnableToMount(context: Context) {
             if (isWinUnableToMountDialog) return
-            if (State.getFailed()) UniversalDialog.dialog.dismiss()
+            if (failed) UniversalDialog.dialog.dismiss()
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.mountfail),
                 text = context.getString(R.string.internalstorage),
                 image = R.drawable.ic_error,
-                tintColor = State.Colors.text,
+                tintColor = appColors.text,
                 buttons = listOf(
                     Pair(context.getString(R.string.chat)) {
                         context.startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(State.deviceConfig.groupLink)
+                                Uri.parse(deviceConfig.groupLink)
                             )
                         )
                     },
@@ -72,27 +76,27 @@ class Info {
                 )
             ) { dialog ->
                 dialog.setOnDismissListener {
-                    State.setFailed(false)
+                    failed = false
                     isWinUnableToMountDialog = false
                 }
             }
             isWinUnableToMountDialog = true
         }
 
-        fun noWinPartition(context: Context) {
+        fun noWinPartition() {
             if (isNoWinPartitionDialog) return
-            if (State.getFailed()) UniversalDialog.dialog.dismiss()
+            if (failed) UniversalDialog.dialog.dismiss()
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.partition),
                 image = R.drawable.ic_error,
-                tintColor = State.Colors.text,
+                tintColor = appColors.text,
                 dismissible = false,
                 buttons = listOf(
                     Pair(context.getString(R.string.guide)) {
                         context.startActivity(
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(State.deviceConfig.guideLink)
+                                deviceConfig.guideLink.toUri()
                             )
                         )
                     },
@@ -109,21 +113,21 @@ class Info {
                 title = context.getString(R.string.download_failed_title),
                 text = context.getString(R.string.download_failed_subtitle),
                 image = R.drawable.ic_error,
-                tintColor = State.Colors.text,
+                tintColor = appColors.text,
                 buttons = listOf(
                     Pair(context.getString(R.string.dismiss)) {},
                 )
             )
         }
 
-        fun notifyAboutUpdate(context: ComponentActivity, version: String) {
+        fun notifyAboutUpdate(version: String) {
             UniversalDialog.showDialog(context,
                 title = context.getString(R.string.update1),
                 text = context.getString(R.string.update_question, version),
                 image = R.drawable.info,
                 buttons = listOf(
                     Pair(context.getString(R.string.yes)) {
-                        pleaseWait(context, R.string.done, R.drawable.info) {
+                        pleaseWait(R.string.done, R.drawable.info) {
                             Download.download(context, "https://github.com/VendDair/HolyHelper/releases/download/$version/HolyHelper.apk", "HolyHelper.apk") { _, name ->
                                 Download.installAPK(context, name)
                             }
@@ -139,9 +143,21 @@ class Info {
                 context,
                 title = context.getString(R.string.nonroot),
                 image = R.drawable.ic_error,
-                tintColor = State.Colors.text,
+                tintColor = appColors.text,
             )
             UniversalDialog.dialog.setCancelable(false)
+        }
+
+        fun noInternet() {
+            UniversalDialog.showDialog(
+                context,
+                title = context.getString(R.string.internet),
+                image = R.drawable.ic_error,
+                tintColor = appColors.text,
+                buttons = listOf(
+                    Pair(context.getString(R.string.dismiss)) {},
+                )
+            )
         }
 
         fun appRestricted(context: Context) {
@@ -149,7 +165,7 @@ class Info {
                 context,
                 title = context.getString(R.string.unsupported2),
                 image = R.drawable.ic_error,
-                tintColor = State.Colors.text,
+                tintColor = appColors.text,
             )
             UniversalDialog.dialog.setCancelable(false)
         }
@@ -172,13 +188,12 @@ class Info {
 
         @OptIn(DelicateCoroutinesApi::class)
         fun pleaseWait(
-            context: Context,
             doneText: String,
             imageId: Int,
             async: suspend () -> Unit = {},
             onThread: () -> Unit = {},
         ) {
-            (context as ComponentActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+            context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
             UniversalDialog.clear()
             UniversalDialog.dialogText.get()?.text = context.getString(R.string.please_wait)
             UniversalDialog.imageView.get()?.setImageResource(imageId)
@@ -187,31 +202,29 @@ class Info {
                 async()
                 context.runOnUiThread {
                     onThread()
-                    if (!State.getFailed()) done(context, doneText, imageId)
+                    if (!failed) done(context, doneText, imageId)
                 }
             }
         }
 
         fun pleaseWait(
-            context: Context,
             doneText: Int,
             imageId: Int,
             async: suspend () -> Unit = {},
             onThread: () -> Unit = {},
         ) {
-            pleaseWait(context, context.getString(doneText), imageId, async, onThread)
+            pleaseWait(context.getString(doneText), imageId, async, onThread)
         }
 
         @OptIn(DelicateCoroutinesApi::class)
         fun pleaseWaitProgress(
-            context: Context,
-            doneText: Int,
+            doneText: String,
             imageId: Int,
             steps: Int,
             async: suspend () -> Unit = {},
             onThread: () -> Unit = {},
         ) {
-            (context as ComponentActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+            context.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
             UniversalDialog.clear()
             UniversalDialog.setupProgressBar(true, steps)
             UniversalDialog.dialogText.get()?.text = context.getString(R.string.please_wait)
@@ -221,9 +234,19 @@ class Info {
                 async()
                 context.runOnUiThread {
                     onThread()
-                    if (!State.getFailed()) done(context, doneText, imageId)
+                    if (!failed) done(context, doneText, imageId)
                 }
             }
+        }
+
+        fun pleaseWaitProgress(
+            doneText: Int,
+            imageId: Int,
+            steps: Int,
+            async: suspend () -> Unit = {},
+            onThread: () -> Unit = {},
+        ) {
+            pleaseWaitProgress(context.getString(doneText), imageId, steps, async, onThread)
         }
     }
 }

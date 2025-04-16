@@ -15,7 +15,7 @@ object Update {
         ) { content ->
             val version = content.replace("\n", "")
             if (isVersionNew(version)) {
-                Info.notifyAboutUpdate(context, version)
+                Info.notifyAboutUpdate(version)
             }
         }
     }

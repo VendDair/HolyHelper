@@ -18,8 +18,9 @@
 	<string name="setup_title">ВСТАНОВЛЮВАЧІ FRAMEWORK</string>
 	<string name="dbkp_title">ПАТЧЕР ЯДРА DUALBOOT</string>
 	<string name="tablet_title">СЦЕНАРІЙ РЕЖИМУ ПЛАНШЕТА</string>
+	<string name="devcfg_title">Інструмент для прошивки DEVCFG</string>
 
-	<string name="backup_boot_subtitle">Резервне копіювання Boot образу на Android та/або Windows</string>
+    <string name="backup_boot_subtitle">Резервне копіювання Boot образу на Android та/або Windows</string>
 	<string name="mnt_subtitle">Перемкніть монтований розділ Windows, щоб переглядати або редагувати вміст усередині</string>
 	<string name="toolbox_subtitle">Інструменти та сценарії для більш приємного використання Windows</string>
 	<string name="dump_modem_subtitle">Зробіть дамп модему у Windows, щоб виправити LTE на SIM1 в Windows. Необхідно перед кожним завантаженням Windows</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">Додає встановлювачі фреймворків в C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Виправляє ядро ​​для безпроблемного подвійного завантаження</string>
 	<string name="tablet_subtitle">Додає сценарій до C:⧹Toolbox, який дозволяє вмикати режим планшета</string>
+	<string name="devcfg_subtitle">Прошиває devcfg з OOS11, щоб Windows міг завантажуватися на пристроях з OOS12</string>
 
 	<string name="backup_boot_question">Зробити резервне копіювання поточного Boot образу Android?</string>
 	<string name="mount_question">Змонтувати Windows в %s?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Завантажити і перемістити у C:⧹Toolbox встановлювачі C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX і XNA?\n(це може заняти деякий час)</string>
 	<string name="dbkp_question">Виправити та прошити поточне ядро?\n!!!НЕ НАТИСКАЙТЕ ТАК, ЯКЩО ВАШ ПРИСТРІЙ НЕ ПОТРЕБУЄ ЦЬОГО %s!!!!</string>
 	<string name="tablet_question">Копіювати сценарій ввімкнення/вимкнення режиму планшета до C:⧹Toolbox?</string>
+	<string name="devcfg_question">Прошити OOS11 devcfg?\n!!!НЕ НАТИСКАЙТЕ ТАК, ЯКЩО ВАШ ПРИСТРІЙ НЕ %s!!!</string>
 
-	<string name="wrong">Щось пішло не так</string>
+    <string name="wrong">Щось пішло не так</string>
 	<string name="mountfail">Щось пішло не так, \nне вдалося змонтувати Windows.\nЗверніться за допомогою в Telegram-чат.</string>
 	<string name="ntfs">NTFS не підтримується у даній системі. \nВстановити модуль NTFS3G?</string>
 	<string name="internet">Не знайдено інтернет з\'єднання.\nПідключіться до інтернету і спробуйте знову.</string>
 	<string name="partition">Не знайдено розділ із Windows.</string>
 	<string name="internalstorage">Файли завантажено у внутрішнє сховище.</string>
 	<string name="dbkp">Завантажувальний образ було виправлено та прошито.\nВиправлений образ також можна знайти у /sdcard/patched-boot.img.\nВикористовуйте , щоб перемикатися між Windows та Android.</string>
-	<string name="op7">повзунок</string>
+    <string name="devcfg">OOS11 devcfg було прошито.\nОригінальний devcfg можна знайти за адресою /sdcard/devcfg.img.\nВикористовуйте sdd.exe у STA Creator для прошивки OOS12 devcfg при поверненні до Android.</string>
+    <string name="op7">повзунок</string>
 	<string name="cepheus">кнопку помічника</string>
 	<string name="nabu">магнітний футляр</string>
 	<string name="reboot">Перезавантаження</string>

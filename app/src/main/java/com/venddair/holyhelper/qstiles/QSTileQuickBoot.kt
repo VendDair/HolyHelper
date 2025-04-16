@@ -4,9 +4,9 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.utils.Commands
+import com.venddair.holyhelper.utils.Device
 import com.venddair.holyhelper.utils.Files
 import com.venddair.holyhelper.utils.Preferences
-import com.venddair.holyhelper.utils.State
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -47,7 +47,7 @@ class QSTileQuickBoot : TileService() {
 
         val lockedScreenRequired = Preferences.REQUIREUNLOCKED.get()
 
-        if (State.isDeviceLocked(this)) {
+        if (Device.isLocked) {
             if (lockedScreenRequired) {
                 tile.state = Tile.STATE_UNAVAILABLE
                 updateLabel("UNLOCK")

@@ -7,12 +7,11 @@ import com.venddair.holyhelper.Info
 import com.venddair.holyhelper.R
 import com.venddair.holyhelper.Strings
 import com.venddair.holyhelper.UniversalDialog
-import com.venddair.holyhelper.activities.MainActivity.Companion.updateMountText
 import com.venddair.holyhelper.utils.Files.createWinFolder
 
 object MainActivityFunctions {
 
-    fun backupBoot(context: Context) {
+    fun backupBoot() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.backup_boot_question),
             image = R.drawable.cd,
@@ -20,7 +19,6 @@ object MainActivityFunctions {
             buttons = listOf(
                 Pair("windows") {
                     Info.pleaseWait(
-                        context,
                         R.string.backuped,
                         R.drawable.cd
                     ) {
@@ -32,7 +30,6 @@ object MainActivityFunctions {
                 },
                 Pair("android") {
                     Info.pleaseWait(
-                        context,
                         R.string.backuped,
                         R.drawable.cd
                     ) {
@@ -44,11 +41,11 @@ object MainActivityFunctions {
         )
     }
     
-    fun mountWindows(context: Context) {
+    fun mountWindows() {
         //State.isWindowsMounted = isWindowsMounted()
         //updateMountText(context)
         UniversalDialog.showDialog(context,
-            title = if (!State.isWindowsMounted) context.getString(
+            title = if (!ViewModel.isWindowsMounted.value) context.getString(
                 R.string.mount_question,
                 Files.getMountDir()
             ) else context.getString(R.string.unmount_question),
@@ -57,10 +54,10 @@ object MainActivityFunctions {
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
                     val text =
-                        if (!State.isWindowsMounted) R.string.mounted else R.string.unmounted
-                    Info.pleaseWait(context, text, R.drawable.folder) {
+                        if (!ViewModel.isWindowsMounted.value) R.string.mounted else R.string.unmounted
+                    Info.pleaseWait(text, R.drawable.folder) {
                         Commands.mountWindows(context)
-                        updateMountText(context)
+                        ViewModel.updateMountText()
                     }
 
                 },
@@ -71,7 +68,7 @@ object MainActivityFunctions {
         )
     }
 
-    fun quickboot(context: Context) {
+    fun quickboot() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.quickboot_question),
             imageScale = 2f,
@@ -84,15 +81,15 @@ object MainActivityFunctions {
         )
     }
 
-    fun sta_creator(context: Context) {
+    fun sta_creator() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.sta_question),
             image = R.drawable.adrod,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.adrod) {
-                        Files.copyStaFiles(context)
+                    Info.pleaseWait(R.string.done, R.drawable.adrod) {
+                        Files.copyStaFiles()
                     }
                 },
                 Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
@@ -100,16 +97,16 @@ object MainActivityFunctions {
         )
     }
 
-    fun arm_software(context: Context) {
+    fun arm_software() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.software_question),
             image = R.drawable.ic_sensor,
-            tintColor = State.Colors.text,
+            tintColor = appColors.text,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.ic_sensor) {
-                        Files.copyArmSoftwareLinks(context)
+                    Info.pleaseWait(R.string.done, R.drawable.ic_sensor) {
+                        Files.copyArmSoftwareLinks()
                     }
                 },
                 Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
@@ -117,14 +114,14 @@ object MainActivityFunctions {
         )
     }
 
-    fun flash_uefi(context: Context) {
+    fun flash_uefi() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.flash_uefi_question),
             image = R.drawable.ic_uefi,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.ic_uefi) {
+                    Info.pleaseWait(R.string.done, R.drawable.ic_uefi) {
                         Commands.bootInWindows(context)
                     }
                 },
@@ -133,14 +130,14 @@ object MainActivityFunctions {
         )
     }
 
-    fun dump_modem(context: Context) {
+    fun dump_modem() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.dump_modem_question),
             image = R.drawable.ic_modem,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.ic_modem) {
+                    Info.pleaseWait(R.string.done, R.drawable.ic_modem) {
                         Commands.dumpModem(context)
                     }
                 },
@@ -149,7 +146,26 @@ object MainActivityFunctions {
         )
     }
 
-    fun atlasos(context: ComponentActivity) {
+    @SuppressLint("StringFormatInvalid")
+    fun devcfg() {
+        UniversalDialog.showDialog(context,
+            title = context.getString(R.string.devcfg_question, Device.getDbkpDeviceName()),
+            image = R.drawable.ic_uefi,
+            dismissible = false,
+            buttons = listOf(
+                Pair(context.getString(R.string.yes)) {
+                    Info.pleaseWaitProgress(
+                        context.getString(R.string.devcfg, Device.getDbkpButton(context)),
+                        R.drawable.ic_uefi, 2, {
+                        Commands.devcfg()
+                    })
+                },
+                Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
+            )
+        )
+    }
+
+    fun atlasos() {
         UniversalDialog.showDialog(
             context,
             title = context.getString(R.string.atlasos_question),
@@ -157,12 +173,12 @@ object MainActivityFunctions {
             dismissible = false,
             buttons = listOf(
                 Pair("atlasos") {
-                    Info.pleaseWaitProgress(context, R.string.done, R.drawable.atlasos, 2, {
+                    Info.pleaseWaitProgress(R.string.done, R.drawable.atlasos, 2, {
                         Download.downloadAtlasOS(context)
                     })
                 },
                 Pair("revios") {
-                    Info.pleaseWaitProgress(context, R.string.done, R.drawable.atlasos, 2, {
+                    Info.pleaseWaitProgress(R.string.done, R.drawable.atlasos, 2, {
                         Download.downloadReviOS(context)
 
                     })
@@ -173,7 +189,7 @@ object MainActivityFunctions {
     }
 
     @SuppressLint("StringFormatInvalid")
-    fun dbkp(context: ComponentActivity) {
+    fun dbkp() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.dbkp_question, Device.getDbkpDeviceName()),
             image = R.drawable.ic_uefi,
@@ -181,7 +197,6 @@ object MainActivityFunctions {
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
                     Info.pleaseWait(
-                        context,
                         context.getString(R.string.dbkp, Device.getDbkpButton(context)),
                         R.drawable.ic_uefi,
                         {
@@ -194,17 +209,16 @@ object MainActivityFunctions {
         )
     }
 
-    fun usb_host_mode(context: Context) {
+    fun usb_host_mode() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.usbhost_question),
             image = R.drawable.folder,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.folder) {
-                        createWinFolder(context, Strings.win.folders.toolbox)
+                    Info.pleaseWait(R.string.done, R.drawable.folder) {
+                        createWinFolder(Strings.win.folders.toolbox)
                         Files.copyFileToWin(
-                            context,
                             Strings.assets.USBHostMode,
                             Strings.win.USBHostMode
                         )
@@ -215,15 +229,15 @@ object MainActivityFunctions {
         )
     }
 
-    fun rotation(context: ComponentActivity) {
+    fun rotation() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.rotation_question),
             image = R.drawable.cd,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.cd) {
-                        Files.copyRotationFiles(context)
+                    Info.pleaseWait(R.string.done, R.drawable.cd) {
+                        Files.copyRotationFiles()
                     }
                 },
                 Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
@@ -231,16 +245,16 @@ object MainActivityFunctions {
         )
     }
 
-    fun optimizedTaskbar(context: ComponentActivity) {
+    fun optimizedTaskbar() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.tablet_question),
-            image = R.drawable.cd,
+            image = R.drawable.ic_sensor,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWait(context, R.string.done, R.drawable.cd) {
-                        createWinFolder(context, Strings.win.folders.toolbox)
-                        Files.copyFileToWin(context, Strings.assets.optimizedTaskbar, Strings.win.optimizedTaskbar)
+                    Info.pleaseWait(R.string.done, R.drawable.cd) {
+                        createWinFolder(Strings.win.folders.toolbox)
+                        Files.copyFileToWin(Strings.assets.optimizedTaskbar, Strings.win.optimizedTaskbar)
                     }
                 },
                 Pair(context.getString(R.string.no)) { UniversalDialog.dialog.dismiss() }
@@ -248,20 +262,19 @@ object MainActivityFunctions {
         )
     }
 
-    fun frameworks(context: Context) {
+    fun frameworks() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.setup_question),
             image = R.drawable.folder,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWaitProgress(context, R.string.done, R.drawable.folder, 19, {
-                        createWinFolder(context, Strings.win.folders.toolbox)
-                        createWinFolder(context, Strings.win.folders.frameworks)
+                    Info.pleaseWaitProgress(R.string.done, R.drawable.folder, 19, {
+                        createWinFolder(Strings.win.folders.toolbox)
+                        createWinFolder(Strings.win.folders.frameworks)
                         Download.downloadFrameworks(context)
                     }) {
                         Files.copyFileToWin(
-                            context,
                             Strings.assets.installBat,
                             Strings.win.installBat
                         )
@@ -273,18 +286,18 @@ object MainActivityFunctions {
         )
     }
 
-    fun edge(context: Context) {
+    fun edge() {
         UniversalDialog.showDialog(context,
             title = context.getString(R.string.defender_question),
             image = R.drawable.edge,
             dismissible = false,
             buttons = listOf(
                 Pair(context.getString(R.string.yes)) {
-                    Info.pleaseWaitProgress(context, R.string.done, R.drawable.edge, 1, {
-                        createWinFolder(context, Strings.win.folders.toolbox)
+                    Info.pleaseWaitProgress(R.string.done, R.drawable.edge, 1, {
+                        createWinFolder(Strings.win.folders.toolbox)
                         Download.downloadDefenderRemover(context)
                     }, {
-                        Files.copyFileToWin(context, Strings.assets.edgeremover, Strings.win.edgeremover)
+                        Files.copyFileToWin(Strings.assets.edgeremover, Strings.win.edgeremover)
 
                     })
                 },

@@ -4,35 +4,42 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.venddair.holyhelper.ui.themes.ButtonConfig
 import com.venddair.holyhelper.ui.themes.Configs
 import com.venddair.holyhelper.ui.themes.SettingsButtonConfig
 import com.venddair.holyhelper.ui.themes.SettingsMiniButtonConfig
 import com.venddair.holyhelper.ui.themes.Theme
 import com.venddair.holyhelper.ui.themes.main.MainTheme
+import com.venddair.holyhelper.utils.AppTheme
 import com.venddair.holyhelper.utils.Preferences
-import com.venddair.holyhelper.utils.State
+import com.venddair.holyhelper.utils.appColors
 
 
 object EasyTheme : Theme {
+    override val statusBarColor: Int
+        get() = appColors.surface.toArgb()
+    override val navigationBarColor: Int
+        get() = appColors.background.toArgb()
+
     @Composable
     override fun MainMenu() {
-        State.Theme.OuterColumn(Modifier) {
-            State.Theme.TopBar(null)
+        AppTheme.OuterColumn(Modifier) {
+            AppTheme.TopBar(null)
 
-            State.Theme.ScreenContainer(Modifier) {
-                State.Theme.Panel()
-                State.Theme.ElementsContainer(false) {
-                    State.Theme.Button(Configs.backupBoot(Modifier.weight(1f)))
-                    State.Theme.Button(Configs.mount(Modifier.weight(1f)))
-                    State.Theme.Button(Configs.sta(Modifier.weight(1f)))
-                    State.Theme.Button(Configs.usbHost(Modifier.weight(1f)))
-                    State.Theme.Button(Configs.quickboot(Modifier.weight(1f)))
+            AppTheme.ScreenContainer(Modifier) {
+                AppTheme.Panel()
+                AppTheme.ElementsContainer(false) {
+                    AppTheme.Button(Configs.backupBoot(Modifier.weight(1f)))
+                    AppTheme.Button(Configs.mount(Modifier.weight(1f)))
+                    AppTheme.Button(Configs.sta(Modifier.weight(1f)))
+                    AppTheme.Button(Configs.usbHost(Modifier.weight(1f)))
+                    AppTheme.Button(Configs.quickboot(Modifier.weight(1f)))
                 }
             }
         }
 
-        State.Theme.Loading()
+        
     }
 
     @Composable
@@ -133,8 +140,9 @@ object EasyTheme : Theme {
         topBarText: String,
         initialColor: Color,
         colorKey: Preferences.Preference<String>,
+        previewColorFactor: Float
     ) {
-        MainTheme.ColorChanger(topBarText, initialColor, colorKey)
+        MainTheme.ColorChanger(topBarText, initialColor, colorKey, previewColorFactor)
     }
 
     @Composable

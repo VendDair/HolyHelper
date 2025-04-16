@@ -18,8 +18,9 @@
 	<string name="setup_title">FRAMEWORK INSTALLERS</string>
 	<string name="dbkp_title">DUALBOOT KERNEL PATCHER</string>
 	<string name="tablet_title">TABLET MODE SKRIPT</string>
+	<string name="devcfg_title">DEVCFG Flasher</string>
 
-	<string name="backup_boot_subtitle">Boot-Image Backup erstellen in Windows und/oder Android</string>
+    <string name="backup_boot_subtitle">Boot-Image Backup erstellen in Windows und/oder Android</string>
 	<string name="mnt_subtitle">Windows-Partition mounten um deren Inhalt anzuzeigen und zu ändern</string>
 	<string name="toolbox_subtitle">Tools und Scripts für ein besseres Windows Erlebnis</string>
 	<string name="dump_modem_subtitle">Modem bereitstellen um SIM1 in Windows verwenden zu können. Wird bei jedem Neustart benötigt um LTE in Windows nutzen zu können.</string>
@@ -37,8 +38,9 @@
 	<string name="setup_subtitle">Fügt in C:⧹Toolbox mehrere Framework Installers hinzu</string>
 	<string name="dbkp_subtitle">Patcht den kernel um nahtlos dualbooten zu können</string>
 	<string name="tablet_subtitle">Fügt in C:⧹Toolbox einen Skript hinzu womit Sie den Tablet-Modus umschalten können</string>
-	
-	<string name="backup_boot_question">Backup vom aktuellen Boot-Image erstellen?</string>
+	<string name="devcfg_subtitle">Flasht devcfg von OOS11, damit Windows auf OOS12-Geräten starten kann</string>
+
+    <string name="backup_boot_question">Backup vom aktuellen Boot-Image erstellen?</string>
 	<string name="mount_question">Windows in %s mounten?</string>
 	<string name="unmount_question">Unmount Windows?</string>
 	<string name="dump_modem_question">Modem1st und modem2st bereitstellen?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX und XNA framework Installers herunterladen und nach C:⧹Toolbox kopieren?\n(es kann eine weile dauern)</string>
 	<string name="dbkp_question">Kernel patchen und das neue Boot Image flashen?\n!!!DRÜCKE NICHT AUF JA WENN DU KEIN %s HAST!!!</string>
 	<string name="tablet_question">Tablet-Modus Skript nach C:⧹Toolbox kopieren?</string>
+	<string name="devcfg_question">OOS11 devcfg flashen?\n!!!DRÜCKEN SIE NICHT JA, WENN IHR GERÄT NICHT %s IST!!!</string>
 
-	<string name="wrong">Etwas ist schief gelaufen</string>
+    <string name="wrong">Etwas ist schief gelaufen</string>
 	<string name="mountfail">Etwas ist schief gelaufen, \nWindows konnte nicht gemountet werden.\nFragen Sie nach Hilfe im Telegram-Chat.</string>
 	<string name="ntfs">NTFS Unterstützung nicht gefunden. \nInstallier NTFS3G Module?</string>
 	<string name="internet">Keine Internetverbindung gefunden.\nVerbinden Sie mit das Internet und versuchen Sie es erneut.</string>
 	<string name="partition">Keine Windows Partition gefunden.</string>
 	<string name="internalstorage">Dateien würden im Internen Speicher heruntergeladen.</string>
 	<string name="dbkp">Boot Image würde gepatcht und geflasht.\nDas gepatchte Image finden Sie auch unter /sdcard/patched-boot.img.\nVerwenden Sie Ihren %s, um zwischen Windows und Android zu wechseln.</string>
-	<string name="op7">Alert Slider</string>
+    <string name="devcfg">OOS11 devcfg wurde geflasht.\nDas originale devcfg findet man unter /sdcard/devcfg.img.\nVerwenden Sie sdd.exe im STA Creator, um OOS12 devcfg beim Wechsel zu Android zu flashen.</string>
+    <string name="op7">Alert Slider</string>
 	<string name="cepheus">Assistant Knopf</string>
 	<string name="nabu">Magnetische Hülle</string>
 	<string name="reboot">Neustart</string>

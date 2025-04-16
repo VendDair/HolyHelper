@@ -18,8 +18,9 @@
 	<string name="setup_title">BỘ CÀI FRAMEWORK</string>
 	<string name="dbkp_title">BỘ VÁ NHÂN DUALBOOT</string>
 	<string name="tablet_title">SCRIPT CHẾ ĐỘ MÁY TÍNH BẢNG</string>
+	<string name="devcfg_title">Công cụ flash DEVCFG</string>
 
-	<string name="backup_boot_subtitle">Sao lưu boot.img vào Android và/hoặc Windows</string>
+    <string name="backup_boot_subtitle">Sao lưu boot.img vào Android và/hoặc Windows</string>
 	<string name="mnt_subtitle">Chuyển đổi gắn phân vùng Windows để xem hoặc chỉnh sửa nội dung bên trong</string>
 	<string name="toolbox_subtitle">Các công cụ và tập lệnh mang lại trải nghiệm Windows thú vị hơn</string>
 	<string name="dump_modem_subtitle">Ném modem vào Windows để sửa 4G SIM1 trong Windows. Cần làm lại khi muốn khởi động Windows</string>
@@ -37,6 +38,7 @@
 	<string name="setup_subtitle">Thêm trình cài đặt cho một số framework vào C:⧹Toolbox</string>
 	<string name="dbkp_subtitle">Vá nhân để dualboot một cách dễ dàng</string>
 	<string name="tablet_subtitle">Adds a script to C:⧹Toolbox which allows you to toggle tablet mode</string>
+	<string name="devcfg_subtitle">Flash devcfg từ OOS11 để Windows có thể khởi động trên thiết bị OOS12</string>
 
 	<string name="backup_boot_question">Sao lưu boot.img?</string>
 	<string name="mount_question">Hiện file Windows vào %s?</string>
@@ -54,15 +56,17 @@
 	<string name="setup_question">Tải xuống và di chuyển trình cài đặt C++ Redistributables, DirectX, OpenGL, OpenAL, PhysX và XNA vào C:⧹Toolbox?\n(có thể mất một thời gian)</string>
 	<string name="dbkp_question">Vá và flash nhân hiện tại của bạn? \n!!!CẤM TIẾP TỤC TRỪ KHI MÁY BẠN LÀ %s!!!</string>
 	<string name="tablet_question">Sao chép script chế độ máy tính bảng vào C:⧹Toolbox?</string>
+	<string name="devcfg_question">Flash devcfg OOS11?\n!!!ĐỪNG NHẤP YES TRỪ KHI THIẾT BỊ CỦA BẠN LÀ %s!!!</string>
 
-	<string name="wrong">Lỗi ở đâu ý</string>
+    <string name="wrong">Lỗi ở đâu ý</string>
 	<string name="mountfail">Lỗi rồi, \nWindows không hiện file được.\nYêu cầu được trợ giúp trên Telegram.</string>
 	<string name="ntfs">NTFS không hỗ trợ \nVui lòng cài module NTFS3G.</string>
 	<string name="internet">Không có kết nối internet. \nHãy kết nối và thử lại.</string>
 	<string name="partition">Không phát hiện phân vùng Windows</string>
 	<string name="internalstorage">Tệp đã được tải vào bộ nhớ trong.</string>
 	<string name="dbkp">Đã vá và flash ảnh khởi động\nẢnh khởi động cũng có thể được tìm thấy ở /sdcard/patched-boot.img.\n Sử dụng %s để chuyển đổi giữa Windows và Android.</string>
-	<string name="op7">thanh trượt thông báo</string>
+    <string name="devcfg">OOS11 devcfg đã được flash.\ndevcfg gốc có thể được tìm thấy tại /sdcard/devcfg.img.\nSử dụng sdd.exe trong STA Creator để flash devcfg OOS12 khi quay lại Android.</string>
+    <string name="op7">thanh trượt thông báo</string>
 	<string name="cepheus">nút trợ lý</string>
 	<string name="nabu">hộp từ tính</string>
 	<string name="reboot">Khởi động lại</string>
